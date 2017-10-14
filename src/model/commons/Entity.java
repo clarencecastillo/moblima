@@ -1,0 +1,29 @@
+package model.commons;
+
+import java.io.Serializable;
+import java.util.UUID;
+
+public class Entity implements Serializable {
+
+    protected UUID id;
+
+    public Entity(UUID id) {
+        this.id = id;
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if ((null == obj) || (obj.getClass() != Entity.class))
+            return false;
+        Entity entity = (Entity)obj;
+        return entity.id == id;
+    }
+}
