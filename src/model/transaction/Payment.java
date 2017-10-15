@@ -11,7 +11,6 @@ public class Payment extends Entity {
     protected Date date;
 
     public Payment(PaymentStatus status, Payable payable) {
-        super(UUID.randomUUID());
         this.status = status;
         this.payable = payable;
         this.date = new Date();

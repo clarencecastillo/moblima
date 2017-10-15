@@ -20,7 +20,6 @@ public class Booking extends Entity implements Payable {
     private BookingStatus status;
 
     public Booking(Showtime showtime, Date created, User user) {
-        super(UUID.randomUUID());
         this.showtime = showtime;
         this.created = created;
         this.user = user;

@@ -14,7 +14,6 @@ public class Cineplex extends Entity {
     private ArrayList<Cinema> cinemas;
 
     public Cineplex(String name, Cinema[] cinemas, String address) {
-        super(UUID.randomUUID());
         this.name = name;
         this.cinemas = new ArrayList<Cinema>(Arrays.asList(cinemas));
         this.address = address;

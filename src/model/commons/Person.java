@@ -8,7 +8,6 @@ public abstract class Person extends Entity {
     protected String lastName;
 
     public Person(String firstName, String lastName) {
-        super(UUID.randomUUID());
         this.firstName = firstName;
         this.lastName = lastName;
     }
