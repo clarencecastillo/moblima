@@ -2,6 +2,7 @@ package model.movie;
 
 import model.commons.Person;
 
+// Director and Cast
 public class MoviePerson extends Person {
 
     private String biography;
