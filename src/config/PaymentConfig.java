@@ -34,7 +34,7 @@ public class PaymentConfig implements Configurable {
 
     @Override
     public ConfigType getConfigType() {
-        return null;
+        return ConfigType.PAYMENT;
     }
 
     @Override
