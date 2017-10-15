@@ -12,7 +12,6 @@ public class Cinema extends Entity {
 
     public Cinema(String code, Cineplex cineplex,
                   CinemaType type, CinemaLayout layout) {
-        super(UUID.randomUUID());
         this.code = code;
         this.cineplex = cineplex;
         this.type = type;

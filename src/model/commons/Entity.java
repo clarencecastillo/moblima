@@ -7,8 +7,8 @@ public class Entity implements Serializable {
 
     protected UUID id;
 
-    public Entity(UUID id) {
-        this.id = id;
+    public Entity() {
+        this.id = UUID.randomUUID();
     }
 
     public UUID getId() {

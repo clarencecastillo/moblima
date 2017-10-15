@@ -14,7 +14,6 @@ public class MovieReview extends Entity {
     private User author;
 
     public MovieReview(String review, int rating, Movie movie, User author) {
-        super(UUID.randomUUID());
         this.review = review;
         this.rating = rating;
         this.created = new Date();

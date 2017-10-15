@@ -14,7 +14,6 @@ public class Ticket extends Entity {
     private TicketStatus status;
 
     public Ticket(Seat seat, TicketType type, Pricing pricing, Booking booking) {
-        super(UUID.randomUUID());
         this.seat = seat;
         this.type = type;
         this.pricing = pricing;

@@ -15,7 +15,6 @@ public class BookingCharge extends Entity implements Priceable, Payable {
     private boolean refundable;
 
     public BookingCharge(double price, String description, boolean refundable) {
-        super(UUID.randomUUID());
         this.price = price;
         this.description = description;
         this.payment = null;

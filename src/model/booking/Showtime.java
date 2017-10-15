@@ -28,7 +28,6 @@ public class Showtime extends Entity {
     public Showtime(Movie movie, Cinema cinema, Language language,
                     Date startTime, Date endTime, boolean noFreePasses,
                     boolean isPreview, Language[] subtitles) {
-        super(UUID.randomUUID());
         this.movie = movie;
         this.cinema = cinema;
         this.seating = new ShowtimeSeating(cinema.getLayout().getSeats());

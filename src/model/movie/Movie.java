@@ -20,7 +20,6 @@ public class Movie extends Entity {
 
     public Movie(String title, String sypnosis, MoviePerson director, MovieType type,
                  MoviePerson[] actors, MovieStatus status, MovieRating rating) {
-        super(UUID.randomUUID());
         this.title = title;
         this.sypnosis = sypnosis;
         this.director = director;

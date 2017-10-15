@@ -5,16 +5,17 @@ import java.util.Arrays;
 import java.util.UUID;
 import model.commons.Entity;
 
+// Cineplexes are in different locations, managed by the vendor.
+// Each Cineplex will have 3 or more cinemas. (bi-directional)
 public class Cineplex extends Entity {
 
     private String name;
     private String address;
     private ArrayList<Cinema> cinemas;
 
-    public Cineplex(String name, Cinema[] cinemas, String address) {
-        super(UUID.randomUUID());
+    public Cineplex(String name, String address) {
         this.name = name;
-        this.cinemas = new ArrayList<Cinema>(Arrays.asList(cinemas));
+        this.cinemas = new ArrayList<Cinema>();
         this.address = address;
     }
 

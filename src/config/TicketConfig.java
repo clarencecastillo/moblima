@@ -4,6 +4,8 @@ import java.util.Arrays;
 import java.util.Hashtable;
 import model.booking.TicketType;
 import model.cinema.CinemaType;
+import model.cinema.Seat;
+import model.cinema.SeatType;
 import model.transaction.Priceable;
 
 public class TicketConfig implements Configurable {
@@ -79,5 +81,11 @@ public class TicketConfig implements Configurable {
         priceableRates.put(CinemaType.REGULAR, 0.0);
         priceableRates.put(CinemaType.PLATINUM, 5.0);
         priceableRates.put(CinemaType.EXECUTIVE, 7.0);
+
+        // DEFAULT SEAT TYPE SURCHARGE RATES
+        priceableRates.put(SeatType.SINGLE, 0.0);
+        priceableRates.put(SeatType.COUPLE, 0.0);
+        priceableRates.put(SeatType.HANDICAP, 0.0);
+
     }
 }
