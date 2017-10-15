@@ -2,32 +2,13 @@ package model.cinema;
 
 import java.io.Serializable;
 
-public class Seat implements Serializable {
+public class Seat extends Cell {
 
-    private char row;
-    private int column;
     private SeatType type;
 
     public Seat(char row, int column, SeatType type) {
-        this.row = row;
-        this.column = column;
+        super(row,column);
         this.type = type;
-    }
-
-    public char getRow() {
-        return row;
-    }
-
-    public void setRow(char row) {
-        this.row = row;
-    }
-
-    public int getColumn() {
-        return column;
-    }
-
-    public void setColumn(int column) {
-        this.column = column;
     }
 
     public SeatType getType() {
@@ -43,6 +24,6 @@ public class Seat implements Serializable {
         if ((null == obj) || (obj.getClass() != Seat.class))
             return false;
         Seat seat = (Seat)obj;
-        return seat.row == row && seat.column == column && seat.type == type;
+        return super.equals(seat) && seat.type == type;
     }
 }
