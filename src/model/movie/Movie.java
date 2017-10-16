@@ -3,7 +3,11 @@ package model.movie;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.UUID;
+
+import model.booking.Booking;
 import model.booking.Showtime;
+import model.booking.Ticket;
+import model.booking.TicketStatus;
 import model.commons.Entity;
 
 public class Movie extends Entity {
@@ -75,6 +79,15 @@ public class Movie extends Entity {
         for(MovieReview review : reviews)
             sum += review.getRating();
         return sum / reviews.size();
+    }
+
+    public int getTicketSales() {
+        int sum = 0;
+        for(Showtime showtime: showtimes)
+            for(Booking booking: showtime.getBookings())
+                for(Ticket ticket:booking.getTickets())
+                    if (ticket.getStatus() == TicketStatus.VALID) sum++;
+        return sum;
     }
 
     public void setTitle(String title) {
