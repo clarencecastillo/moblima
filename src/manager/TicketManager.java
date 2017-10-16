@@ -4,6 +4,8 @@ import config.BookingConfig;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
+
+import manager.exception.*;
 import model.booking.Booking;
 import model.booking.BookingStatus;
 import model.booking.SeatingStatus;
@@ -31,7 +33,8 @@ public class TicketManager extends EntityManager<Ticket> {
         return instance;
     }
 
-    public Ticket createTicket(UUID bookingId, Seat seat, TicketType type) {
+    public Ticket createTicket(UUID bookingId, Seat seat, TicketType type) throws IllegalShowtimeBookingException,
+            ExceedBookingSeatException, UnavailableTicketTypeException, UnavailableBookingSeatException {
 
         BookingManager bookingManager = BookingManager.getInstance();
 
@@ -43,23 +46,20 @@ public class TicketManager extends EntityManager<Ticket> {
 
         // Check if booking status not in progress
         if (booking.getStatus() != BookingStatus.IN_PROGRESS)
-            return null; // TODO Can only change showtime for bookings in progress
+            throw new IllegalShowtimeBookingException();
 
         int maxSeatsPerBooking = BookingConfig.getMaxSeatsPerBooking();
         if (booking.getTickets().length == maxSeatsPerBooking)
-            return null; // TODO Already reached maximum number of seats for booking
+            throw new ExceedBookingSeatException();
 
         // Check if ticket type is not available
         if (!cinema.getType().isAvailable(type))
-            return null; // TODO Ticket type not available
-
-        for (Ticket ticket: booking.getTickets())
-            if (ticket.getStatus() == TicketStatus.VALID && ticket.getSeat().equals(seat))
-                return null; // TODO Booking already has ticket with this seat
+            throw new UnavailableTicketTypeException();
 
         // Check if seating is already occupied
         if (!seating.isAvailable(seat))
-            return null; // TODO Ticket already occupied
+            throw new UnavailableBookingSeatException();
+
 
         seating.setSeatingStatus(seat, SeatingStatus.TAKEN);
         Ticket ticket = new Ticket(seat, type, new Pricing(cinema.getType(), seat.getType(),
@@ -69,7 +69,7 @@ public class TicketManager extends EntityManager<Ticket> {
         return ticket;
     }
 
-    public void removeTicket(UUID ticketId) {
+    public void removeTicket(UUID ticketId) throws IllegalTicketRemovingException {
 
         Ticket ticket = findById(ticketId);
         Booking booking = ticket.getBooking();
@@ -78,17 +78,19 @@ public class TicketManager extends EntityManager<Ticket> {
 
         // Check if booking status not in progress
         if (booking.getStatus() != BookingStatus.IN_PROGRESS)
-            return; // TODO Can only change showtime for bookings in progress
+            throw new IllegalTicketRemovingException();
 
         if (ticket.getStatus() == TicketStatus.VOID)
-            return; // TODO ticket is already removed
+            throw new IllegalTicketRemovingException("Ticket has already been removed");
 
         booking.removeTicket(ticket);
         seating.setSeatingStatus(ticket.getSeat(), SeatingStatus.AVAILABLE);
         ticket.setStatus(TicketStatus.VOID);
     }
 
-    public void updateTicket(UUID ticketId, Seat newSeat, TicketType newType) {
+    public void updateTicket(UUID ticketId, Seat newSeat, TicketType newType)
+            throws IllegalTicketUpdatingException, InvalidTicketStatusException,
+            UnavailableTicketTypeException, UnavailableBookingSeatException {
 
         Ticket ticket = findById(ticketId);
         Booking booking = ticket.getBooking();
@@ -100,19 +102,19 @@ public class TicketManager extends EntityManager<Ticket> {
 
         // Check if booking status not in progress
         if (booking.getStatus() != BookingStatus.IN_PROGRESS)
-            return; // TODO Can only change showtime for bookings in progress
+            throw new IllegalTicketUpdatingException();
 
         // Check if booking contains ticket
         if (!bookingTickets.contains(ticket) || ticket.getStatus() == TicketStatus.VOID)
-            return; // TODO Invalid ticket ID
+            throw new InvalidTicketStatusException();
 
         // Check if ticket type is not available
         if (!cinema.getType().isAvailable(newType))
-            return; // TODO Ticket type not available
+            throw new UnavailableTicketTypeException();
 
-        // Check if seat is already occupied
-        if (!seating.isAvailable(newSeat) && !ticket.getSeat().equals(newSeat))
-            return; // TODO Ticket already occupied
+        // Check if seating is already occupied
+        if (!seating.isAvailable(newSeat))
+            throw new UnavailableBookingSeatException();
 
         Pricing pricing = new Pricing(cinema.getType(), newSeat.getType(),
                                       newType, movie.getType());

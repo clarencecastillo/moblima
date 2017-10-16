@@ -1,5 +1,9 @@
 package manager;
 
+import manager.exception.InvalidRegisterEmailException;
+import manager.exception.InvalidRegisterMobileException;
+import manager.exception.InvalidRegisterUsernameException;
+import manager.exception.InvalidReviewRatingException;
 import model.cinema.Staff;
 import model.commons.User;
 
@@ -17,28 +21,31 @@ public class UserManager extends EntityManager<User> {
         return instance;
     }
 
-    public void registerUser(String firstName, String lastName, String mobile, String email) {
+    public void registerUser(String firstName, String lastName, String mobile, String email)
+            throws InvalidRegisterEmailException, InvalidRegisterMobileException {
 
         if (findByEmail(email) != null)
-            return; // TODO registered email exists
+            throw new InvalidRegisterEmailException("Registered email already exists");
 
         if (findByMobile(mobile) != null)
-            return; // TODO registered mobile exists
+            throw new InvalidRegisterMobileException("Registered phone number already exists");
 
         User user = new User(firstName, lastName, mobile, email);
         entities.put(user.getId(), user);
     }
 
-    public void registerStaff(String firstName, String lastName, String mobile, String email, String username, String password) {
+    public void registerStaff(String firstName, String lastName, String mobile, String email,
+                              String username, String password) throws InvalidRegisterEmailException,
+                                InvalidRegisterMobileException, InvalidRegisterUsernameException {
 
         if (findByEmail(email) != null)
-            return; // TODO registered email exists
+            throw new InvalidRegisterEmailException("Registered email already exists");
 
         if (findByMobile(mobile) != null)
-            return; // TODO registered mobile exists
+            throw new InvalidRegisterMobileException("Registered phone number already exists");
 
         if (findByUsername(username) != null)
-            return; // TODO Username exists
+            throw new InvalidRegisterUsernameException("Registered username alreadye exists");
 
         Staff staff = new Staff(firstName, lastName, mobile, email, username, password);
         entities.put(staff.getId(), staff);

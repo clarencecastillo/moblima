@@ -1,6 +1,8 @@
 package manager;
 
 import java.util.UUID;
+
+import manager.exception.InvalidReviewRatingException;
 import model.commons.User;
 import model.movie.Movie;
 import model.movie.MovieReview;
@@ -19,13 +21,13 @@ public class MovieReviewManager extends EntityManager<MovieReview> {
         return instance;
     }
 
-    public MovieReview createReview(String review, int rating, UUID movieId, UUID authorId) {
+    public MovieReview createReview(String review, int rating, UUID movieId, UUID authorId) throws InvalidReviewRatingException {
 
         MovieManager movieManager = MovieManager.getInstance();
         UserManager userManager = UserManager.getInstance();
 
         if (rating > 5 || rating < 0)
-            return null; // TODO invalid rating
+            throw new InvalidReviewRatingException();
 
         Movie movie = movieManager.findById(movieId);
         User author = userManager.findById(authorId);

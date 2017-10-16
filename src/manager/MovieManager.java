@@ -1,6 +1,9 @@
 package manager;
 
 import java.util.UUID;
+
+import manager.exception.IllegalMovieStatusException;
+import manager.exception.IllegalMovieStatusTransitionException;
 import model.booking.Showtime;
 import model.booking.ShowtimeStatus;
 import model.movie.Movie;
@@ -31,29 +34,28 @@ public class MovieManager extends EntityManager<Movie> {
         return movie;
     }
 
-    public void changeMovieStatus(UUID movieId, MovieStatus status) {
+    public void changeMovieStatus(UUID movieId, MovieStatus status) throws IllegalMovieStatusTransitionException {
 
         Movie movie = findById(movieId);
         if (movie.getStatus() == status)
-            return; // TODO Already in state
+            throw new IllegalMovieStatusTransitionException("Already in '" + status + "' state");
 
         switch (status) {
             case END_OF_SHOWING:
                 for (Showtime showtime: movie.getShowtimes())
-                    if (showtime.getStatus() == ShowtimeStatus.OPEN_BOOKING ||
-                        showtime.getStatus() == ShowtimeStatus.PENDING)
-                        return; // TODO Can't remove movie with upcoming/ongoing showtimes
+                    if (showtime.getStatus() == ShowtimeStatus.OPEN_BOOKING)
+                        throw new IllegalMovieStatusTransitionException("Cannot remove movies with upcoming/ongoing showtimes");
                 break;
             case PREVIEW:
                 if (movie.getStatus() != MovieStatus.COMING_SOON)
-                    return; // TODO Illegal state transition
+                    throw new IllegalMovieStatusTransitionException();
                 break;
             case NOW_SHOWING:
                 if (movie.getStatus() == MovieStatus.END_OF_SHOWING)
-                    return; // TODO Illegal state transition
+                    throw new IllegalMovieStatusTransitionException();
                 break;
             case COMING_SOON:
-                return; // TODO Illegal stata transition
+                throw new IllegalMovieStatusTransitionException();
         }
 
         movie.setStatus(status);
@@ -70,10 +72,10 @@ public class MovieManager extends EntityManager<Movie> {
         movie.setRating(rating);
     }
 
-    public void changeMovieType(UUID movieId, MovieType type) {
+    public void changeMovieType(UUID movieId, MovieType type) throws IllegalMovieStatusException{
         Movie movie = findById(movieId);
         if (movie.getStatus() != MovieStatus.COMING_SOON)
-            return; // TODO can only change movie type when not yet available for screening
+            throw new IllegalMovieStatusException("Can only change movie type when it is not yet available for screening");
         movie.setType(type);
     }
 }
