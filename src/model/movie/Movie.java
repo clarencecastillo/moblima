@@ -9,8 +9,9 @@ import model.booking.Showtime;
 import model.booking.Ticket;
 import model.booking.TicketStatus;
 import model.commons.Entity;
+import model.commons.Searchable;
 
-public class Movie extends Entity {
+public class Movie extends Entity implements Searchable {
 
     private String title;
     private String sypnosis;
@@ -88,6 +89,28 @@ public class Movie extends Entity {
                 for(Ticket ticket:booking.getTickets())
                     if (ticket.getStatus() == TicketStatus.VALID) sum++;
         return sum;
+    }
+
+    public String[] getSearchTags() {
+
+        ArrayList<String> tags = new ArrayList<>();
+
+        // Movie Title
+        tags.add(title);
+
+        // Actors
+        for (MoviePerson moviePerson: actors) {
+            tags.add(moviePerson.getFirstName());
+            tags.add(moviePerson.getLastName());
+            tags.add(moviePerson.getFullName());
+        }
+
+        // Director
+        tags.add(director.getFirstName());
+        tags.add(director.getLastName());
+        tags.add(director.getLastName());
+
+        return tags.toArray(new String[tags.size()]);
     }
 
     public void setTitle(String title) {

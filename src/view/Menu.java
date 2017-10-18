@@ -11,7 +11,7 @@ public class Menu extends Form {
     public static final String BACK_OPTION = "Go Back";
     public static final int BACK = -99999;
 
-    private boolean canGoBack;
+    protected boolean canGoBack;
 
     public Menu(String title, String[] options, boolean canGoBack) {
         super(title, options);
@@ -20,6 +20,15 @@ public class Menu extends Form {
 
     public Menu(String title, String[] options) {
         this(title, options, false);
+    }
+
+    public Menu(String title) {
+        super(title);
+    }
+
+    public Menu(String title, boolean canGoBack) {
+        super(title);
+        this.canGoBack = canGoBack;
     }
 
     public Menu() {

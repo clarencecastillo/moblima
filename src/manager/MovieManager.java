@@ -1,5 +1,6 @@
 package manager;
 
+import java.util.ArrayList;
 import java.util.UUID;
 
 import exception.IllegalMovieStatusException;
@@ -11,8 +12,11 @@ import model.movie.MoviePerson;
 import model.movie.MovieRating;
 import model.movie.MovieStatus;
 import model.movie.MovieType;
+import util.Utilities;
 
 public class MovieManager extends EntityManager<Movie> {
+
+    public static final int SIMILARITY_THRESHOLD = 5;
 
     private static MovieManager instance = new MovieManager();
 
@@ -75,5 +79,17 @@ public class MovieManager extends EntityManager<Movie> {
         if (movie.getStatus() != MovieStatus.COMING_SOON)
             throw new IllegalMovieStatusException("Can only change movie type when it is not yet available for screening");
         movie.setType(type);
+    }
+
+    public Movie[] findByKeyword(String keyword) {
+        ArrayList<Movie> movies = new ArrayList<>();
+        for (Movie movie : entities.values()) {
+            for (String tag: movie.getSearchTags())
+                if (Utilities.levenshteinDistance(keyword, tag) <= SIMILARITY_THRESHOLD) {
+                    movies.add(movie);
+                    break;
+                }
+        }
+        return movies.toArray(new Movie[movies.size()]);
     }
 }

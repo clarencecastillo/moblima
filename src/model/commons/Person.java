@@ -31,4 +31,9 @@ public abstract class Person extends Entity {
     protected void setLastName(String lastName) {
         this.lastName = lastName;
     }
+
+    @Override
+    public String toString() {
+        return getFullName();
+    }
 }

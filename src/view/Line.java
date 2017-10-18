@@ -26,6 +26,12 @@ public class Line {
         return label + separator + " " + value;
     }
 
+    public static String format(String line, int padding) {
+        int lineLength = line.replaceAll(CONSOLE_COLOR_REGEX, "").length();
+        String space = format(' ', padding - lineLength);
+        return line + space;
+    }
+
     public static String wrap(String text) {
         return wrap(text, View.VIEW_WIDTH);
     }

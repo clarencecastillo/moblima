@@ -61,6 +61,7 @@ public class MainMenuController extends Controller {
 
         switch (userChoice) {
             case SEARCH_MOVIES:
+                navigation.goTo(MovieSearchController.getInstance());
                 break;
             case LIST_MOVIES:
                 break;
