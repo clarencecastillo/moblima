@@ -1,7 +1,5 @@
 package model.cinema;
 
-import java.io.Serializable;
-
 public class Seat extends Cell {
 
     private SeatType type;

@@ -3,10 +3,9 @@ package model.commons;
 import java.io.Serializable;
 import java.util.UUID;
 
-public class Entity implements Serializable {
+public abstract class Entity implements Serializable {
 
     protected UUID id;
-
     public Entity() {
         this.id = UUID.randomUUID();
     }

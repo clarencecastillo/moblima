@@ -2,9 +2,7 @@ package model.booking;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Hashtable;
-import java.util.List;
 import model.cinema.Seat;
 import model.cinema.SeatType;
 
