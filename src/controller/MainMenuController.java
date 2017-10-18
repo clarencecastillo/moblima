@@ -23,14 +23,13 @@ public class MainMenuController extends Controller {
 
     @Override
     public void onLoad(String[] arguments) {
-        aboutView.setTitle(Line.format("MOBLIMA", Line.format(arguments[0],
-                                                              ConsoleColor.GREEN)));
+        aboutView.setTitle(Line.format("MOBLIMA", Line.format(arguments[0], ConsoleColor.GREEN)));
     }
 
     @Override
     public void setupView() {
         aboutView = new View();
-        aboutView.setContent(new String[] {Line.wrap("TODO Description here")});
+        aboutView.setContent(new String[] {"TODO Description here"});
         mainMenu = new Menu("Main Menu", Menu.getDescriptions(MainMenuOption.values()));
     }
 

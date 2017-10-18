@@ -43,7 +43,7 @@ public class View implements Displayable {
         if (content == null || content.length == 0)
             return;
         for (String line : content)
-            System.out.println(line);
+            System.out.println(Line.wrap(line, VIEW_WIDTH));
         System.out.println();
     }
 
