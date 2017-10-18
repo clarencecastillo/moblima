@@ -7,6 +7,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.UUID;
+
+import manager.exception.*;
 import model.booking.Booking;
 import model.booking.BookingCharge;
 import model.booking.BookingStatus;
@@ -33,7 +35,7 @@ public class BookingManager extends EntityManager<Booking> {
         return instance;
     }
 
-    public Booking createBooking(UUID userId, UUID showtimeId) {
+    public Booking createBooking(UUID userId, UUID showtimeId) throws IllegalShowtimeStatusException {
 
         UserManager userManager = UserManager.getInstance();
         ShowtimeManager showtimeManager = ShowtimeManager.getInstance();
@@ -41,9 +43,9 @@ public class BookingManager extends EntityManager<Booking> {
         User user = userManager.findById(userId);
         Showtime showtime = showtimeManager.findById(showtimeId);
 
-        // Check if showtime is open for booking
+        // Check whether showtime is open for booking
         if (showtime.getStatus() != ShowtimeStatus.OPEN_BOOKING)
-            return null; // TODO can only book when showtime is open for booking
+            throw new IllegalShowtimeStatusException("Can only book when the movie is open for booking");
 
         // Create the booking
         Date now = new Date();
@@ -62,18 +64,19 @@ public class BookingManager extends EntityManager<Booking> {
         return booking;
     }
 
-    public void changeBookingStatus(UUID bookingId, BookingStatus status) {
+    public void changeBookingStatus(UUID bookingId, BookingStatus status) throws IllegalShowtimeStatusException,
+            IllegalBookingStatusException,UnpaidPaymentException,UnpaidBookingChargeException,IllegalBookingChangeException {
 
         Booking booking = findById(bookingId);
         Showtime showtime = booking.getShowtime();
 
         // Check if showtime is still open for booking
         if (showtime.getStatus() != ShowtimeStatus.OPEN_BOOKING)
-            return; // TODO Can only change booking status for showtimes in open booking
+            throw new IllegalShowtimeStatusException("Can only book when the movie is open for booking");
 
         // Check if state is already set
         if (booking.getStatus() == status)
-            return; // TODO Already in state
+            throw new IllegalBookingStatusException("The booking is already "+ status);
 
         ShowtimeSeating seating = showtime.getSeating();
         Payment payment = booking.getPayment();
@@ -85,16 +88,16 @@ public class BookingManager extends EntityManager<Booking> {
 
                 // Check if booking not in progress
                 if (previousStatus != BookingStatus.IN_PROGRESS)
-                    return; // TODO can't pay for bookings not in progress
+                    throw new IllegalBookingStatusException("The booking can not be confirmed");
 
                 // Check if booking not yet paid for
                 if (payment == null || payment.getStatus() != PaymentStatus.ACCEPTED)
-                    return; // TODO invalid payment
+                    throw new UnpaidPaymentException();
 
                 // Check for other charges not yet paid for
                 for (BookingCharge charge: charges)
                     if (charge.isPendingPayment())
-                        return; // TODO existing unpaid booking charges
+                        throw new UnpaidBookingChargeException();
 
                 // Mark all seats for the booking as taken
                 for(Ticket ticket: tickets)
@@ -130,11 +133,11 @@ public class BookingManager extends EntityManager<Booking> {
                 int bookingChangesGraceMinutes = BookingConfig.getBookingChangesGraceMinutes();
                 if (Utilities.getDateBefore(showtime.getStartTime(), Calendar.MINUTE,
                                             bookingChangesGraceMinutes).after(new Date()))
-                    return; // TODO can't make any changes after grace period
+                    throw new IllegalBookingChangeException();
 
                 // Check if booking already cancelled
                 if (previousStatus == BookingStatus.CANCELLED)
-                    return; // TODO can't change booking status if already cancelled
+                    throw new IllegalBookingChangeException("Booking cannot be changed as it is already cancelled");
 
                 // Add booking changes fee if any
                 double bookingChangesSurcharge = BookingConfig.getBookingChangesSurcharge();
@@ -147,7 +150,7 @@ public class BookingManager extends EntityManager<Booking> {
         booking.setStatus(status);
     }
 
-    public void changeBookingShowtime(UUID bookingId, UUID showtimeId) {
+    public void changeBookingShowtime(UUID bookingId, UUID showtimeId) throws IllegalBookingChangeException{
 
         ShowtimeManager showtimeManager = ShowtimeManager.getInstance();
 
@@ -156,16 +159,16 @@ public class BookingManager extends EntityManager<Booking> {
 
         // Check if booking status not in progress
         if (booking.getStatus() != BookingStatus.IN_PROGRESS)
-            return; // TODO Can only change showtime for bookings in progress
+            throw new IllegalBookingChangeException("Can only change showtime for bookings in progress");
 
         // Check if showtime is the previously set showtime
         Showtime previousShowtime = booking.getShowtime();
         if (previousShowtime.equals(showtime))
-            return; // TODO Same showtime already wtf
+            throw new IllegalBookingChangeException("Can only change to another showtime");
 
         // Check if showtime is open for booking
         if (showtime.getStatus() != ShowtimeStatus.OPEN_BOOKING)
-            return; // TODO Specified new showtime is not open for booking
+            throw new IllegalBookingChangeException("This showtime is not open for booking yet.");
 
         // Remove this booking from previous showtime
         previousShowtime.removeBooking(booking);

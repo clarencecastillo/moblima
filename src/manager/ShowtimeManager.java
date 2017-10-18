@@ -4,6 +4,8 @@ import config.BookingConfig;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.UUID;
+
+import manager.exception.*;
 import model.booking.Booking;
 import model.booking.BookingStatus;
 import model.booking.Showtime;
@@ -28,7 +30,7 @@ public class ShowtimeManager extends EntityManager<Showtime> {
 
     public Showtime createShowtime(UUID movieId, UUID cinemaId, Language language,
                                    Date startTime, Date endTime, boolean noFreePasses,
-                                   boolean isPreview, Language[] subtitles) {
+                                   boolean isPreview, Language[] subtitles) throws IllegalMovieStatusException {
 
         MovieManager movieManager = MovieManager.getInstance();
         CinemaManager cinemaManager = CinemaManager.getInstance();
@@ -36,10 +38,10 @@ public class ShowtimeManager extends EntityManager<Showtime> {
         Movie movie = movieManager.findById(movieId);
 
         if (movie.getStatus() == MovieStatus.PREVIEW && !isPreview)
-            return null; // TODO Movie is still in preview
+            throw new IllegalMovieStatusException("Movie is still in preview");
 
         if (movie.getStatus() == MovieStatus.END_OF_SHOWING)
-            return null; // TODO Cant create showtime for removed movies
+            throw new IllegalMovieStatusException("Movie is already not shown");
 
         Cinema cinema = cinemaManager.findById(cinemaId);
 
@@ -51,20 +53,22 @@ public class ShowtimeManager extends EntityManager<Showtime> {
         return showtime;
     }
 
-    public void cancelShowtime(UUID showtimeId) {
+    public void cancelShowtime(UUID showtimeId) throws IllegalShowtimeStatusException,
+            IllegalMovieStatusException, IllegalBookingStatusException,
+            UnpaidBookingChargeException, UnpaidPaymentException, IllegalBookingChangeException {
 
         BookingManager bookingManager = BookingManager.getInstance();
         Showtime showtime = findById(showtimeId);
 
         if (showtime.getStatus() == ShowtimeStatus.CANCELLED)
-            return; // TODO showtime already cancelled
+            throw new IllegalShowtimeStatusException("Showtime is already cancelled");
 
         int minutesBeforeClosedBooking = BookingConfig.getMinutesBeforeClosedBooking();
         Date lastBookingMinute = Utilities.getDateBefore(showtime.getStartTime(), Calendar.MINUTE,
                                                          minutesBeforeClosedBooking);
         Date now = new Date();
         if (now.after(lastBookingMinute))
-            return; // TODO last booking minute already passed,
+            throw new IllegalShowtimeStatusException("Last booking minute is already passed.");
 
         showtime.setCancelled(true);
         for (Booking booking: showtime.getBookings())
