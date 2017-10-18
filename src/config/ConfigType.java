@@ -4,5 +4,6 @@ public enum ConfigType {
     HOLIDAY,
     TICKET,
     BOOKING,
-    PAYMENT;
+    PAYMENT,
+    ADMIN;
 }
