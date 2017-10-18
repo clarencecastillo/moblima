@@ -1,9 +1,5 @@
-import controller.AdminLoginController;
-import controller.AdminMenuController;
-import controller.Controller;
-import controller.MainMenuController;
-import controller.MovieSearchController;
-import controller.Navigation;
+import controller.*;
+
 import java.util.ArrayList;
 import manager.MovieManager;
 import manager.UserManager;
@@ -57,12 +53,17 @@ public class Moblima {
         controllers.add(AdminLoginController.getInstance());
         controllers.add(AdminMenuController.getInstance());
         controllers.add(MovieSearchController.getInstance());
+        controllers.add(MovieViewController.getInstance());
+        controllers.add(BookingHistoryLogInMenuController.getInstance());
+        controllers.add(RankingMenuController.getInstance());
+        controllers.add(AdminMovieViewController.getInstance());
+        controllers.add(ConfigMenuController.getInstance());
 
         nav = new Navigation();
         for (Controller controller: controllers)
             controller.init(nav);
 
-        rootController = controllers.get(0);
+        rootController = controllers.get(8);
     }
 
     public void run() {
