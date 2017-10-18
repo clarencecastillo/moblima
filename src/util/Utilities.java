@@ -43,4 +43,10 @@ public class Utilities {
         DateFormat df = new SimpleDateFormat(format);
         return df.format(date);
     }
+
+    public static boolean dateFallsOn(Date date, int calendarDayOfWeek) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        return calendar.get(Calendar.DAY_OF_WEEK) == calendarDayOfWeek;
+    }
 }
