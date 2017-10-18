@@ -71,6 +71,6 @@ public class UserManager extends EntityManager<User> {
 
     public boolean login(String username, String password) {
         Staff staff = findByUsername(username);
-        return staff == null || !staff.getPassword().equals(password);
+        return staff != null && staff.getPassword().equals(password);
     }
 }
