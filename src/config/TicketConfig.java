@@ -10,7 +10,7 @@ import model.transaction.Priceable;
 
 public class TicketConfig implements Configurable {
 
-    private static TicketConfig instance;
+    private static TicketConfig instance = new TicketConfig();
     private static Hashtable<CinemaType, TicketType[]> cinemaTicketTypes;
     private static Hashtable<Priceable, Double> priceableRates;
 
@@ -19,8 +19,6 @@ public class TicketConfig implements Configurable {
     }
 
     public static TicketConfig getInstance() {
-        if (instance == null)
-            instance = new TicketConfig();
         return instance;
     }
 

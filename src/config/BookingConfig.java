@@ -2,7 +2,7 @@ package config;
 
 public class BookingConfig implements Configurable {
 
-    private static BookingConfig instance;
+    private static BookingConfig instance = new BookingConfig();
     private static int maxSeatsPerBooking;
     private static int minDaysBeforeOpenBooking;
     private static double bookingSurcharge;
@@ -15,8 +15,6 @@ public class BookingConfig implements Configurable {
     }
 
     public static BookingConfig getInstance() {
-        if (instance == null)
-            instance = new BookingConfig();
         return instance;
     }
 

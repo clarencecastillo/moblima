@@ -19,15 +19,13 @@ import model.transaction.Pricing;
 
 public class TicketManager extends EntityManager<Ticket> {
 
-    private static TicketManager instance;
+    private static TicketManager instance = new TicketManager();
 
     private TicketManager() {
         super();
     }
 
     public static TicketManager getInstance() {
-        if (instance == null)
-            instance = new TicketManager();
         return instance;
     }
 

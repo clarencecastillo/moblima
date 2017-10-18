@@ -8,15 +8,13 @@ import model.cinema.Cineplex;
 
 public class CinemaManager extends EntityManager<Cinema> {
 
-    private static CinemaManager instance;
+    private static CinemaManager instance = new CinemaManager();
 
     private CinemaManager() {
         super();
     }
 
     public static CinemaManager getInstance() {
-        if (instance == null)
-            instance = new CinemaManager();
         return instance;
     }
 

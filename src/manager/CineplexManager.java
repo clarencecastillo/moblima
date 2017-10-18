@@ -9,15 +9,13 @@ import java.util.UUID;
 
 public class CineplexManager extends EntityManager<Cineplex> {
 
-    private static CineplexManager instance;
+    private static CineplexManager instance = new CineplexManager();
 
     private CineplexManager() {
         super();
     }
 
     public static CineplexManager getInstance() {
-        if (instance == null)
-            instance = new CineplexManager();
         return instance;
     }
 

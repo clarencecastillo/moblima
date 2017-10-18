@@ -6,15 +6,13 @@ import model.transaction.PaymentStatus;
 
 public class PaymentManager extends EntityManager<Payment> {
 
-    private static PaymentManager instance;
+    private static PaymentManager instance = new PaymentManager();
 
     private PaymentManager() {
         super();
     }
 
     public static PaymentManager getInstance() {
-        if (instance == null)
-            instance = new PaymentManager();
         return instance;
     }
 

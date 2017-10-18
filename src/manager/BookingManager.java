@@ -22,15 +22,14 @@ import util.Utilities;
 
 public class BookingManager extends EntityManager<Booking> {
 
-    private static BookingManager instance;
+    // Eager Singleton
+    private static BookingManager instance = new BookingManager();
 
     private BookingManager() {
         super();
     }
 
     public static BookingManager getInstance() {
-        if (instance == null)
-            instance = new BookingManager();
         return instance;
     }
 

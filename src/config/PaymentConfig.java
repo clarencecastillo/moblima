@@ -2,7 +2,7 @@ package config;
 
 public class PaymentConfig implements Configurable {
 
-    private static PaymentConfig instance;
+    private static PaymentConfig instance = new PaymentConfig();
     private static boolean refundsAllowed;
     private static double gst;
 
@@ -11,8 +11,6 @@ public class PaymentConfig implements Configurable {
     }
 
     public static PaymentConfig getInstance() {
-        if (instance == null)
-            instance = new PaymentConfig();
         return instance;
     }
 

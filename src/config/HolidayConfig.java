@@ -7,7 +7,7 @@ import util.Utilities;
 
 public class HolidayConfig implements Configurable {
 
-    private static HolidayConfig instance;
+    private static HolidayConfig instance = new HolidayConfig();
     private static Hashtable<Date, String> holidays;
 
     private HolidayConfig() {
@@ -15,8 +15,6 @@ public class HolidayConfig implements Configurable {
     }
 
     public static HolidayConfig getInstance() {
-        if (instance == null)
-            instance = new HolidayConfig();
         return instance;
     }
 

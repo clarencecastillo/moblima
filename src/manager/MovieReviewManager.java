@@ -7,15 +7,13 @@ import model.movie.MovieReview;
 
 public class MovieReviewManager extends EntityManager<MovieReview> {
 
-    private static MovieReviewManager instance;
+    private static MovieReviewManager instance = new MovieReviewManager();
 
     private MovieReviewManager() {
         super();
     }
 
     public static MovieReviewManager getInstance() {
-        if (instance == null)
-            instance = new MovieReviewManager();
         return instance;
     }
 

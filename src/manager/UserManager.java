@@ -5,15 +5,13 @@ import model.commons.User;
 
 public class UserManager extends EntityManager<User> {
 
-    private static UserManager instance;
+    private static UserManager instance = new UserManager();
 
     private UserManager() {
         super();
     }
 
     public static UserManager getInstance() {
-        if (instance == null)
-            instance = new UserManager();
         return instance;
     }
 

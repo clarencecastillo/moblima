@@ -16,15 +16,13 @@ import util.Utilities;
 
 public class ShowtimeManager extends EntityManager<Showtime> {
 
-    private static ShowtimeManager instance;
+    private static ShowtimeManager instance = new ShowtimeManager();
 
     private ShowtimeManager() {
         super();
     }
 
     public static ShowtimeManager getInstance() {
-        if (instance == null)
-            instance = new ShowtimeManager();
         return instance;
     }
 

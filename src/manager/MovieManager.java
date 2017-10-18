@@ -11,15 +11,13 @@ import model.movie.MovieType;
 
 public class MovieManager extends EntityManager<Movie> {
 
-    private static MovieManager instance;
+    private static MovieManager instance = new MovieManager();
 
     private MovieManager() {
         super();
     }
 
     public static MovieManager getInstance() {
-        if (instance == null)
-            instance = new MovieManager();
         return instance;
     }
 
@@ -40,8 +38,7 @@ public class MovieManager extends EntityManager<Movie> {
         switch (status) {
             case END_OF_SHOWING:
                 for (Showtime showtime: movie.getShowtimes())
-                    if (showtime.getStatus() == ShowtimeStatus.OPEN_BOOKING ||
-                        showtime.getStatus() == ShowtimeStatus.PENDING)
+                    if (showtime.getStatus() == ShowtimeStatus.OPEN_BOOKING)
                         return; // TODO Can't remove movie with upcoming/ongoing showtimes
                 break;
             case PREVIEW:
