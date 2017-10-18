@@ -1,4 +1,4 @@
-package manager.exception;
+package exception;
 
 public class IllegalMovieStatusTransitionException extends Exception {
     public IllegalMovieStatusTransitionException(String message) {

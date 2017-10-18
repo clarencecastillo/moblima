@@ -1,4 +1,4 @@
-package manager.exception;
+package exception;
 
 public class UnpaidPaymentException extends Exception {
     public UnpaidPaymentException() {

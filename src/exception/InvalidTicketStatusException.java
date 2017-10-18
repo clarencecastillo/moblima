@@ -1,4 +1,4 @@
-package manager.exception;
+package exception;
 
 public class InvalidTicketStatusException extends Exception {
     public InvalidTicketStatusException(String message) {

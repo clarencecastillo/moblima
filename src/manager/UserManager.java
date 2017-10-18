@@ -1,9 +1,8 @@
 package manager;
 
-import manager.exception.InvalidRegisterEmailException;
-import manager.exception.InvalidRegisterMobileException;
-import manager.exception.InvalidRegisterUsernameException;
-import manager.exception.InvalidReviewRatingException;
+import exception.InvalidRegisterEmailException;
+import exception.InvalidRegisterMobileException;
+import exception.InvalidRegisterUsernameException;
 import model.cinema.Staff;
 import model.commons.User;
 

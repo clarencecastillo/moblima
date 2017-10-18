@@ -1,4 +1,4 @@
-package manager.exception;
+package exception;
 
 public class IllegalShowtimeStatusException extends Exception {
     public IllegalShowtimeStatusException(String message) {

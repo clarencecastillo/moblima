@@ -2,8 +2,8 @@ package manager;
 
 import java.util.UUID;
 
-import manager.exception.IllegalMovieStatusException;
-import manager.exception.IllegalMovieStatusTransitionException;
+import exception.IllegalMovieStatusException;
+import exception.IllegalMovieStatusTransitionException;
 import model.booking.Showtime;
 import model.booking.ShowtimeStatus;
 import model.movie.Movie;

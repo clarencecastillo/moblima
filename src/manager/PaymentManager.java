@@ -1,6 +1,6 @@
 package manager;
 
-import manager.exception.InvalidPayableException;
+import exception.InvalidPayableException;
 import model.transaction.Payable;
 import model.transaction.Payment;
 import model.transaction.PaymentStatus;

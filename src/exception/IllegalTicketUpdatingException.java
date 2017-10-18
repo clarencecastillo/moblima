@@ -1,4 +1,4 @@
-package manager.exception;
+package exception;
 
 public class IllegalTicketUpdatingException extends Exception {
     public IllegalTicketUpdatingException(String message) {

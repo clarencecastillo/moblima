@@ -1,11 +1,17 @@
 package manager;
 
 import config.BookingConfig;
+import exception.ExceedBookingSeatException;
+import exception.IllegalShowtimeBookingException;
+import exception.IllegalTicketRemovingException;
+import exception.IllegalTicketUpdatingException;
+import exception.InvalidTicketStatusException;
+import exception.UnavailableBookingSeatException;
+import exception.UnavailableTicketTypeException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
-import manager.exception.*;
 import model.booking.Booking;
 import model.booking.BookingStatus;
 import model.booking.SeatingStatus;
@@ -32,7 +38,7 @@ public class TicketManager extends EntityManager<Ticket> {
     }
 
     public Ticket createTicket(UUID bookingId, Seat seat, TicketType type) throws IllegalShowtimeBookingException,
-            ExceedBookingSeatException, UnavailableTicketTypeException, UnavailableBookingSeatException {
+        ExceedBookingSeatException, UnavailableTicketTypeException, UnavailableBookingSeatException {
 
         BookingManager bookingManager = BookingManager.getInstance();
 

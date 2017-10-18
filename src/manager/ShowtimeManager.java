@@ -1,11 +1,16 @@
 package manager;
 
 import config.BookingConfig;
+import exception.IllegalBookingChangeException;
+import exception.IllegalBookingStatusException;
+import exception.IllegalMovieStatusException;
+import exception.IllegalShowtimeStatusException;
+import exception.UnpaidBookingChargeException;
+import exception.UnpaidPaymentException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.UUID;
 
-import manager.exception.*;
 import model.booking.Booking;
 import model.booking.BookingStatus;
 import model.booking.Showtime;
@@ -55,7 +60,7 @@ public class ShowtimeManager extends EntityManager<Showtime> {
 
     public void cancelShowtime(UUID showtimeId) throws IllegalShowtimeStatusException,
             IllegalMovieStatusException, IllegalBookingStatusException,
-            UnpaidBookingChargeException, UnpaidPaymentException, IllegalBookingChangeException {
+        UnpaidBookingChargeException, UnpaidPaymentException, IllegalBookingChangeException {
 
         BookingManager bookingManager = BookingManager.getInstance();
         Showtime showtime = findById(showtimeId);

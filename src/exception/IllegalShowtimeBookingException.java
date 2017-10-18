@@ -1,4 +1,4 @@
-package manager.exception;
+package exception;
 
 public class IllegalShowtimeBookingException extends Exception {
     public IllegalShowtimeBookingException(String message) {

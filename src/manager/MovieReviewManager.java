@@ -2,7 +2,7 @@ package manager;
 
 import java.util.UUID;
 
-import manager.exception.InvalidReviewRatingException;
+import exception.InvalidReviewRatingException;
 import model.commons.User;
 import model.movie.Movie;
 import model.movie.MovieReview;

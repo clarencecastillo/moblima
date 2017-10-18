@@ -1,4 +1,4 @@
-package manager.exception;
+package exception;
 
 public class InvalidRegisterUsernameException extends Exception {
     public InvalidRegisterUsernameException() {
