@@ -70,10 +70,10 @@ public class TicketConfig implements Configurable {
         priceableRates.put(CinemaType.EXECUTIVE, 7.0);
 
         // DEFAULT TICKET TYPE RATES
-        priceableRates.put(TicketType.PEAK, 0.0);
-        priceableRates.put(TicketType.PEAK, 0.0);
-        priceableRates.put(TicketType.PEAK, 0.0);
-        priceableRates.put(TicketType.PEAK, 0.0);
+        priceableRates.put(TicketType.PEAK, 13.0);
+        priceableRates.put(TicketType.SENIOR_CITIZEN, 5.0);
+        priceableRates.put(TicketType.STANDARD, 9.0);
+        priceableRates.put(TicketType.STUDENT, 7.0);
 
         // DEFAULT CINEMA TYPE SURCHARGE RATES
         priceableRates.put(CinemaType.REGULAR, 0.0);
