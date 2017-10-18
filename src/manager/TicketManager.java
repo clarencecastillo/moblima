@@ -48,14 +48,15 @@ public class TicketManager extends EntityManager<Ticket> {
             return null; // TODO Already reached maximum number of seats for booking
 
         // Check if ticket type is not available
-        if (!cinema.getType().isAvailable(type))
-            return null; // TODO Ticket type not available
+        if (!type.isValidFor(booking))
+            return null; // TODO Ticket type not available for this booking
 
+        // Check if booking already has ticket with this seat
         for (Ticket ticket: booking.getTickets())
             if (ticket.getStatus() == TicketStatus.VALID && ticket.getSeat().equals(seat))
                 return null; // TODO Booking already has ticket with this seat
 
-        // Check if seating is already occupied
+        // Check if seating is already occupied by other booking
         if (!seating.isAvailable(seat))
             return null; // TODO Ticket already occupied
 
