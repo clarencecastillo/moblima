@@ -6,8 +6,11 @@ public interface Item {
     int LEFT_PADDING = 1;
     int LABEL_LENGTH = 3;
 
-    String getLabel();
-    void setLabel(String label);
-    void display();
+    void display(int index);
 
+    static String prepareLabel(int index) {
+        String label = View.line(' ', LEFT_PADDING) + index;
+        label += View.line(' ', LABEL_LENGTH - label.length());
+        return label;
+    }
 }

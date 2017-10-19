@@ -2,6 +2,7 @@ package view;
 
 import exception.InputOutOfBoundsException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.InputMismatchException;
 
 public class Menu extends Form {
@@ -10,9 +11,13 @@ public class Menu extends Form {
     public static final String INVALID_ERROR = "Invalid user input! Please try again.";
     public static final String UNRECOGNIZED_ERROR = "Unrecognized user input! Please try again.";
 
-    protected Item[] menuItems;
+//    public static final MenuItem BACK = new MenuItem("Go Back");
+//    public static final int BACK_INDEX = 0;
 
-    public int getChoice() {
+    private ArrayList<MenuItem> menuItems = new ArrayList<>();
+    private ArrayList<ViewItem> viewItems = new ArrayList<>();
+
+    public String getChoice() {
         while(true)
             try {
                 return getChoiceIgnoreMismatch();
@@ -21,45 +26,46 @@ public class Menu extends Form {
             }
     }
 
-    public int getChoiceIgnoreMismatch() throws InputMismatchException {
+    public String getChoiceIgnoreMismatch() throws InputMismatchException {
+        int totalItems = menuItems.size() + viewItems.size();
         while(true)
             try {
-                return getInt(INPUT_PROMPT, 1, menuItems.length) - 1;
+                int index = getInt(INPUT_PROMPT, 1, totalItems) - 1;
+                return index < viewItems.size() ?
+                       viewItems.get(index).getValue() :
+                       menuItems.get(index - viewItems.size()).getValue();
             } catch (InputOutOfBoundsException e) {
-                if ((int) e.getOutOfBoundsInput() == MenuItem.BACK_LABEL)
-                    return MenuItem.BACK_LABEL;
                 System.out.println(INVALID_ERROR);
             }
     }
 
-    public void displayMenuItems() {
-        for (Item menuItem : menuItems)
-            menuItem.display();
-        System.out.println(DASH_LINE);
+    public void displayItems() {
+        int itemIndex = 1;
+        for (int i = 0; i < viewItems.size(); i++, itemIndex++)
+            viewItems.get(i).display(itemIndex);
+        if (viewItems.size() > 0)
+            System.out.println();
+        for (int i = 0; i < menuItems.size(); i++, itemIndex++)
+            menuItems.get(i).display(itemIndex);
+
     }
 
-    public void displayMenuItemsWithBack() {
-        displayMenuItemsWithBack(MenuItem.BACK_DESCRIPTION);
-    }
-
-    public void displayMenuItemsWithBack(String backOption) {
-        for (Item menuItem : menuItems)
-            menuItem.display();
-        new MenuItem(MenuItem.BACK_LABEL, backOption).display();
-        System.out.println(DASH_LINE);
-    }
-
-    public void setMenuItems(Item[] menuItems) {
-        this.menuItems = menuItems;
+    public void setMenuItems(MenuItem[] menuItems) {
+        this.menuItems.clear();
+        this.menuItems.addAll(Arrays.asList(menuItems));
     }
 
     public void setMenuItems(Describable[] describables) {
-        ArrayList<MenuItem> menuItems = new ArrayList<>();
+        menuItems.clear();
         for (int i = 0; i < describables.length; i++) {
             String description = describables[i].getDescription();
             if (description != null)
-                menuItems.add(new MenuItem(i + 1, description));
+                menuItems.add(new MenuItem(description, describables[i].toString()));
         }
-        this.menuItems = menuItems.toArray(new MenuItem[menuItems.size()]);
+    }
+
+    public void setViewItems(ViewItem[] viewItems) {
+        this.viewItems.clear();
+        this.viewItems.addAll(Arrays.asList(viewItems));
     }
 }

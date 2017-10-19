@@ -40,7 +40,7 @@ public class MainMenuController extends Controller {
         MainMenuOption userChoice = null;
         while(true)
             try {
-                userChoice = MainMenuOption.values()[mainMenu.getChoiceIgnoreMismatch()];
+                userChoice = MainMenuOption.valueOf(mainMenu.getChoiceIgnoreMismatch());
                 break;
             } catch (InputUnrecognisedException e) {
                 String mismatchInput = e.getMismatchInput().toString();

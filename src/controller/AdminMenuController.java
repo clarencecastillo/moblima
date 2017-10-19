@@ -70,7 +70,7 @@ public class AdminMenuController extends Controller {
         adminMenu.displaySuccess("Access granted!");
         adminMenu.displayMenuItemsWithBack("Log out");
 
-        AdminMenuOption userChoice = AdminMenuOption.values()[adminMenu.getChoice()];
+        AdminMenuOption userChoice = AdminMenuOption.valueOf(adminMenu.getChoice());
 
         switch (userChoice) {
             case MANAGE_MOVIE_LISTINGS:

@@ -6,16 +6,14 @@ import manager.MovieManager;
 import model.movie.Movie;
 import model.movie.MoviePerson;
 import view.Describable;
-import view.Item;
-import view.ListMenu;
-import view.ListMenuItem;
-import view.MenuItem;
+import view.Menu;
+import view.ViewItem;
 
 public class MovieListController extends Controller {
 
     private static MovieListController instance = new MovieListController();
 
-    private ListMenu movieListMenu;
+    private Menu movieListMenu;
 
     private MovieManager movieManager;
 
@@ -29,7 +27,7 @@ public class MovieListController extends Controller {
 
     @Override
     public void setupView() {
-        movieListMenu = new ListMenu();
+        movieListMenu = new Menu();
         movieListMenu.setTitle("Movie Listings");
     }
 
