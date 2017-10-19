@@ -60,7 +60,7 @@ public class Moblima {
         for (Controller controller: controllers)
             controller.init(nav);
 
-        rootController = controllers.get(8);
+        rootController = controllers.get(0);
     }
 
     public void run() {

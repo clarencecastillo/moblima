@@ -5,8 +5,11 @@ import java.util.Arrays;
 import manager.MovieManager;
 import model.movie.Movie;
 import model.movie.MoviePerson;
+import view.Describable;
+import view.Item;
 import view.ListMenu;
 import view.ListMenuItem;
+import view.MenuItem;
 
 public class MovieListController extends Controller {
 
@@ -27,6 +30,7 @@ public class MovieListController extends Controller {
     @Override
     public void setupView() {
         movieListMenu = new ListMenu();
+        movieListMenu.setTitle("Movie Listings");
     }
 
     @Override
@@ -56,13 +60,18 @@ public class MovieListController extends Controller {
                     + movies.size() + " movie items."
                 });
                 break;
+            case ADMIN:
+
+                movies.addAll(movieManager.getList());
+
+                break;
         }
 
         navigation.clearScreen();
         movieListMenu.displayHeader();
         movieListMenu.display();
 
-        ArrayList<ListMenuItem> items = new ArrayList<>();
+        ArrayList<Item> items = new ArrayList<>();
         for (int i = 0; i < movies.size(); i++) {
             Movie movie = movies.get(i);
 
@@ -86,12 +95,34 @@ public class MovieListController extends Controller {
             items.add(movieView);
         }
 
+        if (intent == MovieListIntent.ADMIN) {
+            MovieListAdminOption[] options = MovieListAdminOption.values();
+            for (int i = 0; i < options.length; i++)
+                items.add(new MenuItem(i+1, options[i].getDescription()));
+        }
+
         movieListMenu.setMenuItems(items.toArray(new ListMenuItem[items.size()]));
         movieListMenu.displayMenuItemsWithBack();
         movieListMenu.getChoice();
     }
 
     public enum MovieListIntent {
-        SEARCH
+        SEARCH,
+        ADMIN
+    }
+
+    public enum MovieListAdminOption implements Describable {
+
+        ADD_MOVIE("Add Movie");
+
+        private String description;
+        MovieListAdminOption(String description) {
+            this.description = description;
+        }
+
+        @Override
+        public String getDescription() {
+            return description;
+        }
     }
 }

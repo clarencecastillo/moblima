@@ -23,13 +23,4 @@ public class ListMenu extends Menu {
         new MenuItem(MenuItem.BACK_LABEL, backOption).display();
         System.out.println(DASH_LINE);
     }
-
-    public void setMenuItems(ListMenuItem[] menuItems) {
-        this.menuItems = menuItems;
-    }
-
-    @Deprecated
-    public void setMenuItems(MenuItem[] menuItems) {
-        super.setMenuItems(menuItems);
-    }
 }

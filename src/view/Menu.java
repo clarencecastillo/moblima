@@ -49,7 +49,7 @@ public class Menu extends Form {
         System.out.println(DASH_LINE);
     }
 
-    public void setMenuItems(MenuItem[] menuItems) {
+    public void setMenuItems(Item[] menuItems) {
         this.menuItems = menuItems;
     }
 

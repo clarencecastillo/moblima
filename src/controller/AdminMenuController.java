@@ -1,5 +1,6 @@
 package controller;
 
+import controller.MovieListController.MovieListIntent;
 import manager.UserManager;
 import model.cinema.Staff;
 import view.Describable;
@@ -67,18 +68,16 @@ public class AdminMenuController extends Controller {
         navigation.clearScreen();
         adminMenu.displayHeader();
         adminMenu.displaySuccess("Access granted!");
-        adminMenu.displayMenuItems();
+        adminMenu.displayMenuItemsWithBack("Log out");
 
         AdminMenuOption userChoice = AdminMenuOption.values()[adminMenu.getChoice()];
 
         switch (userChoice) {
             case MANAGE_MOVIE_LISTINGS:
+                navigation.goTo(MovieListController.getInstance(),
+                                MovieListIntent.ADMIN.toString());
                 break;
             case MANAGE_SHOWTIMES:
-                break;
-            case MANAGE_CINEPLEXES:
-                break;
-            case MANAGE_CINEMAS:
                 break;
             case VIEW_REPORTS:
                 break;
@@ -91,13 +90,11 @@ public class AdminMenuController extends Controller {
     }
 
     private enum AdminMenuOption implements Describable {
-        MANAGE_MOVIE_LISTINGS("Search Movies"),
-        MANAGE_SHOWTIMES("List Movies"),
-        MANAGE_CINEPLEXES("View Showtimes"),
-        MANAGE_CINEMAS("View Booking History"),
-        VIEW_REPORTS("View Top Reviews"),
-        CONFIGURE_SETTINGS("View Top Ticket Sales"),
-        LOGOUT("Logout");
+        LOGOUT(null),
+        MANAGE_MOVIE_LISTINGS("Manage Movie Listings"),
+        MANAGE_SHOWTIMES("Manage Showtimes"),
+        VIEW_REPORTS("View Top 5"),
+        CONFIGURE_SETTINGS("Configure Settings");
 
         private String description;
         AdminMenuOption(String description) {
