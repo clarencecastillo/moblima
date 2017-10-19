@@ -32,7 +32,6 @@ public class BookingListController extends Controller {
         bookingListMenu = new Menu();
         bookingListMenu.setTitle("Booking History");
         bookingListMenu.setContent("Please enter your mobile number.");
-        bookingListMenu.displayHeader();
     }
 
     @Override
