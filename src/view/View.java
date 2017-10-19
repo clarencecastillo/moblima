@@ -25,7 +25,7 @@ public class View implements Displayable {
         System.out.println(DASH_LINE);
     }
 
-    public void display() {
+    public void displayContent() {
         for (String string: content)
             System.out.println(string);
         System.out.println();

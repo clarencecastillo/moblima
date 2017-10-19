@@ -36,7 +36,7 @@
 //    @Override
 //    public void onViewDisplay() {
 //
-//        bookingHistoryLogInMenu.display();
+//        bookingHistoryLogInMenu.displayContent();
 //
 //        BookingHistoryLogInMenuOption userChoice = BookingHistoryLogInMenuOption.values()[bookingHistoryLogInMenu.getChoice()];
 //

@@ -5,7 +5,6 @@ import manager.UserManager;
 import model.cinema.Staff;
 import view.Describable;
 import view.Menu;
-import view.View;
 
 public class AdminMenuController extends Controller {
 
@@ -39,7 +38,7 @@ public class AdminMenuController extends Controller {
     public void onLoad(String[] arguments) {
 
         adminMenu.displayHeader();
-        adminMenu.display();
+        adminMenu.displayContent();
 
         Staff administrator = null;
         for (int loginAttempts = 1; loginAttempts <= MAX_LOGIN_ATTEMPTS; loginAttempts++) {
@@ -68,7 +67,7 @@ public class AdminMenuController extends Controller {
         navigation.clearScreen();
         adminMenu.displayHeader();
         adminMenu.displaySuccess("Access granted!");
-        adminMenu.displayMenuItemsWithBack("Log out");
+        adminMenu.displayItems();
 
         AdminMenuOption userChoice = AdminMenuOption.valueOf(adminMenu.getChoice());
 
@@ -90,11 +89,11 @@ public class AdminMenuController extends Controller {
     }
 
     private enum AdminMenuOption implements Describable {
-        LOGOUT(null),
         MANAGE_MOVIE_LISTINGS("Manage Movie Listings"),
         MANAGE_SHOWTIMES("Manage Showtimes"),
         VIEW_REPORTS("View Top 5"),
-        CONFIGURE_SETTINGS("Configure Settings");
+        CONFIGURE_SETTINGS("Configure Settings"),
+        LOGOUT("Log Out");
 
         private String description;
         AdminMenuOption(String description) {

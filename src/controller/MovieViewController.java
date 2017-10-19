@@ -35,7 +35,7 @@
 //    @Override
 //    public void onViewDisplay() {
 //
-//        movieMenu.display();
+//        movieMenu.displayContent();
 //
 //        MovieMenuOption userChoice = MovieMenuOption.values()[movieMenu.getChoice()];
 //
@@ -49,7 +49,7 @@
 //                reviewerLogInView = new View("Reviewer Log In Menu");
 //                Menu reviewerLogInMenu = new Menu();
 //                reviewerLogInMenu.setContent(Menu.getDescriptions(ReviewerLogInMenuOption.values()));
-//                reviewerLogInMenu.display();
+//                reviewerLogInMenu.displayContent();
 //
 //                ReviewerLogInMenuOption userLogInChoice = ReviewerLogInMenuOption.values()[reviewerLogInMenu.getChoice()];
 //                switch (userLogInChoice) {

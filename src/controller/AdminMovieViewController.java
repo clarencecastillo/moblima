@@ -23,7 +23,7 @@
 //    @Override
 //    public void onViewDisplay() {
 //
-//        movieMenu.display();
+//        movieMenu.displayContent();
 //
 //        AdminMovieMenuOption userChoice = AdminMovieMenuOption.values()[movieMenu.getChoice()];
 //

@@ -34,8 +34,8 @@ public class MainMenuController extends Controller {
 
         mainMenu.setTitle("MOBLIMA " + arguments[0]);
         mainMenu.displayHeader();
-        mainMenu.display();
-        mainMenu.displayMenuItems();
+        mainMenu.displayContent();
+        mainMenu.displayItems();
 
         MainMenuOption userChoice = null;
         while(true)

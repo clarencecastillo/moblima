@@ -36,7 +36,7 @@
 //    @Override
 //    public void onViewDisplay() {
 //
-//        rankingMenu.display();
+//        rankingMenu.displayContent();
 //
 //        rankingMenuOption userChoice = rankingMenuOption.values()[rankingMenu.getChoice()];
 //

@@ -47,7 +47,7 @@ public class MovieListController extends Controller {
                 });
 
                 movieListMenu.displayHeader();
-                movieListMenu.display();
+                movieListMenu.displayContent();
 
                 String searchKeyword = movieListMenu.getString("Enter keywords");
                 movies.addAll(Arrays.asList(movieManager.findByKeyword(searchKeyword)));

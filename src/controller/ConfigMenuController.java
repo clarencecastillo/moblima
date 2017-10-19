@@ -36,7 +36,7 @@
 //    @Override
 //    public void onViewDisplay() {
 //
-//        configMenu.display();
+//        configMenu.displayContent();
 //
 //        ConfigMenuOption userChoice = ConfigMenuOption.values()[configMenu.getChoice()];
 //
@@ -47,7 +47,7 @@
 //                Menu pricingSettingMenu;
 //                pricingSettingMenu = new Menu();
 //                pricingSettingMenu.setContent(Menu.getDescriptions(PricingSettingMenuOption.values()));
-//                pricingSettingMenu.display();
+//                pricingSettingMenu.displayContent();
 //
 //                PricingSettingMenuOption pricingSettingChoice = PricingSettingMenuOption.values()[pricingSettingMenu.getChoice()];
 //                switch (pricingSettingChoice) {
@@ -65,7 +65,7 @@
 //                Menu cinemaSettingMenu;
 //                cinemaSettingMenu = new Menu();
 //                cinemaSettingMenu.setContent(Menu.getDescriptions(CinemaSettingMenuOption.values()));
-//                cinemaSettingMenu.display();
+//                cinemaSettingMenu.displayContent();
 //
 //                CinemaSettingMenuOption cinemaSettingChoice = CinemaSettingMenuOption.values()[cinemaSettingMenu.getChoice()];
 //                switch (cinemaSettingChoice) {
