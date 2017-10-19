@@ -1,6 +1,7 @@
 package view;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -17,7 +18,7 @@ public class View implements Displayable {
     public final static ConsoleColor SUCCESS = ConsoleColor.GREEN;
 
     protected String title;
-    protected String[] content;
+    protected ArrayList<String> content = new ArrayList<>();
 
     public void displayHeader() {
         System.out.println(DASH_LINE);
@@ -32,7 +33,7 @@ public class View implements Displayable {
     }
 
     public void displayColored(String message, ConsoleColor color) {
-        System.out.println(color.code + message + ConsoleColor.RESET);
+        System.out.println(color.code + message + ConsoleColor.RESET.code);
     }
 
     public void displayInformation(String message) {
@@ -82,10 +83,10 @@ public class View implements Displayable {
     }
 
     public String[] getContent() {
-        return content;
+        return content.toArray(new String[content.size()]);
     }
 
     public void setContent(String[] content) {
-        this.content = content;
+        this.content = new ArrayList<>(Arrays.asList(content));
     }
 }
