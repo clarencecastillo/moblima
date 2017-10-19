@@ -1,9 +1,5 @@
-import controller.AdminMenuController;
-import controller.BookingListController;
-import controller.Controller;
-import controller.MainMenuController;
-import controller.MovieListController;
-import controller.Navigation;
+import controller.*;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -111,12 +107,13 @@ public class Moblima {
         controllers.add(AdminMenuController.getInstance());
         controllers.add(MovieListController.getInstance());
         controllers.add(BookingListController.getInstance());
+        controllers.add(ConfigMenuController.getInstance());
 
         nav = new Navigation();
         for (Controller controller: controllers)
             controller.init(nav);
 
-        rootController = controllers.get(3);
+        rootController = controllers.get(4);
     }
 
     public void run() {
