@@ -2,35 +2,34 @@ package view;
 
 public class ListMenu extends Menu {
 
-    private View[] items;
-
-    public ListMenu(String title, View[] items, boolean canGoBack) {
-        super(title, canGoBack);
-        this.items = items;
-        this.content = new String[items.length];
-    }
-
-    @Override
-    public void display() {
-        for (int i = 0; i < items.length; i++) {
-            View item = items[i];
-            System.out.println(Line.format(Line.format(String.valueOf(i + 1), 4),
-                                           View.VERTICAL_SEPARATOR, item.content[0]));
-            for (String line : item.content)
-                System.out.println(Line.format("    ",
-                                               View.VERTICAL_SEPARATOR, line));
+    public void displayMenuItems() {
+        for (Item listMenuItem : menuItems) {
+            System.out.println();
+            listMenuItem.display();
         }
-        if (canGoBack)
-            System.out.println(Line.format(Line.format(String.valueOf(0), 4),
-                                           View.VERTICAL_SEPARATOR, BACK_OPTION));
-        System.out.println(Line.format('-', View.VIEW_WIDTH));
+        System.out.println(DASH_LINE);
     }
 
-    public void setItems(View[] items) {
-        this.items = items;
+    public void displayMenuItemsWithBack() {
+        displayMenuItemsWithBack(MenuItem.BACK_DESCRIPTION);
     }
 
-    public View[] getItems() {
-        return items;
+    public void displayMenuItemsWithBack(String backOption) {
+        for (Item listMenuItem : menuItems) {
+            System.out.println();
+            listMenuItem.display();
+        }
+        System.out.println();
+        new MenuItem(MenuItem.BACK_LABEL, backOption).display();
+        System.out.println(DASH_LINE);
+    }
+
+    public void setMenuItems(ListMenuItem[] menuItems) {
+        this.menuItems = menuItems;
+    }
+
+    @Deprecated
+    public void setMenuItems(MenuItem[] menuItems) {
+        super.setMenuItems(menuItems);
     }
 }

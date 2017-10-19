@@ -12,23 +12,11 @@ import java.util.Scanner;
 
 public class Form extends View {
 
-    private final static String PROMPT_DELIMETER = " > ";
+    private final static char PROMPT_DELIMETER = '>';
     private final static String DATE_FORMAT = "dd/MM/yyyy HH:mm";
 
-    public Form(String title, String[] content) {
-        super(title, content);
-    }
-
-    public Form(String title) {
-        super(title);
-    }
-
-    public Form() {
-        super();
-    }
-
     public int getInt(String prompt) throws InputUnrecognisedException {
-        System.out.print(prompt + PROMPT_DELIMETER);
+        System.out.print(prompt + PROMPT_DELIMETER + " ");
         Scanner sc = new Scanner(System.in);
         try {
             return sc.nextInt();
@@ -52,7 +40,7 @@ public class Form extends View {
     }
 
     public double getDouble(String prompt) throws InputUnrecognisedException {
-        System.out.print(prompt + PROMPT_DELIMETER);
+        System.out.print(prompt + PROMPT_DELIMETER + " ");
         Scanner sc = new Scanner(System.in);
         try {
             return sc.nextDouble();
@@ -87,11 +75,11 @@ public class Form extends View {
 
     public String getCensoredString(String prompt) {
         Console console = System.console();
-        return new String(console.readPassword(prompt + PROMPT_DELIMETER));
+        return new String(console.readPassword(prompt + PROMPT_DELIMETER + " "));
     }
 
     public String getString(String prompt) {
-        System.out.print(prompt + PROMPT_DELIMETER);
+        System.out.print(prompt + PROMPT_DELIMETER + " ");
         Scanner sc = new Scanner(System.in);
         return sc.nextLine();
     }
@@ -104,7 +92,7 @@ public class Form extends View {
     }
 
     public char getChar(String prompt) {
-        System.out.print(prompt + PROMPT_DELIMETER);
+        System.out.print(prompt + PROMPT_DELIMETER + " ");
         Scanner sc = new Scanner(System.in);
         return sc.next().charAt(0);
     }
@@ -118,12 +106,18 @@ public class Form extends View {
 
     public Date getDate(String prompt, String format) throws ParseException {
         SimpleDateFormat dateFormat = new SimpleDateFormat(format);
-        System.out.print(prompt + " [" + format + "] " + PROMPT_DELIMETER);
+        System.out.print(prompt + " [" + format + "] " + PROMPT_DELIMETER + " ");
         Scanner sc = new Scanner(System.in);
         return dateFormat.parse(sc.nextLine());
     }
 
     public Date getDate(String prompt) throws ParseException {
         return getDate(prompt, DATE_FORMAT);
+    }
+
+    public void pressAnyKeyToContinue() {
+        System.out.print("Press ENTER key to continue...");
+        Scanner sc = new Scanner(System.in);
+        sc.nextLine();
     }
 }

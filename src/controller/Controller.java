@@ -1,7 +1,5 @@
 package controller;
 
-import view.View;
-
 public abstract class Controller {
 
     protected Navigation navigation;
@@ -15,11 +13,7 @@ public abstract class Controller {
         setupView();
     }
 
-    public abstract void onLoad(String[] arguments);
-
     public abstract void setupView();
-
-    public abstract View getView();
-
-    public abstract void onViewDisplay();
+    
+    public abstract void onLoad(String[] arguments);
 }

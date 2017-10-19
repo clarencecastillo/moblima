@@ -1,52 +1,46 @@
 package controller;
 
 import config.AdminConfig;
+import controller.MovieListController.MovieListIntent;
 import exception.InputUnrecognisedException;
-import util.ConsoleColor;
-import view.Line;
+import view.Describable;
 import view.Menu;
-import view.MenuOption;
-import view.View;
 
 public class MainMenuController extends Controller {
 
     private static MainMenuController instance = new MainMenuController();
 
-    private View aboutView;
+    // Views
     private Menu mainMenu;
 
-    private MainMenuController() {}
+    private MainMenuController() { }
 
     public static MainMenuController getInstance() {
         return instance;
     }
 
     @Override
-    public void onLoad(String[] arguments) {
-        aboutView.setTitle(Line.format("MOBLIMA", Line.format(arguments[0], ConsoleColor.GREEN)));
-    }
-
-    @Override
     public void setupView() {
-        aboutView = new View();
-        aboutView.setContent(new String[] {"TODO Description here"});
-        mainMenu = new Menu("Main Menu", Menu.getDescriptions(MainMenuOption.values()));
+
+        mainMenu = new Menu();
+        mainMenu.setContent(new String[]{
+            "TODO Description here"
+        });
+        mainMenu.setMenuItems(MainMenuOption.values());
     }
 
     @Override
-    public View getView() {
-        return aboutView;
-    }
+    public void onLoad(String[] arguments) {
 
-    @Override
-    public void onViewDisplay() {
-
+        mainMenu.setTitle("MOBLIMA " + arguments[0]);
+        mainMenu.displayHeader();
         mainMenu.display();
+        mainMenu.displayMenuItems();
 
         MainMenuOption userChoice = null;
         while(true)
             try {
-                userChoice = MainMenuOption.values()[mainMenu.getChoice()];
+                userChoice = MainMenuOption.values()[mainMenu.getChoiceIgnoreMismatch()];
                 break;
             } catch (InputUnrecognisedException e) {
                 String mismatchInput = e.getMismatchInput().toString();
@@ -54,14 +48,13 @@ public class MainMenuController extends Controller {
                     userChoice = MainMenuOption.ADMIN;
                     break;
                 }
-                else {
-                    mainMenu.displayError(Menu.UNRECOGNIZED_ERROR);
-                }
+                mainMenu.displayError(Menu.UNRECOGNIZED_ERROR);
             }
 
         switch (userChoice) {
             case SEARCH_MOVIES:
-                navigation.goTo(MovieSearchController.getInstance());
+                navigation.goTo(MovieListController.getInstance(),
+                                MovieListIntent.SEARCH.toString());
                 break;
             case LIST_MOVIES:
                 break;
@@ -72,12 +65,12 @@ public class MainMenuController extends Controller {
             case VIEW_TOP_5_MOVIES:
                 break;
             case ADMIN:
-                navigation.goTo(AdminLoginController.getInstance());
+                navigation.goTo(AdminMenuController.getInstance());
                 break;
         }
     }
 
-    private enum MainMenuOption implements MenuOption {
+    private enum MainMenuOption implements Describable {
 
         SEARCH_MOVIES("Search Movies"),
         LIST_MOVIES("List Movies"),

@@ -2,12 +2,12 @@ package model.movie;
 
 public enum MovieRating {
 
-    G("General"),
-    PG("Parental Guidance"),
-    PG13("Parental Guidance 13"),
-    NC16("No Children Under 16"),
-    M18("Mature 18"),
-    R21("Restricted 21");
+    G("G"),
+    PG("PG"),
+    PG13("PG13"),
+    NC16("NC16"),
+    M18("M18"),
+    R21("R21");
 
     private String name;
 

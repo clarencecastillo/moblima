@@ -1,15 +1,22 @@
 package controller;
 
+import java.util.AbstractMap.SimpleEntry;
 import java.util.Stack;
 import exception.RootControllerPopException;
 import view.View;
 
 public class Navigation {
 
-    private Stack<Controller> stack;
+    private Stack<SimpleEntry<Controller, String[]>> stack;
+    private String[] lastArgs;
 
     public Navigation() {
-        this.stack = new Stack<Controller>();
+        this.stack = new Stack<>();
+    }
+
+    public void reload() {
+        SimpleEntry<Controller, String[]> stackTop = stack.peek();
+        load(stackTop.getKey(), stackTop.getValue());
     }
 
     public void clearScreen() {
@@ -17,18 +24,19 @@ public class Navigation {
         System.out.flush();
     }
 
-    public void goTo(Controller controller, String... args) {
+    private void load(Controller controller, String... args) {
+        lastArgs = args;
         clearScreen();
-        stack.push(controller);
         controller.onLoad(args);
-        View controllerView = controller.getView();
-        controllerView.displayHeader();
-        controllerView.display();
-        controller.onViewDisplay();
+    }
+
+    public void goTo(Controller controller, String... args) {
+        stack.push(new SimpleEntry<>(controller, args));
+        load(controller, args);
     }
 
     public void goBack(String... args) {
-        goBack(1);
+        goBack(1, args);
     }
 
     public void goBack(int levels, String... args) {
@@ -37,19 +45,7 @@ public class Navigation {
             throw new RootControllerPopException();
         for (int i = 0; i < levels; i++)
             stack.pop();
-        Controller controller = stack.peek();
-        controller.onLoad(args);
-        View controllerView = controller.getView();
-        controllerView.displayHeader();
-        controllerView.display();
-        controller.onViewDisplay();
-    }
-
-    public void goBackUpdate(Controller controller, String... args) {
-        if (stack.size() == 1)
-            throw new RootControllerPopException();
-        stack.pop();
-        stack.pop();
-        goTo(controller, args);
+        SimpleEntry<Controller, String[]> stackTop = stack.peek();
+        load(stackTop.getKey(), args.length == 0 ? stackTop.getValue() : args);
     }
 }
