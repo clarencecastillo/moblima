@@ -18,7 +18,6 @@ public class Showtime extends Entity {
     private ShowtimeSeating seating;
     private Language language;
     private Date startTime;
-    private Date endTime;
     private boolean noFreePasses; // can't use coupons
     private boolean isPreview;
     private boolean isCancelled;
@@ -26,14 +25,13 @@ public class Showtime extends Entity {
     private ArrayList<Booking> bookings;
 
     public Showtime(Movie movie, Cinema cinema, Language language,
-                    Date startTime, Date endTime, boolean noFreePasses,
+                    Date startTime, boolean noFreePasses,
                     boolean isPreview, Language[] subtitles) {
         this.movie = movie;
         this.cinema = cinema;
         this.seating = new ShowtimeSeating(cinema.getLayout().getSeats());
         this.language = language;
         this.startTime = startTime;
-        this.endTime = endTime;
         this.noFreePasses = noFreePasses;
         this.isPreview = isPreview;
         this.subtitles = new ArrayList<Language>();
@@ -59,10 +57,6 @@ public class Showtime extends Entity {
 
     public Date getStartTime() {
         return startTime;
-    }
-
-    public Date getEndTime() {
-        return endTime;
     }
 
     public boolean isNoFreePasses() {
@@ -122,10 +116,6 @@ public class Showtime extends Entity {
 
     public void setStartTime(Date startTime) {
         this.startTime = startTime;
-    }
-
-    public void setEndTime(Date endTime) {
-        this.endTime = endTime;
     }
 
     public void setNoFreePasses(boolean noFreePasses) {

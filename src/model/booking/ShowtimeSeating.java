@@ -11,6 +11,7 @@ public class ShowtimeSeating implements Serializable {
     private Hashtable<Seat, SeatingStatus> seatings;
 
     public ShowtimeSeating(Seat[] seats) {
+        this.seatings = new Hashtable<>();
         for (Seat seat: seats)
             seatings.put(seat, SeatingStatus.AVAILABLE);
     }
