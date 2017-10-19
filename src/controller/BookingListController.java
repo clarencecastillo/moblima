@@ -37,6 +37,8 @@ public class BookingListController extends Controller {
     @Override
     public void onEnter(String[] arguments) {
 
+        bookingListMenu.displayHeader();
+
         String mobile = bookingListMenu.getString("Mobile number");
         User user = userManager.findByMobile(mobile);
 

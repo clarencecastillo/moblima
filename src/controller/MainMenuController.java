@@ -10,7 +10,8 @@ public class MainMenuController extends Controller {
 
     private static MainMenuController instance = new MainMenuController();
 
-    // Views
+    private String version;
+
     private Menu mainMenu;
 
     private MainMenuController() { }
@@ -23,16 +24,20 @@ public class MainMenuController extends Controller {
     public void setupView() {
 
         mainMenu = new Menu();
-        mainMenu.setContent("TODO Description here");
         mainMenu.setMenuItems(MainMenuOption.values());
     }
 
     @Override
     public void onEnter(String[] arguments) {
 
-        mainMenu.setTitle("MOBLIMA " + arguments[0]);
+        version = arguments[0];
+
+        mainMenu.setTitle("MOBLIMA " + version);
         mainMenu.displayHeader();
+
+        mainMenu.setContent("TODO Description here");
         mainMenu.displayContent();
+
         mainMenu.displayItems();
 
         MainMenuOption userChoice = null;
@@ -51,8 +56,19 @@ public class MainMenuController extends Controller {
 
         switch (userChoice) {
             case SEARCH_MOVIES:
+
+                navigation.clearScreen();
+
+                mainMenu.setTitle("Search Movies");
+                mainMenu.displayHeader();
+
+                mainMenu.setContent("Please enter search terms. Keywords may include movie "
+                                    + "title, director, and actors.");
+                mainMenu.displayContent();
+
                 navigation.goTo(MovieListController.getInstance(),
-                                MovieListIntent.SEARCH.toString());
+                                MovieListIntent.SEARCH.toString(),
+                                mainMenu.getString("Enter keywords"));
                 break;
             case LIST_MOVIES:
                 break;

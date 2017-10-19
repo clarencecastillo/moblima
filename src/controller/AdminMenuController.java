@@ -12,8 +12,9 @@ public class AdminMenuController extends Controller {
 
     private static AdminMenuController instance = new AdminMenuController();
 
-    private Menu adminMenu;
+    private Staff administrator;
 
+    private Menu adminMenu;
     private UserManager userManager;
 
     private AdminMenuController() {
@@ -27,41 +28,48 @@ public class AdminMenuController extends Controller {
     @Override
     public void setupView() {
         adminMenu = new Menu();
-        adminMenu.setTitle("Admin Menu");
-        adminMenu.setContent("Please enter your credentials.");
         adminMenu.setMenuItems(AdminMenuOption.values());
     }
 
     @Override
     public void onEnter(String[] arguments) {
 
-        adminMenu.displayHeader();
-        adminMenu.displayContent();
-
-        Staff administrator = null;
-        for (int loginAttempts = 1; loginAttempts <= MAX_LOGIN_ATTEMPTS; loginAttempts++) {
-            String username = adminMenu.getString("Username");
-            String password = adminMenu.getCensoredString("Password");
-            if (userManager.login(username, password)) {
-                administrator = userManager.findByUsername(username);
-                break;
-            }
-            String attemptsMessage = "[" + loginAttempts + " of " + MAX_LOGIN_ATTEMPTS + "]";
-            adminMenu.displayError("Access denied. Please try again. " + attemptsMessage);
-        }
-
         if (administrator == null) {
-            navigation.clearScreen();
-            adminMenu.displayHeader();
-            adminMenu.displayError("Max login attempts reached!");
-            adminMenu.pressAnyKeyToContinue();
-            navigation.goBack();
-        }
 
-        adminMenu.setContent("Signed in: " + administrator.getUsername());
+            adminMenu.setTitle("Admin Login");
+            adminMenu.displayHeader();
+
+            adminMenu.setContent("Please enter your credentials.");
+            adminMenu.displayContent();
+
+            for (int loginAttempts = 1; loginAttempts <= MAX_LOGIN_ATTEMPTS; loginAttempts++) {
+                String username = adminMenu.getString("Username");
+                String password = adminMenu.getCensoredString("Password");
+                if (userManager.login(username, password)) {
+                    administrator = userManager.findByUsername(username);
+                    break;
+                }
+                String attemptsMessage = "[" + loginAttempts + " of " + MAX_LOGIN_ATTEMPTS + "]";
+                adminMenu.displayError("Access denied. Please try again. " + attemptsMessage);
+            }
+
+            if (administrator == null) {
+                navigation.clearScreen();
+                adminMenu.displayHeader();
+                adminMenu.displayError("Max login attempts reached!");
+                adminMenu.pressAnyKeyToContinue();
+                navigation.goBack();
+            }
+        }
 
         navigation.clearScreen();
+
+        adminMenu.setTitle("Admin Menu");
         adminMenu.displayHeader();
+
+        adminMenu.setContent("Signed in: " + administrator.getUsername());
+        adminMenu.displayContent();
+
         adminMenu.displaySuccess("Access granted!");
         adminMenu.displayItems();
 
@@ -79,6 +87,7 @@ public class AdminMenuController extends Controller {
             case CONFIGURE_SETTINGS:
                 break;
             case LOGOUT:
+                administrator = null;
                 navigation.goBack();
                 break;
         }

@@ -39,21 +39,11 @@ public class MovieListController extends Controller {
         switch (intent) {
             case SEARCH:
 
-                movieListMenu.setTitle("Search Movies");
-                movieListMenu.setContent("Please enter search terms. Keywords may include movie "
-                                         + "title, director, and actors."
-                );
-
-                movieListMenu.displayHeader();
-                movieListMenu.displayContent();
-
-                String searchKeyword = movieListMenu.getString("Enter keywords");
+                String searchKeyword = arguments[1];
                 movies.addAll(Arrays.asList(movieManager.findByKeyword(searchKeyword)));
-
                 movieListMenu.setTitle("Search Results");
                 movieListMenu.setContent("Your search '" + searchKeyword + "' yielded "
                                          + movies.size() + " movie items.");
-
                 movieListMenu.setMenuItems(new MovieListMenuOption[] {
                     MovieListMenuOption.GO_BACK
                 });
@@ -109,7 +99,7 @@ public class MovieListController extends Controller {
                     break;
             }
         } catch (IllegalArgumentException e) {
-            System.out.println("Selected movie with ID " + userInput);
+            navigation.goTo(MovieViewController.getInstance(), userInput);
         }
 
 
