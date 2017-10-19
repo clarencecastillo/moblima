@@ -94,14 +94,10 @@ public class Moblima {
             TicketManager ticketManager = TicketManager.getInstance();
             ticketManager.createTicket(booking1.getId(),seats[0], TicketType.STANDARD);
 
-
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Debug Error!");
         }
-
-
-
 
         controllers.add(MainMenuController.getInstance());
         controllers.add(AdminMenuController.getInstance());
