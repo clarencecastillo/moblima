@@ -62,9 +62,7 @@ public class MainMenuController extends Controller {
                 break;
             case VIEW_BOOKING_HISTORY:
                 break;
-            case VIEW_TOP_REVIEWS:
-                break;
-            case VIEW_TOP_SALES:
+            case VIEW_TOP_5_MOVIES:
                 break;
             case ADMIN:
                 navigation.goTo(AdminMenuController.getInstance());
@@ -78,8 +76,7 @@ public class MainMenuController extends Controller {
         LIST_MOVIES("List Movies"),
         VIEW_SHOWTIMES("View Showtimes"),
         VIEW_BOOKING_HISTORY("View Booking History"),
-        VIEW_TOP_REVIEWS("View Top Reviews"),
-        VIEW_TOP_SALES("View Top Ticket Sales"),
+        VIEW_TOP_5_MOVIES("View Top 5 Movies"),
         ADMIN(null);
 
         private String description;
