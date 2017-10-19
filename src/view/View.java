@@ -87,6 +87,12 @@ public class View implements Displayable {
     }
 
     public void setContent(String[] content) {
-        this.content = new ArrayList<>(Arrays.asList(content));
+        this.content.clear();
+        this.content.addAll(Arrays.asList(content));
+    }
+
+    public void setContent(String content) {
+        this.content.clear();
+        this.content.add(content);
     }
 }

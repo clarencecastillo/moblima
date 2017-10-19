@@ -28,9 +28,7 @@ public class AdminMenuController extends Controller {
     public void setupView() {
         adminMenu = new Menu();
         adminMenu.setTitle("Admin Menu");
-        adminMenu.setContent(new String[] {
-            "Please enter your credentials."
-        });
+        adminMenu.setContent("Please enter your credentials.");
         adminMenu.setMenuItems(AdminMenuOption.values());
     }
 
@@ -60,9 +58,7 @@ public class AdminMenuController extends Controller {
             navigation.goBack();
         }
 
-        adminMenu.setContent(new String[] {
-            "Signed in: " + administrator.getUsername()
-        });
+        adminMenu.setContent("Signed in: " + administrator.getUsername());
 
         navigation.clearScreen();
         adminMenu.displayHeader();

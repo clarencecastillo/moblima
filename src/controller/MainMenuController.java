@@ -23,9 +23,7 @@ public class MainMenuController extends Controller {
     public void setupView() {
 
         mainMenu = new Menu();
-        mainMenu.setContent(new String[]{
-            "TODO Description here"
-        });
+        mainMenu.setContent("TODO Description here");
         mainMenu.setMenuItems(MainMenuOption.values());
     }
 

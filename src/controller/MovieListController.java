@@ -41,10 +41,9 @@ public class MovieListController extends Controller {
             case SEARCH:
 
                 movieListMenu.setTitle("Search Movies");
-                movieListMenu.setContent(new String[] {
-                    "Please enter search terms. Keywords may include movie "
-                    + "title, director, and actors."
-                });
+                movieListMenu.setContent("Please enter search terms. Keywords may include movie "
+                                         + "title, director, and actors."
+                );
 
                 movieListMenu.displayHeader();
                 movieListMenu.displayContent();
@@ -53,10 +52,8 @@ public class MovieListController extends Controller {
                 movies.addAll(Arrays.asList(movieManager.findByKeyword(searchKeyword)));
 
                 movieListMenu.setTitle("Search Results");
-                movieListMenu.setContent(new String[] {
-                    "Your search '" + searchKeyword + "' yielded "
-                    + movies.size() + " movie items."
-                });
+                movieListMenu.setContent("Your search '" + searchKeyword + "' yielded "
+                                         + movies.size() + " movie items.");
 
                 movieListMenu.setMenuItems(new MovieListMenuOption[] {
                     MovieListMenuOption.GO_BACK

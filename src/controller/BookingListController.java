@@ -31,12 +31,13 @@ public class BookingListController extends Controller {
     public void setupView() {
         bookingListMenu = new Menu();
         bookingListMenu.setTitle("Booking History");
+        bookingListMenu.setContent("Please enter your mobile number.");
         bookingListMenu.displayHeader();
     }
 
     @Override
     public void onLoad(String[] arguments) {
-        String mobile = bookingListMenu.getString("Please enter your mobile number to log in");
+        String mobile = bookingListMenu.getString("Mobile number");
         User user = userManager.findByMobile(mobile);
 
         ArrayList<Booking> bookings = user.getBookings();
