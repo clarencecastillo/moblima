@@ -29,4 +29,9 @@ public class Seat extends Cell {
     public String toString() {
         return String.valueOf(row) + column;
     }
+
+    @Override
+    public int hashCode() {
+        return toString().hashCode();
+    }
 }

@@ -9,6 +9,7 @@ import manager.*;
 import model.booking.Booking;
 import model.booking.Showtime;
 import model.booking.Ticket;
+import model.booking.TicketType;
 import model.cinema.*;
 import model.commons.Language;
 import model.commons.User;
@@ -79,9 +80,7 @@ public class Moblima {
             Booking booking1 = bookingManager.createBooking(user1.getId(),showtime1.getId());
 
             TicketManager ticketManager = TicketManager.getInstance();
-
-
-
+            ticketManager.createTicket(booking1.getId(),seats[0], TicketType.STANDARD);
 
 
         } catch (Exception e) {
