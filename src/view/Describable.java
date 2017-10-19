@@ -1,6 +1,6 @@
 package view;
 
-public interface MenuOption {
+public interface Describable {
 
     String getDescription();
 }
