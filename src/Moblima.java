@@ -102,6 +102,7 @@ public class Moblima {
         controllers.add(MainMenuController.getInstance());
         controllers.add(AdminMenuController.getInstance());
         controllers.add(MovieListController.getInstance());
+        controllers.add(MovieViewController.getInstance());
         controllers.add(BookingListController.getInstance());
         controllers.add(ConfigMenuController.getInstance());
 
@@ -109,7 +110,7 @@ public class Moblima {
         for (Controller controller: controllers)
             controller.init(nav);
 
-        rootController = controllers.get(4);
+        rootController = controllers.get(0);
     }
 
     public void run() {
