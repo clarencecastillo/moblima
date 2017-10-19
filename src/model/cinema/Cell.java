@@ -30,7 +30,7 @@ public class Cell implements Serializable {
 
     @Override
     public boolean equals(Object obj) {
-        if ((null == obj) || (obj.getClass() != Cell.class))
+        if ((null == obj) || !(obj instanceof Cell))
             return false;
         Cell seat = (Cell)obj;
         return seat.row == row && seat.column == column;
