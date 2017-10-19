@@ -30,8 +30,8 @@ public class MovieManager extends EntityManager<Movie> {
 
     public Movie createMovie(String title, String sypnosis, MoviePerson director,
                              MoviePerson[] actors, MovieType movieType,
-                             MovieStatus status, MovieRating rating) {
-        Movie movie = new Movie(title, sypnosis, director, movieType, actors, status, rating);
+                             MovieStatus status, MovieRating rating, int runtimeMinutes) {
+        Movie movie = new Movie(title, sypnosis, director, movieType, actors, status, rating, runtimeMinutes);
         entities.put(movie.getId(), movie);
         return movie;
     }

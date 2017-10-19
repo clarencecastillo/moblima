@@ -34,7 +34,7 @@ public class ShowtimeManager extends EntityManager<Showtime> {
     }
 
     public Showtime createShowtime(UUID movieId, UUID cinemaId, Language language,
-                                   Date startTime, Date endTime, boolean noFreePasses,
+                                   Date startTime, boolean noFreePasses,
                                    boolean isPreview, Language[] subtitles) throws IllegalMovieStatusException {
 
         MovieManager movieManager = MovieManager.getInstance();
@@ -50,7 +50,7 @@ public class ShowtimeManager extends EntityManager<Showtime> {
 
         Cinema cinema = cinemaManager.findById(cinemaId);
 
-        Showtime showtime = new Showtime(movie, cinema, language, startTime, endTime,
+        Showtime showtime = new Showtime(movie, cinema, language, startTime,
                                          noFreePasses, isPreview, subtitles);
 
         movie.addShowtime(showtime);

@@ -22,9 +22,10 @@ public class Movie extends Entity implements Searchable {
     private ArrayList<Showtime> showtimes;
     private MovieStatus status;
     private MovieRating rating;
+    private int runtimeMinutes;
 
     public Movie(String title, String sypnosis, MoviePerson director, MovieType type,
-                 MoviePerson[] actors, MovieStatus status, MovieRating rating) {
+                 MoviePerson[] actors, MovieStatus status, MovieRating rating, int runtimeMinutes) {
         this.title = title;
         this.sypnosis = sypnosis;
         this.director = director;
@@ -34,6 +35,7 @@ public class Movie extends Entity implements Searchable {
         this.showtimes = new ArrayList<Showtime>();
         this.status = status;
         this.rating = rating;
+        this.runtimeMinutes = runtimeMinutes;
     }
 
     public String getTitle() {
@@ -71,6 +73,9 @@ public class Movie extends Entity implements Searchable {
     public MovieRating getRating() {
         return rating;
     }
+
+    public int getRuntimeMinutes(){ return runtimeMinutes; }
+
 
     public double getOverallReviewRating() {
         if (reviews.size() <= 1)
@@ -156,4 +161,6 @@ public class Movie extends Entity implements Searchable {
     public void setRating(MovieRating rating) {
         this.rating = rating;
     }
+
+    public void setRuntime(int runtimeMinutes) { this.runtimeMinutes = runtimeMinutes; }
 }

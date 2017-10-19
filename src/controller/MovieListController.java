@@ -88,6 +88,7 @@ public class MovieListController extends Controller {
             movieView.setContent(new String[] {
                 "Director: " + directorName,
                 "Actors: " + String.join(",", actorNames),
+                "Runtime: " + movie.getRuntimeMinutes(),
                 "Score: " + movieScore,
                 "Sypnosis",
                 movie.getSypnosis()
