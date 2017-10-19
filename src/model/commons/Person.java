@@ -21,7 +21,7 @@ public abstract class Person extends Entity {
     }
 
     public String getFullName() {
-        return this.firstName + this.lastName;
+        return this.firstName + " " + this.lastName;
     }
 
     protected void setFirstName(String firstName) {

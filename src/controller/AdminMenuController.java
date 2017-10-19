@@ -2,20 +2,19 @@ package controller;
 
 import manager.UserManager;
 import model.cinema.Staff;
-import util.ConsoleColor;
-import view.Line;
+import view.Describable;
 import view.Menu;
-import view.MenuOption;
 import view.View;
 
 public class AdminMenuController extends Controller {
 
+    public static final int MAX_LOGIN_ATTEMPTS = 5;
+
     private static AdminMenuController instance = new AdminMenuController();
 
     private Menu adminMenu;
-    private UserManager userManager;
 
-    private Staff administrator;
+    private UserManager userManager;
 
     private AdminMenuController() {
         userManager = UserManager.getInstance();
@@ -26,26 +25,49 @@ public class AdminMenuController extends Controller {
     }
 
     @Override
-    public void onLoad(String[] arguments) {
-        administrator = userManager.findByUsername(arguments[0]);
-        String title = Line.format("Admin Menu",
-                                   Line.format(administrator.getUsername(), ConsoleColor.GREEN));
-        adminMenu.setTitle(title);
-    }
-
-    @Override
     public void setupView() {
         adminMenu = new Menu();
-        adminMenu.setContent(Menu.getDescriptions(AdminMenuOption.values()));
+        adminMenu.setTitle("Admin Menu");
+        adminMenu.setContent(new String[] {
+            "Please enter your credentials."
+        });
+        adminMenu.setMenuItems(AdminMenuOption.values());
     }
 
     @Override
-    public View getView() {
-        return adminMenu;
-    }
+    public void onLoad(String[] arguments) {
 
-    @Override
-    public void onViewDisplay() {
+        adminMenu.displayHeader();
+        adminMenu.display();
+
+        Staff administrator = null;
+        for (int loginAttempts = 1; loginAttempts <= MAX_LOGIN_ATTEMPTS; loginAttempts++) {
+            String username = adminMenu.getString("Username");
+            String password = adminMenu.getCensoredString("Password");
+            if (userManager.login(username, password)) {
+                administrator = userManager.findByUsername(username);
+                break;
+            }
+            String attemptsMessage = "[" + loginAttempts + " of " + MAX_LOGIN_ATTEMPTS + "]";
+            adminMenu.displayError("Access denied. Please try again", attemptsMessage);
+        }
+
+        if (administrator == null) {
+            navigation.clearScreen();
+            adminMenu.displayHeader();
+            adminMenu.displayError("Max login attempts reached!");
+            adminMenu.pressAnyKeyToContinue();
+            navigation.goBack();
+        }
+
+        adminMenu.setContent(new String[] {
+            "Signed in: " + administrator.getUsername()
+        });
+
+        navigation.clearScreen();
+        adminMenu.displayHeader();
+        adminMenu.displaySuccess("Access granted!");
+        adminMenu.displayMenuItems();
 
         AdminMenuOption userChoice = AdminMenuOption.values()[adminMenu.getChoice()];
 
@@ -63,12 +85,12 @@ public class AdminMenuController extends Controller {
             case CONFIGURE_SETTINGS:
                 break;
             case LOGOUT:
-                navigation.goBack(2);
+                navigation.goBack();
                 break;
         }
     }
 
-    private enum AdminMenuOption implements MenuOption {
+    private enum AdminMenuOption implements Describable {
         MANAGE_MOVIE_LISTINGS("Search Movies"),
         MANAGE_SHOWTIMES("List Movies"),
         MANAGE_CINEPLEXES("View Showtimes"),

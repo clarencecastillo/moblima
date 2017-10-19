@@ -1,8 +1,7 @@
-import controller.AdminLoginController;
 import controller.AdminMenuController;
 import controller.Controller;
 import controller.MainMenuController;
-import controller.MovieSearchController;
+import controller.MovieListController;
 import controller.Navigation;
 import java.util.ArrayList;
 import manager.MovieManager;
@@ -40,7 +39,7 @@ public class Moblima {
                                                    + "Kyle Coogler. He is a director and writer, "
                                                    + "known for Creed (2015), Fruitvale Station "
                                                    + "(2013) and Black Panther (2018). ");
-            movieManager.createMovie("Black Panther ", "T'Challa, after the death "
+            movieManager.createMovie("Black Panther", "T'Challa, after the death "
                                                        + "of his father, the King of Wakanda, "
                                                        + "returns home to the isolated, "
                                                        + "technologically advanced African nation "
@@ -54,9 +53,8 @@ public class Moblima {
 
 
         controllers.add(MainMenuController.getInstance());
-        controllers.add(AdminLoginController.getInstance());
         controllers.add(AdminMenuController.getInstance());
-        controllers.add(MovieSearchController.getInstance());
+        controllers.add(MovieListController.getInstance());
 
         nav = new Navigation();
         for (Controller controller: controllers)
