@@ -49,7 +49,7 @@ public class AdminMenuController extends Controller {
                 break;
             }
             String attemptsMessage = "[" + loginAttempts + " of " + MAX_LOGIN_ATTEMPTS + "]";
-            adminMenu.displayError("Access denied. Please try again", attemptsMessage);
+            adminMenu.displayError("Access denied. Please try again. " + attemptsMessage);
         }
 
         if (administrator == null) {

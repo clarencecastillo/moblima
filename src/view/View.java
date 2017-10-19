@@ -3,9 +3,6 @@ package view;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import view.layout.LayoutColor;
-import view.layout.PartitionLayout;
-import view.layout.StringLayout;
 
 public class View implements Displayable {
 
@@ -14,10 +11,10 @@ public class View implements Displayable {
     public final static String DASH_LINE = line('-', VIEW_WIDTH);
     public final static String SPACE_LINE = line(' ', VIEW_WIDTH);
 
-    public final static LayoutColor INFO = LayoutColor.CYAN;
-    public final static LayoutColor WARN = LayoutColor.YELLOW;
-    public final static LayoutColor ERROR = LayoutColor.RED;
-    public final static LayoutColor SUCCESS = LayoutColor.GREEN;
+    public final static ConsoleColor INFO = ConsoleColor.CYAN;
+    public final static ConsoleColor WARN = ConsoleColor.YELLOW;
+    public final static ConsoleColor ERROR = ConsoleColor.RED;
+    public final static ConsoleColor SUCCESS = ConsoleColor.GREEN;
 
     protected String title;
     protected String[] content;
@@ -34,43 +31,27 @@ public class View implements Displayable {
         System.out.println();
     }
 
-    public void displayInformation(String message) {
-        System.out.println(new StringLayout(message, INFO));
-        System.out.println();
+    public void displayColored(String message, ConsoleColor color) {
+        System.out.println(color.code + message + ConsoleColor.RESET);
     }
 
-    public void displayInformation(String leftMessage, String rightMessage) {
-        System.out.println(new PartitionLayout(leftMessage, rightMessage, INFO));
+    public void displayInformation(String message) {
+        displayColored(message, INFO);
         System.out.println();
     }
 
     public void displayWarning(String message) {
-        System.out.println(new StringLayout(message, WARN));
-        System.out.println();
-    }
-
-    public void displayWarning(String leftMessage, String rightMessage) {
-        System.out.println(new PartitionLayout(leftMessage, rightMessage, WARN));
+        displayColored(message, WARN);
         System.out.println();
     }
 
     public void displayError(String message) {
-        System.out.println(new StringLayout(message, ERROR));
-        System.out.println();
-    }
-
-    public void displayError(String leftMessage, String rightMessage) {
-        System.out.println(new PartitionLayout(leftMessage, rightMessage, ERROR));
+        displayColored(message, ERROR);
         System.out.println();
     }
 
     public void displaySuccess(String message) {
-        System.out.println(new StringLayout(message, SUCCESS));
-        System.out.println();
-    }
-
-    public void displaySuccess(String leftMessage, String rightMessage) {
-        System.out.println(new PartitionLayout(leftMessage, rightMessage, SUCCESS));
+        displayColored(message, SUCCESS);
         System.out.println();
     }
 
