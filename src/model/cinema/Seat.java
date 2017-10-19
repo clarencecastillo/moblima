@@ -24,4 +24,9 @@ public class Seat extends Cell {
         Seat seat = (Seat)obj;
         return super.equals(seat) && seat.type == type;
     }
+
+    @Override
+    public String toString() {
+        return String.valueOf(row) + column;
+    }
 }

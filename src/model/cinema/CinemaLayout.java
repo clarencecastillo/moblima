@@ -15,6 +15,7 @@ public class CinemaLayout implements Serializable {
         this.layout = new Hashtable<Character,Cell[]>();
         this.maxColumn = maxColumn;
         this.maxRow = maxRow;
+        this.seats = seats;
 
         // Create a matrix of cells
         for (char row = 'A'; row <= maxRow; row++) {
