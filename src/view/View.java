@@ -28,7 +28,8 @@ public class View implements Displayable {
 
     public void displayContent() {
         for (String string: content)
-            System.out.println(string);
+            for (String stringLine : wrap(string, VIEW_WIDTH))
+                System.out.println(stringLine);
         System.out.println();
     }
 
