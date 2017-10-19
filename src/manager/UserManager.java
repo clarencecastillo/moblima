@@ -17,8 +17,7 @@ public class UserManager extends EntityManager<User> {
     public static UserManager getInstance() {
         return instance;
     }
-
-    public void registerUser(String firstName, String lastName, String mobile, String email)
+    public User registerUser(String firstName, String lastName, String mobile, String email)
             throws InvalidRegisterEmailException, InvalidRegisterMobileException {
 
         if (findByEmail(email) != null)
@@ -29,6 +28,7 @@ public class UserManager extends EntityManager<User> {
 
         User user = new User(firstName, lastName, mobile, email);
         entities.put(user.getId(), user);
+        return user;
     }
 
     public void registerStaff(String firstName, String lastName, String mobile, String email,
