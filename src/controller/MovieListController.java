@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import manager.MovieManager;
 import model.movie.Movie;
-import model.movie.MoviePerson;
 import view.Describable;
 import view.Menu;
 import view.ViewItem;
@@ -80,19 +79,16 @@ public class MovieListController extends Controller {
             ViewItem movieView = new ViewItem(movie.getId().toString());
             movieView.setTitle(String.format("%s [%s] %s", movie.getTitle(),
                                              movie.getType(), movie.getRating()));
-            MoviePerson[] movieActors = movie.getActors();
-            String[] actorNames = new String[movieActors.length];
-            for (int a = 0; a < movieActors.length; a++)
-                actorNames[a] = movieActors[a].getFullName();
-            String directorName = movie.getDirector().getFullName();
-            String movieScore = movie.getOverallReviewRating() == -1 ? "NA" :
-                                String.format("%.1f/5.0", movie.getOverallReviewRating());
             movieView.setContent(new String[] {
-                "Director: " + directorName,
-                "Actors: " + String.join(",", actorNames),
+                "Director: " + movie.getDirector(),
+                "Actors: " + String.join(",", Arrays.stream(movie.getActors())
+                                                    .map(String::valueOf).toArray(String[]::new)),
                 "Runtime: " + movie.getRuntimeMinutes(),
-                "Score: " + movieScore,
+                "Score: " + (movie.getOverallReviewRating() == -1 ? "NA" :
+                             String.format("%.1f/5.0", movie.getOverallReviewRating())),
+                " ",
                 "Sypnosis",
+                "--------",
                 movie.getSypnosis()
             });
             viewItems.add(movieView);

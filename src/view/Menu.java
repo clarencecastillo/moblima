@@ -47,7 +47,7 @@ public class Menu extends Form {
             System.out.println();
         for (int i = 0; i < menuItems.size(); i++, itemIndex++)
             menuItems.get(i).display(itemIndex);
-
+        System.out.println(DASH_LINE);
     }
 
     public void setMenuItems(MenuItem[] menuItems) {
