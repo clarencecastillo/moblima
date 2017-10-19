@@ -57,23 +57,30 @@ public class MovieListController extends Controller {
                     "Your search '" + searchKeyword + "' yielded "
                     + movies.size() + " movie items."
                 });
+
+                movieListMenu.setMenuItems(new MovieListMenuOption[] {
+                    MovieListMenuOption.GO_BACK
+                });
                 break;
             case ADMIN:
 
                 movies.addAll(movieManager.getList());
-
+                movieListMenu.setMenuItems(new MovieListMenuOption[] {
+                    MovieListMenuOption.ADD_MOVIE,
+                    MovieListMenuOption.GO_BACK
+                });
                 break;
         }
 
         navigation.clearScreen();
         movieListMenu.displayHeader();
-        movieListMenu.display();
+        movieListMenu.displayContent();
 
-        ArrayList<Item> items = new ArrayList<>();
+        ArrayList<ViewItem> viewItems = new ArrayList<>();
         for (int i = 0; i < movies.size(); i++) {
             Movie movie = movies.get(i);
 
-            ListMenuItem movieView = new ListMenuItem(i + 1);
+            ViewItem movieView = new ViewItem(movie.getId().toString());
             movieView.setTitle(String.format("%s [%s] %s", movie.getTitle(),
                                              movie.getType(), movie.getRating()));
             MoviePerson[] movieActors = movie.getActors();
@@ -90,18 +97,29 @@ public class MovieListController extends Controller {
                 "Sypnosis",
                 movie.getSypnosis()
             });
-            items.add(movieView);
+            viewItems.add(movieView);
         }
 
-        if (intent == MovieListIntent.ADMIN) {
-            MovieListAdminOption[] options = MovieListAdminOption.values();
-            for (int i = 0; i < options.length; i++)
-                items.add(new MenuItem(i+1, options[i].getDescription()));
+        movieListMenu.setViewItems(viewItems.toArray(new ViewItem[viewItems.size()]));
+        movieListMenu.displayItems();
+
+        String userInput = movieListMenu.getChoice();
+        try {
+            MovieListMenuOption userChoice = MovieListMenuOption.valueOf(userInput);
+            switch (userChoice) {
+                case ADD_MOVIE:
+                    System.out.println("Add movie!");
+                    break;
+                case GO_BACK:
+                    navigation.goBack();
+                    break;
+            }
+        } catch (IllegalArgumentException e) {
+            System.out.println("Selected movie with ID " + userInput);
         }
 
-        movieListMenu.setMenuItems(items.toArray(new ListMenuItem[items.size()]));
-        movieListMenu.displayMenuItemsWithBack();
-        movieListMenu.getChoice();
+
+
     }
 
     public enum MovieListIntent {
@@ -109,12 +127,13 @@ public class MovieListController extends Controller {
         ADMIN
     }
 
-    public enum MovieListAdminOption implements Describable {
+    public enum MovieListMenuOption implements Describable {
 
-        ADD_MOVIE("Add Movie");
+        ADD_MOVIE("Add Movie"),
+        GO_BACK("Go Back");
 
         private String description;
-        MovieListAdminOption(String description) {
+        MovieListMenuOption(String description) {
             this.description = description;
         }
 
