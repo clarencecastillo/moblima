@@ -12,11 +12,11 @@ import java.util.Scanner;
 
 public class Form extends View {
 
-    private final static char PROMPT_DELIMETER = '>';
+    private final static String PROMPT_DELIMETER = " > ";
     private final static String DATE_FORMAT = "dd/MM/yyyy HH:mm";
 
     public int getInt(String prompt) throws InputUnrecognisedException {
-        System.out.print(prompt + PROMPT_DELIMETER + " ");
+        System.out.print(prompt + PROMPT_DELIMETER);
         Scanner sc = new Scanner(System.in);
         try {
             return sc.nextInt();
@@ -26,7 +26,7 @@ public class Form extends View {
     }
 
     public int getInt(String prompt, int min, int max) throws InputOutOfBoundsException {
-        int input = getInt(prompt + " [" + min + "-" + max + "] ");
+        int input = getInt(prompt + " [" + min + "-" + max + "]");
         if (input < min || input > max)
             throw new InputOutOfBoundsException(input);
         return input;
@@ -40,7 +40,7 @@ public class Form extends View {
     }
 
     public double getDouble(String prompt) throws InputUnrecognisedException {
-        System.out.print(prompt + PROMPT_DELIMETER + " ");
+        System.out.print(prompt + PROMPT_DELIMETER);
         Scanner sc = new Scanner(System.in);
         try {
             return sc.nextDouble();
@@ -51,7 +51,7 @@ public class Form extends View {
 
     public double getDouble(String prompt, double min, double max)
         throws InputOutOfBoundsException {
-        double input = getDouble(prompt + " [" + min + "-" + max + "] ");
+        double input = getDouble(prompt + " [" + min + "-" + max + "]");
         if (input < min || input > max)
             throw new InputOutOfBoundsException(input);
         return input;
@@ -66,7 +66,7 @@ public class Form extends View {
 
     public String getCensoredString(String prompt, int minLength, int maxLength)
         throws InputOutOfBoundsException {
-        String input = getCensoredString(prompt + " [" + minLength + "-" + maxLength + "] ");
+        String input = getCensoredString(prompt + " [" + minLength + "-" + maxLength + "]");
         int inputLength = input.length();
         if (inputLength< minLength || inputLength > maxLength)
             throw new InputOutOfBoundsException(input);
@@ -75,11 +75,11 @@ public class Form extends View {
 
     public String getCensoredString(String prompt) {
         Console console = System.console();
-        return new String(console.readPassword(prompt + PROMPT_DELIMETER + " "));
+        return new String(console.readPassword(prompt + PROMPT_DELIMETER));
     }
 
     public String getString(String prompt) {
-        System.out.print(prompt + PROMPT_DELIMETER + " ");
+        System.out.print(prompt + PROMPT_DELIMETER);
         Scanner sc = new Scanner(System.in);
         return sc.nextLine();
     }
@@ -92,7 +92,7 @@ public class Form extends View {
     }
 
     public char getChar(String prompt) {
-        System.out.print(prompt + PROMPT_DELIMETER + " ");
+        System.out.print(prompt + PROMPT_DELIMETER);
         Scanner sc = new Scanner(System.in);
         return sc.next().charAt(0);
     }
@@ -106,7 +106,7 @@ public class Form extends View {
 
     public Date getDate(String prompt, String format) throws ParseException {
         SimpleDateFormat dateFormat = new SimpleDateFormat(format);
-        System.out.print(prompt + " [" + format + "] " + PROMPT_DELIMETER + " ");
+        System.out.print(prompt + " [" + format + "]" + PROMPT_DELIMETER);
         Scanner sc = new Scanner(System.in);
         return dateFormat.parse(sc.nextLine());
     }
