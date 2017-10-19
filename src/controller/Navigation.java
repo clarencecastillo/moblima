@@ -3,7 +3,6 @@ package controller;
 import java.util.AbstractMap.SimpleEntry;
 import java.util.Stack;
 import exception.RootControllerPopException;
-import view.View;
 
 public class Navigation {
 
@@ -27,7 +26,7 @@ public class Navigation {
     private void load(Controller controller, String... args) {
         lastArgs = args;
         clearScreen();
-        controller.onLoad(args);
+        controller.onEnter(args);
     }
 
     public void goTo(Controller controller, String... args) {

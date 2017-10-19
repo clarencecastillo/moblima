@@ -15,5 +15,5 @@ public abstract class Controller {
 
     public abstract void setupView();
     
-    public abstract void onLoad(String[] arguments);
+    public abstract void onEnter(String[] arguments);
 }

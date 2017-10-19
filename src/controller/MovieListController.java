@@ -31,7 +31,7 @@ public class MovieListController extends Controller {
     }
 
     @Override
-    public void onLoad(String[] arguments) {
+    public void onEnter(String[] arguments) {
 
         MovieListIntent intent = MovieListIntent.valueOf(arguments[0]);
         ArrayList<Movie> movies = new ArrayList<>();

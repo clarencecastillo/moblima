@@ -26,7 +26,7 @@ public class ConfigMenuController extends Controller {
 
 
     @Override
-    public void onLoad(String[] arguments) {
+    public void onEnter(String[] arguments) {
 
         configMenu.displayHeader();
         configMenu.displayItems();

@@ -33,7 +33,7 @@ public class AdminMenuController extends Controller {
     }
 
     @Override
-    public void onLoad(String[] arguments) {
+    public void onEnter(String[] arguments) {
 
         adminMenu.displayHeader();
         adminMenu.displayContent();

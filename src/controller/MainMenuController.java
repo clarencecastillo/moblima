@@ -28,7 +28,7 @@ public class MainMenuController extends Controller {
     }
 
     @Override
-    public void onLoad(String[] arguments) {
+    public void onEnter(String[] arguments) {
 
         mainMenu.setTitle("MOBLIMA " + arguments[0]);
         mainMenu.displayHeader();
