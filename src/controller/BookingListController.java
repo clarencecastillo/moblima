@@ -13,7 +13,7 @@ public class BookingListController extends Controller {
 
     private static BookingListController instance = new BookingListController();
 
-    private ListMenu bookingListMenu;
+    private Menu bookingListMenu;
 
     private BookingManager bookingManager;
     private UserManager userManager;
@@ -29,7 +29,7 @@ public class BookingListController extends Controller {
 
     @Override
     public void setupView() {
-        bookingListMenu = new ListMenu();
+        bookingListMenu = new Menu();
         bookingListMenu.setTitle("Booking History");
         bookingListMenu.displayHeader();
     }
@@ -44,7 +44,7 @@ public class BookingListController extends Controller {
         navigation.clearScreen();
         bookingListMenu.displayHeader();
 
-        ArrayList<Item> items = new ArrayList<>();
+        ArrayList<ViewItem> items = new ArrayList<>();
         for (int i = 0; i < bookings.size(); i++) {
             Booking booking = bookings.get(i);
             Ticket[] tickets = booking.getTickets();
@@ -53,10 +53,10 @@ public class BookingListController extends Controller {
                 seats[j] = tickets[i].getSeat().toString();
             }
 
-            ListMenuItem bookingView = new ListMenuItem(i + 1);
-            bookingView.setTitle(String.format("%s", booking.getShowtime().getMovie()));
+            ViewItem bookingView = new ViewItem(booking.getId().toString());
+            bookingView.setTitle(String.format("%s", booking.getShowtime().getMovie().getTitle()));
             bookingView.setContent(new String[] {
-                "Cinema: " + booking.getShowtime().getCinema(),
+                "Cinema: " + booking.getShowtime().getCinema().getCode(),
                 "Start Time: " + booking.getShowtime().getStartTime(),
                 "Seats: " + String.join(",", seats)
             });
@@ -64,8 +64,8 @@ public class BookingListController extends Controller {
         }
 
 
-        bookingListMenu.setMenuItems(items.toArray(new ListMenuItem[items.size()]));
-        bookingListMenu.displayMenuItemsWithBack();
+        bookingListMenu.setViewItems(items.toArray(new ViewItem[items.size()]));
+        bookingListMenu.displayItems();
         bookingListMenu.getChoice();
     }
 }
