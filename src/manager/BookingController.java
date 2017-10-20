@@ -26,23 +26,23 @@ import model.transaction.Payment;
 import model.transaction.PaymentStatus;
 import util.Utilities;
 
-public class BookingManager extends EntityManager<Booking> {
+public class BookingController extends EntityController<Booking> {
 
     // Eager Singleton
-    private static BookingManager instance = new BookingManager();
+    private static BookingController instance = new BookingController();
 
-    private BookingManager() {
+    private BookingController() {
         super();
     }
 
-    public static BookingManager getInstance() {
+    public static BookingController getInstance() {
         return instance;
     }
 
     public Booking createBooking(UUID userId, UUID showtimeId) throws IllegalShowtimeStatusException {
 
-        UserManager userManager = UserManager.getInstance();
-        ShowtimeManager showtimeManager = ShowtimeManager.getInstance();
+        UserController userManager = UserController.getInstance();
+        ShowtimeController showtimeManager = ShowtimeController.getInstance();
 
         User user = userManager.findById(userId);
         Showtime showtime = showtimeManager.findById(showtimeId);
@@ -156,7 +156,7 @@ public class BookingManager extends EntityManager<Booking> {
 
     public void changeBookingShowtime(UUID bookingId, UUID showtimeId) throws IllegalBookingChangeException{
 
-        ShowtimeManager showtimeManager = ShowtimeManager.getInstance();
+        ShowtimeController showtimeManager = ShowtimeController.getInstance();
 
         Booking booking = findById(bookingId);
         Showtime showtime = showtimeManager.findById(showtimeId);

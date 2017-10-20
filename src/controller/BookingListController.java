@@ -1,7 +1,7 @@
 package controller;
 
-import manager.BookingManager;
-import manager.UserManager;
+import manager.BookingController;
+import manager.UserController;
 import model.booking.Booking;
 import model.booking.Ticket;
 import model.commons.User;
@@ -15,12 +15,12 @@ public class BookingListController extends Controller {
 
     private Menu bookingListMenu;
 
-    private BookingManager bookingManager;
-    private UserManager userManager;
+    private BookingController bookingController;
+    private UserController userManager;
 
     private BookingListController() {
-        bookingManager = BookingManager.getInstance();
-        userManager =  UserManager.getInstance();
+        bookingController = BookingController.getInstance();
+        userManager =  UserController.getInstance();
     }
 
     public static BookingListController getInstance() {

@@ -5,14 +5,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.InputMismatchException;
 
-public class Menu extends Form {
+public abstract class Menu extends Form {
 
     public static final String INPUT_PROMPT = "Choose option";
     public static final String INVALID_ERROR = "Invalid user input! Please try again.";
     public static final String UNRECOGNIZED_ERROR = "Unrecognized user input! Please try again.";
-
-//    public static final MenuItem BACK = new MenuItem("Go Back");
-//    public static final int BACK_INDEX = 0;
 
     private ArrayList<MenuItem> menuItems = new ArrayList<>();
     private ArrayList<ViewItem> viewItems = new ArrayList<>();

@@ -1,7 +1,7 @@
 package controller;
 
 import controller.MovieListController.MovieListIntent;
-import manager.UserManager;
+import manager.UserController;
 import model.cinema.Staff;
 import view.Describable;
 import view.Menu;
@@ -15,10 +15,10 @@ public class AdminMenuController extends Controller {
     private Staff administrator;
 
     private Menu adminMenu;
-    private UserManager userManager;
+    private UserController userManager;
 
     private AdminMenuController() {
-        userManager = UserManager.getInstance();
+        userManager = UserController.getInstance();
     }
 
     public static AdminMenuController getInstance() {

@@ -25,24 +25,24 @@ import model.cinema.Seat;
 import model.movie.Movie;
 import model.transaction.Pricing;
 
-public class TicketManager extends EntityManager<Ticket> {
+public class TicketController extends EntityController<Ticket> {
 
-    private static TicketManager instance = new TicketManager();
+    private static TicketController instance = new TicketController();
 
-    private TicketManager() {
+    private TicketController() {
         super();
     }
 
-    public static TicketManager getInstance() {
+    public static TicketController getInstance() {
         return instance;
     }
 
     public Ticket createTicket(UUID bookingId, Seat seat, TicketType type) throws IllegalShowtimeBookingException,
         ExceedBookingSeatException, UnavailableTicketTypeException, UnavailableBookingSeatException {
 
-        BookingManager bookingManager = BookingManager.getInstance();
+        BookingController bookingController = BookingController.getInstance();
 
-        Booking booking = bookingManager.findById(bookingId);
+        Booking booking = bookingController.findById(bookingId);
         Showtime showtime = booking.getShowtime();
         Cinema cinema = showtime.getCinema();
         ShowtimeSeating seating = showtime.getSeating();

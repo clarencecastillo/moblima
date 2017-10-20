@@ -6,23 +6,23 @@ import model.cinema.CinemaLayout;
 import model.cinema.CinemaType;
 import model.cinema.Cineplex;
 
-public class CinemaManager extends EntityManager<Cinema> {
+public class CinemaController extends EntityController<Cinema> {
 
-    private static CinemaManager instance = new CinemaManager();
+    private static CinemaController instance = new CinemaController();
 
-    private CinemaManager() {
+    private CinemaController() {
         super();
     }
 
-    public static CinemaManager getInstance() {
+    public static CinemaController getInstance() {
         return instance;
     }
 
     public Cinema createCinema(UUID cineplexId, String code,
                                CinemaType type, CinemaLayout layout) {
 
-        CineplexManager cineplexManager = CineplexManager.getInstance();
-        Cineplex cineplex = cineplexManager.findById(cineplexId);
+        CineplexController cineplexController = CineplexController.getInstance();
+        Cineplex cineplex = cineplexController.findById(cineplexId);
         Cinema cinema = new Cinema(code, cineplex, type, layout);
 
         cineplex.addCinema(cinema);

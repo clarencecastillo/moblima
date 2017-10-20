@@ -3,7 +3,7 @@ package controller;
 public abstract class Controller {
 
     protected Navigation navigation;
-    protected boolean initialised;
+
 
     public void init(Navigation navigation) {
         if (initialised)

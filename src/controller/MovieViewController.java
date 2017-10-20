@@ -2,7 +2,7 @@ package controller;
 
 import java.util.Arrays;
 import java.util.UUID;
-import manager.MovieManager;
+import manager.MovieController;
 import model.movie.Movie;
 import view.Describable;
 import view.Menu;
@@ -13,10 +13,10 @@ public class MovieViewController extends Controller {
 
     protected Menu movieViewMenu;
 
-    private MovieManager movieManager;
+    private MovieController movieManager;
 
     private MovieViewController() {
-        movieManager = MovieManager.getInstance();
+        movieManager = MovieController.getInstance();
     }
 
     public static MovieViewController getInstance() {

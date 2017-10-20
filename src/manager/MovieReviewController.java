@@ -7,22 +7,22 @@ import model.commons.User;
 import model.movie.Movie;
 import model.movie.MovieReview;
 
-public class MovieReviewManager extends EntityManager<MovieReview> {
+public class MovieReviewController extends EntityController<MovieReview> {
 
-    private static MovieReviewManager instance = new MovieReviewManager();
+    private static MovieReviewController instance = new MovieReviewController();
 
-    private MovieReviewManager() {
+    private MovieReviewController() {
         super();
     }
 
-    public static MovieReviewManager getInstance() {
+    public static MovieReviewController getInstance() {
         return instance;
     }
 
     public MovieReview createReview(String review, int rating, UUID movieId, UUID authorId) throws InvalidReviewRatingException {
 
-        MovieManager movieManager = MovieManager.getInstance();
-        UserManager userManager = UserManager.getInstance();
+        MovieController movieManager = MovieController.getInstance();
+        UserController userManager = UserController.getInstance();
 
         if (rating > 5 || rating < 0)
             throw new InvalidReviewRatingException();

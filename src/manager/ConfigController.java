@@ -4,18 +4,18 @@ import config.ConfigType;
 import config.Configurable;
 import java.util.Hashtable;
 
-public class ConfigManager {
+public class ConfigController {
 
-    private static ConfigManager instance;
+    private static ConfigController instance;
     private Hashtable<ConfigType, Configurable> configurations;
 
-    public ConfigManager() {
+    public ConfigController() {
         configurations = new Hashtable<ConfigType, Configurable>();
     }
 
-    public static ConfigManager getInstance() {
+    public static ConfigController getInstance() {
         if (instance == null) {
-            instance = new ConfigManager();
+            instance = new ConfigController();
         }
         return instance;
     }

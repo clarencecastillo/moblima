@@ -6,11 +6,11 @@ import java.util.Hashtable;
 import java.util.UUID;
 import model.commons.Entity;
 
-public abstract class EntityManager <T extends Entity> implements Serializable {
+public abstract class EntityController<T extends Entity> implements Serializable {
 
     protected Hashtable<UUID, T> entities;
 
-    protected EntityManager() {
+    protected EntityController() {
         this.entities = new Hashtable<UUID, T>();
     }
 

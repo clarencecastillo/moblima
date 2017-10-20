@@ -2,7 +2,7 @@ package controller;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import manager.MovieManager;
+import manager.MovieController;
 import model.movie.Movie;
 import view.Describable;
 import view.Menu;
@@ -14,10 +14,10 @@ public class MovieListController extends Controller {
 
     private Menu movieListMenu;
 
-    private MovieManager movieManager;
+    private MovieController movieManager;
 
     private MovieListController() {
-        movieManager = MovieManager.getInstance();
+        movieManager = MovieController.getInstance();
     }
 
     public static MovieListController getInstance() {
@@ -64,24 +64,24 @@ public class MovieListController extends Controller {
 
         ArrayList<ViewItem> viewItems = new ArrayList<>();
         for (int i = 0; i < movies.size(); i++) {
-            Movie movie = movies.get(i);
+                Movie movie = movies.get(i);
 
-            ViewItem movieView = new ViewItem(movie.getId().toString());
-            movieView.setTitle(String.format("%s [%s] %s", movie.getTitle(),
-                                             movie.getType(), movie.getRating()));
-            movieView.setContent(new String[] {
-                "Director: " + movie.getDirector(),
-                "Actors: " + String.join(",", Arrays.stream(movie.getActors())
-                                                    .map(String::valueOf).toArray(String[]::new)),
-                "Runtime: " + movie.getRuntimeMinutes(),
-                "Score: " + (movie.getOverallReviewRating() == -1 ? "NA" :
-                             String.format("%.1f/5.0", movie.getOverallReviewRating())),
-                " ",
-                "Sypnosis",
-                "--------",
-                movie.getSypnosis()
-            });
-            viewItems.add(movieView);
+                ViewItem movieView = new ViewItem(movie.getId().toString());
+                movieView.setTitle(String.format("%s [%s] %s", movie.getTitle(),
+                                                 movie.getType(), movie.getRating()));
+                movieView.setContent(new String[] {
+                    "Director: " + movie.getDirector(),
+                    "Actors: " + String.join(",", Arrays.stream(movie.getActors())
+                                                        .map(String::valueOf).toArray(String[]::new)),
+                    "Runtime: " + movie.getRuntimeMinutes(),
+                    "Score: " + (movie.getOverallReviewRating() == -1 ? "NA" :
+                                 String.format("%.1f/5.0", movie.getOverallReviewRating())),
+                    " ",
+                    "Sypnosis",
+                    "--------",
+                    movie.getSypnosis()
+                });
+                viewItems.add(movieView);
         }
 
         movieListMenu.setViewItems(viewItems.toArray(new ViewItem[viewItems.size()]));

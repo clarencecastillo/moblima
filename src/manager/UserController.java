@@ -6,15 +6,15 @@ import exception.InvalidRegisterUsernameException;
 import model.cinema.Staff;
 import model.commons.User;
 
-public class UserManager extends EntityManager<User> {
+public class UserController extends EntityController<User> {
 
-    private static UserManager instance = new UserManager();
+    private static UserController instance = new UserController();
 
-    private UserManager() {
+    private UserController() {
         super();
     }
 
-    public static UserManager getInstance() {
+    public static UserController getInstance() {
         return instance;
     }
     public User registerUser(String firstName, String lastName, String mobile, String email)

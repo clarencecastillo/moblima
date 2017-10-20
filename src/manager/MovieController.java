@@ -14,17 +14,17 @@ import model.movie.MovieStatus;
 import model.movie.MovieType;
 import util.Utilities;
 
-public class MovieManager extends EntityManager<Movie> {
+public class MovieController extends EntityController<Movie> {
 
     public static final int SIMILARITY_THRESHOLD = 5;
 
-    private static MovieManager instance = new MovieManager();
+    private static MovieController instance = new MovieController();
 
-    private MovieManager() {
+    private MovieController() {
         super();
     }
 
-    public static MovieManager getInstance() {
+    public static MovieController getInstance() {
         return instance;
     }
 

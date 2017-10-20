@@ -5,15 +5,15 @@ import model.transaction.Payable;
 import model.transaction.Payment;
 import model.transaction.PaymentStatus;
 
-public class PaymentManager extends EntityManager<Payment> {
+public class PaymentController extends EntityController<Payment> {
 
-    private static PaymentManager instance = new PaymentManager();
+    private static PaymentController instance = new PaymentController();
 
-    private PaymentManager() {
+    private PaymentController() {
         super();
     }
 
-    public static PaymentManager getInstance() {
+    public static PaymentController getInstance() {
         return instance;
     }
 
@@ -22,7 +22,7 @@ public class PaymentManager extends EntityManager<Payment> {
         // Assume Payment will always be successful.
         Payment payment = new Payment(PaymentStatus.ACCEPTED, payable);
 
-        PaymentManager paymentManager = PaymentManager.getInstance();
+        PaymentController paymentManager = PaymentController.getInstance();
 
         if (!payable.isPendingPayment())
             throw new InvalidPayableException();

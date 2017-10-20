@@ -21,15 +21,15 @@ import model.movie.Movie;
 import model.movie.MovieStatus;
 import util.Utilities;
 
-public class ShowtimeManager extends EntityManager<Showtime> {
+public class ShowtimeController extends EntityController<Showtime> {
 
-    private static ShowtimeManager instance = new ShowtimeManager();
+    private static ShowtimeController instance = new ShowtimeController();
 
-    private ShowtimeManager() {
+    private ShowtimeController() {
         super();
     }
 
-    public static ShowtimeManager getInstance() {
+    public static ShowtimeController getInstance() {
         return instance;
     }
 
@@ -37,8 +37,8 @@ public class ShowtimeManager extends EntityManager<Showtime> {
                                    Date startTime, boolean noFreePasses,
                                    boolean isPreview, Language[] subtitles) throws IllegalMovieStatusException {
 
-        MovieManager movieManager = MovieManager.getInstance();
-        CinemaManager cinemaManager = CinemaManager.getInstance();
+        MovieController movieManager = MovieController.getInstance();
+        CinemaController cinemaController = CinemaController.getInstance();
 
         Movie movie = movieManager.findById(movieId);
 
@@ -48,7 +48,7 @@ public class ShowtimeManager extends EntityManager<Showtime> {
         if (movie.getStatus() == MovieStatus.END_OF_SHOWING)
             throw new IllegalMovieStatusException("Movie is already not shown");
 
-        Cinema cinema = cinemaManager.findById(cinemaId);
+        Cinema cinema = cinemaController.findById(cinemaId);
 
         Showtime showtime = new Showtime(movie, cinema, language, startTime,
                                          noFreePasses, isPreview, subtitles);
@@ -62,7 +62,7 @@ public class ShowtimeManager extends EntityManager<Showtime> {
             IllegalMovieStatusException, IllegalBookingStatusException,
         UnpaidBookingChargeException, UnpaidPaymentException, IllegalBookingChangeException {
 
-        BookingManager bookingManager = BookingManager.getInstance();
+        BookingController bookingController = BookingController.getInstance();
         Showtime showtime = findById(showtimeId);
 
         if (showtime.getStatus() == ShowtimeStatus.CANCELLED)
@@ -77,6 +77,6 @@ public class ShowtimeManager extends EntityManager<Showtime> {
 
         showtime.setCancelled(true);
         for (Booking booking: showtime.getBookings())
-            bookingManager.changeBookingStatus(booking.getId(), BookingStatus.CANCELLED);
+            bookingController.changeBookingStatus(booking.getId(), BookingStatus.CANCELLED);
     }
 }
