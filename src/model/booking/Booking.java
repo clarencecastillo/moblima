@@ -19,10 +19,10 @@ public class Booking extends Entity implements Payable {
     private ArrayList<BookingCharge> charges;
     private BookingStatus status;
 
-    public Booking(Showtime showtime, Date created, User user) {
+    public Booking(Showtime showtime, Date created) {
         this.showtime = showtime;
         this.created = created;
-        this.user = user;
+        this.user = null;
         this.tickets = new ArrayList<Ticket>();
         this.payment = null;
         this.charges = new ArrayList<BookingCharge>();
@@ -70,10 +70,6 @@ public class Booking extends Entity implements Payable {
             price += ticket.getPricing().getPrice();
         }
         return price;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
     }
 
     public void setShowtime(Showtime showtime) {
