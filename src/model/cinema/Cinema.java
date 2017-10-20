@@ -6,24 +6,17 @@ import model.commons.Entity;
 public class Cinema extends Entity {
 
     private String code;
-    private Cineplex cineplex;
     private CinemaType type;
     private CinemaLayout layout;
 
-    public Cinema(String code, Cineplex cineplex,
-                  CinemaType type, CinemaLayout layout) {
+    public Cinema(String code, CinemaType type, CinemaLayout layout) {
         this.code = code;
-        this.cineplex = cineplex;
         this.type = type;
         this.layout = layout;
     }
 
     public String getCode() {
         return code;
-    }
-
-    public Cineplex getCineplex() {
-        return cineplex;
     }
 
     public CinemaType getType() {
@@ -36,10 +29,6 @@ public class Cinema extends Entity {
 
     public void setCode(String code) {
         this.code = code;
-    }
-
-    public void setCineplex(Cineplex cineplex) {
-        this.cineplex = cineplex;
     }
 
     public void setType(CinemaType type) {

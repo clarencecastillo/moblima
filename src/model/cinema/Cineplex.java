@@ -6,7 +6,7 @@ import java.util.UUID;
 import model.commons.Entity;
 
 // Cineplexes are in different locations, managed by the vendor.
-// Each Cineplex will have 3 or more cinemas. (bi-directional)
+// Each Cineplex will have 3 or more cinemas. (composition)
 public class Cineplex extends Entity {
 
     private String name;
