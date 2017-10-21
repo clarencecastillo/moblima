@@ -32,14 +32,9 @@ public abstract class View {
         return content.toArray(new String[content.size()]);
     }
 
-    public void setContent(String[] content) {
+    public void setContent(String... content) {
         this.content.clear();
         this.content.addAll(Arrays.asList(content));
-    }
-
-    public void setContent(String content) {
-        this.content.clear();
-        this.content.add(content);
     }
 
     public void displayTitle() {

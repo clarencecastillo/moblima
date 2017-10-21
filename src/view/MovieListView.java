@@ -35,17 +35,13 @@ public class MovieListView extends ListView {
                 movies.addAll(Arrays.asList(movieController.findByKeyword(searchKeyword)));
                 setContent("Your search for '" + searchKeyword + "' yielded "
                            + movies.size() + " movie items.");
-                setMenuItems(new MovieListMenuOption[] {
-                    MovieListMenuOption.GO_BACK
-                });
+                setMenuItems(MovieListMenuOption.GO_BACK);
                 break;
 
             case ADMIN:
                 movies.addAll(movieController.getList());
-                setMenuItems(new MovieListMenuOption[] {
-                    MovieListMenuOption.ADD_MOVIE,
-                    MovieListMenuOption.GO_BACK
-                });
+                setMenuItems(MovieListMenuOption.ADD_MOVIE,
+                             MovieListMenuOption.GO_BACK);
                 break;
         }
 
