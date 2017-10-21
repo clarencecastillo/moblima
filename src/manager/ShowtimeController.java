@@ -16,6 +16,7 @@ import model.booking.BookingStatus;
 import model.booking.Showtime;
 import model.booking.ShowtimeStatus;
 import model.cinema.Cinema;
+import model.cinema.Cineplex;
 import model.commons.Language;
 import model.movie.Movie;
 import model.movie.MovieStatus;
@@ -33,14 +34,16 @@ public class ShowtimeController extends EntityController<Showtime> {
         return instance;
     }
 
-    public Showtime createShowtime(UUID movieId, UUID cinemaId, Language language,
+    public Showtime createShowtime(UUID movieId, UUID cineplexId, UUID cinemaId, Language language,
                                    Date startTime, boolean noFreePasses,
                                    boolean isPreview, Language[] subtitles) throws IllegalMovieStatusException {
 
         MovieController movieManager = MovieController.getInstance();
         CinemaController cinemaController = CinemaController.getInstance();
+        CineplexController cineplexController = CineplexController.getInstance();
 
         Movie movie = movieManager.findById(movieId);
+        Cineplex cineplex = cineplexController.findById(cineplexId);
 
         if (movie.getStatus() == MovieStatus.PREVIEW && !isPreview)
             throw new IllegalMovieStatusException("Movie is still in preview");
@@ -50,7 +53,7 @@ public class ShowtimeController extends EntityController<Showtime> {
 
         Cinema cinema = cinemaController.findById(cinemaId);
 
-        Showtime showtime = new Showtime(movie, cinema, language, startTime,
+        Showtime showtime = new Showtime(movie, cineplex, cinema, language, startTime,
                                          noFreePasses, isPreview, subtitles);
 
         movie.addShowtime(showtime);

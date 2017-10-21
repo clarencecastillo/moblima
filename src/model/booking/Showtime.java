@@ -6,6 +6,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.UUID;
 import model.cinema.Cinema;
+import model.cinema.Cineplex;
 import model.commons.Entity;
 import model.commons.Language;
 import model.movie.Movie;
@@ -14,6 +15,7 @@ import util.Utilities;
 public class Showtime extends Entity {
 
     private Movie movie;
+    private Cineplex cineplex;
     private Cinema cinema;
     private ShowtimeSeating seating;
     private Language language;
@@ -24,10 +26,11 @@ public class Showtime extends Entity {
     private ArrayList<Language> subtitles;
     private ArrayList<Booking> bookings;
 
-    public Showtime(Movie movie, Cinema cinema, Language language,
+    public Showtime(Movie movie, Cineplex cineplex, Cinema cinema, Language language,
                     Date startTime, boolean noFreePasses,
                     boolean isPreview, Language[] subtitles) {
         this.movie = movie;
+        this.cineplex = cineplex;
         this.cinema = cinema;
         this.seating = new ShowtimeSeating(cinema.getLayout().getSeats());
         this.language = language;
@@ -42,6 +45,8 @@ public class Showtime extends Entity {
     public Movie getMovie() {
         return movie;
     }
+
+    public Cineplex getCineplex() {return cineplex; }
 
     public Cinema getCinema() {
         return cinema;
@@ -101,6 +106,8 @@ public class Showtime extends Entity {
     public void setMovie(Movie movie) {
         this.movie = movie;
     }
+
+    public void setCineplex(Cineplex cineplex) {this.cineplex = cineplex; }
 
     public void setCinema(Cinema cinema) {
         this.cinema = cinema;

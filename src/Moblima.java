@@ -82,7 +82,7 @@ public class Moblima {
             Date startTime1 = calendar.getTime();
             Language[] subtitles = new Language[1];
             subtitles[0]= Language.ENGLISH;
-            Showtime showtime1 = showtimeManager.createShowtime(movie1.getId(),cinema1.getId(), Language.ENGLISH,startTime1, false,false, subtitles);
+            Showtime showtime1 = showtimeManager.createShowtime(movie1.getId(),cineplex.getId(),cinema1.getId(), Language.ENGLISH,startTime1, false,false, subtitles);
 
             BookingController bookingController = BookingController.getInstance();
             Booking booking1 = bookingController.createBooking(showtime1.getId());
