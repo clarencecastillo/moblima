@@ -10,14 +10,12 @@ public class Ticket extends Entity {
     private Seat seat;
     private TicketType type;
     private Pricing pricing;
-    private Booking booking;
     private TicketStatus status;
 
-    public Ticket(Seat seat, TicketType type, Pricing pricing, Booking booking) {
+    public Ticket(Seat seat, TicketType type, Pricing pricing) {
         this.seat = seat;
         this.type = type;
         this.pricing = pricing;
-        this.booking = booking;
         this.status = TicketStatus.VALID;
     }
 
@@ -31,10 +29,6 @@ public class Ticket extends Entity {
 
     public Pricing getPricing() {
         return pricing;
-    }
-
-    public Booking getBooking() {
-        return booking;
     }
 
     public TicketStatus getStatus() {
@@ -51,10 +45,6 @@ public class Ticket extends Entity {
 
     public void setPricing(Pricing pricing) {
         this.pricing = pricing;
-    }
-
-    public void setBooking(Booking booking) {
-        this.booking = booking;
     }
 
     public void setStatus(TicketStatus status) {

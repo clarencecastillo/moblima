@@ -72,64 +72,64 @@ public class TicketController extends EntityController<Ticket> {
 
         seating.setSeatingStatus(seat, SeatingStatus.TAKEN);
         Ticket ticket = new Ticket(seat, type, new Pricing(cinema.getType(), seat.getType(),
-                                                           type, movie.getType()), booking);
+                                                           type, movie.getType()));
         booking.addTicket(ticket);
         entities.put(ticket.getId(), ticket);
         return ticket;
     }
 
-    public void removeTicket(UUID ticketId) throws IllegalTicketRemovingException {
+//    public void removeTicket(UUID ticketId) throws IllegalTicketRemovingException {
+//
+//        Ticket ticket = findById(ticketId);
+//        Booking booking = ticket.getBooking();
+//        Showtime showtime = booking.getShowtime();
+//        ShowtimeSeating seating = showtime.getSeating();
+//
+//        // Check if booking status not in progress
+//        if (booking.getStatus() != BookingStatus.IN_PROGRESS)
+//            throw new IllegalTicketRemovingException();
+//
+//        if (ticket.getStatus() == TicketStatus.VOID)
+//            throw new IllegalTicketRemovingException("Ticket has already been removed");
+//
+//        booking.removeTicket(ticket);
+//        seating.setSeatingStatus(ticket.getSeat(), SeatingStatus.AVAILABLE);
+//        ticket.setStatus(TicketStatus.VOID);
+//    }
 
-        Ticket ticket = findById(ticketId);
-        Booking booking = ticket.getBooking();
-        Showtime showtime = booking.getShowtime();
-        ShowtimeSeating seating = showtime.getSeating();
-
-        // Check if booking status not in progress
-        if (booking.getStatus() != BookingStatus.IN_PROGRESS)
-            throw new IllegalTicketRemovingException();
-
-        if (ticket.getStatus() == TicketStatus.VOID)
-            throw new IllegalTicketRemovingException("Ticket has already been removed");
-
-        booking.removeTicket(ticket);
-        seating.setSeatingStatus(ticket.getSeat(), SeatingStatus.AVAILABLE);
-        ticket.setStatus(TicketStatus.VOID);
-    }
-
-    public void updateTicket(UUID ticketId, Seat newSeat, TicketType newType)
-            throws IllegalTicketUpdatingException, InvalidTicketStatusException,
-            UnavailableTicketTypeException, UnavailableBookingSeatException {
-
-        Ticket ticket = findById(ticketId);
-        Booking booking = ticket.getBooking();
-        List<Ticket> bookingTickets = Arrays.asList(booking.getTickets());
-        Showtime showtime = booking.getShowtime();
-        Cinema cinema = showtime.getCinema();
-        ShowtimeSeating seating = showtime.getSeating();
-        Movie movie = showtime.getMovie();
-
-        // Check if booking status not in progress
-        if (booking.getStatus() != BookingStatus.IN_PROGRESS)
-            throw new IllegalTicketUpdatingException();
-
-        // Check if booking contains ticket
-        if (!bookingTickets.contains(ticket) || ticket.getStatus() == TicketStatus.VOID)
-            throw new InvalidTicketStatusException();
-
-        // Check if ticket type is not available
-        if (!cinema.getType().isAvailable(newType))
-            throw new UnavailableTicketTypeException();
-
-        // Check if seating is already occupied
-        if (!seating.isAvailable(newSeat))
-            throw new UnavailableBookingSeatException();
-
-        Pricing pricing = new Pricing(cinema.getType(), newSeat.getType(),
-                                      newType, movie.getType());
-
-        ticket.setSeat(newSeat);
-        ticket.setType(newType);
-        ticket.setPricing(pricing);
-    }
+//    public void updateTicket(UUID ticketId, Seat newSeat, TicketType newType)
+//            throws IllegalTicketUpdatingException, InvalidTicketStatusException,
+//            UnavailableTicketTypeException, UnavailableBookingSeatException {
+//
+//        Ticket ticket = findById(ticketId);
+//        Booking booking = ticket.getBooking();
+//        List<Ticket> bookingTickets = Arrays.asList(booking.getTickets());
+//        Showtime showtime = booking.getShowtime();
+//        Cinema cinema = showtime.getCinema();
+//        ShowtimeSeating seating = showtime.getSeating();
+//        Movie movie = showtime.getMovie();
+//
+//        // Check if booking status not in progress
+//        if (booking.getStatus() != BookingStatus.IN_PROGRESS)
+//            throw new IllegalTicketUpdatingException();
+//
+//        // Check if booking contains ticket
+//        if (!bookingTickets.contains(ticket) || ticket.getStatus() == TicketStatus.VOID)
+//            throw new InvalidTicketStatusException();
+//
+//        // Check if ticket type is not available
+//        if (!cinema.getType().isAvailable(newType))
+//            throw new UnavailableTicketTypeException();
+//
+//        // Check if seating is already occupied
+//        if (!seating.isAvailable(newSeat))
+//            throw new UnavailableBookingSeatException();
+//
+//        Pricing pricing = new Pricing(cinema.getType(), newSeat.getType(),
+//                                      newType, movie.getType());
+//
+//        ticket.setSeat(newSeat);
+//        ticket.setType(newType);
+//        ticket.setPricing(pricing);
+//    }
 }
