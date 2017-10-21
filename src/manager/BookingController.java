@@ -41,7 +41,6 @@ public class BookingController extends EntityController<Booking> {
 
     public Booking createBooking(UUID showtimeId) throws IllegalShowtimeStatusException {
 
-        UserController userManager = UserController.getInstance();
         ShowtimeController showtimeManager = ShowtimeController.getInstance();
 
         Showtime showtime = showtimeManager.findById(showtimeId);
@@ -51,8 +50,7 @@ public class BookingController extends EntityController<Booking> {
             throw new IllegalShowtimeStatusException("Can only book when the movie is open for booking");
 
         // Create the booking
-        Date now = new Date();
-        Booking booking = new Booking(showtime, now);
+        Booking booking = new Booking(showtime);
 
         // Add booking fee if any
         double bookingSurcharge = BookingConfig.getBookingSurcharrge();
@@ -75,10 +73,6 @@ public class BookingController extends EntityController<Booking> {
         // Check if showtime is still open for booking
         if (showtime.getStatus() != ShowtimeStatus.OPEN_BOOKING)
             throw new IllegalShowtimeStatusException("Can only book when the movie is open for booking");
-
-        // Check if state is already set
-        if (booking.getStatus() == status)
-            throw new IllegalBookingStatusException("The booking is already "+ status);
 
         ShowtimeSeating seating = showtime.getSeating();
         Payment payment = booking.getPayment();
@@ -188,12 +182,12 @@ public class BookingController extends EntityController<Booking> {
         booking.setShowtime(showtime);
     }
 
-// TODO
-//    public void assignUser(UUID showtimeId,UUID userId){
-//        UserController userManager = UserController.getInstance();
-//        ShowtimeController showtimeManager = ShowtimeController.getInstance();
-//
-//        User user = userManager.findById(userId);
-//        Showtime showtime = showtimeManager.findById(showtimeId);
-//        user.addBooking(booking);
+
+    public void assignUser(UUID bookingId,UUID userId) {
+        UserController userManager = UserController.getInstance();
+        BookingController bookingController = BookingController.getInstance();
+
+        User user = userManager.findById(userId);
+        user.addBooking(bookingController.findById(bookingId));
+    }
 }
