@@ -4,11 +4,15 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import manager.MovieController;
 import model.movie.Movie;
+import model.movie.MovieStatus;
+import view.MovieMenuView.MovieMenuIntent;
 import view.ui.Describable;
 import view.ui.Form;
+import view.ui.NavigationIntent;
 import view.ui.ListView;
 import view.ui.Navigation;
 import view.ui.View;
+import view.ui.ViewItem;
 
 public class MovieListView extends ListView {
 
@@ -24,59 +28,68 @@ public class MovieListView extends ListView {
     }
 
     @Override
-    public void onLoad(String... args) {
-        intent = MovieListIntent.valueOf(args[0]);
-        setTitle("Movie Listings");
-        switch (intent) {
+    public void onLoad(NavigationIntent intent, String... args) {
+
+        this.intent = (MovieListIntent) intent;
+        switch (this.intent) {
             case SEARCH:
                 View.displayInformation("Please enter search terms. Keywords may include movie "
                                         + "title, director, and actors.");
                 String searchKeyword = Form.getString("Search");
                 movies.addAll(Arrays.asList(movieController.findByKeyword(searchKeyword)));
                 setContent("Your search for '" + searchKeyword + "' yielded "
-                           + movies.size() + " movie items.");
-                setMenuItems(MovieListMenuOption.GO_BACK);
+                           + movies.size() + " movie item(s).");
                 break;
 
+            case LIST:
+                movies.addAll(Arrays.asList(movieController.findByStatus(MovieStatus.PREVIEW,
+                                                                         MovieStatus.COMING_SOON,
+                                                                         MovieStatus.NOW_SHOWING)));
+                setContent("Displaying " + movies.size() + " movie item(s).");
+                break;
             case ADMIN:
                 movies.addAll(movieController.getList());
-                setMenuItems(MovieListMenuOption.ADD_MOVIE,
-                             MovieListMenuOption.GO_BACK);
+                setMenuItems(MovieListMenuOption.ADD_MOVIE);
                 break;
         }
 
-        setViewItems(movies.stream().map(MovieItemView::new).toArray(MovieItemView[]::new));
+        setTitle("Movie Listings");
+        addBackOption();
+        setViewItems(movies.stream().map(
+            movie -> new ViewItem(new MovieView(movie),
+                                  movie.getId().toString())).toArray(ViewItem[]::new));
     }
 
     @Override
     public void onEnter() {
         display();
         String userInput = getChoice();
-        try {
-            MovieListMenuOption userChoice = MovieListMenuOption.valueOf(userInput);
-            switch (userChoice) {
-                case ADD_MOVIE:
-                    System.out.println("Add movie!");
-                    break;
-                case GO_BACK:
-                    navigation.goBack();
-                    break;
+        if (userInput.equals(BACK))
+            navigation.goBack();
+        else
+            try {
+                MovieListMenuOption userChoice = MovieListMenuOption.valueOf(userInput);
+                switch (userChoice) {
+                    case ADD_MOVIE:
+                        System.out.println("Add movie!");
+                        break;
+                }
+            } catch (IllegalArgumentException e) {
+                navigation.goTo(new MovieMenuView(navigation),
+                                this.intent == MovieListIntent.ADMIN ?
+                                MovieMenuIntent.ADMIN : MovieMenuIntent.VIEW, userInput);
             }
-        } catch (IllegalArgumentException e) {
-            System.out.println("Selected movie ID " + userInput);
-//            navigation.goTo(MovieViewController.getInstance(), userInput);
-        }
     }
 
-    public enum MovieListIntent {
+    public enum MovieListIntent implements NavigationIntent {
         SEARCH,
-        ADMIN
+        ADMIN,
+        LIST
     }
 
     public enum MovieListMenuOption implements Describable {
 
-        ADD_MOVIE("Add Movie"),
-        GO_BACK("Go Back");
+        ADD_MOVIE("Add Movie");
 
         private String description;
         MovieListMenuOption(String description) {

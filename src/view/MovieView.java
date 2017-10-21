@@ -2,15 +2,17 @@ package view;
 
 import java.util.Arrays;
 import model.movie.Movie;
-import view.ui.ViewItem;
+import view.ui.View;
 
-public class MovieItemView extends ViewItem {
+public class MovieView extends View {
 
-    public MovieItemView(Movie movie) {
-        super(movie.getId().toString());
+    private Movie movie;
+
+    public MovieView(Movie movie) {
+        this.movie = movie;
 
         setTitle(String.format("%s [%s] %s", movie.getTitle(),
-                                         movie.getType(), movie.getRating()));
+                               movie.getType(), movie.getRating()));
         setContent("Director: " + movie.getDirector(),
                    "Actors: " + String.join(",",
                                             Arrays.stream(movie.getActors())

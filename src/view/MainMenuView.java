@@ -6,6 +6,7 @@ import view.ui.Navigation;
 import exception.InputUnrecognisedException;
 import view.ui.Describable;
 import view.ui.MenuView;
+import view.ui.NavigationIntent;
 import view.ui.View;
 
 public class MainMenuView extends MenuView {
@@ -17,7 +18,7 @@ public class MainMenuView extends MenuView {
     }
 
     @Override
-    public void onLoad(String... args) {
+    public void onLoad(NavigationIntent intent, String... args) {
         this.version = args[0];
 
         setMenuItems(MainMenuOption.values());
@@ -44,10 +45,10 @@ public class MainMenuView extends MenuView {
 
         switch (userChoice) {
             case SEARCH_MOVIES:
-                navigation.goTo(new MovieListView(navigation), MovieListIntent.SEARCH.toString());
+                navigation.goTo(new MovieListView(navigation), MovieListIntent.SEARCH);
                 break;
             case LIST_MOVIES:
-                navigation.goTo(new MovieListView(navigation));
+                navigation.goTo(new MovieListView(navigation), MovieListIntent.LIST);
                 break;
             case VIEW_SHOWTIMES:
                 break;
@@ -57,6 +58,7 @@ public class MainMenuView extends MenuView {
                 navigation.goTo(new MovieListView(navigation));
                 break;
             case ADMIN:
+                navigation.goTo(new AdminMenuView(navigation));
                 break;
         }
     }

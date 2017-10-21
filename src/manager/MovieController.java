@@ -1,6 +1,8 @@
 package manager;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
 
 import exception.IllegalMovieStatusException;
@@ -79,6 +81,15 @@ public class MovieController extends EntityController<Movie> {
         if (movie.getStatus() != MovieStatus.COMING_SOON)
             throw new IllegalMovieStatusException("Can only change movie type when it is not yet available for screening");
         movie.setType(type);
+    }
+
+    public Movie[] findByStatus(MovieStatus... status) {
+        ArrayList<Movie> movies = new ArrayList<>();
+        List<MovieStatus> statuses = Arrays.asList(status);
+        for (Movie movie : entities.values())
+            if (statuses.contains(movie.getStatus()))
+                movies.add(movie);
+        return movies.toArray(new Movie[movies.size()]);
     }
 
     public Movie[] findByKeyword(String keyword) {
