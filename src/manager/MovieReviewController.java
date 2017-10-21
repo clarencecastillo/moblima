@@ -29,7 +29,7 @@ public class MovieReviewController extends EntityController<MovieReview> {
 
         Movie movie = movieManager.findById(movieId);
         User author = userManager.findById(authorId);
-        MovieReview movieReview = new MovieReview(review, rating, movie, author);
+        MovieReview movieReview = new MovieReview(review, rating, author);
         entities.put(movieReview.getId(), movieReview);
         movie.addReview(movieReview);
         author.addReview(movieReview);
