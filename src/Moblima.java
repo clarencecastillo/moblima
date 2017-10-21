@@ -85,7 +85,7 @@ public class Moblima {
             Showtime showtime1 = showtimeManager.createShowtime(movie1.getId(),cinema1.getId(), Language.ENGLISH,startTime1, false,false, subtitles);
 
             BookingController bookingController = BookingController.getInstance();
-            Booking booking1 = bookingController.createBooking(user1.getId(), showtime1.getId());
+            Booking booking1 = bookingController.createBooking(showtime1.getId());
 
             TicketController ticketManager = TicketController.getInstance();
             ticketManager.createTicket(booking1.getId(),seats[0], TicketType.STANDARD);

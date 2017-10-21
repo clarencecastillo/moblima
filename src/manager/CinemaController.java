@@ -23,7 +23,7 @@ public class CinemaController extends EntityController<Cinema> {
 
         CineplexController cineplexController = CineplexController.getInstance();
         Cineplex cineplex = cineplexController.findById(cineplexId);
-        Cinema cinema = new Cinema(code, cineplex, type, layout);
+        Cinema cinema = new Cinema(code, type, layout);
 
         cineplex.addCinema(cinema);
         entities.put(cinema.getId(), cinema);

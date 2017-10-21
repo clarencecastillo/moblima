@@ -188,12 +188,12 @@ public class BookingController extends EntityController<Booking> {
         booking.setShowtime(showtime);
     }
 
-    public void assignUser(UUID userId){
-        UserController userManager = UserController.getInstance();
-        ShowtimeController showtimeManager = ShowtimeController.getInstance();
-
-        User user = userManager.findById(userId);
-        Showtime showtime = showtimeManager.findById(showtimeId);
-        user.addBooking(booking);
-    }
+// TODO
+//    public void assignUser(UUID showtimeId,UUID userId){
+//        UserController userManager = UserController.getInstance();
+//        ShowtimeController showtimeManager = ShowtimeController.getInstance();
+//
+//        User user = userManager.findById(userId);
+//        Showtime showtime = showtimeManager.findById(showtimeId);
+//        user.addBooking(booking);
 }
