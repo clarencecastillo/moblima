@@ -94,7 +94,10 @@ public interface Form {
     static char getChar(String prompt) {
         System.out.print(prompt + PROMPT_DELIMETER);
         Scanner sc = new Scanner(System.in);
-        return sc.next().charAt(0);
+        String input = sc.next();
+        if (input.length() != 1)
+            throw new InputUnrecognisedException(input);
+        return input.charAt(0);
     }
 
     static char getChar(String prompt, char[] options) throws InputOutOfBoundsException {
@@ -104,6 +107,13 @@ public interface Form {
         return input;
     }
 
+    static char getChar(String prompt, char min, char max) throws InputOutOfBoundsException {
+        char input = getChar(prompt + " [" + min + "-" + max + "]");
+        if (input < min || input > max)
+            throw new InputOutOfBoundsException(input);
+        return input;
+    }
+    
     static Date getDate(String prompt, String format) throws ParseException {
         SimpleDateFormat dateFormat = new SimpleDateFormat(format);
         System.out.print(prompt + " [" + format + "]" + PROMPT_DELIMETER);

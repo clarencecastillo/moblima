@@ -8,6 +8,12 @@ public class ViewItem extends View implements Item {
         this.value = value;
     }
 
+    public ViewItem(View view, String value) {
+        this.title = view.title;
+        this.content = view.content;
+        this.value = value;
+    }
+
     @Override
     public void display(int index) {
         int maxLength = VIEW_WIDTH - LABEL_LENGTH - 2;
@@ -25,10 +31,5 @@ public class ViewItem extends View implements Item {
     @Override
     public String getValue() {
         return value;
-    }
-
-    @Override
-    public void setValue(String value) {
-        this.value = value;
     }
 }

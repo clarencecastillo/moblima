@@ -3,6 +3,7 @@ package view.ui;
 import exception.InputOutOfBoundsException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.InputMismatchException;
 
 public abstract class ListView extends MenuView implements Navigable {
 
@@ -23,15 +24,12 @@ public abstract class ListView extends MenuView implements Navigable {
 
     @Override
     public void displayItems() {
-        int itemIndex = 1;
-        for (int i = 0; i < viewItems.size(); i++, itemIndex++)
-            viewItems.get(i).display(itemIndex);
+        for (int i = 0; i < viewItems.size(); i++)
+            viewItems.get(i).display(i + 1);
         if (menuItems.size() > 0) {
             System.out.println();
-            for (int i = 0; i < menuItems.size(); i++, itemIndex++)
-                menuItems.get(i).display(itemIndex);
+            super.displayItems();
         }
-        System.out.println();
     }
 
     @Override
@@ -39,19 +37,38 @@ public abstract class ListView extends MenuView implements Navigable {
         displayTitle();
         displayContent();
         displayItems();
+        System.out.println();
     }
 
     @Override
     public String getChoiceIgnoreMismatch() {
-        int totalItems = menuItems.size() + viewItems.size();
         while(true)
             try {
-                int index = Form.getInt(INPUT_PROMPT, 1, totalItems) - 1;
-                return index < viewItems.size() ?
-                       viewItems.get(index).getValue() :
-                       menuItems.get(index - viewItems.size()).getValue();
+                String viewItemRange = viewItems.size() > 1 ? "1-" + viewItems.size() :
+                                       (viewItems.size() == 1 ? "1" : "");
+                String menuItemRange = menuItems.size() > 1 ?
+                                       "A-" + ((char) ('A' + menuItems.size())) :
+                                       (menuItems.size() == 1 ? "A" : "");
+                String input = Form.getString(INPUT_PROMPT + " [" +
+                                              String.join(", ",
+                                                          viewItemRange, menuItemRange) + "]");
+                try {
+                    int viewItemIndex = Integer.parseInt(input) - 1;
+                    if (viewItemIndex >= viewItems.size())
+                        throw new InputOutOfBoundsException(viewItemIndex);
+                    return viewItems.get(viewItemIndex).getValue();
+                } catch (NumberFormatException e) {
+                    if (input.length() != 1)
+                        throw new InputMismatchException(input);
+                    else {
+                        int menuItemIndex = input.charAt(0) - 'A';
+                        if (menuItemIndex >= menuItems.size())
+                            throw new InputOutOfBoundsException(menuItemIndex);
+                        return menuItems.get(menuItemIndex).getValue();
+                    }
+                }
             } catch (InputOutOfBoundsException e) {
-                System.out.println(INVALID_ERROR);
+                View.displayError(INVALID_ERROR);
             }
     }
 }

@@ -1,5 +1,6 @@
 package view.ui;
 
+import exception.NavigationRejectedException;
 import exception.RootControllerPopException;
 import java.util.Stack;
 
@@ -21,10 +22,18 @@ public class Navigation {
         System.out.flush();
     }
 
-    public void goTo(Navigable navigable, String... args) {
+    public void goTo(Navigable navigable, NavigationIntent intent, String... args) {
         stack.push(navigable);
-        navigable.onLoad(args);
-        enter(navigable);
+        try {
+            navigable.onLoad(intent, args);
+            enter(navigable);
+        } catch (NavigationRejectedException e) {
+            goBack();
+        }
+    }
+
+    public void goTo(Navigable navigable, String... args) {
+        goTo(navigable, null, args);
     }
 
     public void goBack() {

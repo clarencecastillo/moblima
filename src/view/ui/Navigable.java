@@ -2,6 +2,6 @@ package view.ui;
 
 public interface Navigable {
 
-    void onLoad(String... args);
+    void onLoad(NavigationIntent intent, String... args);
     void onEnter();
 }

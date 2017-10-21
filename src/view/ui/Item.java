@@ -14,7 +14,11 @@ public interface Item {
         return label;
     }
 
-    String getValue();
+    static String prepareLabel(char index) {
+        String label = View.line(' ', LEFT_PADDING) + index;
+        label += View.line(' ', LABEL_LENGTH - label.length());
+        return label;
+    }
 
-    void setValue(String value);
+    String getValue();
 }

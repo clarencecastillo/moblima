@@ -23,13 +23,12 @@ public class MenuItem implements Item {
         System.out.println(Item.prepareLabel(index) + DELIMITER + " " + description);
     }
 
-    @Override
-    public String getValue() {
-        return value;
+    public void display(char index) {
+        System.out.println(Item.prepareLabel(index) + DELIMITER + " " + description);
     }
 
     @Override
-    public void setValue(String value) {
-        this.value = value;
+    public String getValue() {
+        return value;
     }
 }

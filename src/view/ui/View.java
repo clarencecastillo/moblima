@@ -44,9 +44,9 @@ public abstract class View {
     }
 
     public void displayContent() {
-        for (String line : content) {
-            System.out.println(line);
-        }
+        for (String line : content)
+            for (String stringLine : wrap(line, VIEW_WIDTH))
+                System.out.println(stringLine);
         System.out.println();
     }
 
