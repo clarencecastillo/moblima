@@ -9,13 +9,11 @@ import view.ui.Form;
 import view.ui.ListView;
 import view.ui.Navigation;
 import view.ui.View;
-import view.ui.ViewItem;
 
 public class MovieListView extends ListView {
 
     private MovieListIntent intent;
     private ArrayList<Movie> movies;
-    private String searchKeyword;
 
     private MovieController movieController;
 
@@ -26,21 +24,15 @@ public class MovieListView extends ListView {
     }
 
     @Override
-    public void onEnter(String... args) {
-
-        setTitle("Movie Listings");
-
+    public void onLoad(String... args) {
         intent = MovieListIntent.valueOf(args[0]);
+        setTitle("Movie Listings");
         switch (intent) {
-
             case SEARCH:
-
                 View.displayInformation("Please enter search terms. Keywords may include movie "
                                         + "title, director, and actors.");
-
-                searchKeyword = Form.getString("Search");
+                String searchKeyword = Form.getString("Search");
                 movies.addAll(Arrays.asList(movieController.findByKeyword(searchKeyword)));
-
                 setContent("Your search for '" + searchKeyword + "' yielded "
                            + movies.size() + " movie items.");
                 setMenuItems(new MovieListMenuOption[] {
@@ -49,7 +41,6 @@ public class MovieListView extends ListView {
                 break;
 
             case ADMIN:
-
                 movies.addAll(movieController.getList());
                 setMenuItems(new MovieListMenuOption[] {
                     MovieListMenuOption.ADD_MOVIE,
@@ -58,14 +49,12 @@ public class MovieListView extends ListView {
                 break;
         }
 
-        ArrayList<ViewItem> viewItems = new ArrayList<>();
-        for (int i = 0; i < movies.size(); i++)
-            viewItems.add(new MovieItemView(movies.get(i)));
+        setViewItems(movies.stream().map(MovieItemView::new).toArray(MovieItemView[]::new));
+    }
 
-        setViewItems(viewItems.toArray(new ViewItem[viewItems.size()]));
-
+    @Override
+    public void onEnter() {
         display();
-
         String userInput = getChoice();
         try {
             MovieListMenuOption userChoice = MovieListMenuOption.valueOf(userInput);
@@ -78,9 +67,9 @@ public class MovieListView extends ListView {
                     break;
             }
         } catch (IllegalArgumentException e) {
+            System.out.println("Selected movie ID " + userInput);
 //            navigation.goTo(MovieViewController.getInstance(), userInput);
         }
-
     }
 
     public enum MovieListIntent {
