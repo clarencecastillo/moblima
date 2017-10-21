@@ -23,6 +23,7 @@ public class Navigation {
     }
 
     public void goTo(Navigable navigable, NavigationIntent intent, String... args) {
+        clearScreen();
         stack.push(navigable);
         try {
             navigable.onLoad(intent, args);
