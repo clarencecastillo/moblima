@@ -10,14 +10,12 @@ public class MovieReview extends Entity {
     private String review;
     private int rating;
     private Date created;
-    private Movie movie;
     private User author;
 
-    public MovieReview(String review, int rating, Movie movie, User author) {
+    public MovieReview(String review, int rating, User author) {
         this.review = review;
         this.rating = rating;
         this.created = new Date();
-        this.movie = movie;
         this.author = author;
     }
 
@@ -31,10 +29,6 @@ public class MovieReview extends Entity {
 
     public Date getCreated() {
         return created;
-    }
-
-    public Movie getMovie() {
-        return movie;
     }
 
     public User getAuthor() {
