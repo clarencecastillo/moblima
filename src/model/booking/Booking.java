@@ -12,17 +12,13 @@ import model.transaction.PaymentStatus;
 public class Booking extends Entity implements Payable {
 
     private Showtime showtime;
-    private Date created;
-    private User user;
     private ArrayList<Ticket> tickets;
     private BookingPayment payment;
     private ArrayList<BookingCharge> charges;
     private BookingStatus status;
 
-    public Booking(Showtime showtime, Date created) {
+    public Booking(Showtime showtime) {
         this.showtime = showtime;
-        this.created = created;
-        this.user = null;
         this.tickets = new ArrayList<Ticket>();
         this.payment = null;
         this.charges = new ArrayList<BookingCharge>();
@@ -35,14 +31,6 @@ public class Booking extends Entity implements Payable {
 
     public Showtime getShowtime() {
         return showtime;
-    }
-
-    public Date getCreated() {
-        return created;
-    }
-
-    public User getUser() {
-        return user;
     }
 
     public Ticket[] getTickets() {
@@ -74,14 +62,6 @@ public class Booking extends Entity implements Payable {
 
     public void setShowtime(Showtime showtime) {
         this.showtime = showtime;
-    }
-
-    public void setCreated(Date created) {
-        this.created = created;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 
     public void setPayment(Payment payment) {
