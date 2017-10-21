@@ -39,12 +39,11 @@ public class BookingController extends EntityController<Booking> {
         return instance;
     }
 
-    public Booking createBooking(UUID userId, UUID showtimeId) throws IllegalShowtimeStatusException {
+    public Booking createBooking(UUID showtimeId) throws IllegalShowtimeStatusException {
 
         UserController userManager = UserController.getInstance();
         ShowtimeController showtimeManager = ShowtimeController.getInstance();
 
-        User user = userManager.findById(userId);
         Showtime showtime = showtimeManager.findById(showtimeId);
 
         // Check whether showtime is open for booking
@@ -53,7 +52,7 @@ public class BookingController extends EntityController<Booking> {
 
         // Create the booking
         Date now = new Date();
-        Booking booking = new Booking(showtime, now, user);
+        Booking booking = new Booking(showtime, now);
 
         // Add booking fee if any
         double bookingSurcharge = BookingConfig.getBookingSurcharrge();
@@ -62,7 +61,6 @@ public class BookingController extends EntityController<Booking> {
                                                 false));
 
         // Add booking to entities
-        user.addBooking(booking);
         showtime.addBooking(booking);
         entities.put(booking.getId(), booking);
         return booking;
@@ -188,5 +186,14 @@ public class BookingController extends EntityController<Booking> {
         }
 
         booking.setShowtime(showtime);
+    }
+
+    public void assignUser(UUID userId){
+        UserController userManager = UserController.getInstance();
+        ShowtimeController showtimeManager = ShowtimeController.getInstance();
+
+        User user = userManager.findById(userId);
+        Showtime showtime = showtimeManager.findById(showtimeId);
+        user.addBooking(booking);
     }
 }

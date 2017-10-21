@@ -2,7 +2,6 @@ package model.movie;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.UUID;
 
 import model.booking.Booking;
 import model.booking.Showtime;
