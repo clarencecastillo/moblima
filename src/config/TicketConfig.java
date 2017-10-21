@@ -68,6 +68,7 @@ public class TicketConfig implements Configurable {
         // DEFAULT MOVIE TYPE SURCHARGE RATES
         priceableRates.put(MovieType.TWO_DIMENSIOM, 0.0);
         priceableRates.put(MovieType.THREE_DIMENSION, 1.0);
+        priceableRates.put(MovieType.BLOCKBUSTER, 1.0);
 
         // DEFAULT TICKET TYPE RATES
         priceableRates.put(TicketType.PEAK, 13.0);

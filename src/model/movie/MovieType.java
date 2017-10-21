@@ -6,7 +6,8 @@ import model.transaction.Priceable;
 public enum MovieType implements Priceable {
 
     TWO_DIMENSIOM("2D"),
-    THREE_DIMENSION("3D");
+    THREE_DIMENSION("3D"),
+    BLOCKBUSTER("Blockbuster");
 
     private String name;
 
