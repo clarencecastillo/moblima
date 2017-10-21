@@ -1,6 +1,3 @@
-import controller.*;
-
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import manager.BookingController;
@@ -26,17 +23,16 @@ import model.movie.MoviePerson;
 import model.movie.MovieRating;
 import model.movie.MovieStatus;
 import model.movie.MovieType;
+import view.MainMenuView;
+import view.ui.Navigation;
 
 public class Moblima {
 
     public static final String VERSION = "v1.0.0";
 
     private Navigation nav;
-    private ArrayList<Controller> controllers;
-    private Controller rootController;
 
     public Moblima() {
-        controllers = new ArrayList<>();
         bootstrap();
     }
 
@@ -81,7 +77,7 @@ public class Moblima {
             ShowtimeController showtimeManager = ShowtimeController.getInstance();
 
             Calendar calendar = Calendar.getInstance();
-            calendar.set(2017, 9, 20, 8, 8);
+            calendar.set(2017, 9, 24, 8, 8);
 
             Date startTime1 = calendar.getTime();
             Language[] subtitles = new Language[1];
@@ -99,21 +95,10 @@ public class Moblima {
             System.out.println("Debug Error!");
         }
 
-        controllers.add(MainMenuController.getInstance());
-        controllers.add(AdminMenuController.getInstance());
-        controllers.add(MovieListController.getInstance());
-        controllers.add(MovieViewController.getInstance());
-        controllers.add(BookingListController.getInstance());
-        controllers.add(ConfigMenuController.getInstance());
-
         nav = new Navigation();
-        for (Controller controller: controllers)
-            controller.init(nav);
-
-        rootController = controllers.get(0);
     }
 
     public void run() {
-        nav.goTo(rootController, VERSION);
+        nav.goTo(new MainMenuView(nav), VERSION);
     }
 }

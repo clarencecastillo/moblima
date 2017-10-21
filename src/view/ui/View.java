@@ -1,4 +1,4 @@
-package view;
+package view.ui;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,17 +20,44 @@ public abstract class View {
     protected String title;
     protected ArrayList<String> content = new ArrayList<>();
 
-    protected void displayHeader() {
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String[] getContent() {
+        return content.toArray(new String[content.size()]);
+    }
+
+    public void setContent(String[] content) {
+        this.content.clear();
+        this.content.addAll(Arrays.asList(content));
+    }
+
+    public void setContent(String content) {
+        this.content.clear();
+        this.content.add(content);
+    }
+
+    public void displayTitle() {
         System.out.println(DASH_LINE);
         System.out.println(title);
         System.out.println(DASH_LINE);
     }
 
-    protected void displayContent() {
-        for (String string: content)
-            for (String stringLine : wrap(string, VIEW_WIDTH))
-                System.out.println(stringLine);
+    public void displayContent() {
+        for (String line : content) {
+            System.out.println(line);
+        }
         System.out.println();
+    }
+
+    public void display() {
+        displayTitle();
+        displayContent();
     }
 
     public static void displayColored(String message, ConsoleColor color) {
@@ -73,19 +100,5 @@ public abstract class View {
                 lines.add(match);
         }
         return lines.toArray(new String[lines.size()]);
-    }
-
-    protected void setTitle(String title) {
-        this.title = title;
-    }
-
-    protected void setContent(String[] content) {
-        this.content.clear();
-        this.content.addAll(Arrays.asList(content));
-    }
-
-    protected void setContent(String content) {
-        this.content.clear();
-        this.content.add(content);
     }
 }

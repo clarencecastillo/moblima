@@ -1,4 +1,4 @@
-package view;
+package view.ui;
 
 import exception.InputOutOfBoundsException;
 import exception.InputUnrecognisedException;
@@ -10,12 +10,12 @@ import java.util.Date;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class Form extends View {
+public interface Form {
 
-    private final static String PROMPT_DELIMETER = " > ";
-    private final static String DATE_FORMAT = "dd/MM/yyyy HH:mm";
+    String PROMPT_DELIMETER = " > ";
+    String DATE_FORMAT = "dd/MM/yyyy HH:mm";
 
-    public int getInt(String prompt) throws InputUnrecognisedException {
+    static int getInt(String prompt) throws InputUnrecognisedException {
         System.out.print(prompt + PROMPT_DELIMETER);
         Scanner sc = new Scanner(System.in);
         try {
@@ -25,21 +25,21 @@ public class Form extends View {
         }
     }
 
-    public int getInt(String prompt, int min, int max) throws InputOutOfBoundsException {
+    static int getInt(String prompt, int min, int max) throws InputOutOfBoundsException {
         int input = getInt(prompt + " [" + min + "-" + max + "]");
         if (input < min || input > max)
             throw new InputOutOfBoundsException(input);
         return input;
     }
 
-    public int getInt(String prompt, int[] options) throws InputOutOfBoundsException {
+    static int getInt(String prompt, int[] options) throws InputOutOfBoundsException {
         int input = getInt(prompt);
         if (!Arrays.asList(options).contains(input))
             throw new InputOutOfBoundsException(input);
         return input;
     }
 
-    public double getDouble(String prompt) throws InputUnrecognisedException {
+    static double getDouble(String prompt) throws InputUnrecognisedException {
         System.out.print(prompt + PROMPT_DELIMETER);
         Scanner sc = new Scanner(System.in);
         try {
@@ -49,7 +49,7 @@ public class Form extends View {
         }
     }
 
-    public double getDouble(String prompt, double min, double max)
+    static double getDouble(String prompt, double min, double max)
         throws InputOutOfBoundsException {
         double input = getDouble(prompt + " [" + min + "-" + max + "]");
         if (input < min || input > max)
@@ -57,14 +57,14 @@ public class Form extends View {
         return input;
     }
 
-    public double getDouble(String prompt, double[] options) throws InputOutOfBoundsException {
+    static double getDouble(String prompt, double[] options) throws InputOutOfBoundsException {
         double input = getDouble(prompt);
         if (!Arrays.asList(options).contains(input))
             throw new InputOutOfBoundsException(input);
         return input;
     }
 
-    public String getCensoredString(String prompt, int minLength, int maxLength)
+    static String getCensoredString(String prompt, int minLength, int maxLength)
         throws InputOutOfBoundsException {
         String input = getCensoredString(prompt + " [" + minLength + "-" + maxLength + "]");
         int inputLength = input.length();
@@ -73,49 +73,49 @@ public class Form extends View {
         return input;
     }
 
-    public String getCensoredString(String prompt) {
+    static String getCensoredString(String prompt) {
         Console console = System.console();
         return new String(console.readPassword(prompt + PROMPT_DELIMETER));
     }
 
-    public String getString(String prompt) {
+    static String getString(String prompt) {
         System.out.print(prompt + PROMPT_DELIMETER);
         Scanner sc = new Scanner(System.in);
         return sc.nextLine();
     }
 
-    public String getString(String prompt, String[] options) throws InputOutOfBoundsException {
+    static String getString(String prompt, String[] options) throws InputOutOfBoundsException {
         String input = getString(prompt);
         if (!Arrays.asList(options).contains(input))
             throw new InputOutOfBoundsException(input);
         return input;
     }
 
-    public char getChar(String prompt) {
+    static char getChar(String prompt) {
         System.out.print(prompt + PROMPT_DELIMETER);
         Scanner sc = new Scanner(System.in);
         return sc.next().charAt(0);
     }
 
-    public char getChar(String prompt, char[] options) throws InputOutOfBoundsException {
+    static char getChar(String prompt, char[] options) throws InputOutOfBoundsException {
         char input = getChar(prompt);
         if (!Arrays.asList(options).contains(input))
             throw new InputOutOfBoundsException(input);
         return input;
     }
 
-    public Date getDate(String prompt, String format) throws ParseException {
+    static Date getDate(String prompt, String format) throws ParseException {
         SimpleDateFormat dateFormat = new SimpleDateFormat(format);
         System.out.print(prompt + " [" + format + "]" + PROMPT_DELIMETER);
         Scanner sc = new Scanner(System.in);
         return dateFormat.parse(sc.nextLine());
     }
 
-    public Date getDate(String prompt) throws ParseException {
+    static Date getDate(String prompt) throws ParseException {
         return getDate(prompt, DATE_FORMAT);
     }
 
-    public void pressAnyKeyToContinue() {
+    static void pressAnyKeyToContinue() {
         System.out.print("Press ENTER key to continue...");
         Scanner sc = new Scanner(System.in);
         sc.nextLine();

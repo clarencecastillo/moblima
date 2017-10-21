@@ -1,4 +1,4 @@
-package view;
+package view.ui;
 
 public interface Item {
 
@@ -13,4 +13,8 @@ public interface Item {
         label += View.line(' ', LABEL_LENGTH - label.length());
         return label;
     }
+
+    String getValue();
+
+    void setValue(String value);
 }

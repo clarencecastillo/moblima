@@ -1,34 +1,33 @@
 package view;
 
 import config.AdminConfig;
-import controller.Navigation;
+import view.MovieListView.MovieListIntent;
+import view.ui.Navigation;
 import exception.InputUnrecognisedException;
+import view.ui.Describable;
+import view.ui.MenuView;
+import view.ui.View;
 
-public class MainMenu extends Menu implements ConsoleInterface {
+public class MainMenuView extends MenuView {
 
     public String version;
-    public Navigation navigation;
 
-    public MainMenu(Navigation navigation) {
-        this.navigation = navigation;
+    public MainMenuView(Navigation navigation) {
+        super(navigation);
     }
 
-    public void onEnter(String... args) {
-        this.version = version;
+    @Override
+    public void onLoad(String... args) {
+        this.version = args[0];
 
         setMenuItems(MainMenuOption.values());
         setTitle("MOBLIMA " + version);
         setContent("TODO Description here");
     }
 
-    public void display() {
-        displayHeader();
-        displayContent();
-        displayItems();
-    }
-
-    public void onDisplay() {
-
+    @Override
+    public void onEnter() {
+        display();
         MainMenuOption userChoice = null;
         while(true)
             try {
@@ -40,35 +39,24 @@ public class MainMenu extends Menu implements ConsoleInterface {
                     userChoice = MainMenuOption.ADMIN;
                     break;
                 }
-                View.displayError(Menu.UNRECOGNIZED_ERROR);
+                View.displayError(UNRECOGNIZED_ERROR);
             }
 
         switch (userChoice) {
             case SEARCH_MOVIES:
-
-                navigation.clearScreen();
-
-                mainMenu.setTitle("Search Movies");
-                mainMenu.displayHeader();
-
-                mainMenu.setContent("Please enter search terms. Keywords may include movie "
-                                    + "title, director, and actors.");
-                mainMenu.displayContent();
-
-                navigation.goTo(MovieListController.getInstance(),
-                                MovieListIntent.SEARCH.toString(),
-                                mainMenu.getString("Enter keywords"));
+                navigation.goTo(new MovieListView(navigation), MovieListIntent.SEARCH.toString());
                 break;
             case LIST_MOVIES:
+                navigation.goTo(new MovieListView(navigation));
                 break;
             case VIEW_SHOWTIMES:
                 break;
             case VIEW_BOOKING_HISTORY:
                 break;
             case VIEW_TOP_5_MOVIES:
+                navigation.goTo(new MovieListView(navigation));
                 break;
             case ADMIN:
-                navigation.goTo(AdminMenuController.getInstance());
                 break;
         }
     }

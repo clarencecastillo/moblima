@@ -1,4 +1,4 @@
-package view;
+package view.ui;
 
 public class MenuItem implements Item {
 
@@ -10,12 +10,26 @@ public class MenuItem implements Item {
         this.value = value;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     @Override
     public void display(int index) {
         System.out.println(Item.prepareLabel(index) + DELIMITER + " " + description);
     }
 
+    @Override
     public String getValue() {
         return value;
+    }
+
+    @Override
+    public void setValue(String value) {
+        this.value = value;
     }
 }
