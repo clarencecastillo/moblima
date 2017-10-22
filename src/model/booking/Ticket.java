@@ -1,14 +1,10 @@
 package model.booking;
 
-import java.util.UUID;
 import model.cinema.Seat;
-import model.commons.Entity;
-import model.transaction.Payable;
-import model.transaction.Payment;
 import model.transaction.Priceable;
 import model.transaction.Pricing;
 
-public class Ticket extends Entity implements Priceable {
+public class Ticket implements Priceable {
 
     private Seat seat;
     private TicketType type;

@@ -37,29 +37,30 @@ public class BookingController extends EntityController<Booking> {
         // Create the booking
         Booking booking = new Booking(showtime);
 
+        // Add booking to entities
+        showtime.addBooking(booking);
+        entities.put(booking.getId(), booking);
+
         return booking;
     }
 
     public void selectTicketType(UUID bookingId, TicketType ticketType) {
-        BookingController bookingController = BookingController.getInstance();
-        Booking booking = bookingController.findById(bookingId);
+        Booking booking = findById(bookingId);
         booking.addTicketType(ticketType);
     }
 
     public void selectSeat(UUID bookingId, Seat seat) {
-        BookingController bookingController = BookingController.getInstance();
-        Booking booking = bookingController.findById(bookingId);
+        Booking booking = findById(bookingId);
         booking.addSeat(seat);
     }
 
-    public void confirmBooking(UUID bookingId, UUID userId, Seat[] seats, TicketType[] types)
+    public void confirmBooking(UUID bookingId, UUID userId)
             throws IllegalShowtimeStatusException, UnpaidPaymentException, IllegalShowtimeBookingException,
             ExceedBookingSeatException, UnavailableTicketTypeException, UnavailableBookingSeatException {
 
         UserController userManager = UserController.getInstance();
-        BookingController bookingController = BookingController.getInstance();
         ShowtimeController showtimeManager = ShowtimeController.getInstance();
-        Booking booking = bookingController.findById(bookingId);
+        Booking booking = findById(bookingId);
         Showtime showtime = booking.getShowtime();
 
         // Check whether showtime is open for booking
@@ -74,21 +75,19 @@ public class BookingController extends EntityController<Booking> {
         booking.setStatus(BookingStatus.CONFIRMED);
 
         User user = userManager.findById(userId);
-        user.addBooking(bookingController.findById(bookingId));
+        user.addBooking(findById(bookingId));
 
-        TicketController ticketController = TicketController.getInstance();
-        for (int i = 0; i < seats.length; i++) {
-            ticketController.createTicket(booking,seats[i], types[i]);
-        }
+//        TicketController ticketController = TicketController.getInstance();
+//        Seat[] seats = booking.getSeat();
+//        TicketType[] ticketTypes = booking.getTicketType();
+//        for (int i = 0; i < seats.length; i++) {
+//            ticketController.createTicket(booking,seats[i], ticketTypes[i]);
+//        }
 
         // Mark all seats for the booking as taken
-        ShowtimeSeating seating = showtime.getSeating();
-        for(Seat seat: seats)
-            seating.setSeatingStatus(seat, SeatingStatus.TAKEN);
-
-        // Add booking to entities
-        showtime.addBooking(booking);
-        entities.put(booking.getId(), booking);
+//        ShowtimeSeating seating = showtime.getSeating();
+//        for(Seat seat: seats)
+//            seating.setSeatingStatus(seat, SeatingStatus.TAKEN);
     }
 
     public void changeBookingStatus(UUID bookingId, BookingStatus status) throws IllegalShowtimeStatusException,

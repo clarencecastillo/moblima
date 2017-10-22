@@ -73,4 +73,8 @@ public class Booking extends Entity implements Payable {
     public void addTicketType(TicketType ticketType) {ticketTypes.add(ticketType); }
 
     public void addSeat(Seat seat) {seats.add(seat); }
+
+    public TicketType[] getTicketType() { return ticketTypes.toArray(new TicketType[ticketTypes.size()]); }
+
+    public Seat[] getSeat() { return seats.toArray(new Seat[seats.size()]); }
 }
