@@ -1,11 +1,19 @@
 package model.commons;
 
-import java.util.UUID;
-
 public abstract class Person extends Entity {
 
     protected String firstName;
     protected String lastName;
+
+    public Person(String fullName) {
+        String[] splitName = fullName.split(" ");
+        if (splitName.length == 1)
+            firstName = fullName;
+        else {
+            firstName = splitName[0];
+            lastName = splitName[1];
+        }
+    }
 
     public Person(String firstName, String lastName) {
         this.firstName = firstName;

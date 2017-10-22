@@ -35,18 +35,20 @@ public class MovieMenuView extends MenuView {
                 View.displayInformation("Please enter movie details.");
                 String title = Form.getString("Title");
                 String sypnosis = Form.getString("Sypnosis");
-                String[] directorName = Form.getString("Director").split(" ");
-                MoviePerson director = new MoviePerson(directorName[0], directorName[1]);
+                MoviePerson director = new MoviePerson(Form.getString("Director"));
                 int numberOfActors = Form.getIntWithMin("Number of Actors", 0);
                 MoviePerson[] actors = new MoviePerson[numberOfActors];
-                for (int i = 0; i < numberOfActors; i++) {
-                    String[] actorName = Form.getString("Actor " + (i + 1) + " Name").split(" ");
-                    actors[i] = new MoviePerson(actorName[0], actorName[1]);
-                }
+                for (int i = 0; i < numberOfActors; i++)
+                    actors[i] = new MoviePerson(Form.getString("Actor " + (i + 1) + " Name"));
                 MovieType type = MovieType.valueOf(Form.getOption("Movie Type", MovieType.values()));
                 MovieStatus status = MovieStatus.valueOf(Form.getOption("Movie Status", MovieStatus.values()));
                 MovieRating rating = MovieRating.valueOf(Form.getOption("Movie Rating", MovieRating.values()));
                 int runtime = Form.getIntWithMin("Runtime Minutes", 0);
+
+                movie = movieController.createMovie(title, sypnosis, director, actors, type, status, rating, runtime);
+                setMenuItems(MovieMenuOption.values());
+                View.displaySuccess("Successfully created movie!");
+                Form.pressAnyKeyToContinue();
                 break;
         }
 
