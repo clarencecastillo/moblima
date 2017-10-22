@@ -1,5 +1,6 @@
 package view;
 
+import exception.IllegalMovieStatusTransitionException;
 import manager.MovieController;
 import model.movie.*;
 import view.ui.*;
@@ -70,6 +71,17 @@ public class MovieMenuView extends MenuView {
                 case SEE_REVIEWS:
                     break;
                 case CHANGE_STATUS:
+                    View.displayInformation("Please enter new status.");
+                    MovieStatus status = MovieStatus.valueOf(Form.getOption("Movie Status",
+                            MovieStatus.PREVIEW, MovieStatus.NOW_SHOWING));
+                    try {
+                        movieController.changeMovieStatus(movie.getId(), status);
+                        View.displaySuccess("Successfully updated movie!");
+                    } catch (IllegalMovieStatusTransitionException e) {
+                        View.displayError("Cannot change movie status to " + status + "!");
+                    }
+                    Form.pressAnyKeyToContinue();
+                    navigation.reload();
                     break;
                 case UPDATE:
                     View.displayInformation("Please enter updated movie details.");
@@ -80,7 +92,6 @@ public class MovieMenuView extends MenuView {
                     MoviePerson[] actors = new MoviePerson[numberOfActors];
                     for (int i = 0; i < numberOfActors; i++)
                         actors[i] = new MoviePerson(Form.getString("Actor " + (i + 1) + " Name"));
-                    MovieType type = MovieType.valueOf(Form.getOption("Movie Type", MovieType.values()));
                     MovieRating rating = MovieRating.valueOf(Form.getOption("Movie Rating",
                             MovieRating.values()));
                     int runtime = Form.getIntWithMin("Runtime Minutes", 0);
@@ -91,6 +102,16 @@ public class MovieMenuView extends MenuView {
                     navigation.reload();
                     break;
                 case REMOVE:
+                    try {
+                        movieController.changeMovieStatus(movie.getId(), MovieStatus.END_OF_SHOWING);
+                        View.displaySuccess("Successfully removed movie!");
+                        Form.pressAnyKeyToContinue();
+                        navigation.goBack();
+                    } catch (IllegalMovieStatusTransitionException e) {
+                        View.displayError("Cannot remove movie!");
+                        Form.pressAnyKeyToContinue();
+                        navigation.reload();
+                    }
                     break;
             }
     }
