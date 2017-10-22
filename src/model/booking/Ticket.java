@@ -1,22 +1,19 @@
 package model.booking;
 
-import java.util.UUID;
 import model.cinema.Seat;
-import model.commons.Entity;
+import model.transaction.Priceable;
 import model.transaction.Pricing;
 
-public class Ticket extends Entity {
+public class Ticket implements Priceable {
 
     private Seat seat;
     private TicketType type;
     private Pricing pricing;
-    private TicketStatus status;
 
     public Ticket(Seat seat, TicketType type, Pricing pricing) {
         this.seat = seat;
         this.type = type;
         this.pricing = pricing;
-        this.status = TicketStatus.VALID;
     }
 
     public Seat getSeat() {
@@ -31,23 +28,12 @@ public class Ticket extends Entity {
         return pricing;
     }
 
-    public TicketStatus getStatus() {
-        return status;
-    }
-
-    public void setSeat(Seat seat) {
-        this.seat = seat;
-    }
-
     public void setType(TicketType type) {
         this.type = type;
     }
 
-    public void setPricing(Pricing pricing) {
-        this.pricing = pricing;
-    }
-
-    public void setStatus(TicketStatus status) {
-        this.status = status;
+    @Override
+    public double getPrice() {
+        return pricing.getPrice();
     }
 }

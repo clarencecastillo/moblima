@@ -1,8 +1,6 @@
 package model.transaction;
 
-public interface Payable {
-    double getPrice();
-    void setPayment(Payment payment);
+public interface Payable extends Priceable {
     Payment getPayment();
-    boolean isPendingPayment();
+    void setPayment(Payment payment);
 }

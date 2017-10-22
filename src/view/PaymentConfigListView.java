@@ -27,9 +27,9 @@ public class PaymentConfigListView extends ListView {
         viewItems.add(new ViewItem("GST",
                 PaymentConfigMenuOption.GST.toString(),
                 String.format("$%.2f", PaymentConfig.getGst())));
-        viewItems.add(new ViewItem("Allow Refunds",
-                PaymentConfigMenuOption.ALLOW_REFUNDS.toString(),
-                PaymentConfig.isRefundsAllowed() ? "ALLOWED" : "NOT ALLOWED"));
+//        viewItems.add(new ViewItem("Allow Refunds",
+//                PaymentConfigMenuOption.ALLOW_REFUNDS.toString(),
+//                PaymentConfig.isRefundsAllowed() ? "ALLOWED" : "NOT ALLOWED"));
         setViewItems(viewItems.toArray(new ViewItem[viewItems.size()]));
 
         display();
@@ -43,9 +43,9 @@ public class PaymentConfigListView extends ListView {
                     double newGst = Form.getDouble("New GST", 0, 5);
                     paymentConfig.setGst(newGst);
                     break;
-                case ALLOW_REFUNDS:
-                    paymentConfig.setAllowedRefunds(!PaymentConfig.isRefundsAllowed());
-                    break;
+//                case ALLOW_REFUNDS:
+//                    paymentConfig.setAllowedRefunds(!PaymentConfig.isRefundsAllowed());
+//                    break;
             }
             View.displaySuccess("Successfully changed payment config value!");
             Form.pressAnyKeyToContinue();
@@ -55,6 +55,6 @@ public class PaymentConfigListView extends ListView {
 
     private enum PaymentConfigMenuOption {
         GST,
-        ALLOW_REFUNDS
+//        ALLOW_REFUNDS
     }
 }

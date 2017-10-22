@@ -1,30 +1,15 @@
 package manager;
 
-import config.BookingConfig;
-import config.PaymentConfig;
-import exception.IllegalBookingChangeException;
-import exception.IllegalBookingStatusException;
-import exception.IllegalShowtimeStatusException;
-import exception.UnpaidBookingChargeException;
-import exception.UnpaidPaymentException;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Iterator;
+import exception.*;
+
 import java.util.UUID;
 
-import model.booking.Booking;
-import model.booking.BookingCharge;
-import model.booking.BookingStatus;
-import model.booking.SeatingStatus;
-import model.booking.Showtime;
-import model.booking.ShowtimeSeating;
-import model.booking.ShowtimeStatus;
-import model.booking.Ticket;
+import model.booking.*;
+import model.cinema.Seat;
+import model.cinema.SeatType;
 import model.commons.User;
 import model.transaction.Payment;
 import model.transaction.PaymentStatus;
-import util.Utilities;
 
 public class BookingController extends EntityController<Booking> {
 
@@ -41,25 +26,72 @@ public class BookingController extends EntityController<Booking> {
 
     public Booking createBooking(UUID showtimeId) throws IllegalShowtimeStatusException {
 
-        ShowtimeController showtimeManager = ShowtimeController.getInstance();
+        ShowtimeController showtimeController = ShowtimeController.getInstance();
 
-        Showtime showtime = showtimeManager.findById(showtimeId);
+        Showtime showtime = showtimeController.findById(showtimeId);
 
         // Check whether showtime is open for booking
         if (showtime.getStatus() != ShowtimeStatus.OPEN_BOOKING)
             throw new IllegalShowtimeStatusException("Can only book when the movie is open for booking");
 
         // Create the booking
-        Booking booking = new Booking(showtime, BookingConfig.getBookingSurcharrge());
+        Booking booking = new Booking(showtime);
 
         // Add booking to entities
         showtime.addBooking(booking);
         entities.put(booking.getId(), booking);
+
         return booking;
     }
 
+    public void selectTicketType(UUID bookingId, TicketType ticketType) {
+        Booking booking = findById(bookingId);
+        booking.addTicketType(ticketType);
+    }
+
+    public void selectSeat(UUID bookingId, Seat seat) {
+        Booking booking = findById(bookingId);
+        booking.addSeat(seat);
+    }
+
+    public void confirmBooking(UUID bookingId, UUID userId)
+            throws IllegalShowtimeStatusException, UnpaidPaymentException, IllegalShowtimeBookingException,
+            ExceedBookingSeatException, UnavailableTicketTypeException, UnavailableBookingSeatException {
+
+        UserController userManager = UserController.getInstance();
+        ShowtimeController showtimeManager = ShowtimeController.getInstance();
+        Booking booking = findById(bookingId);
+        Showtime showtime = booking.getShowtime();
+
+        // Check whether showtime is open for booking
+        if (showtime.getStatus() != ShowtimeStatus.OPEN_BOOKING)
+            throw new IllegalShowtimeStatusException("Can only book when the movie is open for booking");
+
+        // Check whether payment is made
+        Payment payment = booking.getPayment();
+        if (payment.getStatus() != PaymentStatus.ACCEPTED)
+            throw new UnpaidPaymentException();
+
+        booking.setStatus(BookingStatus.CONFIRMED);
+
+        User user = userManager.findById(userId);
+        user.addBooking(findById(bookingId));
+
+//        TicketController ticketController = TicketController.getInstance();
+//        Seat[] seats = booking.getSeat();
+//        TicketType[] ticketTypes = booking.getTicketType();
+//        for (int i = 0; i < seats.length; i++) {
+//            ticketController.createTicket(booking,seats[i], ticketTypes[i]);
+//        }
+
+        // Mark all seats for the booking as taken
+//        ShowtimeSeating seating = showtime.getSeating();
+//        for(Seat seat: seats)
+//            seating.setSeatingStatus(seat, SeatingStatus.TAKEN);
+    }
+
     public void changeBookingStatus(UUID bookingId, BookingStatus status) throws IllegalShowtimeStatusException,
-        IllegalBookingStatusException, UnpaidPaymentException, UnpaidBookingChargeException, IllegalBookingChangeException {
+        IllegalBookingStatusException, UnpaidPaymentException, UnpaidBookingChargeException {
 
         Booking booking = findById(bookingId);
         Showtime showtime = booking.getShowtime();
@@ -68,9 +100,9 @@ public class BookingController extends EntityController<Booking> {
         if (showtime.getStatus() != ShowtimeStatus.OPEN_BOOKING)
             throw new IllegalShowtimeStatusException("Can only book when the movie is open for booking");
 
+
         ShowtimeSeating seating = showtime.getSeating();
         Payment payment = booking.getPayment();
-        BookingCharge[] charges = booking.getCharges();
         Ticket[] tickets = booking.getTickets();
         BookingStatus previousStatus = booking.getStatus();
         switch (status) {
@@ -81,13 +113,8 @@ public class BookingController extends EntityController<Booking> {
                     throw new IllegalBookingStatusException("The booking can not be confirmed");
 
                 // Check if booking not yet paid for
-                if (payment == null || payment.getStatus() != PaymentStatus.ACCEPTED)
+                if (payment.getStatus() != PaymentStatus.ACCEPTED)
                     throw new UnpaidPaymentException();
-
-                // Check for other charges not yet paid for
-                for (BookingCharge charge: charges)
-                    if (charge.isPendingPayment())
-                        throw new UnpaidBookingChargeException();
 
                 // Mark all seats for the booking as taken
                 for(Ticket ticket: tickets)
@@ -97,91 +124,26 @@ public class BookingController extends EntityController<Booking> {
 
             case CANCELLED:
 
-                // Check if already paid and if refunds are allowed
-                if (previousStatus == BookingStatus.CONFIRMED &&
-                    payment != null && payment.getStatus() == PaymentStatus.ACCEPTED &&
-                    PaymentConfig.isRefundsAllowed()) {
-
-                    // Refund booking payment and other refundable charges
-                    payment.setStatus(PaymentStatus.REFUNDED);
-                    for (BookingCharge charge: charges)
-                        if (charge.isRefundable())
-                            charge.getPayment().setStatus(PaymentStatus.REFUNDED);
-                }
+//                // Check if already paid and if refunds are allowed
+//                if (previousStatus == BookingStatus.CONFIRMED &&
+//                    payment != null && payment.getStatus() == PaymentStatus.ACCEPTED &&
+//                    PaymentConfig.isRefundsAllowed()) {
+//
+//                    // Refund booking payment and other refundable charges
+//                    payment.setStatus(PaymentStatus.REFUNDED);
+//                    for (BookingCharge charge: charges)
+//                        if (charge.isRefundable())
+//                            charge.getPayment().setStatus(PaymentStatus.REFUNDED);
+//                }
 
                 // Mark all seats for the booking as available
                 for (Ticket ticket: tickets)
                     seating.setSeatingStatus(ticket.getSeat(), SeatingStatus.AVAILABLE);
 
                 break;
-
-            case IN_PROGRESS:
-
-                // Happens when user wants to change booking showtime or seating
-
-                // Check if still within grace period to change booking
-                int bookingChangesGraceMinutes = BookingConfig.getBookingChangesGraceMinutes();
-                if (Utilities.getDateBefore(showtime.getStartTime(), Calendar.MINUTE,
-                                            bookingChangesGraceMinutes).after(new Date()))
-                    throw new IllegalBookingChangeException();
-
-                // Check if booking already cancelled
-                if (previousStatus == BookingStatus.CANCELLED)
-                    throw new IllegalBookingChangeException("Booking cannot be changed as it is already cancelled");
-
-                // Add booking changes fee if any
-                double bookingChangesSurcharge = BookingConfig.getBookingChangesSurcharge();
-                if (bookingChangesSurcharge > 0)
-                    booking.addCharge(new BookingCharge(bookingChangesSurcharge,
-                                                        "Booking Changes Fee",
-                                                        false));
         }
 
         booking.setStatus(status);
     }
 
-    public void changeBookingShowtime(UUID bookingId, UUID showtimeId) throws IllegalBookingChangeException{
-
-        ShowtimeController showtimeManager = ShowtimeController.getInstance();
-
-        Booking booking = findById(bookingId);
-        Showtime showtime = showtimeManager.findById(showtimeId);
-
-        // Check if booking status not in progress
-        if (booking.getStatus() != BookingStatus.IN_PROGRESS)
-            throw new IllegalBookingChangeException("Can only change showtime for bookings in progress");
-
-        // Check if showtime is the previously set showtime
-        Showtime previousShowtime = booking.getShowtime();
-        if (previousShowtime.equals(showtime))
-            throw new IllegalBookingChangeException("Can only change to another showtime");
-
-        // Check if showtime is open for booking
-        if (showtime.getStatus() != ShowtimeStatus.OPEN_BOOKING)
-            throw new IllegalBookingChangeException("This showtime is not open for booking yet.");
-
-        // Remove this booking from previous showtime
-        previousShowtime.removeBooking(booking);
-
-        // Free previously taken seats from old showtime
-        ShowtimeSeating seating = showtime.getSeating();
-        Iterator<Ticket> ticketIterator = Arrays.asList(booking.getTickets()).iterator();
-        while (ticketIterator.hasNext()) {
-            Ticket ticket = ticketIterator.next();
-            if (seating.getSeatingStatus(ticket.getSeat()) == SeatingStatus.TAKEN)
-                seating.setSeatingStatus(ticket.getSeat(), SeatingStatus.AVAILABLE);
-            ticketIterator.remove();
-        }
-
-        booking.setShowtime(showtime);
-    }
-
-
-    public void assignUser(UUID bookingId,UUID userId) {
-        UserController userManager = UserController.getInstance();
-        BookingController bookingController = BookingController.getInstance();
-
-        User user = userManager.findById(userId);
-        user.addBooking(bookingController.findById(bookingId));
-    }
 }
