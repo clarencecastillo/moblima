@@ -20,14 +20,12 @@ public class PaymentController extends EntityController<Payment> {
     public Payment makePayment(Payable payable) throws InvalidPayableException{
 
         // Assume Payment will always be successful.
-        Payment payment = new Payment(PaymentStatus.ACCEPTED, payable);
-
-        PaymentController paymentManager = PaymentController.getInstance();
+        Payment payment = payable.getPayment();
 
         if (!payable.isPendingPayment())
             throw new InvalidPayableException();
 
-        payable.setPayment(payment);
+        payment.setStatus(PaymentStatus.ACCEPTED);
         entities.put(payment.getId(), payment);
         return payment;
     }

@@ -68,6 +68,10 @@ public class BookingController extends EntityController<Booking> {
         if (showtime.getStatus() != ShowtimeStatus.OPEN_BOOKING)
             throw new IllegalShowtimeStatusException("Can only book when the movie is open for booking");
 
+        // Check if state is already set
+        if (booking.getStatus() == status)
+            throw new IllegalBookingStatusException("The booking is already "+ status);
+
         ShowtimeSeating seating = showtime.getSeating();
         Payment payment = booking.getPayment();
         BookingCharge[] charges = booking.getCharges();
@@ -81,7 +85,7 @@ public class BookingController extends EntityController<Booking> {
                     throw new IllegalBookingStatusException("The booking can not be confirmed");
 
                 // Check if booking not yet paid for
-                if (payment == null || payment.getStatus() != PaymentStatus.ACCEPTED)
+                if (payment.getStatus() != PaymentStatus.ACCEPTED)
                     throw new UnpaidPaymentException();
 
                 // Check for other charges not yet paid for

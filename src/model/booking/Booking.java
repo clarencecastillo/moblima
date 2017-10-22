@@ -20,7 +20,7 @@ public class Booking extends Entity implements Payable {
     public Booking(Showtime showtime, double bookingSurcharge) {
         this.showtime = showtime;
         this.tickets = new ArrayList<Ticket>();
-        this.payment = null;
+        this.payment = new BookingPayment(this);
         this.charges = new ArrayList<BookingCharge>();
         this.status = BookingStatus.IN_PROGRESS;
 
@@ -51,8 +51,7 @@ public class Booking extends Entity implements Payable {
 
     @Override
     public boolean isPendingPayment() {
-        return getStatus() == BookingStatus.IN_PROGRESS &&
-               (payment == null || payment.getStatus() != PaymentStatus.ACCEPTED);
+        return getStatus() == BookingStatus.IN_PROGRESS && payment.getStatus() == PaymentStatus.PENDING;
     }
 
     @Override
@@ -68,10 +67,6 @@ public class Booking extends Entity implements Payable {
 
     public void setShowtime(Showtime showtime) {
         this.showtime = showtime;
-    }
-
-    public void setPayment(Payment payment) {
-        this.payment = new BookingPayment(payment);
     }
 
     public void setStatus(BookingStatus status) {

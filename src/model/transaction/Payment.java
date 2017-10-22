@@ -10,8 +10,8 @@ public class Payment extends Entity {
     protected Payable payable;
     protected Date date;
 
-    public Payment(PaymentStatus status, Payable payable) {
-        this.status = status;
+    public Payment(Payable payable) {
+        this.status = PaymentStatus.PENDING;
         this.payable = payable;
         this.date = new Date();
     }

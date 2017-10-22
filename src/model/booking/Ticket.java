@@ -3,14 +3,17 @@ package model.booking;
 import java.util.UUID;
 import model.cinema.Seat;
 import model.commons.Entity;
+import model.transaction.Payable;
+import model.transaction.Payment;
 import model.transaction.Pricing;
 
-public class Ticket extends Entity {
+public class Ticket extends Entity implements Payable {
 
     private Seat seat;
     private TicketType type;
     private Pricing pricing;
     private TicketStatus status;
+    private Payment payment;
 
     public Ticket(Seat seat, TicketType type, Pricing pricing) {
         this.seat = seat;
@@ -49,5 +52,25 @@ public class Ticket extends Entity {
 
     public void setStatus(TicketStatus status) {
         this.status = status;
+    }
+
+    @Override
+    public double getPrice() {
+        return pricing.getPrice();
+    }
+
+    @Override
+    public void setPayment(Payment payment) {
+        this.payment = payment;
+    }
+
+    @Override
+    public Payment getPayment() {
+        return payment;
+    }
+
+    @Override
+    public boolean isPendingPayment() {
+        return false;
     }
 }
