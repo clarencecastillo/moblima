@@ -17,12 +17,16 @@ public class Booking extends Entity implements Payable {
     private ArrayList<BookingCharge> charges;
     private BookingStatus status;
 
-    public Booking(Showtime showtime) {
+    public Booking(Showtime showtime, double bookingSurcharge) {
         this.showtime = showtime;
         this.tickets = new ArrayList<Ticket>();
         this.payment = null;
         this.charges = new ArrayList<BookingCharge>();
         this.status = BookingStatus.IN_PROGRESS;
+
+        if (bookingSurcharge > 0)
+            addCharge(new BookingCharge(bookingSurcharge, "Booking Fee",
+                    false));
     }
 
     public BookingStatus getStatus() {
@@ -54,9 +58,11 @@ public class Booking extends Entity implements Payable {
     @Override
     public double getPrice() {
         double price = 0;
-        for(Ticket ticket: tickets) {
+
+        for(Ticket ticket: tickets)
             price += ticket.getPricing().getPrice();
-        }
+        // Add the booking processing fee to bookingPayment
+        price += charges.get(0).getPrice();
         return price;
     }
 

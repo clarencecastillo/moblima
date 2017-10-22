@@ -50,13 +50,7 @@ public class BookingController extends EntityController<Booking> {
             throw new IllegalShowtimeStatusException("Can only book when the movie is open for booking");
 
         // Create the booking
-        Booking booking = new Booking(showtime);
-
-        // Add booking fee if any
-        double bookingSurcharge = BookingConfig.getBookingSurcharrge();
-        if (bookingSurcharge > 0)
-            booking.addCharge(new BookingCharge(bookingSurcharge, "Booking Fee",
-                                                false));
+        Booking booking = new Booking(showtime, BookingConfig.getBookingSurcharrge());
 
         // Add booking to entities
         showtime.addBooking(booking);
