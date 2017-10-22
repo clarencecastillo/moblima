@@ -36,12 +36,12 @@ public class BookingConfigListView extends ListView {
         viewItems.add(new ViewItem("Booking Fee",
                 BookingConfigMenuOption.BOOKING_FEE.toString(),
                 String.format("$%.2f", BookingConfig.getBookingSurcharrge())));
-        viewItems.add(new ViewItem("Booking Changes Grace Period",
-                BookingConfigMenuOption.BOOKING_CHANGE_GRACE_PERIOD.toString(),
-                String.format("%d minutes", BookingConfig.getBookingChangesGraceMinutes())));
-        viewItems.add(new ViewItem("Booking Changes Fee",
-                BookingConfigMenuOption.BOOKING_CHANGE_FEE.toString(),
-                String.format("$%.2f", BookingConfig.getBookingChangesSurcharge())));
+//        viewItems.add(new ViewItem("Booking Changes Grace Period",
+//                BookingConfigMenuOption.BOOKING_CHANGE_GRACE_PERIOD.toString(),
+//                String.format("%d minutes", BookingConfig.getBookingChangesGraceMinutes())));
+//        viewItems.add(new ViewItem("Booking Changes Fee",
+//                BookingConfigMenuOption.BOOKING_CHANGE_FEE.toString(),
+//                String.format("$%.2f", BookingConfig.getBookingChangesSurcharge())));
         viewItems.add(new ViewItem("Minutes Before Closed Booking",
                 BookingConfigMenuOption.MINS_BEFORE_CLOSED_BOOKING.toString(),
                 String.format("%d minutes", BookingConfig.getMinutesBeforeClosedBooking())));
@@ -71,16 +71,16 @@ public class BookingConfigListView extends ListView {
                             double newBookingFee = Form.getDouble("Enter new booking fee", 0, 10);
                             bookingConfig.setBookingSurcharge(newBookingFee);
                             break;
-                        case BOOKING_CHANGE_GRACE_PERIOD:
-                            int newBookingChangeGracePeriod = Form.getInt("Enter new booking change " +
-                                    "grace period", 0, 360);
-                            bookingConfig.setBookingChangesGraceMinutes(newBookingChangeGracePeriod);
-                            break;
-                        case BOOKING_CHANGE_FEE:
-                            double newBookingChangeFee = Form.getDouble("Enter new booking change fee",
-                                    0, 10);
-                            bookingConfig.setBookingChangesSurcharge(newBookingChangeFee);
-                            break;
+//                        case BOOKING_CHANGE_GRACE_PERIOD:
+//                            int newBookingChangeGracePeriod = Form.getInt("Enter new booking change " +
+//                                    "grace period", 0, 360);
+//                            bookingConfig.setBookingChangesGraceMinutes(newBookingChangeGracePeriod);
+//                            break;
+//                        case BOOKING_CHANGE_FEE:
+//                            double newBookingChangeFee = Form.getDouble("Enter new booking change fee",
+//                                    0, 10);
+//                            bookingConfig.setBookingChangesSurcharge(newBookingChangeFee);
+//                            break;
                         case MINS_BEFORE_CLOSED_BOOKING:
                             int newMinutesBeforeClosedBooking  = Form.getInt("Enter new minutes before " +
                                     "closed booking", 0, 60);
