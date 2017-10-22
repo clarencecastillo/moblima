@@ -100,9 +100,22 @@ public interface Form {
     }
 
     static String getString(String prompt) {
-        System.out.print(prompt + PROMPT_DELIMETER);
-        Scanner sc = new Scanner(System.in);
-        return sc.nextLine();
+        return getString(prompt, 1);
+    }
+
+    static String getString(String prompt, int minWords) {
+
+        while (true) {
+            System.out.print(prompt + PROMPT_DELIMETER);
+            Scanner sc = new Scanner(System.in);
+            String input = sc.nextLine();
+            if (minWords == 0)
+                return input;
+            else if (!input.trim().equals("") && input.split(" ").length >= minWords)
+                return input;
+            else
+                View.displayError(INVALID_ERROR);
+        }
     }
 
     static String getOption(String prompt, EnumerableMenuOption... enumerableMenuOptions) {

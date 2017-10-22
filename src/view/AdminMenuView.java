@@ -27,8 +27,8 @@ public class AdminMenuView extends MenuView {
         View.displayInformation("Please enter your credentials");
 
         for (int loginAttempts = 1; loginAttempts <= MAX_LOGIN_ATTEMPTS; loginAttempts++) {
-            String username = Form.getString("Username");
             String password = Form.getCensoredString("Password");
+            String username = Form.getString("Username", 0);
 
             // DEBUG
             administrator = userController.findByUsername("tuanqi");
