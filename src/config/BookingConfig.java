@@ -6,8 +6,6 @@ public class BookingConfig implements Configurable {
     private static int maxSeatsPerBooking;
     private static int minDaysBeforeOpenBooking;
     private static double bookingSurcharge;
-    private static int bookingChangesGraceMinutes;
-    private static double bookingChangesSurcharge;
     private static int minutesBeforeClosedBooking;
 
     private BookingConfig() {
@@ -30,14 +28,6 @@ public class BookingConfig implements Configurable {
         return bookingSurcharge;
     }
 
-    public static int getBookingChangesGraceMinutes() {
-        return bookingChangesGraceMinutes;
-    }
-
-    public static double getBookingChangesSurcharge() {
-        return bookingChangesSurcharge;
-    }
-
     public static int getMinutesBeforeClosedBooking() {
         return minutesBeforeClosedBooking;
     }
@@ -54,14 +44,6 @@ public class BookingConfig implements Configurable {
         BookingConfig.bookingSurcharge = bookingSurcharge;
     }
 
-    public void setBookingChangesGraceMinutes(int bookingChangesGraceMinutes) {
-        BookingConfig.bookingChangesGraceMinutes = bookingChangesGraceMinutes;
-    }
-
-    public void setBookingChangesSurcharge(double bookingChangesSurcharge) {
-        BookingConfig.bookingChangesSurcharge = bookingChangesSurcharge;
-    }
-
     public void setMinutesBeforeClosedBooking(int minutesBeforeClosedBooking) {
         BookingConfig.minutesBeforeClosedBooking = minutesBeforeClosedBooking;
     }
@@ -76,8 +58,6 @@ public class BookingConfig implements Configurable {
         maxSeatsPerBooking = 10;
         minDaysBeforeOpenBooking = 7;
         bookingSurcharge = 1.0;
-        bookingChangesGraceMinutes = 120;
-        bookingChangesSurcharge = 1.50;
         minutesBeforeClosedBooking = 0;
     }
 }

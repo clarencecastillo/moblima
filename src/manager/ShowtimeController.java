@@ -1,7 +1,6 @@
 package manager;
 
 import config.BookingConfig;
-import exception.IllegalBookingChangeException;
 import exception.IllegalBookingStatusException;
 import exception.IllegalMovieStatusException;
 import exception.IllegalShowtimeStatusException;
@@ -63,7 +62,7 @@ public class ShowtimeController extends EntityController<Showtime> {
 
     public void cancelShowtime(UUID showtimeId) throws IllegalShowtimeStatusException,
             IllegalMovieStatusException, IllegalBookingStatusException,
-        UnpaidBookingChargeException, UnpaidPaymentException, IllegalBookingChangeException {
+        UnpaidBookingChargeException, UnpaidPaymentException {
 
         BookingController bookingController = BookingController.getInstance();
         Showtime showtime = findById(showtimeId);
