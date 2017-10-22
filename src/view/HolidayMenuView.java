@@ -29,7 +29,7 @@ public class HolidayMenuView extends MenuView {
 
         setTitle("Holiday Config");
         setContent("Date: " + Utilities.toFormat(holidayDate, "d MMMMM"),
-                "Description" + holidayDescription);
+                "Description: " + holidayDescription);
         setMenuItems(HolidayMenuOption.values());
         addBackOption();
     }
