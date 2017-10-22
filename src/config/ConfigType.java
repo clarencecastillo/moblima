@@ -1,8 +1,8 @@
 package config;
 
-import view.ui.Describable;
+import view.ui.EnumerableMenuOption;
 
-public enum ConfigType implements Describable {
+public enum ConfigType implements EnumerableMenuOption {
     HOLIDAY("Holidays"),
     TICKET("Ticket Pricing and Types"),
     BOOKING("Booking"),

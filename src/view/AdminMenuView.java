@@ -4,12 +4,8 @@ import exception.NavigationRejectedException;
 import manager.UserController;
 import model.cinema.Staff;
 import view.MovieListView.MovieListIntent;
-import view.ui.Describable;
-import view.ui.Form;
-import view.ui.MenuView;
-import view.ui.Navigation;
-import view.ui.NavigationIntent;
-import view.ui.View;
+import view.ui.*;
+import view.ui.EnumerableMenuOption;
 
 public class AdminMenuView extends MenuView {
 
@@ -31,8 +27,8 @@ public class AdminMenuView extends MenuView {
         View.displayInformation("Please enter your credentials");
 
         for (int loginAttempts = 1; loginAttempts <= MAX_LOGIN_ATTEMPTS; loginAttempts++) {
-            String username = Form.getString("Username");
             String password = Form.getCensoredString("Password");
+            String username = Form.getString("Username", 0);
 
             // DEBUG
             administrator = userController.findByUsername("tuanqi");
@@ -78,7 +74,7 @@ public class AdminMenuView extends MenuView {
         }
     }
 
-    private enum AdminMenuOption implements Describable {
+    private enum AdminMenuOption implements EnumerableMenuOption {
         MANAGE_MOVIE_LISTINGS("Manage Movie Listings"),
         MANAGE_SHOWTIMES("Manage Showtimes"),
         VIEW_REPORTS("View Top 5"),

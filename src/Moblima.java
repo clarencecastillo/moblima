@@ -47,12 +47,7 @@ public class Moblima {
                     "tuanqi96@cinema.com");
 
             MovieController movieManager = MovieController.getInstance();
-            MoviePerson director = new MoviePerson("Ryan", "Coogler",
-                                                   "Ryan Coogler was born on May 23, "
-                                                   + "1986 in Oakland, California, USA as Ryan "
-                                                   + "Kyle Coogler. He is a director and writer, "
-                                                   + "known for Creed (2015), Fruitvale Station "
-                                                   + "(2013) and Black Panther (2018). ");
+            MoviePerson director = new MoviePerson("Ryan", "Coogler");
             Movie movie1 = movieManager.createMovie("Black Panther", "T'Challa, after the death "
                                                        + "of his father, the King of Wakanda, "
                                                        + "returns home to the isolated, "

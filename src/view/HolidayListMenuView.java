@@ -2,12 +2,10 @@ package view;
 
 import config.HolidayConfig;
 
-import java.text.DateFormat;
-import java.text.ParseException;
 import java.util.*;
 
 import util.Utilities;
-import view.ui.Describable;
+import view.ui.EnumerableMenuOption;
 import view.ui.Form;
 import view.ui.ListView;
 import view.ui.Navigation;
@@ -57,17 +55,12 @@ public class HolidayListMenuView extends ListView {
                     case SET_HOLIDAY:
                         View.displayInformation("Please enter holiday details. Specifying dates already " +
                                 "configured will be overwritten.");
-                        while (true)
-                            try {
-                                Date date = Form.getDate("Enter date", "dd/MM");
-                                String description = Form.getString("Holiday name");
-                                holidayConfig.setHoliday(date, description);
-                                View.displaySuccess("Successfully added new holiday!");
-                                Form.pressAnyKeyToContinue();
-                                break;
-                            } catch (ParseException e) {
-                                View.displayError("Unrecognized date format! Please enter a valid date.");
-                            }
+                        Date date = Form.getDate("Enter date", "dd/MM");
+                        String description = Form.getString("Holiday name");
+                        holidayConfig.setHoliday(date, description);
+                        View.displaySuccess("Successfully added new holiday!");
+                        Form.pressAnyKeyToContinue();
+                        break;
                 }
             } catch (IllegalArgumentException e) {
                 Date holidayDate = Utilities.parseDate(userOption);
@@ -77,7 +70,7 @@ public class HolidayListMenuView extends ListView {
         }
     }
 
-    private enum HolidayConfigMenuOption implements Describable {
+    private enum HolidayConfigMenuOption implements EnumerableMenuOption {
 
         SET_HOLIDAY("Set Holiday");
 

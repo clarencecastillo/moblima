@@ -6,7 +6,7 @@ import manager.MovieController;
 import model.movie.Movie;
 import model.movie.MovieStatus;
 import view.MovieMenuView.MovieMenuIntent;
-import view.ui.Describable;
+import view.ui.EnumerableMenuOption;
 import view.ui.Form;
 import view.ui.NavigationIntent;
 import view.ui.ListView;
@@ -18,6 +18,7 @@ public class MovieListView extends ListView {
 
     private MovieListIntent intent;
     private ArrayList<Movie> movies;
+    private String searchKeyword;
 
     private MovieController movieController;
 
@@ -29,39 +30,49 @@ public class MovieListView extends ListView {
 
     @Override
     public void onLoad(NavigationIntent intent, String... args) {
-
         this.intent = (MovieListIntent) intent;
+        setTitle("Movie Listings");
         switch (this.intent) {
             case SEARCH:
                 View.displayInformation("Please enter search terms. Keywords may include movie "
-                                        + "title, director, and actors.");
-                String searchKeyword = Form.getString("Search");
-                movies.addAll(Arrays.asList(movieController.findByKeyword(searchKeyword)));
-                setContent("Your search for '" + searchKeyword + "' yielded "
-                           + movies.size() + " movie item(s).");
-                break;
-
-            case LIST:
-                movies.addAll(Arrays.asList(movieController.findByStatus(MovieStatus.PREVIEW,
-                                                                         MovieStatus.COMING_SOON,
-                                                                         MovieStatus.NOW_SHOWING)));
-                setContent("Displaying " + movies.size() + " movie item(s).");
+                        + "title, director, and actors.");
+                searchKeyword = Form.getString("Search");
                 break;
             case ADMIN:
-                movies.addAll(movieController.getList());
                 setMenuItems(MovieListMenuOption.ADD_MOVIE);
                 break;
+            case LIST:
+                break;
         }
-
-        setTitle("Movie Listings");
         addBackOption();
-        setViewItems(movies.stream().map(
-            movie -> new ViewItem(new MovieView(movie),
-                                  movie.getId().toString())).toArray(ViewItem[]::new));
     }
 
     @Override
     public void onEnter() {
+
+        movies = new ArrayList<>();
+        switch (this.intent) {
+            case SEARCH:
+                movies.addAll(Arrays.asList(movieController.findByKeyword(searchKeyword)));
+                setContent("Your search for '" + searchKeyword + "' yielded "
+                        + movies.size() + " movie item(s).");
+                break;
+
+            case LIST:
+                movies.addAll(Arrays.asList(movieController.findByStatus(MovieStatus.PREVIEW,
+                        MovieStatus.COMING_SOON,
+                        MovieStatus.NOW_SHOWING)));
+                setContent("Displaying " + movies.size() + " movie item(s).");
+                break;
+            case ADMIN:
+                movies.addAll(movieController.getList());
+                setContent("Displaying " + movies.size() + " movie item(s).");
+                break;
+        }
+        setViewItems(movies.stream().map(
+                movie -> new ViewItem(new MovieView(movie),
+                        movie.getId().toString())).toArray(ViewItem[]::new));
+
         display();
         String userInput = getChoice();
         if (userInput.equals(BACK))
@@ -71,13 +82,13 @@ public class MovieListView extends ListView {
                 MovieListMenuOption userChoice = MovieListMenuOption.valueOf(userInput);
                 switch (userChoice) {
                     case ADD_MOVIE:
-                        System.out.println("Add movie!");
+                        navigation.goTo(new MovieMenuView(navigation), MovieMenuIntent.CREATE);
                         break;
                 }
             } catch (IllegalArgumentException e) {
                 navigation.goTo(new MovieMenuView(navigation),
                                 this.intent == MovieListIntent.ADMIN ?
-                                MovieMenuIntent.ADMIN : MovieMenuIntent.VIEW, userInput);
+                                MovieMenuIntent.MANAGE : MovieMenuIntent.VIEW, userInput);
             }
     }
 
@@ -87,7 +98,7 @@ public class MovieListView extends ListView {
         LIST
     }
 
-    public enum MovieListMenuOption implements Describable {
+    public enum MovieListMenuOption implements EnumerableMenuOption {
 
         ADD_MOVIE("Add Movie");
 

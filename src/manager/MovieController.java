@@ -67,13 +67,14 @@ public class MovieController extends EntityController<Movie> {
 
     public void changeMovieDetails(UUID movieId, String title, String sypnosis,
                                    MoviePerson director, MoviePerson[] actors,
-                                   MovieRating rating) {
+                                   MovieRating rating, int runtime) {
         Movie movie = findById(movieId);
         movie.setTitle(title);
         movie.setSypnosis(sypnosis);
         movie.setDirector(director);
         movie.setActors(actors);
         movie.setRating(rating);
+        movie.setRuntime(runtime);
     }
 
     public void changeMovieType(UUID movieId, MovieType type) throws IllegalMovieStatusException{
