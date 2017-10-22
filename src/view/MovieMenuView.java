@@ -1,12 +1,10 @@
 package view;
 
-import java.util.UUID;
 import manager.MovieController;
-import model.movie.Movie;
-import view.ui.Describable;
-import view.ui.MenuView;
-import view.ui.Navigation;
-import view.ui.NavigationIntent;
+import model.movie.*;
+import view.ui.*;
+
+import java.util.UUID;
 
 public class MovieMenuView extends MenuView {
 
@@ -22,15 +20,33 @@ public class MovieMenuView extends MenuView {
 
     @Override
     public void onLoad(NavigationIntent intent, String... args) {
-        movie = movieController.findById(UUID.fromString(args[0]));
         switch ((MovieMenuIntent) intent) {
-            case ADMIN:
+            case MANAGE:
+                movie = movieController.findById(UUID.fromString(args[0]));
                 setMenuItems(MovieMenuOption.values());
                 break;
             case VIEW:
+                movie = movieController.findById(UUID.fromString(args[0]));
                 setMenuItems(MovieMenuOption.VIEW_SHOWTIMES,
                              MovieMenuOption.SEE_REVIEWS,
                              MovieMenuOption.WRITE_REVIEW);
+                break;
+            case CREATE:
+                View.displayInformation("Please enter movie details.");
+                String title = Form.getString("Title");
+                String sypnosis = Form.getString("Sypnosis");
+                String[] directorName = Form.getString("Director").split(" ");
+                MoviePerson director = new MoviePerson(directorName[0], directorName[1]);
+                int numberOfActors = Form.getIntWithMin("Number of Actors", 0);
+                MoviePerson[] actors = new MoviePerson[numberOfActors];
+                for (int i = 0; i < numberOfActors; i++) {
+                    String[] actorName = Form.getString("Actor " + (i + 1) + " Name").split(" ");
+                    actors[i] = new MoviePerson(actorName[0], actorName[1]);
+                }
+                MovieType type = MovieType.valueOf(Form.getOption("Movie Type", MovieType.values()));
+                MovieStatus status = MovieStatus.valueOf(Form.getOption("Movie Status", MovieStatus.values()));
+                MovieRating rating = MovieRating.valueOf(Form.getOption("Movie Rating", MovieRating.values()));
+                int runtime = Form.getIntWithMin("Runtime Minutes", 0);
                 break;
         }
 
@@ -62,8 +78,9 @@ public class MovieMenuView extends MenuView {
     }
 
     public enum MovieMenuIntent implements NavigationIntent {
-        ADMIN,
-        VIEW
+        MANAGE,
+        VIEW,
+        CREATE
     }
 
     private enum MovieMenuOption implements Describable {

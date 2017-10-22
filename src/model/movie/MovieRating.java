@@ -1,6 +1,8 @@
 package model.movie;
 
-public enum MovieRating {
+import view.ui.Describable;
+
+public enum MovieRating implements Describable {
 
     G("G"),
     PG("PG"),
@@ -17,6 +19,11 @@ public enum MovieRating {
 
     @Override
     public String toString() {
+        return name;
+    }
+
+    @Override
+    public String getDescription() {
         return name;
     }
 }

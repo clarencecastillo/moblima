@@ -77,7 +77,7 @@ public class MovieListView extends ListView {
             } catch (IllegalArgumentException e) {
                 navigation.goTo(new MovieMenuView(navigation),
                                 this.intent == MovieListIntent.ADMIN ?
-                                MovieMenuIntent.ADMIN : MovieMenuIntent.VIEW, userInput);
+                                MovieMenuIntent.MANAGE : MovieMenuIntent.VIEW, userInput);
             }
     }
 
