@@ -6,7 +6,7 @@ import manager.MovieController;
 import model.movie.Movie;
 import model.movie.MovieStatus;
 import view.MovieMenuView.MovieMenuIntent;
-import view.ui.Describable;
+import view.ui.EnumerableMenuOption;
 import view.ui.Form;
 import view.ui.NavigationIntent;
 import view.ui.ListView;
@@ -87,7 +87,7 @@ public class MovieListView extends ListView {
         LIST
     }
 
-    public enum MovieListMenuOption implements Describable {
+    public enum MovieListMenuOption implements EnumerableMenuOption {
 
         ADD_MOVIE("Add Movie");
 

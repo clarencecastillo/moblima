@@ -32,7 +32,7 @@ public class TicketConfigMenuView extends MenuView {
             }
     }
 
-    private enum TicketConfigMenuOption implements Describable {
+    private enum TicketConfigMenuOption implements EnumerableMenuOption {
 
         SET_PRICING("Set Pricing"),
         SET_ALLOWED_TICKET_TYPES("Set Allowed Ticket Types");

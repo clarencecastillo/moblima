@@ -1,6 +1,6 @@
 //package controller;
 //
-//import view.ui.Describable;
+//import view.ui.EnumerableMenuOption;
 //
 //public class MovieReviewViewController extends Controller {
 //
@@ -39,7 +39,7 @@
 //
 //    }
 //
-//    private enum MovieReviewLoginMenuOption implements Describable {
+//    private enum MovieReviewLoginMenuOption implements EnumerableMenuOption {
 //
 //        LOG_IN_VIA_PHONE_NUMBER("Log in via phone number"),
 //        LOG_IN_VIA_EMAIL("Log in via email"),

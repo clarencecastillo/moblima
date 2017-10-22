@@ -83,7 +83,7 @@ public class MovieMenuView extends MenuView {
         CREATE
     }
 
-    private enum MovieMenuOption implements Describable {
+    private enum MovieMenuOption implements EnumerableMenuOption {
 
         VIEW_SHOWTIMES("View Showtimes"),
         SEE_REVIEWS("See Reviews"),

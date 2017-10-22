@@ -105,14 +105,14 @@ public interface Form {
         return sc.nextLine();
     }
 
-    static String getOption(String prompt, Describable... describables) {
+    static String getOption(String prompt, EnumerableMenuOption... enumerableMenuOptions) {
 
         char itemIndex = 'A';
-        MenuItem[] options = new MenuItem[describables.length];
-        for (int i = 0; i < describables.length; i++, itemIndex++) {
-            String description = describables[i].getDescription();
+        MenuItem[] options = new MenuItem[enumerableMenuOptions.length];
+        for (int i = 0; i < enumerableMenuOptions.length; i++, itemIndex++) {
+            String description = enumerableMenuOptions[i].getDescription();
             if (description != null) {
-                options[i] = new MenuItem(description, describables[i].toString());
+                options[i] = new MenuItem(description, enumerableMenuOptions[i].name());
                 options[i].display(itemIndex);
             }
         }

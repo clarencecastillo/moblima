@@ -1,8 +1,8 @@
 package model.movie;
 
-import view.ui.Describable;
+import view.ui.EnumerableMenuOption;
 
-public enum MovieRating implements Describable {
+public enum MovieRating implements EnumerableMenuOption {
 
     G("G"),
     PG("PG"),

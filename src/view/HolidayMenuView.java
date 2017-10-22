@@ -4,8 +4,6 @@ import config.HolidayConfig;
 import util.Utilities;
 import view.ui.*;
 
-import java.awt.*;
-import java.text.ParseException;
 import java.util.Date;
 
 public class HolidayMenuView extends MenuView {
@@ -51,7 +49,7 @@ public class HolidayMenuView extends MenuView {
             }
     }
 
-    private enum HolidayMenuOption implements Describable {
+    private enum HolidayMenuOption implements EnumerableMenuOption {
 
         REMOVE("Remove Holiday");
 

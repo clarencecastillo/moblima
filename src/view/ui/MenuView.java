@@ -28,12 +28,12 @@ public abstract class MenuView extends View implements Navigable, Form {
         this.menuItems.addAll(Arrays.asList(menuItems));
     }
 
-    protected void setMenuItems(Describable... describables) {
+    protected void setMenuItems(EnumerableMenuOption... enumerableMenuOptions) {
         menuItems.clear();
-        for (int i = 0; i < describables.length; i++) {
-            String description = describables[i].getDescription();
+        for (int i = 0; i < enumerableMenuOptions.length; i++) {
+            String description = enumerableMenuOptions[i].getDescription();
             if (description != null)
-                menuItems.add(new MenuItem(description, describables[i].toString()));
+                menuItems.add(new MenuItem(description, enumerableMenuOptions[i].name()));
         }
     }
 

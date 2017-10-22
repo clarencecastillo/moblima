@@ -68,7 +68,7 @@ public class MainMenuView extends MenuView {
         }
     }
 
-    public enum MainMenuOption implements Describable {
+    public enum MainMenuOption implements EnumerableMenuOption {
 
         SEARCH_MOVIES("Search Movies"),
         LIST_MOVIES("List Movies"),

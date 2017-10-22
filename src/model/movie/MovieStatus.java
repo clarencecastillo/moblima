@@ -1,8 +1,8 @@
 package model.movie;
 
-import view.ui.Describable;
+import view.ui.EnumerableMenuOption;
 
-public enum MovieStatus implements Describable {
+public enum MovieStatus implements EnumerableMenuOption {
 
     COMING_SOON("Coming Soon"),
     PREVIEW("Preview"),

@@ -2,9 +2,9 @@ package model.movie;
 
 import config.TicketConfig;
 import model.transaction.Priceable;
-import view.ui.Describable;
+import view.ui.EnumerableMenuOption;
 
-public enum MovieType implements Priceable, Describable {
+public enum MovieType implements Priceable, EnumerableMenuOption {
 
     TWO_DIMENSION("2D", "2D Movie"),
     THREE_DIMENSION("3D", "3D Movie"),
