@@ -28,8 +28,7 @@ public class MovieMenuView extends MenuView {
             case VIEW:
                 movie = movieController.findById(UUID.fromString(args[0]));
                 setMenuItems(MovieMenuOption.VIEW_SHOWTIMES,
-                             MovieMenuOption.SEE_REVIEWS,
-                             MovieMenuOption.WRITE_REVIEW);
+                             MovieMenuOption.SEE_REVIEWS);
                 break;
             case CREATE:
                 View.displayInformation("Please enter movie details.");
@@ -70,7 +69,7 @@ public class MovieMenuView extends MenuView {
                     break;
                 case SEE_REVIEWS:
                     break;
-                case WRITE_REVIEW:
+                case CHANGE_STATUS:
                     break;
                 case UPDATE:
                     View.displayInformation("Please enter updated movie details.");
@@ -106,7 +105,7 @@ public class MovieMenuView extends MenuView {
 
         VIEW_SHOWTIMES("View Showtimes"),
         SEE_REVIEWS("See Reviews"),
-        WRITE_REVIEW("Write Review"),
+        CHANGE_STATUS("Change Status"),
         UPDATE("Update"),
         REMOVE("Remove");
 
