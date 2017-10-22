@@ -6,7 +6,6 @@ import java.util.Arrays;
 import model.booking.Booking;
 import model.booking.Showtime;
 import model.booking.Ticket;
-import model.booking.TicketStatus;
 import model.commons.Entity;
 import model.commons.Searchable;
 
@@ -91,7 +90,7 @@ public class Movie extends Entity implements Searchable {
         for(Showtime showtime: showtimes)
             for(Booking booking: showtime.getBookings())
                 for(Ticket ticket:booking.getTickets())
-                    if (ticket.getStatus() == TicketStatus.VALID) sum++;
+                    sum++;
         return sum;
     }
 

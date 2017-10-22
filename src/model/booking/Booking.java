@@ -1,32 +1,30 @@
 package model.booking;
 
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.UUID;
+
+import config.BookingConfig;
+import model.cinema.Seat;
 import model.commons.Entity;
 import model.commons.User;
 import model.transaction.Payable;
 import model.transaction.Payment;
 import model.transaction.PaymentStatus;
+import model.transaction.Pricing;
 
 public class Booking extends Entity implements Payable {
 
     private Showtime showtime;
     private ArrayList<Ticket> tickets;
-    private BookingPayment payment;
-    private ArrayList<BookingCharge> charges;
+    private Payment payment;
     private BookingStatus status;
+    private ArrayList<TicketType> ticketTypes;
+    private ArrayList<Seat> seats;
 
-    public Booking(Showtime showtime, double bookingSurcharge) {
+    public Booking(Showtime showtime) {
         this.showtime = showtime;
         this.tickets = new ArrayList<Ticket>();
-        this.payment = new BookingPayment(this);
-        this.charges = new ArrayList<BookingCharge>();
+        this.payment = null;
         this.status = BookingStatus.IN_PROGRESS;
-
-        if (bookingSurcharge > 0)
-            addCharge(new BookingCharge(bookingSurcharge, "Booking Fee",
-                    false));
     }
 
     public BookingStatus getStatus() {
@@ -45,23 +43,18 @@ public class Booking extends Entity implements Payable {
         return payment;
     }
 
-    public BookingCharge[] getCharges() {
-        return charges.toArray(new BookingCharge[charges.size()]);
-    }
-
     @Override
-    public boolean isPendingPayment() {
-        return getStatus() == BookingStatus.IN_PROGRESS && payment.getStatus() == PaymentStatus.PENDING;
+    public void setPayment(Payment payment) {
+        this.payment = new Payment(this.getPrice());
     }
 
     @Override
     public double getPrice() {
         double price = 0;
-
         for(Ticket ticket: tickets)
             price += ticket.getPricing().getPrice();
         // Add the booking processing fee to bookingPayment
-        price += charges.get(0).getPrice();
+        price += BookingConfig.getBookingSurcharrge();
         return price;
     }
 
@@ -77,15 +70,7 @@ public class Booking extends Entity implements Payable {
         tickets.add(ticket);
     }
 
-    public void removeTicket(Ticket ticket) {
-        tickets.remove(ticket);
-    }
+    public void addTicketType(TicketType ticketType) {ticketTypes.add(ticketType); }
 
-    public void addCharge(BookingCharge charge) {
-        charges.add(charge);
-    }
-
-    public void removeCharge(BookingCharge charge) {
-        charges.remove(charge);
-    }
+    public void addSeat(Seat seat) {seats.add(seat); }
 }

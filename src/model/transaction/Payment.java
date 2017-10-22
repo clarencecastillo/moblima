@@ -1,42 +1,52 @@
 package model.transaction;
 
-import java.util.Date;
-import java.util.UUID;
+import model.booking.Booking;
+import model.cinema.Cinema;
 import model.commons.Entity;
+import util.Utilities;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
 
 public class Payment extends Entity {
 
-    protected PaymentStatus status;
-    protected Payable payable;
-    protected Date date;
+    private PaymentStatus status;
+    private Date date;
+    private String transactionId;
+    private double amount;
 
-    public Payment(Payable payable) {
+    public Payment(double amount) {
+        this.amount = amount;
         this.status = PaymentStatus.PENDING;
-        this.payable = payable;
-        this.date = new Date();
     }
 
     public PaymentStatus getStatus() {
         return status;
     }
 
-    public Payable getPayable() {
-        return payable;
+    public void setStatus(PaymentStatus status) {
+        this.status = status;
     }
 
     public Date getDate() {
         return date;
     }
 
-    public void setPayable(Payable payable) {
-        this.payable = payable;
-    }
-
     public void setDate(Date date) {
         this.date = date;
     }
 
-    public void setStatus(PaymentStatus status) {
-        this.status = status;
+    public double getAmount() {return amount; }
+
+    public void setAmount(double amount) {this.amount = amount; }
+
+    public void setTransactionId(Booking booking) {
+        Cinema cinema = booking.getShowtime().getCinema();
+        this.transactionId = cinema.getCode() + Utilities.toFormat(date, "yyyyMMddHHmm");
+    }
+
+    public String getTransactionId() {
+        return transactionId;
     }
 }

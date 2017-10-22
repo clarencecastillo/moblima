@@ -88,7 +88,7 @@ public class Moblima {
             Booking booking1 = bookingController.createBooking(showtime1.getId());
 
             TicketController ticketManager = TicketController.getInstance();
-            ticketManager.createTicket(booking1.getId(),seats[0], TicketType.STANDARD);
+            ticketManager.createTicket(booking1,seats[0], TicketType.STANDARD);
 
         } catch (Exception e) {
             e.printStackTrace();
