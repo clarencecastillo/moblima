@@ -1,8 +1,16 @@
 package view.ui;
 
+import java.util.Arrays;
+
 public class ViewItem extends View implements Item {
 
     public String value;
+
+    public ViewItem(String title, String value, String... description) {
+        this.title = title;
+        this.value = value;
+        this.content.addAll(Arrays.asList(description));
+    }
 
     public ViewItem(String value) {
         this.value = value;

@@ -5,14 +5,14 @@ import model.transaction.Priceable;
 
 public enum MovieType implements Priceable {
 
-    TWO_DIMENSIOM("2D"),
+    TWO_DIMENSION("2D"),
     THREE_DIMENSION("3D"),
     BLOCKBUSTER("Blockbuster");
 
-    private String name;
+    private String string;
 
-    MovieType(String name) {
-        this.name = name;
+    MovieType(String string) {
+        this.string = string;
     }
 
     public double getPrice() {
@@ -21,6 +21,6 @@ public enum MovieType implements Priceable {
 
     @Override
     public String toString() {
-        return name;
+        return string;
     }
 }

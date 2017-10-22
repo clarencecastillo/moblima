@@ -10,10 +10,10 @@ public enum CinemaType implements Priceable {
     PLATINUM("Platinum"),
     EXECUTIVE("Executive");
 
-    private String name;
+    private String string;
 
-    CinemaType(String name) {
-        this.name = name;
+    CinemaType(String string) {
+        this.string = string;
     }
 
     public double getPrice() {
@@ -30,6 +30,6 @@ public enum CinemaType implements Priceable {
 
     @Override
     public String toString() {
-        return name;
+        return string;
     }
 }

@@ -15,10 +15,10 @@ public enum TicketType implements Priceable {
     STANDARD("Standard Ticket"),
     PEAK("Fri - Sun, Eve of PH & PH Ticket");
 
-    private String name;
+    private String string;
 
-    TicketType(String name) {
-        this.name = name;
+    TicketType(String string) {
+        this.string = string;
     }
 
     public double getPrice() {
@@ -27,7 +27,7 @@ public enum TicketType implements Priceable {
 
     @Override
     public String toString() {
-        return name;
+        return string;
     }
 
     public boolean isValidFor(Booking booking) {

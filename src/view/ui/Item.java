@@ -3,20 +3,20 @@ package view.ui;
 public interface Item {
 
     char DELIMITER = '|';
-    int LEFT_PADDING = 1;
-    int LABEL_LENGTH = 3;
+    int RIGHT_PADDING = 1;
+    int LABEL_LENGTH = 4;
 
     void display(int index);
 
     static String prepareLabel(int index) {
-        String label = View.line(' ', LEFT_PADDING) + index;
-        label += View.line(' ', LABEL_LENGTH - label.length());
+        String label = index + View.line(' ', RIGHT_PADDING);
+        label = View.line(' ', LABEL_LENGTH - label.length()) + label;
         return label;
     }
 
     static String prepareLabel(char index) {
-        String label = View.line(' ', LEFT_PADDING) + index;
-        label += View.line(' ', LABEL_LENGTH - label.length());
+        String label = index + View.line(' ', RIGHT_PADDING);
+        label = View.line(' ', LABEL_LENGTH - label.length()) + label;
         return label;
     }
 

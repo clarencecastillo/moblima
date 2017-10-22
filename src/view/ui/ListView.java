@@ -24,8 +24,10 @@ public abstract class ListView extends MenuView implements Navigable {
 
     @Override
     public void displayItems() {
-        for (int i = 0; i < viewItems.size(); i++)
+        for (int i = 0; i < viewItems.size(); i++) {
             viewItems.get(i).display(i + 1);
+            System.out.println();
+        }
         if (menuItems.size() > 0) {
             System.out.println();
             super.displayItems();
@@ -47,7 +49,7 @@ public abstract class ListView extends MenuView implements Navigable {
                 String viewItemRange = viewItems.size() > 1 ? "1-" + viewItems.size() :
                                        (viewItems.size() == 1 ? "1" : "");
                 String menuItemRange = menuItems.size() > 1 ?
-                                       "A-" + ((char) ('A' + menuItems.size())) :
+                                       "A-" + ((char) ('A' + menuItems.size() - 1)) :
                                        (menuItems.size() == 1 ? "A" : "");
                 String input = Form.getString(INPUT_PROMPT + " [" +
                                               String.join(", ",

@@ -4,7 +4,6 @@ import java.util.Arrays;
 import java.util.Hashtable;
 import model.booking.TicketType;
 import model.cinema.CinemaType;
-import model.cinema.Seat;
 import model.cinema.SeatType;
 import model.movie.MovieType;
 import model.transaction.Priceable;
@@ -66,7 +65,7 @@ public class TicketConfig implements Configurable {
         cinemaTicketTypes.put(CinemaType.EXECUTIVE, eliteTicketTypes);
 
         // DEFAULT MOVIE TYPE SURCHARGE RATES
-        priceableRates.put(MovieType.TWO_DIMENSIOM, 0.0);
+        priceableRates.put(MovieType.TWO_DIMENSION, 0.0);
         priceableRates.put(MovieType.THREE_DIMENSION, 1.0);
         priceableRates.put(MovieType.BLOCKBUSTER, 1.0);
 

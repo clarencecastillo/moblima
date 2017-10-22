@@ -33,12 +33,16 @@ public class AdminMenuView extends MenuView {
         for (int loginAttempts = 1; loginAttempts <= MAX_LOGIN_ATTEMPTS; loginAttempts++) {
             String username = Form.getString("Username");
             String password = Form.getCensoredString("Password");
-            if (userController.login(username, password)) {
-                administrator = userController.findByUsername(username);
-                break;
-            }
-            String attemptsMessage = "[" + loginAttempts + " of " + MAX_LOGIN_ATTEMPTS + "]";
-            View.displayError("Access denied. Please try again. " + attemptsMessage);
+
+            // DEBUG
+            administrator = userController.findByUsername("tuanqi");
+            break;
+//            if (userController.login(username, password)) {
+//                administrator = userController.findByUsername(username);
+//                break;
+//            }
+//            String attemptsMessage = "[" + loginAttempts + " of " + MAX_LOGIN_ATTEMPTS + "]";
+//            View.displayError("Access denied. Please try again. " + attemptsMessage);
         }
 
         if (administrator == null) {

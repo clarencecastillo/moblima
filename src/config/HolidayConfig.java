@@ -1,8 +1,8 @@
 package config;
 
+import java.text.ParseException;
 import java.util.Date;
 import java.util.Hashtable;
-import java.util.UUID;
 import util.Utilities;
 
 public class HolidayConfig implements Configurable {
@@ -45,5 +45,16 @@ public class HolidayConfig implements Configurable {
     @Override
     public void reset() {
         holidays = new Hashtable<Date, String>();
+        holidays.put(Utilities.parseDate("01/01", "dd/MM"), "New Year's Day");
+        holidays.put(Utilities.parseDate("28/01", "dd/MM"), "Chinese New Year");
+        holidays.put(Utilities.parseDate("14/04", "dd/MM"), "Good Friday");
+        holidays.put(Utilities.parseDate("01/05", "dd/MM"), "Labour Day");
+        holidays.put(Utilities.parseDate("10/05", "dd/MM"), "Vesak Day");
+        holidays.put(Utilities.parseDate("25/06", "dd/MM"), "Hari Raya Puasa");
+        holidays.put(Utilities.parseDate("09/08", "dd/MM"), "National Day");
+        holidays.put(Utilities.parseDate("01/09", "dd/MM"), "Hari Raya Haji");
+        holidays.put(Utilities.parseDate("18/10", "dd/MM"), "Deepavali");
+        holidays.put(Utilities.parseDate("25/12", "dd/MM"), "Christmas Day");
+
     }
 }

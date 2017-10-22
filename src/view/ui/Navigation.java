@@ -12,6 +12,10 @@ public class Navigation {
         this.stack = new Stack<>();
     }
 
+    public void reload() {
+        enter(stack.peek());
+    }
+
     public void enter(Navigable navigable) {
         clearScreen();
         navigable.onEnter();

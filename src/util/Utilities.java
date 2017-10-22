@@ -1,11 +1,33 @@
 package util;
 
+import view.ui.Form;
+
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Scanner;
 
 public class Utilities {
+
+    public static Date parseDate(String date) {
+        return parseDate(date, Form.DATE_FORMAT);
+    }
+
+    public static Date parseDate(String date, String format) {
+        try {
+            return parseDateIgnoreError(date, format);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static Date parseDateIgnoreError(String date, String format) throws ParseException {
+        SimpleDateFormat dateFormat = new SimpleDateFormat(format);
+        return dateFormat.parse(date);
+    }
 
     public static Date getDateWithTime(Date date, int hour, int minute) {
 
@@ -42,6 +64,10 @@ public class Utilities {
     public static String toFormat(Date date, String format) {
         DateFormat df = new SimpleDateFormat(format);
         return df.format(date);
+    }
+
+    public static String toFormat(Date date) {
+        return toFormat(date, Form.DATE_FORMAT);
     }
 
     public static boolean dateFallsOn(Date date, int calendarDayOfWeek) {
