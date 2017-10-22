@@ -5,7 +5,7 @@ import manager.CinemaController;
 import manager.CineplexController;
 import manager.MovieController;
 import manager.ShowtimeController;
-import manager.TicketController;
+//import manager.TicketController;
 import manager.UserController;
 import model.booking.Booking;
 import model.booking.Showtime;
@@ -86,9 +86,9 @@ public class Moblima {
 
             BookingController bookingController = BookingController.getInstance();
             Booking booking1 = bookingController.createBooking(showtime1.getId());
-
-            TicketController ticketManager = TicketController.getInstance();
-            ticketManager.createTicket(booking1,seats[0], TicketType.STANDARD);
+            bookingController.selectTicketType(booking1.getId(),TicketType.STANDARD);
+            bookingController.selectSeat(booking1.getId(), seats[0]);
+            bookingController.confirmBooking(booking1.getId(),user1.getId());
 
         } catch (Exception e) {
             e.printStackTrace();
