@@ -20,9 +20,14 @@ public abstract class Entity implements Serializable {
 
     @Override
     public boolean equals(Object obj) {
-        if ((null == obj) || (obj.getClass() != Entity.class))
+        if ((null == obj) || !(obj instanceof Entity))
             return false;
         Entity entity = (Entity)obj;
         return entity.id == id;
+    }
+
+    @Override
+    public int hashCode() {
+        return id.hashCode();
     }
 }

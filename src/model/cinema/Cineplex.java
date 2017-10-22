@@ -20,6 +20,7 @@ public class Cineplex extends Entity {
         this.name = name;
         this.cinemas = new ArrayList<Cinema>();
         this.address = address;
+        this.showtimes = new ArrayList<Showtime>();
     }
 
     public String getName() {

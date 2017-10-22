@@ -72,7 +72,7 @@ public class Moblima {
             ShowtimeController showtimeManager = ShowtimeController.getInstance();
 
             Calendar calendar = Calendar.getInstance();
-            calendar.set(2017, 9, 24, 8, 8);
+            calendar.set(2017, 9, 22, 8, 8);
 
             Date startTime1 = calendar.getTime();
             Language[] subtitles = new Language[1];

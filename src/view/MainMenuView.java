@@ -1,9 +1,11 @@
 package view;
 
 import config.AdminConfig;
+import util.Utilities;
 import view.MovieListView.MovieListIntent;
 import view.ui.*;
 
+import java.util.Date;
 import java.util.Scanner;
 
 public class MainMenuView extends MenuView {
@@ -31,9 +33,11 @@ public class MainMenuView extends MenuView {
                 navigation.goTo(new MovieListView(navigation), MovieListIntent.SEARCH);
                 break;
             case LIST_MOVIES:
-                navigation.goTo(new MovieListView(navigation), MovieListIntent.LIST);
+                navigation.goTo(new MovieListView(navigation), MovieListIntent.PUBLIC);
                 break;
             case VIEW_SHOWTIMES:
+                navigation.goTo(new ShowtimeListView(navigation), ShowtimeListView.ShowtimeListIntent.CINEPLEX,
+                        Utilities.toFormat(new Date()));
                 break;
             case VIEW_BOOKING_HISTORY:
                 navigation.goTo(new BookingListView(navigation));

@@ -6,9 +6,8 @@ import exception.IllegalMovieStatusException;
 import exception.IllegalShowtimeStatusException;
 import exception.UnpaidBookingChargeException;
 import exception.UnpaidPaymentException;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.UUID;
+
+import java.util.*;
 
 import model.booking.Booking;
 import model.booking.BookingStatus;
@@ -56,6 +55,7 @@ public class ShowtimeController extends EntityController<Showtime> {
                                          noFreePasses, isPreview, subtitles);
 
         movie.addShowtime(showtime);
+        cineplex.addShowtime(showtime);
         entities.put(showtime.getId(), showtime);
         return showtime;
     }
@@ -81,4 +81,14 @@ public class ShowtimeController extends EntityController<Showtime> {
         for (Booking booking: showtime.getBookings())
             bookingController.changeBookingStatus(booking.getId(), BookingStatus.CANCELLED);
     }
+
+    public ArrayList<Showtime> findByStatus(ShowtimeStatus statuses) {
+        ArrayList<Showtime> showtimes = new ArrayList<>();
+        List<ShowtimeStatus> statusFilter = Arrays.asList(statuses);
+        for (Showtime showtime : entities.values())
+            if (statusFilter.contains(showtime.getStatus()))
+                showtimes.add(showtime);
+        return showtimes;
+    }
+
 }

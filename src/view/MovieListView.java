@@ -41,7 +41,7 @@ public class MovieListView extends ListView {
             case ADMIN:
                 setMenuItems(MovieListMenuOption.ADD_MOVIE);
                 break;
-            case LIST:
+            case PUBLIC:
                 break;
         }
         addBackOption();
@@ -58,7 +58,7 @@ public class MovieListView extends ListView {
                         + movies.size() + " movie item(s).");
                 break;
 
-            case LIST:
+            case PUBLIC:
                 movies.addAll(Arrays.asList(movieController.findByStatus(MovieStatus.PREVIEW,
                         MovieStatus.COMING_SOON,
                         MovieStatus.NOW_SHOWING)));
@@ -95,7 +95,7 @@ public class MovieListView extends ListView {
     public enum MovieListIntent implements NavigationIntent {
         SEARCH,
         ADMIN,
-        LIST
+        PUBLIC
     }
 
     public enum MovieListMenuOption implements EnumerableMenuOption {
