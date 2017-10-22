@@ -28,14 +28,19 @@ public class ConfigMenuView extends MenuView {
         else
             switch (ConfigType.valueOf(userChoice)) {
                 case HOLIDAY:
+                    navigation.goTo(new HolidayListMenuView(navigation));
                     break;
                 case TICKET:
+                    navigation.goTo(new TicketConfigMenuView(navigation));
                     break;
                 case BOOKING:
+                    navigation.goTo(new BookingConfigListView(navigation));
                     break;
                 case PAYMENT:
+                    navigation.goTo(new PaymentConfigListView(navigation));
                     break;
                 case ADMIN:
+                    navigation.goTo(new AdminConfigListView(navigation));
                     break;
             }
     }

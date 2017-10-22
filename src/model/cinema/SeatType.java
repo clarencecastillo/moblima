@@ -5,14 +5,14 @@ import model.transaction.Priceable;
 
 public enum SeatType implements Priceable {
 
-    SINGLE("[ ]"),
-    COUPLE("[    ]"),
-    HANDICAP("( )");
+    SINGLE("Single"),
+    COUPLE("Couple"),
+    HANDICAP("Handicap");
 
-    private String icon;
+    private String string;
 
-    SeatType(String icon) {
-        this.icon = icon;
+    SeatType(String string) {
+        this.string = string;
     }
 
     public double getPrice() {
@@ -21,6 +21,6 @@ public enum SeatType implements Priceable {
 
     @Override
     public String toString() {
-        return icon;
+        return string;
     }
 }
