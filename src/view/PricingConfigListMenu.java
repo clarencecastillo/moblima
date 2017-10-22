@@ -1,8 +1,6 @@
 package view;
 
 import config.TicketConfig;
-import exception.InputOutOfBoundsException;
-import exception.InputUnrecognisedException;
 import model.booking.TicketType;
 import model.cinema.CinemaType;
 import model.cinema.SeatType;
@@ -62,34 +60,25 @@ public class PricingConfigListMenu extends ListView {
         else {
             String[] priceable = userChoice.split(VALUE_DELIMITER);
             View.displayInformation("Please enter new pricing value in SGD.");
-            while (true)
-                try {
-                    double newPrice = Form.getDouble("Enter new pricing for " + priceable[2] + "",
-                            0, 10);
-                    switch (priceable[0]) {
-                        case "MovieType":
-                            ticketConfig.setPriceableRate(MovieType.valueOf(priceable[1]), newPrice);
-                            break;
-                        case "TicketType":
-                            ticketConfig.setPriceableRate(TicketType.valueOf(priceable[1]), newPrice);
-                            break;
-                        case "CinemaType":
-                            ticketConfig.setPriceableRate(CinemaType.valueOf(priceable[1]), newPrice);
-                            break;
-                        case "SeatType":
-                            ticketConfig.setPriceableRate(SeatType.valueOf(priceable[1]), newPrice);
-                            break;
-                    }
-                    View.displaySuccess(String.format("Successfully changed pricing of " + priceable[2] + " to $%.2f",
-                            newPrice));
-                    Form.pressAnyKeyToContinue();
+            double newPrice = Form.getDouble("Enter new pricing for " + priceable[2] + "",
+                    0, 10);
+            switch (priceable[0]) {
+                case "MovieType":
+                    ticketConfig.setPriceableRate(MovieType.valueOf(priceable[1]), newPrice);
                     break;
-                } catch (InputOutOfBoundsException e) {
-                    View.displayError("Invalid price! Please enter pricing value from $0 to $10.");
-                } catch (InputUnrecognisedException e) {
-                    View.displayError("Unrecognised pricing value! Please enter a valid pricing value.");
-                }
-
+                case "TicketType":
+                    ticketConfig.setPriceableRate(TicketType.valueOf(priceable[1]), newPrice);
+                    break;
+                case "CinemaType":
+                    ticketConfig.setPriceableRate(CinemaType.valueOf(priceable[1]), newPrice);
+                    break;
+                case "SeatType":
+                    ticketConfig.setPriceableRate(SeatType.valueOf(priceable[1]), newPrice);
+                    break;
+            }
+            View.displaySuccess(String.format("Successfully changed pricing of " + priceable[2] + " to $%.2f",
+                    newPrice));
+            Form.pressAnyKeyToContinue();
             navigation.reload();
         }
 

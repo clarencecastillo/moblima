@@ -1,8 +1,6 @@
 package view;
 
 import config.BookingConfig;
-import exception.InputOutOfBoundsException;
-import exception.InputUnrecognisedException;
 import view.ui.*;
 
 import java.util.ArrayList;
@@ -48,53 +46,44 @@ public class BookingConfigListView extends ListView {
         setViewItems(viewItems.toArray(new ViewItem[viewItems.size()]));
 
         display();
+
         String userChoice = getChoice();
         if (userChoice.equals(BACK))
             navigation.goBack();
         else {
             View.displayInformation("Please enter new value. Enter pricing values in SGD.");
-            while (true)
-                try {
-                    switch (BookingConfigMenuOption.valueOf(userChoice)) {
-                        case MAX_SEATS_PER_BOOKING:
-                            int newMaxSeatsPerBooking = Form.getInt("Enter new maximum seats per booking",
-                                    0, 20);
-                            bookingConfig.setMaxSeatsPerBooking(newMaxSeatsPerBooking);
-                            break;
-                        case MIN_DAYS_BEFORE_OPEN_BOOKING:
-                            int newMinDaysBeforeOpenBooking = Form.getInt("Enter new minimum days " +
-                                            "before open booking",
-                                    0, 31);
-                            bookingConfig.setMinDaysBeforeOpenBooking(newMinDaysBeforeOpenBooking);
-                            break;
-                        case BOOKING_FEE:
-                            double newBookingFee = Form.getDouble("Enter new booking fee", 0, 10);
-                            bookingConfig.setBookingSurcharge(newBookingFee);
-                            break;
-                        case BOOKING_CHANGE_GRACE_PERIOD:
-                            int newBookingChangeGracePeriod = Form.getInt("Enter new booking change " +
-                                    "grace period", 0, 360);
-                            bookingConfig.setBookingChangesGraceMinutes(newBookingChangeGracePeriod);
-                            break;
-                        case BOOKING_CHANGE_FEE:
-                            double newBookingChangeFee = Form.getDouble("Enter new booking change fee",
-                                    0, 10);
-                            bookingConfig.setBookingChangesSurcharge(newBookingChangeFee);
-                            break;
-                        case MINS_BEFORE_CLOSED_BOOKING:
-                            int newMinutesBeforeClosedBooking  = Form.getInt("Enter new minutes before " +
-                                    "closed booking", 0, 60);
-                            bookingConfig.setMinutesBeforeClosedBooking(newMinutesBeforeClosedBooking);
-                            break;
-                    }
-                    View.displaySuccess("Successfully changed booking config value!");
-                    Form.pressAnyKeyToContinue();
+            switch (BookingConfigMenuOption.valueOf(userChoice)) {
+                case MAX_SEATS_PER_BOOKING:
+                    int newMaxSeatsPerBooking = Form
+                            .getIntWithMin("Enter new maximum seats per booking", 0);
+                    bookingConfig.setMaxSeatsPerBooking(newMaxSeatsPerBooking);
                     break;
-                } catch (InputOutOfBoundsException e) {
-                    View.displayError("Invalid value! Please try again.");
-                } catch (InputUnrecognisedException e) {
-                    View.displayError("Unrecognised value! Please try again.");
-                }
+                case MIN_DAYS_BEFORE_OPEN_BOOKING:
+                    int newMinDaysBeforeOpenBooking = Form
+                            .getIntWithMin("Enter new minimum days before open booking",0);
+                    bookingConfig.setMinDaysBeforeOpenBooking(newMinDaysBeforeOpenBooking);
+                    break;
+                case BOOKING_FEE:
+                    double newBookingFee = Form.getDoubleWithMin("Enter new booking fee", 0);
+                    bookingConfig.setBookingSurcharge(newBookingFee);
+                    break;
+                case BOOKING_CHANGE_GRACE_PERIOD:
+                    int newBookingChangeGracePeriod = Form
+                            .getIntWithMin("Enter new booking change grace period", 0);
+                    bookingConfig.setBookingChangesGraceMinutes(newBookingChangeGracePeriod);
+                    break;
+                case BOOKING_CHANGE_FEE:
+                    double newBookingChangeFee = Form.getDoubleWithMin("Enter new booking change fee", 0);
+                    bookingConfig.setBookingChangesSurcharge(newBookingChangeFee);
+                    break;
+                case MINS_BEFORE_CLOSED_BOOKING:
+                    int newMinutesBeforeClosedBooking  = Form
+                            .getIntWithMin("Enter new minutes before closed booking", 0);
+                    bookingConfig.setMinutesBeforeClosedBooking(newMinutesBeforeClosedBooking);
+                    break;
+            }
+            View.displaySuccess("Successfully changed booking config value!");
+            Form.pressAnyKeyToContinue();
             navigation.reload();
         }
     }

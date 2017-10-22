@@ -1,15 +1,11 @@
 package view.ui;
 
-import exception.InputOutOfBoundsException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.InputMismatchException;
 
 public abstract class MenuView extends View implements Navigable, Form {
 
-    public static final String INPUT_PROMPT = "Choose option";
-    public static final String INVALID_ERROR = "Invalid user input! Please try again.";
-    public static final String UNRECOGNIZED_ERROR = "Unrecognized user input! Please try again.";
+    public static final String PROMPT = "Option";
 
     public static final String BACK = "BACK";
     public static final String HOME = "HOME";
@@ -63,22 +59,7 @@ public abstract class MenuView extends View implements Navigable, Form {
     }
 
     public String getChoice() {
-        while(true)
-            try {
-                return getChoiceIgnoreMismatch();
-            } catch (InputMismatchException e) {
-                View.displayError(UNRECOGNIZED_ERROR);
-            }
-    }
-
-    public String getChoiceIgnoreMismatch() {
-        while(true)
-            try {
-                int index = Form.getChar(INPUT_PROMPT, 'A',
-                                         (char) ('A' + menuItems.size() - 1)) - 'A';
-                return menuItems.get(index).getValue();
-            } catch (InputOutOfBoundsException e) {
-                View.displayError(INVALID_ERROR);
-            }
+        int index = Form.getChar(PROMPT, 'A', (char) ('A' + menuItems.size() - 1)) - 'A';
+        return menuItems.get(index).getValue();
     }
 }

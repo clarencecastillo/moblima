@@ -1,8 +1,6 @@
 package view;
 
 import config.PaymentConfig;
-import exception.InputOutOfBoundsException;
-import exception.InputUnrecognisedException;
 import view.ui.*;
 
 import java.util.ArrayList;
@@ -39,26 +37,18 @@ public class PaymentConfigListView extends ListView {
         if (userChoice.equals(BACK))
             navigation.goBack();
         else {
-            while (true)
-                try {
-                    switch (PaymentConfigMenuOption.valueOf(userChoice)) {
-                        case GST:
-                            View.displayInformation("Please enter new value. Enter values in SGD.");
-                            double newGst = Form.getDouble("New GST", 0, 5);
-                            paymentConfig.setGst(newGst);
-                            break;
-                        case ALLOW_REFUNDS:
-                            paymentConfig.setAllowedRefunds(!PaymentConfig.isRefundsAllowed());
-                            break;
-                    }
-                    View.displaySuccess("Successfully changed payment config value!");
-                    Form.pressAnyKeyToContinue();
+            switch (PaymentConfigMenuOption.valueOf(userChoice)) {
+                case GST:
+                    View.displayInformation("Please enter new value. Enter values in SGD.");
+                    double newGst = Form.getDouble("New GST", 0, 5);
+                    paymentConfig.setGst(newGst);
                     break;
-                } catch (InputOutOfBoundsException e) {
-                    View.displayError("Invalid value! Please try again.");
-                } catch (InputUnrecognisedException e) {
-                    View.displayError("Unrecognised value! Please try again.");
-                }
+                case ALLOW_REFUNDS:
+                    paymentConfig.setAllowedRefunds(!PaymentConfig.isRefundsAllowed());
+                    break;
+            }
+            View.displaySuccess("Successfully changed payment config value!");
+            Form.pressAnyKeyToContinue();
             navigation.reload();
         }
     }

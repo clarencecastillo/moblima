@@ -2,12 +2,9 @@ package view;
 
 import config.AdminConfig;
 import view.MovieListView.MovieListIntent;
-import view.ui.Navigation;
-import exception.InputUnrecognisedException;
-import view.ui.Describable;
-import view.ui.MenuView;
-import view.ui.NavigationIntent;
-import view.ui.View;
+import view.ui.*;
+
+import java.util.Scanner;
 
 public class MainMenuView extends MenuView {
 
@@ -29,21 +26,7 @@ public class MainMenuView extends MenuView {
     @Override
     public void onEnter() {
         display();
-        MainMenuOption userChoice = null;
-        while(true)
-            try {
-                userChoice = MainMenuOption.valueOf(getChoiceIgnoreMismatch());
-                break;
-            } catch (InputUnrecognisedException e) {
-                String mismatchInput = e.getMismatchInput().toString();
-                if (mismatchInput.equals(AdminConfig.getAdminSecret())) {
-                    userChoice = MainMenuOption.ADMIN;
-                    break;
-                }
-                View.displayError(UNRECOGNIZED_ERROR);
-            }
-
-        switch (userChoice) {
+        switch (MainMenuOption.valueOf(getChoice())) {
             case SEARCH_MOVIES:
                 navigation.goTo(new MovieListView(navigation), MovieListIntent.SEARCH);
                 break;
@@ -53,6 +36,7 @@ public class MainMenuView extends MenuView {
             case VIEW_SHOWTIMES:
                 break;
             case VIEW_BOOKING_HISTORY:
+                navigation.goTo(new BookingListView(navigation));
                 break;
             case VIEW_TOP_5_MOVIES:
                 navigation.goTo(new MovieListView(navigation));
@@ -60,6 +44,27 @@ public class MainMenuView extends MenuView {
             case ADMIN:
                 navigation.goTo(new AdminMenuView(navigation));
                 break;
+        }
+    }
+
+    @Override
+    public String getChoice() {
+        char min = 'A';
+        char max = (char) ('A' + menuItems.size() - 1);
+        while (true) {
+            System.out.print(PROMPT + " [ " + min + "-" + max + " ]" + PROMPT_DELIMETER);
+            Scanner sc = new Scanner(System.in);
+            String input = sc.next();
+            if (input.length() == 1) {
+                char charInput = input.charAt(0);
+                if (charInput >= min && charInput <= max)
+                    return menuItems.get(charInput - 'A').getValue();
+                else
+                    View.displayError(UNRECOGNIZED_ERROR);
+            } else if (input.equals(AdminConfig.getAdminSecret()))
+                return "ADMIN";
+            else
+                View.displayError(UNRECOGNIZED_ERROR);
         }
     }
 

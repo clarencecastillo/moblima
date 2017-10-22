@@ -57,17 +57,12 @@ public class HolidayListMenuView extends ListView {
                     case SET_HOLIDAY:
                         View.displayInformation("Please enter holiday details. Specifying dates already " +
                                 "configured will be overwritten.");
-                        while (true)
-                            try {
-                                Date date = Form.getDate("Enter date", "dd/MM");
-                                String description = Form.getString("Holiday name");
-                                holidayConfig.setHoliday(date, description);
-                                View.displaySuccess("Successfully added new holiday!");
-                                Form.pressAnyKeyToContinue();
-                                break;
-                            } catch (ParseException e) {
-                                View.displayError("Unrecognized date format! Please enter a valid date.");
-                            }
+                        Date date = Form.getDate("Enter date", "dd/MM");
+                        String description = Form.getString("Holiday name");
+                        holidayConfig.setHoliday(date, description);
+                        View.displaySuccess("Successfully added new holiday!");
+                        Form.pressAnyKeyToContinue();
+                        break;
                 }
             } catch (IllegalArgumentException e) {
                 Date holidayDate = Utilities.parseDate(userOption);
