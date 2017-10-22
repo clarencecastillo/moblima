@@ -39,7 +39,7 @@ public class AdminConfigListView extends ListView {
             switch (AdminConfigMenuOption.valueOf(userChoice)) {
                 case ADMIN_SECRET:
                     View.displayInformation("Please enter new admin secret.");
-                    String newAdminSecret = Form.getString("New Admin Secret");
+                    String newAdminSecret = Form.getString("Admin Secret");
                     adminConfig.setAdminSecret(newAdminSecret);
                     break;
             }
