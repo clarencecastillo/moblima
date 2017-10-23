@@ -1,9 +1,6 @@
 package model.cinema;
 
-import config.TicketConfig;
-import model.transaction.Priceable;
-
-public enum SeatType implements Priceable {
+public enum SeatType {
 
     SINGLE("Single"),
     COUPLE("Couple"),
@@ -13,10 +10,6 @@ public enum SeatType implements Priceable {
 
     SeatType(String string) {
         this.string = string;
-    }
-
-    public double getPrice() {
-        return TicketConfig.getPriceableRate(this);
     }
 
     @Override

@@ -46,11 +46,6 @@ public class PricingConfigListMenu extends ListView {
                     String.join(VALUE_DELIMITER, "CinemaType", cinemaType.name(),
                             cinemaType.toString() + " Cinemas"),
                     String.format("$%.2f", cinemaType.getPrice())));
-        for (SeatType seatType: SeatType.values())
-            viewItems.add(new ViewItem(seatType.toString() + " Seats",
-                    String.join(VALUE_DELIMITER, "SeatType", seatType.name(),
-                            seatType.toString() + " Seats"),
-                    String.format("$%.2f", seatType.getPrice())));
         setViewItems(viewItems.toArray(new ViewItem[viewItems.size()]));
 
         display();
@@ -71,9 +66,6 @@ public class PricingConfigListMenu extends ListView {
                     break;
                 case "CinemaType":
                     ticketConfig.setPriceableRate(CinemaType.valueOf(priceable[1]), newPrice);
-                    break;
-                case "SeatType":
-                    ticketConfig.setPriceableRate(SeatType.valueOf(priceable[1]), newPrice);
                     break;
             }
             View.displaySuccess(String.format("Successfully changed pricing of " + priceable[2] + " to $%.2f",
