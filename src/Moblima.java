@@ -1,12 +1,8 @@
 import java.util.Calendar;
 import java.util.Date;
-import manager.BookingController;
-import manager.CinemaController;
-import manager.CineplexController;
-import manager.MovieController;
-import manager.ShowtimeController;
+
+import manager.*;
 //import manager.TicketController;
-import manager.UserController;
 import model.booking.Booking;
 import model.booking.Showtime;
 import model.booking.TicketType;
@@ -83,7 +79,11 @@ public class Moblima {
             Booking booking1 = bookingController.createBooking(showtime1.getId());
             bookingController.selectTicketType(booking1.getId(),TicketType.STANDARD);
             bookingController.selectSeat(booking1.getId(), seats[0]);
-            bookingController.confirmBooking(booking1.getId(),user1.getId());
+            PaymentController paymentController = PaymentController.getInstance();
+            paymentController.makePayment(booking1);
+            bookingController.assignBooking(booking1.getId(),user1.getId());
+
+
 
         } catch (Exception e) {
             e.printStackTrace();

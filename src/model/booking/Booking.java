@@ -25,6 +25,9 @@ public class Booking extends Entity implements Payable {
         this.tickets = new ArrayList<Ticket>();
         this.payment = null;
         this.status = BookingStatus.IN_PROGRESS;
+        this.ticketTypes = new ArrayList<TicketType>();
+        this.seats = new ArrayList<Seat>();
+
     }
 
     public BookingStatus getStatus() {

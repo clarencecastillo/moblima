@@ -1,10 +1,11 @@
 package model.booking;
 
 import model.cinema.Seat;
+import model.commons.Entity;
 import model.transaction.Priceable;
 import model.transaction.Pricing;
 
-public class Ticket implements Priceable {
+public class Ticket extends Entity implements Priceable {
 
     private Seat seat;
     private TicketType type;

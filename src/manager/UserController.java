@@ -17,6 +17,8 @@ public class UserController extends EntityController<User> {
     public static UserController getInstance() {
         return instance;
     }
+
+    // Create user after capturing user information when they make bookings
     public User registerUser(String firstName, String lastName, String mobile, String email)
             throws InvalidRegisterEmailException, InvalidRegisterMobileException {
 
