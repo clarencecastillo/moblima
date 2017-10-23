@@ -18,9 +18,9 @@ public class Cineplex extends Entity {
 
     public Cineplex(String name, String address) {
         this.name = name;
-        this.cinemas = new ArrayList<Cinema>();
+        this.cinemas = new ArrayList<>();
         this.address = address;
-        this.showtimes = new ArrayList<Showtime>();
+        this.showtimes = new ArrayList<>();
     }
 
     public String getName() {

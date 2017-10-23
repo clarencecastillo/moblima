@@ -55,6 +55,10 @@ public abstract class View {
         displayContent();
     }
 
+    public String flatten(String titleDelimiter, String contentDelimiter) {
+        return title + titleDelimiter + String.join(contentDelimiter, content);
+    }
+
     public static void displayColored(String message, ConsoleColor color) {
         System.out.println(color.code + message + ConsoleColor.RESET.code);
     }

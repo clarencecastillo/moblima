@@ -36,8 +36,7 @@ public class MainMenuView extends MenuView {
                 navigation.goTo(new MovieListView(navigation), MovieListIntent.PUBLIC);
                 break;
             case VIEW_SHOWTIMES:
-                navigation.goTo(new ShowtimeListView(navigation), ShowtimeListView.ShowtimeListIntent.CINEPLEX,
-                        Utilities.toFormat(new Date()));
+                navigation.goTo(new ShowtimeListView(navigation), ShowtimeListView.CineplexShowtimeListIntent.PUBLIC);
                 break;
             case VIEW_BOOKING_HISTORY:
                 navigation.goTo(new BookingListView(navigation));
