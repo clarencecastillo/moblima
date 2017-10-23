@@ -4,11 +4,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 import exception.IllegalMovieStatusException;
 import exception.IllegalMovieStatusTransitionException;
 import model.booking.Showtime;
 import model.booking.ShowtimeStatus;
+import model.cinema.Cineplex;
 import model.movie.Movie;
 import model.movie.MoviePerson;
 import model.movie.MovieRating;
@@ -103,5 +106,11 @@ public class MovieController extends EntityController<Movie> {
                 }
         }
         return movies.toArray(new Movie[movies.size()]);
+    }
+
+    public List<Movie> findByCineplex(Cineplex cineplex) {
+        return entities.values().stream().filter(movie ->
+                Arrays.stream(movie.getShowtimes()).anyMatch(showtime ->
+                        showtime.getCineplex().equals(cineplex))).collect(Collectors.toList());
     }
 }

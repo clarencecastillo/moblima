@@ -91,4 +91,12 @@ public class ShowtimeController extends EntityController<Showtime> {
         return showtimes;
     }
 
+    public ArrayList<Showtime> findByCineplexAndMovie(Cineplex cineplex, Movie movie) {
+        ArrayList<Showtime> showtimes = new ArrayList<>();
+        for (Showtime showtime : cineplex.getShowtimes())
+            if (showtime.getMovie().equals(movie))
+                showtimes.add(showtime);
+        return showtimes;
+    }
+
 }

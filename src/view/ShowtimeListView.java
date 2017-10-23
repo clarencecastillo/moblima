@@ -3,79 +3,59 @@ package view;
 import manager.CineplexController;
 import manager.MovieController;
 import manager.ShowtimeController;
-import model.booking.Showtime;
 import model.cinema.Cineplex;
 import model.movie.Movie;
+import model.movie.MovieStatus;
 import util.Utilities;
 import view.ui.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
-import java.util.UUID;
 
 public class ShowtimeListView extends ListView {
 
-    private ShowtimeListIntent intent;
-    private ShowtimeController showtimeController;
-    private MovieController movieController;
-    private CineplexController cineplexController;
-
     private Date dateFilter;
     private ArrayList<Cineplex> cineplexes;
-    private ArrayList<Showtime> showtimes;
-    private Movie movie;
+
+    private CineplexShowtimeListIntent intent;
+    private CineplexController cineplexController;
+    private MovieController movieController;
+    private ShowtimeController showtimeController;
 
     public ShowtimeListView(Navigation navigation) {
         super(navigation);
-        this.showtimeController = ShowtimeController.getInstance();
-        this.movieController = MovieController.getInstance();
         this.cineplexController = CineplexController.getInstance();
+        this.movieController = MovieController.getInstance();
+        this.showtimeController = ShowtimeController.getInstance();
     }
 
     @Override
     public void onLoad(NavigationIntent intent, String... args) {
-        this.intent = (ShowtimeListIntent) intent;
+        this.intent = (CineplexShowtimeListIntent) intent;
         setTitle("Movie Showtimes");
-        showtimes = new ArrayList<>();
         switch (this.intent) {
-            case CINEPLEX:
-                dateFilter = Utilities.parseDate(args[0]);
-                cineplexes = cineplexController.getList();
-                break;
-            case CINEPLEX_MOVIE:
-                movie = movieController.findById(UUID.fromString(args[0]));
             case ADMIN:
-                setMenuItems(ShowtimeListMenuOption.ADD_SHOWTIME);
+                setMenuItems(CineplexShowtimeMenuOption.values());
+                break;
+            case PUBLIC:
+                setMenuItems(CineplexShowtimeMenuOption.CHOOSE_DAY);
                 break;
         }
+        cineplexes = new ArrayList<>();
+        dateFilter = args.length == 1 ? Utilities.parseDate(args[0]) : new Date();
+        cineplexes = cineplexController.getList();
+        setContent("Displaying showtimes from all cineplex for " + (args.length == 1 ?
+                Utilities.toFormat(dateFilter, "EEEEE, dd MMMMM YYYY") : "today") + ".");
         addBackOption();
     }
 
     @Override
     public void onEnter() {
 
-        ArrayList<ViewItem> viewItems = new ArrayList<>();
-        switch (this.intent) {
-            case CINEPLEX:
-                for (Cineplex cineplex: cineplexes)
-                    viewItems.add(new ViewItem(new CineplexShowtimesView(cineplex, dateFilter),
-                            cineplex.getId().toString()));
-                break;
-            case CINEPLEX_MOVIE:
-                showtimes.addAll(Arrays.asList(movie.getShowtimes()));
-                setContent("Displaying " + showtimes.size() + " showtime item(s) for " + new MovieView(movie).getTitle());
-                break;
-            case ADMIN:
-                showtimes.addAll(showtimeController.getList());
-                setContent("Displaying " + showtimes.size() + " showtime item(s).");
-                break;
-//            case PUBLIC:
-//                showtimes.addAll(showtimeController.findByStatus(ShowtimeStatus.OPEN_BOOKING));
-//                setContent("Displaying " + showtimes.size() + " showtime item(s).");
-//                break;
-        }
-        setViewItems(viewItems.toArray(new ViewItem[viewItems.size()]));
+        setViewItems(cineplexes.stream().map(cineplex ->
+                new ViewItem(new CineplexShowtimeView(cineplex, dateFilter, MovieStatus.NOW_SHOWING),
+                        cineplex.getId().toString())).toArray(ViewItem[]::new));
 
         display();
         String userInput = getChoice();
@@ -83,34 +63,33 @@ public class ShowtimeListView extends ListView {
             navigation.goBack();
         else
             try {
-                ShowtimeListMenuOption userChoice = ShowtimeListMenuOption.valueOf(userInput);
+                CineplexShowtimeMenuOption userChoice = CineplexShowtimeMenuOption.valueOf(userInput);
                 switch (userChoice) {
                     case ADD_SHOWTIME:
-                        System.out.println("Create showtime!");
-//                        navigation.goTo(new MovieMenuView(navigation), ShowtimeListIntent.CREATE);
+                        System.out.println("Go to Showtime View CREATE!");
+                        break;
+                    case CHOOSE_DAY:
+                        View.displayInformation("Please select date");
+//                        Form.getOption("Date", )
                         break;
                 }
             } catch (IllegalArgumentException e) {
-//                navigation.goTo(new MovieMenuView(navigation),
-//                        this.intent == ShowtimeListIntent.ADMIN ?
-//                                ShowtimeMenuIntent.MANAGE : ShowtimeMenuIntent.VIEW, userInput);
+                System.out.println("Go to showtime View view");
             }
-
     }
 
-    public enum ShowtimeListIntent implements NavigationIntent {
+    public enum CineplexShowtimeListIntent implements NavigationIntent {
         ADMIN,
-        CINEPLEX,
-        CINEPLEX_MOVIE,
-        CINEPLEX_MOVIE_SHOWTIME
+        PUBLIC
     }
 
-    public enum ShowtimeListMenuOption implements EnumerableMenuOption {
+    public enum CineplexShowtimeMenuOption implements EnumerableMenuOption {
 
+        CHOOSE_DAY("Choose Another Date"),
         ADD_SHOWTIME("Add Showtime");
 
         private String description;
-        ShowtimeListMenuOption(String description) {
+        CineplexShowtimeMenuOption(String description) {
             this.description = description;
         }
 
@@ -119,5 +98,4 @@ public class ShowtimeListView extends ListView {
             return description;
         }
     }
-
 }
