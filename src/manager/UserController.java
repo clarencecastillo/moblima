@@ -3,18 +3,25 @@ package manager;
 import exception.InvalidRegisterEmailException;
 import exception.InvalidRegisterMobileException;
 import exception.InvalidRegisterUsernameException;
+import exception.UninitialisedSingletonException;
 import model.cinema.Staff;
 import model.commons.User;
 
 public class UserController extends EntityController<User> {
 
-    private static UserController instance = new UserController();
+    private static UserController instance;
 
     private UserController() {
         super();
     }
 
+    public static void init() {
+        instance = new UserController();
+    }
+
     public static UserController getInstance() {
+        if (instance == null)
+            throw new UninitialisedSingletonException();
         return instance;
     }
 

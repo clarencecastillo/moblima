@@ -2,6 +2,7 @@ package view;
 
 import java.util.Arrays;
 import model.booking.Booking;
+import model.booking.Ticket;
 import view.ui.View;
 
 public class BookingView extends View {
@@ -16,7 +17,7 @@ public class BookingView extends View {
                     "Start Time: " + booking.getShowtime().getStartTime(),
                     "Seats: " + String.join(",",
                                             Arrays.stream(booking.getTickets())
-                                                  .map(String::valueOf)
+                                                  .map(Ticket::getSeat).map(String::valueOf)
                                                   .toArray(String[]::new)));
     }
 }

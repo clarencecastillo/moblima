@@ -3,19 +3,26 @@ package manager;
 import java.util.UUID;
 
 import exception.InvalidReviewRatingException;
+import exception.UninitialisedSingletonException;
 import model.commons.User;
 import model.movie.Movie;
 import model.movie.MovieReview;
 
 public class MovieReviewController extends EntityController<MovieReview> {
 
-    private static MovieReviewController instance = new MovieReviewController();
+    private static MovieReviewController instance;
 
     private MovieReviewController() {
         super();
     }
 
+    public static void init() {
+        instance = new MovieReviewController();
+    }
+
     public static MovieReviewController getInstance() {
+        if (instance == null)
+            throw new UninitialisedSingletonException();
         return instance;
     }
 

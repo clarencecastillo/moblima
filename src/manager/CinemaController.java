@@ -1,6 +1,8 @@
 package manager;
 
 import java.util.UUID;
+
+import exception.UninitialisedSingletonException;
 import model.cinema.Cinema;
 import model.cinema.CinemaLayout;
 import model.cinema.CinemaType;
@@ -8,13 +10,19 @@ import model.cinema.Cineplex;
 
 public class CinemaController extends EntityController<Cinema> {
 
-    private static CinemaController instance = new CinemaController();
+    private static CinemaController instance;
 
     private CinemaController() {
         super();
     }
 
+    public static void init() {
+        instance = new CinemaController();
+    }
+
     public static CinemaController getInstance() {
+        if (instance == null)
+            throw new UninitialisedSingletonException();
         return instance;
     }
 

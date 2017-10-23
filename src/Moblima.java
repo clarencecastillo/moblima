@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -34,6 +35,15 @@ public class Moblima {
 
     public void bootstrap() {
 
+        BookingController.init();
+        CineplexController.init();
+        CinemaController.init();
+        MovieController.init();
+        MovieReviewController.init();
+        PaymentController.init();
+        ShowtimeController.init();
+        UserController.init();
+
         // DEBUG
         try {
             UserController userManager = UserController.getInstance();
@@ -51,7 +61,7 @@ public class Moblima {
                                                        + "to succeed to the throne and take his "
                                                        + "rightful place as king.", director,
                                      new MoviePerson[] {director}, MovieType.THREE_DIMENSION,
-                                     MovieStatus.COMING_SOON, MovieRating.PG, 120);
+                                     MovieStatus.NOW_SHOWING, MovieRating.PG, 120);
 
 
             CineplexController cineplexController = CineplexController.getInstance();
@@ -68,7 +78,7 @@ public class Moblima {
             ShowtimeController showtimeManager = ShowtimeController.getInstance();
 
             Calendar calendar = Calendar.getInstance();
-            calendar.set(2017, 9, 25, 8, 8);
+            calendar.set(2017, 9, 24, 8, 8);
 
             Date startTime1 = calendar.getTime();
             Language[] subtitles = new Language[1];

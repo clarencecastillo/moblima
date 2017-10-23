@@ -11,7 +11,7 @@ public abstract class EntityController<T extends Entity> implements Serializable
     protected Hashtable<UUID, T> entities;
 
     protected EntityController() {
-        this.entities = new Hashtable<UUID, T>();
+        this.entities = new Hashtable<>();
     }
 
     public T findById(UUID id) {
@@ -19,6 +19,6 @@ public abstract class EntityController<T extends Entity> implements Serializable
     }
 
     public ArrayList<T> getList() {
-        return new ArrayList<T>(entities.values());
+        return new ArrayList<>(entities.values());
     }
 }

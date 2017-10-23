@@ -1,11 +1,7 @@
 package manager;
 
 import config.BookingConfig;
-import exception.IllegalBookingStatusException;
-import exception.IllegalMovieStatusException;
-import exception.IllegalShowtimeStatusException;
-import exception.UnpaidBookingChargeException;
-import exception.UnpaidPaymentException;
+import exception.*;
 
 import java.util.*;
 
@@ -21,18 +17,19 @@ import util.Utilities;
 
 public class ShowtimeController extends EntityController<Showtime> {
 
-    private static ShowtimeController instance = new ShowtimeController();
-
-    private MovieController movieManager = MovieController.getInstance();
-    private CinemaController cinemaController = CinemaController.getInstance();
-    private CineplexController cineplexController = CineplexController.getInstance();
-    private BookingController bookingController = BookingController.getInstance();
+    private static ShowtimeController instance;
 
     private ShowtimeController() {
         super();
     }
 
+    public static void init() {
+        instance = new ShowtimeController();
+    }
+
     public static ShowtimeController getInstance() {
+        if (instance == null)
+            throw new UninitialisedSingletonException();
         return instance;
     }
 
@@ -40,7 +37,11 @@ public class ShowtimeController extends EntityController<Showtime> {
                                    Date startTime, boolean noFreePasses,
                                    boolean isPreview, Language[] subtitles) throws IllegalMovieStatusException {
 
-        Movie movie = movieManager.findById(movieId);
+        MovieController movieController = MovieController.getInstance();
+        CineplexController cineplexController = CineplexController.getInstance();
+        CinemaController cinemaController = CinemaController.getInstance();
+
+        Movie movie = movieController.findById(movieId);
         Cineplex cineplex = cineplexController.findById(cineplexId);
 
         if (movie.getStatus() == MovieStatus.PREVIEW && !isPreview)
@@ -63,6 +64,8 @@ public class ShowtimeController extends EntityController<Showtime> {
     public void cancelShowtime(UUID showtimeId) throws IllegalShowtimeStatusException,
             IllegalMovieStatusException, IllegalBookingStatusException,
         UnpaidBookingChargeException, UnpaidPaymentException {
+
+        BookingController bookingController = BookingController.getInstance();
 
         Showtime showtime = findById(showtimeId);
 

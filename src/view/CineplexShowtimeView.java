@@ -22,19 +22,16 @@ public class CineplexShowtimeView extends View {
         setTitle(cineplex.getName());
         ArrayList<String> content = new ArrayList<>();
         List<Movie> movies = movieController.findByCineplex(cineplex);
-        if (movieStatusFilter != null)
-            movies = movies.stream().filter(movie ->
-                    movie.getStatus() == movieStatusFilter).collect(Collectors.toList());
-        for (Movie movie : movieController.findByCineplex(cineplex)) {
+        for (Movie movie : movieStatusFilter != null ? (movies.stream().filter(movie ->
+                movie.getStatus() == movieStatusFilter).collect(Collectors.toList())) : movies) {
             List<Showtime> movieShowtimes = Arrays.asList(movie.getShowtimes());
             if (dateFilter != null)
                 movieShowtimes = movieShowtimes.stream().filter(showtime ->
                         Utilities.getStartOfDate(showtime.getStartTime())
                                 .compareTo(Utilities.getStartOfDate(dateFilter)) == 0).collect(Collectors.toList());
-            if (movieShowtimes.size() > 0) {
+            if (movieShowtimes.size() > 0)
                 content.add(new MovieShowtimeView(movie, movieShowtimes)
                         .flatten(" : ", " | "));
-            }
         }
         setContent(content.toArray(new String[content.size()]));
     }

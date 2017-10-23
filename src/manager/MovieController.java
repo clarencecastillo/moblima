@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 
 import exception.IllegalMovieStatusException;
 import exception.IllegalMovieStatusTransitionException;
+import exception.UninitialisedSingletonException;
 import model.booking.Showtime;
 import model.booking.ShowtimeStatus;
 import model.cinema.Cineplex;
@@ -23,13 +24,19 @@ public class MovieController extends EntityController<Movie> {
 
     public static final int SIMILARITY_THRESHOLD = 5;
 
-    private static MovieController instance = new MovieController();
+    private static MovieController instance;
 
     private MovieController() {
         super();
     }
 
+    public static void init() {
+        instance = new MovieController();
+    }
+
     public static MovieController getInstance() {
+        if (instance == null)
+            throw new UninitialisedSingletonException();
         return instance;
     }
 

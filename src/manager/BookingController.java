@@ -14,20 +14,25 @@ import model.transaction.PaymentStatus;
 
 public class BookingController extends EntityController<Booking> {
 
-    // Eager Singleton
-    private static BookingController instance = new BookingController();
-    UserController userController = UserController.getInstance();;
+    private static BookingController instance;
 
     private BookingController() {
         super();
     }
 
+    public static void init() {
+        instance = new BookingController();
+    }
+
     public static BookingController getInstance() {
+        if (instance == null)
+            throw new UninitialisedSingletonException();
         return instance;
     }
 
     // Create a booking when the user chooses the showtime
     public Booking createBooking(UUID showtimeId) throws IllegalShowtimeStatusException {
+
         ShowtimeController showtimeController = ShowtimeController.getInstance();
         Showtime showtime = showtimeController.findById(showtimeId);
 
@@ -79,6 +84,8 @@ public class BookingController extends EntityController<Booking> {
             throws IllegalShowtimeStatusException, UnpaidPaymentException, IllegalShowtimeBookingException,
             ExceedBookingSeatException, UnavailableTicketTypeException, UnavailableBookingSeatException,
             IllegalBookingStatusException {
+
+        UserController userController = UserController.getInstance();
 
         Booking booking = findById(bookingId);
         Showtime showtime = booking.getShowtime();

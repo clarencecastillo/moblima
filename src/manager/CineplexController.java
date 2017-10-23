@@ -1,16 +1,23 @@
 package manager;
 
+import exception.UninitialisedSingletonException;
 import model.cinema.Cineplex;
 
 public class CineplexController extends EntityController<Cineplex> {
 
-    private static CineplexController instance = new CineplexController();
+    private static CineplexController instance;
 
     private CineplexController() {
         super();
     }
 
+    public static void init() {
+        instance = new CineplexController();
+    }
+
     public static CineplexController getInstance() {
+        if (instance == null)
+            throw new UninitialisedSingletonException();
         return instance;
     }
 
