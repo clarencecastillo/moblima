@@ -7,6 +7,8 @@ import model.transaction.Payable;
 import model.transaction.Payment;
 import model.transaction.PaymentStatus;
 
+import java.util.Date;
+
 public class PaymentController extends EntityController<Payment> {
 
     private static PaymentController instance = new PaymentController();
@@ -23,8 +25,9 @@ public class PaymentController extends EntityController<Payment> {
 
         // Assume Payment will always be successful.
         Payment payment = new Payment(booking.getPrice());
+        payment.setDate(new Date());
         payment.setStatus(PaymentStatus.ACCEPTED);
-        booking.setStatus(BookingStatus.CONFIRMED);
+        payment.setTransactionId(booking);
         booking.setPayment(payment);
         entities.put(payment.getId(), payment);
         return payment;

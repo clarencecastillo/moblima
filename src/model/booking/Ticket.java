@@ -5,28 +5,24 @@ import model.commons.Entity;
 import model.transaction.Priceable;
 import model.transaction.Pricing;
 
-public class Ticket extends Entity implements Priceable {
+public class Ticket implements Priceable {
 
     private Seat seat;
     private TicketType type;
-    private Pricing pricing;
 
-    public Ticket(Seat seat, TicketType type, Pricing pricing) {
-        this.seat = seat;
+    public Ticket(TicketType type) {
+        this.seat = null;
         this.type = type;
-        this.pricing = pricing;
     }
 
     public Seat getSeat() {
         return seat;
     }
 
+    public void setSeat(Seat seat) { this.seat = seat; }
+
     public TicketType getType() {
         return type;
-    }
-
-    public Pricing getPricing() {
-        return pricing;
     }
 
     public void setType(TicketType type) {
@@ -35,6 +31,6 @@ public class Ticket extends Entity implements Priceable {
 
     @Override
     public double getPrice() {
-        return pricing.getPrice();
+        return type.getPrice();
     }
 }

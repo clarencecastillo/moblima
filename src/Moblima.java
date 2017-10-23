@@ -58,7 +58,7 @@ public class Moblima {
             Cineplex cineplex = cineplexController.createCineplex("Cineplex1", "Address1");
 
             CinemaController cinemaController = CinemaController.getInstance();
-            Seat[] seats = new Seat[4];
+            Seat[] seats = new Seat[1];
             for (int i = 0; i < seats.length; i++) {
                 seats[i] = new Seat('A',i+1, SeatType.SINGLE);
             }
@@ -68,7 +68,7 @@ public class Moblima {
             ShowtimeController showtimeManager = ShowtimeController.getInstance();
 
             Calendar calendar = Calendar.getInstance();
-            calendar.set(2017, 9, 23, 8, 8);
+            calendar.set(2017, 9, 25, 8, 8);
 
             Date startTime1 = calendar.getTime();
             Language[] subtitles = new Language[1];
@@ -77,11 +77,15 @@ public class Moblima {
 
             BookingController bookingController = BookingController.getInstance();
             Booking booking1 = bookingController.createBooking(showtime1.getId());
-            bookingController.selectTicketType(booking1.getId(),TicketType.STANDARD);
-            bookingController.selectSeat(booking1.getId(), seats[0]);
+
+            TicketType[] ticketTypes = new TicketType[] {
+                    TicketType.STANDARD
+            };
+            bookingController.selectTicketType(booking1.getId(),ticketTypes);
+            bookingController.selectSeat(booking1.getId(), seats);
             PaymentController paymentController = PaymentController.getInstance();
             paymentController.makePayment(booking1);
-            bookingController.assignBooking(booking1.getId(),user1.getId());
+            bookingController.confirmBooking(booking1.getId(),user1.getId());
 
 
 

@@ -9,20 +9,24 @@ import exception.UnpaidPaymentException;
 
 import java.util.*;
 
-import model.booking.Booking;
-import model.booking.BookingStatus;
-import model.booking.Showtime;
-import model.booking.ShowtimeStatus;
+import model.booking.*;
 import model.cinema.Cinema;
 import model.cinema.Cineplex;
 import model.commons.Language;
 import model.movie.Movie;
 import model.movie.MovieStatus;
+import model.transaction.Priceable;
+import model.transaction.Pricing;
 import util.Utilities;
 
 public class ShowtimeController extends EntityController<Showtime> {
 
     private static ShowtimeController instance = new ShowtimeController();
+
+    private MovieController movieManager = MovieController.getInstance();
+    private CinemaController cinemaController = CinemaController.getInstance();
+    private CineplexController cineplexController = CineplexController.getInstance();
+    private BookingController bookingController = BookingController.getInstance();
 
     private ShowtimeController() {
         super();
@@ -35,10 +39,6 @@ public class ShowtimeController extends EntityController<Showtime> {
     public Showtime createShowtime(UUID movieId, UUID cineplexId, UUID cinemaId, Language language,
                                    Date startTime, boolean noFreePasses,
                                    boolean isPreview, Language[] subtitles) throws IllegalMovieStatusException {
-
-        MovieController movieManager = MovieController.getInstance();
-        CinemaController cinemaController = CinemaController.getInstance();
-        CineplexController cineplexController = CineplexController.getInstance();
 
         Movie movie = movieManager.findById(movieId);
         Cineplex cineplex = cineplexController.findById(cineplexId);
@@ -64,7 +64,6 @@ public class ShowtimeController extends EntityController<Showtime> {
             IllegalMovieStatusException, IllegalBookingStatusException,
         UnpaidBookingChargeException, UnpaidPaymentException {
 
-        BookingController bookingController = BookingController.getInstance();
         Showtime showtime = findById(showtimeId);
 
         if (showtime.getStatus() == ShowtimeStatus.CANCELLED)
@@ -79,7 +78,7 @@ public class ShowtimeController extends EntityController<Showtime> {
 
         showtime.setCancelled(true);
         for (Booking booking: showtime.getBookings())
-            bookingController.changeBookingStatus(booking.getId(), BookingStatus.CANCELLED);
+            bookingController.cancelBooking(booking.getId());
     }
 
     public ArrayList<Showtime> findByStatus(ShowtimeStatus statuses) {
@@ -97,6 +96,10 @@ public class ShowtimeController extends EntityController<Showtime> {
             if (showtime.getMovie().equals(movie))
                 showtimes.add(showtime);
         return showtimes;
+    }
+
+    public double getTicketTypePricing(Showtime showtime, TicketType ticketType) {
+        return Priceable.getPrice(ticketType,showtime.getCinema().getType(),showtime.getMovie().getType());
     }
 
 }

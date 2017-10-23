@@ -1,15 +1,11 @@
 package model.booking;
 
-import java.util.ArrayList;
-
 import config.BookingConfig;
-import model.cinema.Seat;
 import model.commons.Entity;
-import model.commons.User;
 import model.transaction.Payable;
 import model.transaction.Payment;
-import model.transaction.PaymentStatus;
-import model.transaction.Pricing;
+
+import java.util.ArrayList;
 
 public class Booking extends Entity implements Payable {
 
@@ -17,16 +13,12 @@ public class Booking extends Entity implements Payable {
     private ArrayList<Ticket> tickets;
     private Payment payment;
     private BookingStatus status;
-    private ArrayList<TicketType> ticketTypes;
-    private ArrayList<Seat> seats;
 
     public Booking(Showtime showtime) {
         this.showtime = showtime;
         this.tickets = new ArrayList<Ticket>();
         this.payment = null;
         this.status = BookingStatus.IN_PROGRESS;
-        this.ticketTypes = new ArrayList<TicketType>();
-        this.seats = new ArrayList<Seat>();
 
     }
 
@@ -48,16 +40,14 @@ public class Booking extends Entity implements Payable {
 
     @Override
     public void setPayment(Payment payment) {
-        this.payment = new Payment(this.getPrice());
+        this.payment = payment;
     }
 
     @Override
     public double getPrice() {
-        double price = 0;
-        for(Ticket ticket: tickets)
-            price += ticket.getPricing().getPrice();
-        // Add the booking processing fee to bookingPayment
-        price += BookingConfig.getBookingSurcharrge();
+        double price = BookingConfig.getBookingSurcharrge();
+        for (Ticket ticket:this.getTickets())
+            price += ticket.getPrice();
         return price;
     }
 
@@ -72,12 +62,4 @@ public class Booking extends Entity implements Payable {
     public void addTicket(Ticket ticket) {
         tickets.add(ticket);
     }
-
-    public void addTicketType(TicketType ticketType) {ticketTypes.add(ticketType); }
-
-    public void addSeat(Seat seat) {seats.add(seat); }
-
-    public TicketType[] getTicketType() { return ticketTypes.toArray(new TicketType[ticketTypes.size()]); }
-
-    public Seat[] getSeat() { return seats.toArray(new Seat[seats.size()]); }
 }
