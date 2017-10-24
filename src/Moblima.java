@@ -72,11 +72,11 @@ public class Moblima {
                                      new MoviePerson[] {director}, MovieType.THREE_DIMENSION,
                                      MovieStatus.NOW_SHOWING, MovieRating.PG, 120);
 
-            Cineplex cineplex = cineplexController.createCineplex("Cineplex1", "Address1");
+            Cineplex cineplex = cineplexController.createCineplex("AMK Hub", "Ang Mo Kio, Singapore");
             Seat[] seats = IntStream.range(0, 4).mapToObj(col ->
                     new Seat('A', col + 1, SeatType.SINGLE)).toArray(Seat[]::new);
             CinemaLayout layout1 = new CinemaLayout(seats,4,'A');
-            Cinema cinema1 = cinemaController.createCinema(cineplex.getId(), "Cinema1",
+            Cinema cinema1 = cinemaController.createCinema(cineplex.getId(), "1",
                     CinemaType.REGULAR, layout1);
             Calendar calendar = Calendar.getInstance();
             calendar.set(2017, 9, 24, 23, 8);

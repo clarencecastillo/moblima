@@ -1,9 +1,9 @@
 package view;
 
 import config.TicketConfig;
+import exception.UnauthorisedNavigationException;
 import model.booking.TicketType;
 import model.cinema.CinemaType;
-import model.cinema.SeatType;
 import model.movie.MovieType;
 import view.ui.*;
 
@@ -21,7 +21,11 @@ public class PricingConfigListMenu extends ListView {
     }
 
     @Override
-    public void onLoad(NavigationIntent intent, String... args) {
+    public void onLoad(AccessLevel accessLevel, Intent intent, String... args) {
+
+        if (accessLevel != AccessLevel.ADMINISTRATOR)
+            throw new UnauthorisedNavigationException();
+
         setTitle("Pricing Config");
         setContent("Select the item to change price. All values are displayed in SGD.");
         addBackOption();
@@ -71,7 +75,7 @@ public class PricingConfigListMenu extends ListView {
             View.displaySuccess(String.format("Successfully changed pricing of " + priceable[2] + " to $%.2f",
                     newPrice));
             Form.pressAnyKeyToContinue();
-            navigation.reload();
+            navigation.reload(AccessLevel.ADMINISTRATOR);
         }
 
 

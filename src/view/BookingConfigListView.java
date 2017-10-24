@@ -1,6 +1,7 @@
 package view;
 
 import config.BookingConfig;
+import exception.UnauthorisedNavigationException;
 import view.ui.*;
 
 import java.util.ArrayList;
@@ -15,7 +16,11 @@ public class BookingConfigListView extends ListView {
     }
 
     @Override
-    public void onLoad(NavigationIntent intent, String... args) {
+    public void onLoad(AccessLevel accessLevel, Intent intent, String... args) {
+
+        if (accessLevel != AccessLevel.ADMINISTRATOR)
+            throw new UnauthorisedNavigationException();
+
         setTitle("Booking Config");
         setContent("Select the item to change. All monetary values are displayed in SGD.");
         addBackOption();
@@ -84,7 +89,7 @@ public class BookingConfigListView extends ListView {
             }
             View.displaySuccess("Successfully changed booking config value!");
             Form.pressAnyKeyToContinue();
-            navigation.reload();
+            navigation.reload(AccessLevel.ADMINISTRATOR);
         }
     }
 

@@ -27,7 +27,7 @@ public class MovieShowtimeView extends View {
 
         setTitle(new MovieView(movie).getTitle());
         setContent(movieShowtimes.size() > 0 ? (movieShowtimes.stream().map(showtime ->
-                Utilities.toFormat(showtime.getStartTime(), "HH:mm")).toArray(String[]::new)) :
+                Utilities.toFormat(showtime.getStartTime(), "[hh:mm a]")).toArray(String[]::new)) :
                 new String[] { "No available showtime screenings for this movie"});
     }
 }

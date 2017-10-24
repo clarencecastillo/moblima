@@ -4,16 +4,13 @@ import config.BookingConfig;
 import exception.NavigationRejectedException;
 import manager.CineplexController;
 import manager.MovieController;
-import manager.ShowtimeController;
 import model.cinema.Cineplex;
 import model.movie.Movie;
 import model.movie.MovieStatus;
 import util.Utilities;
 import view.ui.*;
 
-import javax.rmi.CORBA.Util;
 import java.util.*;
-import java.util.stream.Stream;
 
 public class CineplexShowtimeListView extends ListView {
 
@@ -21,7 +18,7 @@ public class CineplexShowtimeListView extends ListView {
     private Movie movieFilter;
     private ArrayList<Cineplex> cineplexes;
 
-    private CineplexShowtimeListIntent intent;
+    private AccessLevel accessLevel;
     private CineplexController cineplexController;
     private MovieController movieController;
 
@@ -32,11 +29,15 @@ public class CineplexShowtimeListView extends ListView {
     }
 
     @Override
-    public void onLoad(NavigationIntent intent, String... args) {
-        this.intent = (CineplexShowtimeListIntent) intent;
+    public void onLoad(AccessLevel accessLevel, Intent intent, String... args) {
 
-        switch (this.intent) {
-            case ADMIN:
+        // args[0] - Movie UUID
+        // args[1] - Date
+
+        this.accessLevel = accessLevel;
+        switch (accessLevel) {
+
+            case ADMINISTRATOR:
                 setMenuItems(CineplexShowtimeMenuOption.values());
                 break;
             case PUBLIC:
@@ -44,8 +45,8 @@ public class CineplexShowtimeListView extends ListView {
                 break;
         }
 
-        if (args.length == 2) {
-            movieFilter = movieController.findById(UUID.fromString(args[1]));
+        if (args.length >= 1 && args[0] != null) {
+            movieFilter = movieController.findById(UUID.fromString(args[0]));
             if (movieFilter == null) {
                 View.displayError("Movie not found!!");
                 Form.pressAnyKeyToContinue();
@@ -54,11 +55,12 @@ public class CineplexShowtimeListView extends ListView {
         }
 
         cineplexes = new ArrayList<>();
-        dateFilter = args.length >= 1 && args[0] != null ? Utilities.parseDate(args[0]) : new Date();
+        dateFilter = args.length == 2 && args[1] != null ? Utilities.parseDate(args[1]) : new Date();
         cineplexes = cineplexController.getList();
-        setTitle("Movie Showtimes: " + (movieFilter == null ? "All Movies" : new MovieView(movieFilter).getTitle()));
-        setContent("Displaying showtimes from all cineplex for " + (args.length >= 1 && args[0] != null ?
-                Utilities.toFormat(dateFilter, DATE_DISPLAY_FORMAT) : "today") + ".");
+        setTitle("Movie Showtimes");
+        setContent("Movie: " + (movieFilter == null ? "All Movies" : new MovieView(movieFilter).getTitle()),
+                "Cineplex: All Cineplexes",
+                "Date: " + Utilities.toFormat(dateFilter, DATE_DISPLAY_FORMAT));
         addBackOption();
     }
 
@@ -81,7 +83,7 @@ public class CineplexShowtimeListView extends ListView {
                 CineplexShowtimeMenuOption userChoice = CineplexShowtimeMenuOption.valueOf(userInput);
                 switch (userChoice) {
                     case ADD_SHOWTIME:
-                        System.out.println("Go to Showtime View CREATE!");
+                        System.out.println("Go to Showtime View CREATE_MOVIE!");
                         break;
                     case CHOOSE_DAY:
                         View.displayInformation("Please select date");
@@ -96,7 +98,8 @@ public class CineplexShowtimeListView extends ListView {
                                 .map(date ->
                                         new GenericMenuOption(Utilities.toFormat(date, DATE_DISPLAY_FORMAT),
                                                 Utilities.toFormat(date))).toArray(GenericMenuOption[]::new));
-                        navigation.reload(intent, dateChoice);
+                        navigation.reload(accessLevel, movieFilter == null ? null :
+                                movieFilter.getId().toString(), dateChoice);
                         break;
                 }
             } catch (IllegalArgumentException e) {
@@ -105,13 +108,8 @@ public class CineplexShowtimeListView extends ListView {
                     navigation.goTo(new ShowtimeListView(navigation), cineplex.getId().toString(),
                             movieFilter.getId().toString(), Utilities.toFormat(dateFilter));
                 } else
-                    navigation.goTo(new CineplexMovieListView(navigation), userInput, Utilities.toFormat(dateFilter));
+                    navigation.goTo(new MovieShowtimeListView(navigation), userInput, Utilities.toFormat(dateFilter));
             }
-    }
-
-    public enum CineplexShowtimeListIntent implements NavigationIntent {
-        ADMIN,
-        PUBLIC
     }
 
     public enum CineplexShowtimeMenuOption implements EnumerableMenuOption {

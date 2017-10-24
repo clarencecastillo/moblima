@@ -1,6 +1,7 @@
 package view;
 
 import exception.NavigationRejectedException;
+import manager.BookingController;
 import manager.UserController;
 import model.booking.Booking;
 import model.commons.User;
@@ -15,26 +16,36 @@ public class BookingListView extends ListView {
     private User user;
     private ArrayList<Booking> bookings;
 
+    private BookingController bookingController;
+
     public BookingListView(Navigation navigation) {
         super(navigation);
         this.userController = UserController.getInstance();
+        this.bookingController = BookingController.getInstance();
     }
 
     @Override
-    public void onLoad(NavigationIntent intent, String... args) {
+    public void onLoad(AccessLevel accessLevel, Intent intent, String... args) {
         setTitle("Booking History");
 
-        View.displayInformation("Please enter your mobile number.");
-        String mobileNumber = Form.getString("Mobile number");
+        switch (accessLevel) {
 
-        user = userController.findByMobile(mobileNumber);
-        if (user == null) {
-            View.displayError("User with mobile '" + mobileNumber + "' not found!");
-            Form.pressAnyKeyToContinue();
-            throw new NavigationRejectedException();
+            case ADMINISTRATOR:
+                bookings = bookingController.getList();
+                break;
+            case PUBLIC:
+                View.displayInformation("Please enter your mobile number.");
+                String mobileNumber = Form.getString("Mobile number");
+                user = userController.findByMobile(mobileNumber);
+                if (user == null) {
+                    View.displayError("User with mobile '" + mobileNumber + "' not found!");
+                    Form.pressAnyKeyToContinue();
+                    throw new NavigationRejectedException();
+                }
+                bookings = user.getBookings();
+                break;
         }
 
-        bookings = user.getBookings();
         setContent("Displaying " + bookings.size() + " booking item(s).");
         addBackOption();
         setViewItems(bookings.stream().map(

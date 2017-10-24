@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-public class CineplexMovieListView extends ListView {
+public class MovieShowtimeListView extends ListView {
 
     private Date dateFilter;
     private Cineplex cineplex;
@@ -25,15 +25,21 @@ public class CineplexMovieListView extends ListView {
     private MovieController movieController;
     private CineplexController cineplexController;
 
-    public CineplexMovieListView(Navigation navigation) {
+    private AccessLevel accessLevel;
+
+    public MovieShowtimeListView(Navigation navigation) {
         super(navigation);
         this.movieController = MovieController.getInstance();
         this.cineplexController = CineplexController.getInstance();
     }
 
     @Override
-    public void onLoad(NavigationIntent intent, String... args) {
+    public void onLoad(AccessLevel accessLevel, Intent intent, String... args) {
 
+        // args[0] - Cineplex UUID
+        // args[1] - Date
+
+        this.accessLevel = accessLevel;
         cineplex = cineplexController.findById(UUID.fromString(args[0]));
         if (cineplex == null) {
             View.displayError("Cineplex not found!!");
@@ -41,13 +47,14 @@ public class CineplexMovieListView extends ListView {
             throw new NavigationRejectedException();
         }
 
-        dateFilter = args.length == 2 ? Utilities.parseDate(args[1]) : new Date();
+        dateFilter = args.length == 2 && args[1] != null ? Utilities.parseDate(args[1]) : new Date();
         movies = movieController.findByCineplex(cineplex).stream().filter(movie ->
                 movie.getStatus() == MovieStatus.NOW_SHOWING).collect(Collectors.toList());
 
-        setTitle(cineplex.getName() + " Movie Showtimes");
-        setContent("Displaying showtimes for " + (args.length == 2 ?
-                Utilities.toFormat(dateFilter, DATE_DISPLAY_FORMAT) : "today") + ".");
+        setTitle("Movie Showtimes");
+        setContent("Movie: All Movies",
+                "Cineplex: " + cineplex.getName(),
+                "Date: " + Utilities.toFormat(dateFilter, DATE_DISPLAY_FORMAT));
         setMenuItems(CineplexMovieMenuOption.values());
         addBackOption();
     }
@@ -78,12 +85,12 @@ public class CineplexMovieListView extends ListView {
                                 .map(date ->
                                         new GenericMenuOption(Utilities.toFormat(date, DATE_DISPLAY_FORMAT),
                                                 Utilities.toFormat(date))).toArray(GenericMenuOption[]::new));
-                        navigation.reload(cineplex.getId().toString(), dateChoice);
+                        navigation.reload(accessLevel, cineplex.getId().toString(), dateChoice);
                         break;
                 }
             } catch (IllegalArgumentException e) {
                 Movie movie = movieController.findById(UUID.fromString(userInput));
-                navigation.goTo(new ShowtimeListView(navigation), cineplex.getId().toString(),
+                navigation.goTo(new ShowtimeListView(navigation), accessLevel, cineplex.getId().toString(),
                         movie.getId().toString(), Utilities.toFormat(dateFilter));
             }
     }

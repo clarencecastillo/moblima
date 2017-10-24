@@ -5,6 +5,7 @@ import manager.CineplexController;
 import manager.MovieController;
 import manager.ShowtimeController;
 import model.booking.Showtime;
+import model.booking.ShowtimeStatus;
 import model.cinema.Cineplex;
 import model.movie.Movie;
 import util.Utilities;
@@ -21,11 +22,14 @@ public class ShowtimeListView extends ListView {
     private Cineplex cineplexFilter;
     private Movie movieFilter;
     private Date dateFilter;
+    private ShowtimeStatus showtimeStatusFilter;
     private List<Showtime> showtimes;
 
     private CineplexController cineplexController;
     private MovieController movieController;
     private ShowtimeController showtimeController;
+
+    private AccessLevel accessLevel;
 
     public ShowtimeListView(Navigation navigation) {
         super(navigation);
@@ -35,7 +39,19 @@ public class ShowtimeListView extends ListView {
     }
 
     @Override
-    public void onLoad(NavigationIntent intent, String... args) {
+    public void onLoad(AccessLevel accessLevel, Intent intent, String... args) {
+
+        this.accessLevel = accessLevel;
+        switch (accessLevel) {
+            case ADMINISTRATOR:
+                setMenuItems(ShowtimeMenuOption.values());
+                showtimeStatusFilter = ShowtimeStatus.OPEN_BOOKING;
+                break;
+            case PUBLIC:
+                setMenuItems(ShowtimeMenuOption.CHOOSE_DAY);
+                break;
+        }
+
         cineplexFilter = cineplexController.findById(UUID.fromString(args[0]));
         movieFilter = movieController.findById(UUID.fromString(args[1]));
         dateFilter = Utilities.parseDate(args[2]);
@@ -44,12 +60,16 @@ public class ShowtimeListView extends ListView {
                 Utilities.getStartOfDate(showtime.getStartTime())
                         .compareTo(Utilities.getStartOfDate(dateFilter)) == 0).collect(Collectors.toList());
 
-        setTitle("Showtimes for " + new MovieView(movieFilter).getTitle() + " at " + cineplexFilter.getName());
-        setContent("Displaying " + showtimes.size() +  " showtimes for "
-                + Utilities.toFormat(dateFilter, DATE_DISPLAY_FORMAT) + ".");
+        if (showtimeStatusFilter != null)
+            showtimes = showtimes.stream().filter(showtime ->
+                    showtime.getStatus() == showtimeStatusFilter).collect(Collectors.toList());
+
+        setTitle("Movie Showtimes");
+        setContent("Movie: " + new MovieView(movieFilter).getTitle(),
+                "Cineplex: " + cineplexFilter.getName(),
+                "Date: " + Utilities.toFormat(dateFilter, DATE_DISPLAY_FORMAT));
         setViewItems(showtimes.stream().map(showtime ->
                 new ViewItem(new ShowtimeView(showtime), showtime.getId().toString())).toArray(ViewItem[]::new));
-        setMenuItems(ShowtimeMenuOption.values());
         addBackOption();
     }
 
@@ -74,7 +94,7 @@ public class ShowtimeListView extends ListView {
                                         .compareTo(Utilities.getDateWithTime(dateFilter, 0, 0)) != 0)
                                 .map(date -> new GenericMenuOption(Utilities.toFormat(date, DATE_DISPLAY_FORMAT),
                                                 Utilities.toFormat(date))).toArray(GenericMenuOption[]::new));
-                        navigation.reload(cineplexFilter.getId().toString(),
+                        navigation.reload(accessLevel, cineplexFilter.getId().toString(),
                                 movieFilter.getId().toString(), dateChoice);
                         break;
                 }
@@ -86,7 +106,8 @@ public class ShowtimeListView extends ListView {
 
     public enum ShowtimeMenuOption implements EnumerableMenuOption {
 
-        CHOOSE_DAY("Choose Another Date");
+        CHOOSE_DAY("Choose Another Date"),
+        ADD_SHOWTIME("Add Showtime");
 
         private String description;
         ShowtimeMenuOption(String description) {

@@ -1,9 +1,11 @@
 package view;
 
 import config.ConfigType;
+import exception.UnauthorisedNavigationException;
+import view.ui.AccessLevel;
 import view.ui.MenuView;
 import view.ui.Navigation;
-import view.ui.NavigationIntent;
+import view.ui.Intent;
 
 public class ConfigMenuView extends MenuView {
 
@@ -12,7 +14,10 @@ public class ConfigMenuView extends MenuView {
     }
 
     @Override
-    public void onLoad(NavigationIntent intent, String... args) {
+    public void onLoad(AccessLevel accessLevel, Intent intent, String... args) {
+
+        if (accessLevel != AccessLevel.ADMINISTRATOR)
+            throw new UnauthorisedNavigationException();
 
         setTitle("Configuration Settings Menu");
         setMenuItems(ConfigType.values());
@@ -28,19 +33,19 @@ public class ConfigMenuView extends MenuView {
         else
             switch (ConfigType.valueOf(userChoice)) {
                 case HOLIDAY:
-                    navigation.goTo(new HolidayListMenuView(navigation));
+                    navigation.goTo(new HolidayListMenuView(navigation), AccessLevel.ADMINISTRATOR);
                     break;
                 case TICKET:
-                    navigation.goTo(new TicketConfigMenuView(navigation));
+                    navigation.goTo(new TicketConfigMenuView(navigation), AccessLevel.ADMINISTRATOR);
                     break;
                 case BOOKING:
-                    navigation.goTo(new BookingConfigListView(navigation));
+                    navigation.goTo(new BookingConfigListView(navigation), AccessLevel.ADMINISTRATOR);
                     break;
                 case PAYMENT:
-                    navigation.goTo(new PaymentConfigListView(navigation));
+                    navigation.goTo(new PaymentConfigListView(navigation), AccessLevel.ADMINISTRATOR);
                     break;
                 case ADMIN:
-                    navigation.goTo(new AdminConfigListView(navigation));
+                    navigation.goTo(new AdminConfigListView(navigation), AccessLevel.ADMINISTRATOR);
                     break;
             }
     }

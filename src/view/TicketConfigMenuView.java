@@ -1,5 +1,6 @@
 package view;
 
+import exception.UnauthorisedNavigationException;
 import view.ui.*;
 
 public class TicketConfigMenuView extends MenuView {
@@ -9,7 +10,11 @@ public class TicketConfigMenuView extends MenuView {
     }
 
     @Override
-    public void onLoad(NavigationIntent intent, String... args) {
+    public void onLoad(AccessLevel accessLevel, Intent intent, String... args) {
+
+        if (accessLevel != AccessLevel.ADMINISTRATOR)
+            throw new UnauthorisedNavigationException();
+
         setTitle("Ticket Config");
         setMenuItems(TicketConfigMenuOption.values());
         addBackOption();
@@ -24,10 +29,10 @@ public class TicketConfigMenuView extends MenuView {
         else
             switch (TicketConfigMenuOption.valueOf(userChoice)) {
                 case SET_PRICING:
-                    navigation.goTo(new PricingConfigListMenu(navigation));
+                    navigation.goTo(new PricingConfigListMenu(navigation), AccessLevel.ADMINISTRATOR);
                     break;
                 case SET_ALLOWED_TICKET_TYPES:
-                    navigation.goTo(new TicketTypeConfigListMenu(navigation));
+                    navigation.goTo(new TicketTypeConfigListMenu(navigation), AccessLevel.ADMINISTRATOR);
                     break;
             }
     }

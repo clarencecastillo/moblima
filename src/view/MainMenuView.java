@@ -1,11 +1,9 @@
 package view;
 
 import config.AdminConfig;
-import util.Utilities;
 import view.MovieListView.MovieListIntent;
 import view.ui.*;
 
-import java.util.Date;
 import java.util.Scanner;
 
 public class MainMenuView extends MenuView {
@@ -17,7 +15,7 @@ public class MainMenuView extends MenuView {
     }
 
     @Override
-    public void onLoad(NavigationIntent intent, String... args) {
+    public void onLoad(AccessLevel accessLevel, Intent intent, String... args) {
         this.version = args[0];
 
         setMenuItems(MainMenuOption.values());
@@ -30,23 +28,22 @@ public class MainMenuView extends MenuView {
         display();
         switch (MainMenuOption.valueOf(getChoice())) {
             case SEARCH_MOVIES:
-                navigation.goTo(new MovieListView(navigation), MovieListIntent.SEARCH);
+                navigation.goTo(new MovieListView(navigation), AccessLevel.PUBLIC, MovieListIntent.SEARCH_MOVIES);
                 break;
             case LIST_MOVIES:
-                navigation.goTo(new MovieListView(navigation), MovieListIntent.PUBLIC);
+                navigation.goTo(new MovieListView(navigation), AccessLevel.PUBLIC, MovieListIntent.VIEW_MOVIES);
                 break;
             case VIEW_SHOWTIMES:
-                navigation.goTo(new CineplexShowtimeListView(navigation),
-                        CineplexShowtimeListView.CineplexShowtimeListIntent.PUBLIC);
+                navigation.goTo(new CineplexShowtimeListView(navigation), AccessLevel.PUBLIC);
                 break;
             case VIEW_BOOKING_HISTORY:
-                navigation.goTo(new BookingListView(navigation));
+                navigation.goTo(new BookingListView(navigation), AccessLevel.PUBLIC);
                 break;
             case VIEW_TOP_5_MOVIES:
-                navigation.goTo(new MovieListView(navigation));
+                navigation.goTo(new MovieListView(navigation), AccessLevel.PUBLIC, MovieListIntent.VIEW_RANKING);
                 break;
             case ADMIN:
-                navigation.goTo(new AdminMenuView(navigation));
+                navigation.goTo(new AdminMenuView(navigation), AccessLevel.PUBLIC);
                 break;
         }
     }

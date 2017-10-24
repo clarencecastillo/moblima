@@ -1,6 +1,7 @@
 package view;
 
 import exception.IllegalMovieStatusTransitionException;
+import exception.UnauthorisedNavigationException;
 import manager.MovieController;
 import model.movie.*;
 import view.ui.*;
@@ -9,6 +10,7 @@ import java.util.UUID;
 
 public class MovieMenuView extends MenuView {
 
+    private AccessLevel accessLevel;
     private MovieMenuIntent intent;
     private Movie movie;
 
@@ -21,19 +23,29 @@ public class MovieMenuView extends MenuView {
     }
 
     @Override
-    public void onLoad(NavigationIntent intent, String... args) {
-        this.intent = (MovieMenuIntent) intent;
-        switch (this.intent) {
-            case MANAGE:
-                movie = movieController.findById(UUID.fromString(args[0]));
+    public void onLoad(AccessLevel accessLevel, Intent intent, String... args) {
+
+        this.accessLevel = accessLevel;
+        switch (accessLevel) {
+            case ADMINISTRATOR:
                 setMenuItems(MovieMenuOption.values());
                 break;
-            case VIEW:
-                movie = movieController.findById(UUID.fromString(args[0]));
+            case PUBLIC:
                 setMenuItems(MovieMenuOption.VIEW_SHOWTIMES,
-                             MovieMenuOption.SEE_REVIEWS);
+                        MovieMenuOption.SEE_REVIEWS);
                 break;
-            case CREATE:
+        }
+
+        this.intent = (MovieMenuIntent) intent;
+        switch (this.intent) {
+            case VIEW_MOVIE:
+                movie = movieController.findById(UUID.fromString(args[0]));
+                break;
+            case CREATE_MOVIE:
+
+                if (accessLevel != AccessLevel.ADMINISTRATOR)
+                    throw new UnauthorisedNavigationException();
+
                 View.displayInformation("Please enter movie details.");
                 String title = Form.getString("Title");
                 String sypnosis = Form.getString("Sypnosis");
@@ -69,10 +81,7 @@ public class MovieMenuView extends MenuView {
         else
             switch (MovieMenuOption.valueOf(userChoice)) {
                 case VIEW_SHOWTIMES:
-                    navigation.goTo(new CineplexShowtimeListView(navigation), intent == MovieMenuIntent.MANAGE ?
-                                    CineplexShowtimeListView.CineplexShowtimeListIntent.ADMIN :
-                                    CineplexShowtimeListView.CineplexShowtimeListIntent.PUBLIC,
-                            null, movie.getId().toString());
+                    navigation.goTo(new CineplexShowtimeListView(navigation), accessLevel, movie.getId().toString());
                     break;
                 case SEE_REVIEWS:
                     break;
@@ -87,7 +96,7 @@ public class MovieMenuView extends MenuView {
                         View.displayError("Cannot change movie status to " + status + "!");
                     }
                     Form.pressAnyKeyToContinue();
-                    navigation.reload();
+                    navigation.reload(accessLevel, MovieMenuIntent.VIEW_MOVIE, movie.getId().toString());
                     break;
                 case UPDATE:
                     View.displayInformation("Please enter updated movie details.");
@@ -105,7 +114,7 @@ public class MovieMenuView extends MenuView {
                             director, actors, rating, runtime);
                     View.displaySuccess("Successfully updated movie!");
                     Form.pressAnyKeyToContinue();
-                    navigation.reload();
+                    navigation.reload(accessLevel, MovieMenuIntent.VIEW_MOVIE, movie.getId().toString());
                     break;
                 case REMOVE:
                     try {
@@ -116,16 +125,15 @@ public class MovieMenuView extends MenuView {
                     } catch (IllegalMovieStatusTransitionException e) {
                         View.displayError("Cannot remove movie!");
                         Form.pressAnyKeyToContinue();
-                        navigation.reload();
+                        navigation.reload(accessLevel, MovieMenuIntent.VIEW_MOVIE, movie.getId().toString());
                     }
                     break;
             }
     }
 
-    public enum MovieMenuIntent implements NavigationIntent {
-        MANAGE,
-        VIEW,
-        CREATE
+    public enum MovieMenuIntent implements Intent {
+        VIEW_MOVIE,
+        CREATE_MOVIE;
     }
 
     private enum MovieMenuOption implements EnumerableMenuOption {

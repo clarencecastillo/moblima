@@ -74,7 +74,8 @@ public class BookingController extends EntityController<Booking> {
             throw new ExceedBookingSeatException();
 
         for (TicketType ticketType : ticketTypesCount.keySet())
-            booking.addTicket(new Ticket(ticketType));
+            for (int i = 0; i < ticketTypesCount.get(ticketType); i++)
+                booking.addTicket(new Ticket(ticketType));
     }
 
     // Set seats to tickets according to the order when user selects seats
