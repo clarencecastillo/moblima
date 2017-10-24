@@ -3,7 +3,10 @@ package manager;
 import config.BookingConfig;
 import exception.*;
 
+import java.util.Date;
+import java.util.Hashtable;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import model.booking.*;
 import model.cinema.Seat;
@@ -51,24 +54,51 @@ public class BookingController extends EntityController<Booking> {
 
 
     // Create tickets when user selects ticketTypes
-    public void selectTicketType(UUID bookingId, TicketType[] ticketTypes) {
-        // TODO Check ticketType available for the booking showtime
-        // TODO Check number of ticketTypes exceed maximum of booking
+    public void selectTicketType(UUID bookingId, Hashtable<TicketType, Integer> ticketTypesCount)
+            throws ExceedBookingSeatException, UnavailableTicketTypeException, IllegalBookingStatusException {
+
         Booking booking = findById(bookingId);
-        for (TicketType ticketType : ticketTypes) {
-            Ticket ticket = new Ticket(ticketType);
-            booking.addTicket(ticket);
-        }
+
+        // Check if booking not in progress
+        if (booking.getStatus() != BookingStatus.IN_PROGRESS)
+            throw new IllegalBookingStatusException("The booking cannot be modified");
+
+        // Check if all ticket types are available for this booking cinema
+        for (TicketType ticketType : ticketTypesCount.keySet())
+            if (!booking.getShowtime().getCinema().getType().isAvailable(ticketType))
+                throw new UnavailableTicketTypeException();
+
+        // Check if number of ticket types exceed maximum seats per booking
+        int totalCount = ticketTypesCount.values().stream().mapToInt(Integer::intValue).sum();
+        if (totalCount > BookingConfig.getMaxSeatsPerBooking())
+            throw new ExceedBookingSeatException();
+
+        for (TicketType ticketType : ticketTypesCount.keySet())
+            booking.addTicket(new Ticket(ticketType));
     }
 
     // Set seats to tickets according to the order when user selects seats
-    public void selectSeat(UUID bookingId, Seat[] seats) {
-        // TODO Check seat availability
-        // TODO Check number of seats match of ticket types
+    public void selectSeat(UUID bookingId, Seat[] seats) throws UnavailableBookingSeatException,
+            InsufficientSeatsException, IllegalBookingStatusException {
+
         Booking booking = findById(bookingId);
-        for (int i = 0; i < seats.length; i++) {
+
+        // Check if booking not in progress
+        if (booking.getStatus() != BookingStatus.IN_PROGRESS)
+            throw new IllegalBookingStatusException("The booking cannot be modified");
+
+        // Check if the number of seats the same with the tickets
+        if (seats.length != booking.getTickets().length)
+            throw new InsufficientSeatsException();
+
+        // Check if all seats are available
+        for (Seat seat : seats)
+            if (!booking.getShowtime().getSeating().isAvailable(seat))
+                throw new UnavailableBookingSeatException();
+
+        // Arbitrarily pair seats to the ticket types
+        for (int i = 0; i < seats.length; i++)
             booking.getTickets()[i].setSeat(seats[i]);
-        }
     }
 
     public double getBookingPrice(UUID bookingId) {
@@ -99,13 +129,10 @@ public class BookingController extends EntityController<Booking> {
         if (previousStatus != BookingStatus.IN_PROGRESS)
             throw new IllegalBookingStatusException("The booking can not be confirmed");
 
-
         // Check whether payment is made
         Payment payment = booking.getPayment();
         if (payment.getStatus() != PaymentStatus.ACCEPTED)
             throw new UnpaidPaymentException();
-
-        // TODO Check seat availability
 
         booking.setStatus(BookingStatus.CONFIRMED);
         showtime.addBooking(booking);
