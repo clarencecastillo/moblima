@@ -84,7 +84,7 @@ public class ShowtimeController extends EntityController<Showtime> {
             bookingController.cancelBooking(booking.getId());
     }
 
-    public ArrayList<Showtime> findByStatus(ShowtimeStatus statuses) {
+    public List<Showtime> findByStatus(ShowtimeStatus statuses) {
         ArrayList<Showtime> showtimes = new ArrayList<>();
         List<ShowtimeStatus> statusFilter = Arrays.asList(statuses);
         for (Showtime showtime : entities.values())
@@ -93,7 +93,7 @@ public class ShowtimeController extends EntityController<Showtime> {
         return showtimes;
     }
 
-    public ArrayList<Showtime> findByCineplexAndMovie(Cineplex cineplex, Movie movie) {
+    public List<Showtime> findByCineplexAndMovie(Cineplex cineplex, Movie movie) {
         ArrayList<Showtime> showtimes = new ArrayList<>();
         for (Showtime showtime : cineplex.getShowtimes())
             if (showtime.getMovie().equals(movie))
