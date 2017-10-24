@@ -15,7 +15,7 @@ public class MovieShowtimeView extends View {
 
     public MovieShowtimeView(Movie movie, Cineplex cineplexFilter, Date dateFilter) {
 
-        List<Showtime> movieShowtimes = Arrays.asList(movie.getShowtimes());
+        List<Showtime> movieShowtimes = movie.getShowtimes();
         if (dateFilter != null)
             movieShowtimes = movieShowtimes.stream().filter(showtime ->
                     Utilities.getStartOfDate(showtime.getStartTime())

@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.UUID;
 
 /**
- Represents en entity stored in the database.
+ Represents an entity with an ID.
  @author Castillo Clarence Fitzgerald Gumtang
  @version 1.0
  @since 2017-10-20
@@ -13,37 +13,37 @@ import java.util.UUID;
 public abstract class Entity implements Serializable {
 
     /**
-     * The ID of the entity.
+     * The ID of this entity.
      */
     protected UUID id;
 
     /**
-     * Creates entity with a system-generated ID number.
+     * Creates an entity with a system-generated ID number.
      */
     public Entity() {
         this.id = UUID.randomUUID();
     }
 
     /**
-     * Gets the ID number of this Entity.
-     * @return this Entity's ID number.
+     * Gets the ID number of this entity.
+     * @return This entity's ID number.
      */
     public UUID getId() {
         return id;
     }
 
     /**
-     * Sets the ID number of this Entity.
-     * @param id this Entity's current ID number.
+     * Changes the ID number of this entity.
+     * @param id This entity's new ID number.
      */
     public void setId(UUID id) {
         this.id = id;
     }
 
     /**
-     * Compares this Entity to another.
-     * @param obj the object to compare to.
-     * @return true if and only if obj is instance of Entity and has the same ID number.
+     * Compares this entity to another.
+     * @param obj The object to compare to.
+     * @return true if and only if obj is instance of entity and has the same ID number.
      */
     @Override
     public boolean equals(Object obj) {
@@ -54,8 +54,8 @@ public abstract class Entity implements Serializable {
     }
 
     /**
-     * Returns a hash code value for the entity using the ID number.
-     * @return a hash code value for the entity using the ID number.
+     * Gets a hash code value for this entity using the ID number.
+     * @return a hash code value for this entity using the ID number.
      */
     @Override
     public int hashCode() {
