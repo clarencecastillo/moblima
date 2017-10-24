@@ -9,12 +9,12 @@ import java.util.Arrays;
 
 public class ShowtimeView extends View {
     public ShowtimeView(Showtime showtime) {
-        setTitle((showtime.isNoFreePasses() ? "*" : "") + new MovieView(showtime.getMovie()).getTitle());
-        setContent("Cineplex: " + showtime.getCineplex().getName(),
+        setTitle(Utilities.toFormat(showtime.getStartTime(), "hh:mm a"));
+        setContent("Cinema: " + showtime.getCineplex().getName() + " Hall " + showtime.getCinema().getCode(),
                 "Language: " + showtime.getLanguage(),
                 "Subtitles: " + String.join(",", showtime.getSubtitles().stream()
                         .map(String::valueOf).toArray(String[]::new)),
-                "Screening Time: " + Utilities.toFormat(showtime.getStartTime(), "HH:mm")
+                "Free Seating Allowed: " + (showtime.isNoFreePasses() ? "No" : "Yes")
                 );
     }
 }

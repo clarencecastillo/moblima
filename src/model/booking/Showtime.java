@@ -1,10 +1,9 @@
 package model.booking;
 
 import config.BookingConfig;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.UUID;
+
+import java.util.*;
+
 import model.cinema.Cinema;
 import model.cinema.Cineplex;
 import model.commons.Entity;
@@ -38,6 +37,7 @@ public class Showtime extends Entity {
         this.noFreePasses = noFreePasses;
         this.isPreview = isPreview;
         this.subtitles = new ArrayList<Language>();
+        this.subtitles.addAll(Arrays.asList(subtitles));
         this.bookings = new ArrayList<Booking>();
         this.isCancelled = false;
     }

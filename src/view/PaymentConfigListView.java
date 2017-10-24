@@ -1,6 +1,7 @@
 package view;
 
 import config.PaymentConfig;
+import exception.UnauthorisedNavigationException;
 import view.ui.*;
 
 import java.util.ArrayList;
@@ -15,7 +16,11 @@ public class PaymentConfigListView extends ListView {
     }
 
     @Override
-    public void onLoad(NavigationIntent intent, String... args) {
+    public void onLoad(AccessLevel accessLevel, Intent intent, String... args) {
+
+        if (accessLevel != AccessLevel.ADMINISTRATOR)
+            throw new UnauthorisedNavigationException();
+
         setTitle("Payment Config");
         setContent("Select the item to change.");
         addBackOption();
@@ -49,7 +54,7 @@ public class PaymentConfigListView extends ListView {
             }
             View.displaySuccess("Successfully changed payment config value!");
             Form.pressAnyKeyToContinue();
-            navigation.reload();
+            navigation.reload(AccessLevel.ADMINISTRATOR);
         }
     }
 

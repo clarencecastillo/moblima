@@ -1,6 +1,7 @@
 package view;
 
 import config.HolidayConfig;
+import exception.UnauthorisedNavigationException;
 import util.Utilities;
 import view.ui.*;
 
@@ -19,8 +20,10 @@ public class HolidayMenuView extends MenuView {
     }
 
     @Override
-    public void onLoad(NavigationIntent intent, String... args) {
+    public void onLoad(AccessLevel accessLevel, Intent intent, String... args) {
 
+        if (accessLevel != AccessLevel.ADMINISTRATOR)
+            throw new UnauthorisedNavigationException();
 
         this.holidayDate = Utilities.parseDate(args[0]);
         this.holidayDescription = args[1];

@@ -1,7 +1,6 @@
 package view.ui;
 
-public interface EnumerableMenuOption {
+public interface EnumerableMenuOption extends MenuOption {
 
-    String getDescription();
     String name();
 }

@@ -12,8 +12,18 @@ public class Navigation {
         this.stack = new Stack<>();
     }
 
-    public void reload() {
-        enter(stack.peek());
+    public void reload(AccessLevel accessLevel, Intent intent, String... args) {
+        Navigable recentNavigable = stack.peek();
+        recentNavigable.onLoad(accessLevel, intent, args);
+        enter(recentNavigable);
+    }
+
+    public void reload(String... args) {
+        reload(AccessLevel.PUBLIC,null, args);
+    }
+
+    public void reload(AccessLevel accessLevel, String... args) {
+        reload(accessLevel,null, args);
     }
 
     public void enter(Navigable navigable) {
@@ -26,11 +36,15 @@ public class Navigation {
         System.out.flush();
     }
 
-    public void goTo(Navigable navigable, NavigationIntent intent, String... args) {
+    public void goTo(Navigable navigable, AccessLevel accessLevel, String... args) {
+        goTo(navigable, accessLevel, null, args);
+    }
+
+    public void goTo(Navigable navigable, AccessLevel accessLevel, Intent intent, String... args) {
         clearScreen();
         stack.push(navigable);
         try {
-            navigable.onLoad(intent, args);
+            navigable.onLoad(accessLevel, intent, args);
             enter(navigable);
         } catch (NavigationRejectedException e) {
             goBack();
@@ -38,7 +52,7 @@ public class Navigation {
     }
 
     public void goTo(Navigable navigable, String... args) {
-        goTo(navigable, null, args);
+        goTo(navigable, AccessLevel.PUBLIC, null, args);
     }
 
     public void goBack() {

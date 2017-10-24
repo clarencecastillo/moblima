@@ -4,21 +4,16 @@ import config.HolidayConfig;
 
 import java.util.*;
 
+import exception.UnauthorisedNavigationException;
 import util.Utilities;
-import view.ui.EnumerableMenuOption;
-import view.ui.Form;
-import view.ui.ListView;
-import view.ui.Navigation;
-import view.ui.NavigationIntent;
-import view.ui.View;
-import view.ui.ViewItem;
+import view.ui.*;
 
 public class HolidayListMenuView extends ListView {
 
 
     private HolidayConfig holidayConfig;
 
-    Hashtable<Date, String> holidays;
+    private Hashtable<Date, String> holidays;
 
     public HolidayListMenuView(Navigation navigation) {
         super(navigation);
@@ -26,7 +21,11 @@ public class HolidayListMenuView extends ListView {
     }
 
     @Override
-    public void onLoad(NavigationIntent intent, String... args) {
+    public void onLoad(AccessLevel accessLevel, Intent intent, String... args) {
+
+        if (accessLevel != AccessLevel.ADMINISTRATOR)
+            throw new UnauthorisedNavigationException();
+
         setTitle("Holiday Config");
         holidays = HolidayConfig.getHolidays();
 
@@ -64,9 +63,9 @@ public class HolidayListMenuView extends ListView {
                 }
             } catch (IllegalArgumentException e) {
                 Date holidayDate = Utilities.parseDate(userOption);
-                navigation.goTo(new HolidayMenuView(navigation), userOption, holidays.get(holidayDate));
+                navigation.goTo(new HolidayMenuView(navigation), AccessLevel.ADMINISTRATOR, userOption, holidays.get(holidayDate));
             }
-            navigation.reload();
+            navigation.reload(AccessLevel.ADMINISTRATOR);
         }
     }
 

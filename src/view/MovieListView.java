@@ -2,25 +2,23 @@ package view;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import manager.MovieController;
 import model.movie.Movie;
 import model.movie.MovieStatus;
 import view.MovieMenuView.MovieMenuIntent;
-import view.ui.EnumerableMenuOption;
-import view.ui.Form;
-import view.ui.NavigationIntent;
-import view.ui.ListView;
-import view.ui.Navigation;
-import view.ui.View;
-import view.ui.ViewItem;
+import view.ui.*;
 
 public class MovieListView extends ListView {
 
     private MovieListIntent intent;
-    private ArrayList<Movie> movies;
+    private List<Movie> movies;
     private String searchKeyword;
 
     private MovieController movieController;
+    private AccessLevel accessLevel;
 
     public MovieListView(Navigation navigation) {
         super(navigation);
@@ -29,19 +27,25 @@ public class MovieListView extends ListView {
     }
 
     @Override
-    public void onLoad(NavigationIntent intent, String... args) {
+    public void onLoad(AccessLevel accessLevel, Intent intent, String... args) {
+        this.accessLevel = accessLevel;
+        switch (accessLevel) {
+            case ADMINISTRATOR:
+                setMenuItems(MovieListMenuOption.ADD_MOVIE);
+                break;
+            case PUBLIC:
+                break;
+        }
+
         this.intent = (MovieListIntent) intent;
         setTitle("Movie Listings");
         switch (this.intent) {
-            case SEARCH:
+            case SEARCH_MOVIES:
                 View.displayInformation("Please enter search terms. Keywords may include movie "
                         + "title, director, and actors.");
                 searchKeyword = Form.getString("Search");
                 break;
-            case ADMIN:
-                setMenuItems(MovieListMenuOption.ADD_MOVIE);
-                break;
-            case PUBLIC:
+            case VIEW_RANKING:
                 break;
         }
         addBackOption();
@@ -52,23 +56,23 @@ public class MovieListView extends ListView {
 
         movies = new ArrayList<>();
         switch (this.intent) {
-            case SEARCH:
+            case SEARCH_MOVIES:
                 movies.addAll(Arrays.asList(movieController.findByKeyword(searchKeyword)));
+                if (accessLevel == AccessLevel.PUBLIC)
+                    movies = movies.stream().filter(movie ->
+                            movie.getStatus() != MovieStatus.END_OF_SHOWING).collect(Collectors.toList());
                 setContent("Your search for '" + searchKeyword + "' yielded "
                         + movies.size() + " movie item(s).");
                 break;
-
-            case PUBLIC:
-                movies.addAll(Arrays.asList(movieController.findByStatus(MovieStatus.PREVIEW,
-                        MovieStatus.COMING_SOON,
-                        MovieStatus.NOW_SHOWING)));
-                setContent("Displaying " + movies.size() + " movie item(s).");
-                break;
-            case ADMIN:
+            case VIEW_MOVIES:
                 movies.addAll(movieController.getList());
+                if (accessLevel == AccessLevel.PUBLIC)
+                    movies = movies.stream().filter(movie ->
+                            movie.getStatus() != MovieStatus.END_OF_SHOWING).collect(Collectors.toList());
                 setContent("Displaying " + movies.size() + " movie item(s).");
                 break;
         }
+
         setViewItems(movies.stream().map(
                 movie -> new ViewItem(new MovieView(movie),
                         movie.getId().toString())).toArray(ViewItem[]::new));
@@ -82,20 +86,18 @@ public class MovieListView extends ListView {
                 MovieListMenuOption userChoice = MovieListMenuOption.valueOf(userInput);
                 switch (userChoice) {
                     case ADD_MOVIE:
-                        navigation.goTo(new MovieMenuView(navigation), MovieMenuIntent.CREATE);
+                        navigation.goTo(new MovieMenuView(navigation), accessLevel, MovieMenuIntent.CREATE_MOVIE);
                         break;
                 }
             } catch (IllegalArgumentException e) {
-                navigation.goTo(new MovieMenuView(navigation),
-                                this.intent == MovieListIntent.ADMIN ?
-                                MovieMenuIntent.MANAGE : MovieMenuIntent.VIEW, userInput);
+                navigation.goTo(new MovieMenuView(navigation), accessLevel, MovieMenuIntent.VIEW_MOVIE, userInput);
             }
     }
 
-    public enum MovieListIntent implements NavigationIntent {
-        SEARCH,
-        ADMIN,
-        PUBLIC
+    public enum MovieListIntent implements Intent {
+        VIEW_MOVIES,
+        SEARCH_MOVIES,
+        VIEW_RANKING
     }
 
     public enum MovieListMenuOption implements EnumerableMenuOption {

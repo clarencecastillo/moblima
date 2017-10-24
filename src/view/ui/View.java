@@ -8,6 +8,7 @@ import java.util.regex.Pattern;
 public abstract class View {
 
     public final static int VIEW_WIDTH = 100;
+    public static final String DATE_DISPLAY_FORMAT = "EEEEE, dd MMMMM YYYY";
 
     public final static String DASH_LINE = line('-', VIEW_WIDTH);
     public final static String SPACE_LINE = line(' ', VIEW_WIDTH);

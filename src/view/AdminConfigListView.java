@@ -1,6 +1,7 @@
 package view;
 
 import config.AdminConfig;
+import exception.UnauthorisedNavigationException;
 import view.ui.*;
 
 import java.util.ArrayList;
@@ -15,7 +16,11 @@ public class AdminConfigListView extends ListView {
     }
 
     @Override
-    public void onLoad(NavigationIntent intent, String... args) {
+    public void onLoad(AccessLevel accessLevel, Intent intent, String... args) {
+
+        if (accessLevel != AccessLevel.ADMINISTRATOR)
+            throw new UnauthorisedNavigationException();
+
         setTitle("Administration Config");
         setContent("Select the item to change.");
         addBackOption();
@@ -45,7 +50,7 @@ public class AdminConfigListView extends ListView {
             }
             View.displaySuccess("Successfully changed admin secret!");
             Form.pressAnyKeyToContinue();
-            navigation.reload();
+            navigation.reload(AccessLevel.ADMINISTRATOR);
         }
     }
 

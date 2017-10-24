@@ -21,7 +21,7 @@ public class AdminMenuView extends MenuView {
     }
 
     @Override
-    public void onLoad(NavigationIntent intent, String... args) {
+    public void onLoad(AccessLevel accessLevel, Intent intent, String... args) {
         setTitle("Admin Menu");
         setMenuItems(AdminMenuOption.values());
         View.displayInformation("Please enter your credentials");
@@ -57,14 +57,14 @@ public class AdminMenuView extends MenuView {
         AdminMenuOption userChoice = AdminMenuOption.valueOf(getChoice());
         switch (userChoice) {
             case MANAGE_MOVIE_LISTINGS:
-                navigation.goTo(new MovieListView(navigation), MovieListIntent.ADMIN);
+                navigation.goTo(new MovieListView(navigation), AccessLevel.ADMINISTRATOR);
                 break;
             case MANAGE_SHOWTIMES:
                 break;
             case VIEW_REPORTS:
                 break;
             case CONFIGURE_SETTINGS:
-                navigation.goTo(new ConfigMenuView(navigation));
+                navigation.goTo(new ConfigMenuView(navigation), AccessLevel.ADMINISTRATOR);
                 break;
             case LOGOUT:
                 View.displaySuccess("You have been logged out successfully!");

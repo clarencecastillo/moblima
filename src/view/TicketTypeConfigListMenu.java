@@ -1,6 +1,7 @@
 package view;
 
 import config.TicketConfig;
+import exception.UnauthorisedNavigationException;
 import model.booking.TicketType;
 import model.cinema.CinemaType;
 import view.ui.*;
@@ -20,7 +21,11 @@ public class TicketTypeConfigListMenu extends ListView {
     }
 
     @Override
-    public void onLoad(NavigationIntent intent, String... args) {
+    public void onLoad(AccessLevel accessLevel, Intent intent, String... args) {
+
+        if (accessLevel != AccessLevel.ADMINISTRATOR)
+            throw new UnauthorisedNavigationException();
+
         setTitle("Available Ticket Types Config");
         setContent("Select the item to toggle its current value.");
         addBackOption();
@@ -40,7 +45,7 @@ public class TicketTypeConfigListMenu extends ListView {
         display();
         String userChoice = getChoice();
         if (userChoice.equals(BACK))
-            navigation.goBack();
+                navigation.goBack();
         else {
             String[] ticketTypeConfig = userChoice.split(VALUE_DELIMITER);
             CinemaType cinemaType = CinemaType.valueOf(ticketTypeConfig[0]);
@@ -55,7 +60,7 @@ public class TicketTypeConfigListMenu extends ListView {
             ticketConfig.setAvailableTicketTypes(cinemaType, ticketTypes.toArray(new TicketType[ticketTypes.size()]));
             View.displaySuccess(String.format("Successfully toggled!"));
             Form.pressAnyKeyToContinue();
-            navigation.reload();
+            navigation.reload(AccessLevel.ADMINISTRATOR);
         }
     }
 }

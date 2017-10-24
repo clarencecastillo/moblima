@@ -1,6 +1,7 @@
 package manager;
 
 import exception.InvalidPayableException;
+import exception.UninitialisedSingletonException;
 import model.booking.Booking;
 import model.booking.BookingStatus;
 import model.transaction.Payable;
@@ -11,13 +12,19 @@ import java.util.Date;
 
 public class PaymentController extends EntityController<Payment> {
 
-    private static PaymentController instance = new PaymentController();
+    private static PaymentController instance;
 
     private PaymentController() {
         super();
     }
 
+    public static void init() {
+        instance = new PaymentController();
+    }
+
     public static PaymentController getInstance() {
+        if (instance == null)
+            throw new UninitialisedSingletonException();
         return instance;
     }
 

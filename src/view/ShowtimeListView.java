@@ -1,95 +1,116 @@
 package view;
 
+import config.BookingConfig;
 import manager.CineplexController;
 import manager.MovieController;
 import manager.ShowtimeController;
+import model.booking.Showtime;
+import model.booking.ShowtimeStatus;
 import model.cinema.Cineplex;
 import model.movie.Movie;
-import model.movie.MovieStatus;
 import util.Utilities;
 import view.ui.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
 public class ShowtimeListView extends ListView {
 
+    private Cineplex cineplexFilter;
+    private Movie movieFilter;
     private Date dateFilter;
-    private ArrayList<Cineplex> cineplexes;
+    private ShowtimeStatus showtimeStatusFilter;
+    private List<Showtime> showtimes;
 
-    private CineplexShowtimeListIntent intent;
     private CineplexController cineplexController;
     private MovieController movieController;
     private ShowtimeController showtimeController;
 
+    private AccessLevel accessLevel;
+
     public ShowtimeListView(Navigation navigation) {
         super(navigation);
-        this.cineplexController = CineplexController.getInstance();
-        this.movieController = MovieController.getInstance();
-        this.showtimeController = ShowtimeController.getInstance();
+        cineplexController = CineplexController.getInstance();
+        movieController = MovieController.getInstance();
+        showtimeController = ShowtimeController.getInstance();
     }
 
     @Override
-    public void onLoad(NavigationIntent intent, String... args) {
-        this.intent = (CineplexShowtimeListIntent) intent;
-        setTitle("Movie Showtimes");
-        switch (this.intent) {
-            case ADMIN:
-                setMenuItems(CineplexShowtimeMenuOption.values());
+    public void onLoad(AccessLevel accessLevel, Intent intent, String... args) {
+
+        this.accessLevel = accessLevel;
+        switch (accessLevel) {
+            case ADMINISTRATOR:
+                setMenuItems(ShowtimeMenuOption.values());
+                showtimeStatusFilter = ShowtimeStatus.OPEN_BOOKING;
                 break;
             case PUBLIC:
-                setMenuItems(CineplexShowtimeMenuOption.CHOOSE_DAY);
+                setMenuItems(ShowtimeMenuOption.CHOOSE_DAY);
                 break;
         }
-        cineplexes = new ArrayList<>();
-        dateFilter = args.length == 1 ? Utilities.parseDate(args[0]) : new Date();
-        cineplexes = cineplexController.getList();
-        setContent("Displaying showtimes from all cineplex for " + (args.length == 1 ?
-                Utilities.toFormat(dateFilter, "EEEEE, dd MMMMM YYYY") : "today") + ".");
+
+        cineplexFilter = cineplexController.findById(UUID.fromString(args[0]));
+        movieFilter = movieController.findById(UUID.fromString(args[1]));
+        dateFilter = Utilities.parseDate(args[2]);
+
+        showtimes = showtimeController.findByCineplexAndMovie(cineplexFilter, movieFilter).stream().filter(showtime ->
+                Utilities.getStartOfDate(showtime.getStartTime())
+                        .compareTo(Utilities.getStartOfDate(dateFilter)) == 0).collect(Collectors.toList());
+
+        if (showtimeStatusFilter != null)
+            showtimes = showtimes.stream().filter(showtime ->
+                    showtime.getStatus() == showtimeStatusFilter).collect(Collectors.toList());
+
+        setTitle("Movie Showtimes");
+        setContent("Movie: " + new MovieView(movieFilter).getTitle(),
+                "Cineplex: " + cineplexFilter.getName(),
+                "Date: " + Utilities.toFormat(dateFilter, DATE_DISPLAY_FORMAT));
+        setViewItems(showtimes.stream().map(showtime ->
+                new ViewItem(new ShowtimeView(showtime), showtime.getId().toString())).toArray(ViewItem[]::new));
         addBackOption();
     }
 
     @Override
     public void onEnter() {
-
-        setViewItems(cineplexes.stream().map(cineplex ->
-                new ViewItem(new CineplexShowtimeView(cineplex, dateFilter, MovieStatus.NOW_SHOWING),
-                        cineplex.getId().toString())).toArray(ViewItem[]::new));
-
         display();
         String userInput = getChoice();
         if (userInput.equals(BACK))
             navigation.goBack();
         else
             try {
-                CineplexShowtimeMenuOption userChoice = CineplexShowtimeMenuOption.valueOf(userInput);
+                ShowtimeMenuOption userChoice = ShowtimeMenuOption.valueOf(userInput);
                 switch (userChoice) {
-                    case ADD_SHOWTIME:
-                        System.out.println("Go to Showtime View CREATE!");
-                        break;
                     case CHOOSE_DAY:
                         View.displayInformation("Please select date");
-//                        Form.getOption("Date", )
+                        Date today = new Date();
+                        // Get user date selection from today to number of days before booking
+                        String dateChoice = Form.getOption("Date", Utilities.getDaysBetweenDates(today,
+                                Utilities.getDateAfter(today, Calendar.DAY_OF_YEAR,
+                                        BookingConfig.getMinDaysBeforeOpenBooking())).stream()
+                                .filter(date -> Utilities.getDateWithTime(date, 0, 0)
+                                        .compareTo(Utilities.getDateWithTime(dateFilter, 0, 0)) != 0)
+                                .map(date -> new GenericMenuOption(Utilities.toFormat(date, DATE_DISPLAY_FORMAT),
+                                                Utilities.toFormat(date))).toArray(GenericMenuOption[]::new));
+                        navigation.reload(accessLevel, cineplexFilter.getId().toString(),
+                                movieFilter.getId().toString(), dateChoice);
                         break;
                 }
             } catch (IllegalArgumentException e) {
                 System.out.println("Go to showtime View view");
             }
+
     }
 
-    public enum CineplexShowtimeListIntent implements NavigationIntent {
-        ADMIN,
-        PUBLIC
-    }
-
-    public enum CineplexShowtimeMenuOption implements EnumerableMenuOption {
+    public enum ShowtimeMenuOption implements EnumerableMenuOption {
 
         CHOOSE_DAY("Choose Another Date"),
         ADD_SHOWTIME("Add Showtime");
 
         private String description;
-        CineplexShowtimeMenuOption(String description) {
+        ShowtimeMenuOption(String description) {
             this.description = description;
         }
 
