@@ -100,7 +100,12 @@ public class CineplexShowtimeListView extends ListView {
                         break;
                 }
             } catch (IllegalArgumentException e) {
-                navigation.goTo(new CineplexMovieListView(navigation), userInput, Utilities.toFormat(dateFilter));
+                if (movieFilter != null) {
+                    Cineplex cineplex = cineplexController.findById(UUID.fromString(userInput));
+                    navigation.goTo(new ShowtimeListView(navigation), cineplex.getId().toString(),
+                            movieFilter.getId().toString(), Utilities.toFormat(dateFilter));
+                } else
+                    navigation.goTo(new CineplexMovieListView(navigation), userInput, Utilities.toFormat(dateFilter));
             }
     }
 

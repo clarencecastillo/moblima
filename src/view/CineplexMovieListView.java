@@ -56,7 +56,7 @@ public class CineplexMovieListView extends ListView {
     public void onEnter() {
         // Get showtimes movies and generate view items
         setViewItems(movies.stream().map(movie -> new ViewItem(new MovieShowtimeView(movie, cineplex, dateFilter),
-                        cineplex.getId().toString())).toArray(ViewItem[]::new));
+                        movie.getId().toString())).toArray(ViewItem[]::new));
 
         display();
         String userInput = getChoice();
@@ -67,37 +67,39 @@ public class CineplexMovieListView extends ListView {
                 CineplexMovieMenuOption userChoice = CineplexMovieMenuOption.valueOf(userInput);
                 switch (userChoice) {
                     case CHOOSE_DAY:
-                            View.displayInformation("Please select date");
-                            Date today = new Date();
-                            // Get user date selection from today to number of days before booking
-                            String dateChoice = Form.getOption("Date", Utilities.getDaysBetweenDates(today,
-                                    Utilities.getDateAfter(today, Calendar.DAY_OF_YEAR,
-                                            BookingConfig.getMinDaysBeforeOpenBooking())).stream()
-                                    .filter(date -> Utilities.getDateWithTime(date, 0, 0)
-                                            .compareTo(Utilities.getDateWithTime(dateFilter, 0, 0)) != 0)
-                                    .map(date ->
-                                            new GenericMenuOption(Utilities.toFormat(date, DATE_DISPLAY_FORMAT),
-                                                    Utilities.toFormat(date))).toArray(GenericMenuOption[]::new));
-                            navigation.reload(cineplex.getId().toString(), dateChoice);
-                            break;
+                        View.displayInformation("Please select date");
+                        Date today = new Date();
+                        // Get user date selection from today to number of days before booking
+                        String dateChoice = Form.getOption("Date", Utilities.getDaysBetweenDates(today,
+                                Utilities.getDateAfter(today, Calendar.DAY_OF_YEAR,
+                                        BookingConfig.getMinDaysBeforeOpenBooking())).stream()
+                                .filter(date -> Utilities.getDateWithTime(date, 0, 0)
+                                        .compareTo(Utilities.getDateWithTime(dateFilter, 0, 0)) != 0)
+                                .map(date ->
+                                        new GenericMenuOption(Utilities.toFormat(date, DATE_DISPLAY_FORMAT),
+                                                Utilities.toFormat(date))).toArray(GenericMenuOption[]::new));
+                        navigation.reload(cineplex.getId().toString(), dateChoice);
+                        break;
                 }
             } catch (IllegalArgumentException e) {
-                System.out.println("Go to showtime View view");
+                Movie movie = movieController.findById(UUID.fromString(userInput));
+                navigation.goTo(new ShowtimeListView(navigation), cineplex.getId().toString(),
+                        movie.getId().toString(), Utilities.toFormat(dateFilter));
             }
     }
 
-public enum CineplexMovieMenuOption implements EnumerableMenuOption {
+    public enum CineplexMovieMenuOption implements EnumerableMenuOption {
 
-    CHOOSE_DAY("Choose Another Date");
+        CHOOSE_DAY("Choose Another Date");
 
-    private String description;
-    CineplexMovieMenuOption(String description) {
-        this.description = description;
+        private String description;
+        CineplexMovieMenuOption(String description) {
+            this.description = description;
+        }
+
+        @Override
+        public String getDescription() {
+            return description;
+        }
     }
-
-    @Override
-    public String getDescription() {
-        return description;
-    }
-}
 }

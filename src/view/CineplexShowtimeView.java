@@ -34,11 +34,4 @@ public class CineplexShowtimeView extends View {
         setContent(new MovieShowtimeView(movieFilter, cineplex, dateFilter).getContent());
     }
 
-//    public CineplexShowtimeView(Cineplex cineplex, Movie movie) {
-//        MovieController movieController = MovieController.getInstance();
-//        setTitle(cineplex.getName());
-//        for (Movie movie : movieController.findByCineplex(cineplex)) {
-//            new MovieShowtimeView(movie)
-//        }
-//    }
 }

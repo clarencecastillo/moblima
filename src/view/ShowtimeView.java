@@ -10,8 +10,7 @@ import java.util.Arrays;
 public class ShowtimeView extends View {
     public ShowtimeView(Showtime showtime) {
         setTitle((showtime.isNoFreePasses() ? "*" : "") + new MovieView(showtime.getMovie()).getTitle());
-        setContent("Cineplex: " + showtime.getCineplex().getName(),
-                "Language: " + showtime.getLanguage(),
+        setContent("Language: " + showtime.getLanguage(),
                 "Subtitles: " + String.join(",", showtime.getSubtitles().stream()
                         .map(String::valueOf).toArray(String[]::new)),
                 "Screening Time: " + Utilities.toFormat(showtime.getStartTime(), "HH:mm")
