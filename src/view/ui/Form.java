@@ -3,6 +3,7 @@ package view.ui;
 import java.io.Console;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -118,20 +119,26 @@ public interface Form {
         }
     }
 
-    static String getOption(String prompt, EnumerableMenuOption... enumerableMenuOptions) {
+    static String getOption(String prompt, GenericMenuOption... genericMenuOptions) {
 
         char itemIndex = 'A';
-        MenuItem[] options = new MenuItem[enumerableMenuOptions.length];
-        for (int i = 0; i < enumerableMenuOptions.length; i++, itemIndex++) {
-            String description = enumerableMenuOptions[i].getDescription();
+        MenuItem[] options = new MenuItem[genericMenuOptions.length];
+        for (int i = 0; i < genericMenuOptions.length; i++, itemIndex++) {
+            String description = genericMenuOptions[i].getDescription();
             if (description != null) {
-                options[i] = new MenuItem(description, enumerableMenuOptions[i].name());
+                options[i] = new MenuItem(description, genericMenuOptions[i].getValue());
                 options[i].display(itemIndex);
             }
         }
 
         int index = Form.getChar(prompt, 'A', (char) ('A' + options.length - 1)) - 'A';
         return options[index].getValue();
+    }
+
+    static String getOption(String prompt, EnumerableMenuOption... enumerableMenuOptions) {
+        return getOption(prompt, Arrays.stream(enumerableMenuOptions).map(menuOption ->
+                new GenericMenuOption(menuOption.getDescription(),
+                        menuOption.name())).toArray(GenericMenuOption[]::new));
     }
 
     static char getChar(String prompt) {

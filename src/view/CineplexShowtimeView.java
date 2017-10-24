@@ -29,9 +29,8 @@ public class CineplexShowtimeView extends View {
                 movieShowtimes = movieShowtimes.stream().filter(showtime ->
                         Utilities.getStartOfDate(showtime.getStartTime())
                                 .compareTo(Utilities.getStartOfDate(dateFilter)) == 0).collect(Collectors.toList());
-            if (movieShowtimes.size() > 0)
-                content.add(new MovieShowtimeView(movie, movieShowtimes)
-                        .flatten(" : ", " | "));
+            content.add(new MovieShowtimewView(movie, movieShowtimes)
+                    .flatten(" : ", " | "));
         }
         setContent(content.toArray(new String[content.size()]));
     }

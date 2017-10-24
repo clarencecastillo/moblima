@@ -14,8 +14,9 @@ public class MovieShowtimeView extends View {
 
     public MovieShowtimeView(Movie movie, List<Showtime> showtimes) {
         setTitle(new MovieView(movie).getTitle());
-        setContent(showtimes.stream().map(showtime ->
-                Utilities.toFormat(showtime.getStartTime(), "HH:mm")).toArray(String[]::new));
+        setContent(showtimes.size() > 0 ? (showtimes.stream().map(showtime ->
+                Utilities.toFormat(showtime.getStartTime(), "HH:mm")).toArray(String[]::new)) :
+                new String[] { "No available showtime screenings for this movie"});
     }
 
 //    public MovieShowtimeView(Movie movie, Cineplex cineplex) {

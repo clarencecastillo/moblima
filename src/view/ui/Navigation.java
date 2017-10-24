@@ -12,8 +12,14 @@ public class Navigation {
         this.stack = new Stack<>();
     }
 
-    public void reload() {
-        enter(stack.peek());
+    public void reload(NavigationIntent intent, String... args) {
+        Navigable recentNavigable = stack.peek();
+        recentNavigable.onLoad(intent, args);
+        enter(recentNavigable);
+    }
+
+    public void reload(String... args) {
+        reload(null, args);
     }
 
     public void enter(Navigable navigable) {
