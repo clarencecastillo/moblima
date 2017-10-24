@@ -1,6 +1,7 @@
 package view;
 
 import config.BookingConfig;
+import exception.NavigationRejectedException;
 import manager.CineplexController;
 import manager.MovieController;
 import manager.ShowtimeController;
@@ -11,35 +12,29 @@ import util.Utilities;
 import view.ui.*;
 
 import javax.rmi.CORBA.Util;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
+import java.util.*;
 import java.util.stream.Stream;
 
-public class ShowtimeListView extends ListView {
-
-    public static final String DATE_DISPLAY_FORMAT = "EEEEE, dd MMMMM YYYY";
+public class CineplexShowtimeListView extends ListView {
 
     private Date dateFilter;
+    private Movie movieFilter;
     private ArrayList<Cineplex> cineplexes;
 
     private CineplexShowtimeListIntent intent;
     private CineplexController cineplexController;
     private MovieController movieController;
-    private ShowtimeController showtimeController;
 
-    public ShowtimeListView(Navigation navigation) {
+    public CineplexShowtimeListView(Navigation navigation) {
         super(navigation);
         this.cineplexController = CineplexController.getInstance();
         this.movieController = MovieController.getInstance();
-        this.showtimeController = ShowtimeController.getInstance();
     }
 
     @Override
     public void onLoad(NavigationIntent intent, String... args) {
         this.intent = (CineplexShowtimeListIntent) intent;
-        setTitle("Movie Showtimes");
+
         switch (this.intent) {
             case ADMIN:
                 setMenuItems(CineplexShowtimeMenuOption.values());
@@ -48,10 +43,21 @@ public class ShowtimeListView extends ListView {
                 setMenuItems(CineplexShowtimeMenuOption.CHOOSE_DAY);
                 break;
         }
+
+        if (args.length == 2) {
+            movieFilter = movieController.findById(UUID.fromString(args[1]));
+            if (movieFilter == null) {
+                View.displayError("Movie not found!!");
+                Form.pressAnyKeyToContinue();
+                throw new NavigationRejectedException();
+            }
+        }
+
         cineplexes = new ArrayList<>();
-        dateFilter = args.length == 1 ? Utilities.parseDate(args[0]) : new Date();
+        dateFilter = args.length >= 1 && args[0] != null ? Utilities.parseDate(args[0]) : new Date();
         cineplexes = cineplexController.getList();
-        setContent("Displaying showtimes from all cineplex for " + (args.length == 1 ?
+        setTitle("Movie Showtimes: " + (movieFilter == null ? "All Movies" : new MovieView(movieFilter).getTitle()));
+        setContent("Displaying showtimes from all cineplex for " + (args.length >= 1 && args[0] != null ?
                 Utilities.toFormat(dateFilter, DATE_DISPLAY_FORMAT) : "today") + ".");
         addBackOption();
     }
@@ -59,8 +65,11 @@ public class ShowtimeListView extends ListView {
     @Override
     public void onEnter() {
 
+        // Get cineplex movies and generate view items
         setViewItems(cineplexes.stream().map(cineplex ->
-                new ViewItem(new CineplexShowtimeView(cineplex, dateFilter, MovieStatus.NOW_SHOWING),
+                new ViewItem(movieFilter == null ?
+                        new CineplexShowtimeView(cineplex, MovieStatus.NOW_SHOWING, dateFilter) :
+                        new CineplexShowtimeView(cineplex, movieFilter, dateFilter),
                         cineplex.getId().toString())).toArray(ViewItem[]::new));
 
         display();
@@ -77,6 +86,8 @@ public class ShowtimeListView extends ListView {
                     case CHOOSE_DAY:
                         View.displayInformation("Please select date");
                         Date today = new Date();
+
+                        // Get user date selection from today to number of days before booking
                         String dateChoice = Form.getOption("Date", Utilities.getDaysBetweenDates(today,
                                 Utilities.getDateAfter(today, Calendar.DAY_OF_YEAR,
                                         BookingConfig.getMinDaysBeforeOpenBooking())).stream()
@@ -89,7 +100,7 @@ public class ShowtimeListView extends ListView {
                         break;
                 }
             } catch (IllegalArgumentException e) {
-                System.out.println("Go to showtime View view");
+                navigation.goTo(new CineplexMovieListView(navigation), userInput, Utilities.toFormat(dateFilter));
             }
     }
 

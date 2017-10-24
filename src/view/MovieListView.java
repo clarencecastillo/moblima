@@ -43,6 +43,8 @@ public class MovieListView extends ListView {
                 break;
             case PUBLIC:
                 break;
+            case RANKING:
+                break;
         }
         addBackOption();
     }
@@ -95,7 +97,8 @@ public class MovieListView extends ListView {
     public enum MovieListIntent implements NavigationIntent {
         SEARCH,
         ADMIN,
-        PUBLIC
+        PUBLIC,
+        RANKING
     }
 
     public enum MovieListMenuOption implements EnumerableMenuOption {

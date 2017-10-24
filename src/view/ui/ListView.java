@@ -1,10 +1,7 @@
 package view.ui;
 
-import com.sun.javaws.exceptions.InvalidArgumentException;
-
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.InputMismatchException;
 
 public abstract class ListView extends MenuView implements Navigable {
 

@@ -9,6 +9,7 @@ import java.util.UUID;
 
 public class MovieMenuView extends MenuView {
 
+    private MovieMenuIntent intent;
     private Movie movie;
 
     private MovieController movieController;
@@ -21,7 +22,8 @@ public class MovieMenuView extends MenuView {
 
     @Override
     public void onLoad(NavigationIntent intent, String... args) {
-        switch ((MovieMenuIntent) intent) {
+        this.intent = (MovieMenuIntent) intent;
+        switch (this.intent) {
             case MANAGE:
                 movie = movieController.findById(UUID.fromString(args[0]));
                 setMenuItems(MovieMenuOption.values());
@@ -67,6 +69,10 @@ public class MovieMenuView extends MenuView {
         else
             switch (MovieMenuOption.valueOf(userChoice)) {
                 case VIEW_SHOWTIMES:
+                    navigation.goTo(new CineplexShowtimeListView(navigation), intent == MovieMenuIntent.MANAGE ?
+                                    CineplexShowtimeListView.CineplexShowtimeListIntent.ADMIN :
+                                    CineplexShowtimeListView.CineplexShowtimeListIntent.PUBLIC,
+                            null, movie.getId().toString());
                     break;
                 case SEE_REVIEWS:
                     break;
