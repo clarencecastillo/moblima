@@ -110,8 +110,8 @@ public class ShowtimeController extends EntityController<Showtime> {
     /**
      * Checks whether this ticket type is available for a booking.
      *
-     * @param booking the booking to be checked for.
-     * @return true if the ticket type is avaible for this cinema
+     * @param showtimeId the ID of the showtime to be checked for.
+     * @return true if the ticket type is avaible for the cinema of this showtime.
      */
     public List<TicketType> getAvailableTicketTypes(UUID showtimeId) {
         Showtime showtime = findById(showtimeId);

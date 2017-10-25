@@ -35,10 +35,11 @@ public class Payment extends Entity {
     private double amount;
 
     /**
-     * Creates a payment that is to be paid for with a given amount.
+     * Creates a payment that is to be paid for with a given amount and a given transaction code.
      * A payment is pending when it is initially created.
      *
      * @param amount The amount of this payment.
+     * @param transactionCode The transaction code of the payment.
      */
     public Payment(double amount, String transactionCode) {
         this.amount = amount;
