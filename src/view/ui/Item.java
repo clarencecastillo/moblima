@@ -6,8 +6,6 @@ public interface Item {
     int RIGHT_PADDING = 1;
     int LABEL_LENGTH = 4;
 
-    void display(int index);
-
     static String prepareLabel(int index) {
         String label = index + View.line(' ', RIGHT_PADDING);
         label = View.line(' ', LABEL_LENGTH - label.length()) + label;
@@ -19,6 +17,8 @@ public interface Item {
         label = View.line(' ', LABEL_LENGTH - label.length()) + label;
         return label;
     }
+
+    void display(int index);
 
     String getValue();
 }

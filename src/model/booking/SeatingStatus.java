@@ -1,10 +1,11 @@
 package model.booking;
 
 /**
- Represents a standard set of seating status and their representation on the layout graph.
- @author Castillo Clarence Fitzgerald Gumtang
- @version 1.0
- @since 2017-10-20
+ * Represents a standard set of seating status and their representation on the layout graph.
+ *
+ * @author Castillo Clarence Fitzgerald Gumtang
+ * @version 1.0
+ * @since 2017-10-20
  */
 public enum SeatingStatus {
 
@@ -35,6 +36,7 @@ public enum SeatingStatus {
 
     /**
      * Creates a seating with the given icon.
+     *
      * @param icon The icon of this seating.
      */
     SeatingStatus(String icon) {
@@ -43,6 +45,7 @@ public enum SeatingStatus {
 
     /**
      * Gets the icon of this seating.
+     *
      * @return the icon of this seating.
      */
     @Override

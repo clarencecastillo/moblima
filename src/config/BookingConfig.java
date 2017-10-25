@@ -1,10 +1,11 @@
 package config;
 
 /**
- Represents the configuration of booking setting.
- @author Castillo Clarence Fitzgerald Gumtang
- @version 1.0
- @since 2017-10-20
+ * Represents the configuration of booking setting.
+ *
+ * @author Castillo Clarence Fitzgerald Gumtang
+ * @version 1.0
+ * @since 2017-10-20
  */
 public class BookingConfig implements Configurable {
 
@@ -42,6 +43,7 @@ public class BookingConfig implements Configurable {
 
     /**
      * Gets this BookingConfig's singleton instance.
+     *
      * @return this BookingConfig's singleton instance.
      */
     public static BookingConfig getInstance() {
@@ -50,6 +52,7 @@ public class BookingConfig implements Configurable {
 
     /**
      * Gets the maximum seats to be booked for each booking.
+     *
      * @return the maximum seats to be booked for each booking.
      */
     public static int getMaxSeatsPerBooking() {
@@ -57,7 +60,17 @@ public class BookingConfig implements Configurable {
     }
 
     /**
+     * Changes the maximum seats to be booked for each booking.
+     *
+     * @param maxSeatsPerBooking The new maximum seats to be booked for each booking.
+     */
+    public void setMaxSeatsPerBooking(int maxSeatsPerBooking) {
+        BookingConfig.maxSeatsPerBooking = maxSeatsPerBooking;
+    }
+
+    /**
      * Gets the number of days before the showtime to open its booking.
+     *
      * @return the number of days before the showtime to open its booking.
      */
     public static int getDaysBeforeOpenBooking() {
@@ -66,6 +79,7 @@ public class BookingConfig implements Configurable {
 
     /**
      * Gets the surcharge fee of each booking.
+     *
      * @return the surcharge fee of each booking.
      */
     public static double getBookingSurcharrge() {
@@ -74,6 +88,7 @@ public class BookingConfig implements Configurable {
 
     /**
      * Gets the number of minutes before the showtime to close the booking.
+     *
      * @return the number of minutes before the showtime to close the booking.
      */
     public static int getMinutesBeforeClosedBooking() {
@@ -81,15 +96,17 @@ public class BookingConfig implements Configurable {
     }
 
     /**
-     * Changes the maximum seats to be booked for each booking.
-     * @param maxSeatsPerBooking The new maximum seats to be booked for each booking.
+     * Changes the number of minutes before the showtime to close the booking.
+     *
+     * @param minutesBeforeClosedBooking The new number of minutes before the showtime to close the booking.
      */
-    public void setMaxSeatsPerBooking(int maxSeatsPerBooking) {
-        BookingConfig.maxSeatsPerBooking = maxSeatsPerBooking;
+    public void setMinutesBeforeClosedBooking(int minutesBeforeClosedBooking) {
+        BookingConfig.minutesBeforeClosedBooking = minutesBeforeClosedBooking;
     }
 
     /**
      * Changes the number of days before the showtime to open its booking.
+     *
      * @param DaysBeforeOpenBooking The number of days before the showtime to open its booking.
      */
     public void setMinDaysBeforeOpenBooking(int DaysBeforeOpenBooking) {
@@ -98,6 +115,7 @@ public class BookingConfig implements Configurable {
 
     /**
      * Changes the surcharge fee of each booking.
+     *
      * @param bookingSurcharge The new surcharge fee of each booking.
      */
     public void setBookingSurcharge(double bookingSurcharge) {
@@ -105,15 +123,8 @@ public class BookingConfig implements Configurable {
     }
 
     /**
-     * Changes the number of minutes before the showtime to close the booking.
-     * @param minutesBeforeClosedBooking The new number of minutes before the showtime to close the booking.
-     */
-    public void setMinutesBeforeClosedBooking(int minutesBeforeClosedBooking) {
-        BookingConfig.minutesBeforeClosedBooking = minutesBeforeClosedBooking;
-    }
-
-    /**
      * Gets the type of this configuration.
+     *
      * @return the type of this configuration which is booking.
      */
     @Override

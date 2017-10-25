@@ -7,7 +7,6 @@ import model.cinema.CinemaType;
 import view.ui.*;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class TicketTypeConfigListMenu extends ListView {
 
@@ -45,7 +44,7 @@ public class TicketTypeConfigListMenu extends ListView {
         display();
         String userChoice = getChoice();
         if (userChoice.equals(BACK))
-                navigation.goBack();
+            navigation.goBack();
         else {
             String[] ticketTypeConfig = userChoice.split(VALUE_DELIMITER);
             CinemaType cinemaType = CinemaType.valueOf(ticketTypeConfig[0]);

@@ -3,10 +3,11 @@ package model.cinema;
 import model.commons.Entity;
 
 /**
- Represents a cinema that belongs to a cineplex.
- @author Castillo Clarence Fitzgerald Gumtang
- @version 1.0
- @since 2017-10-20
+ * Represents a cinema that belongs to a cineplex.
+ *
+ * @author Castillo Clarence Fitzgerald Gumtang
+ * @version 1.0
+ * @since 2017-10-20
  */
 public class Cinema extends Entity {
 
@@ -27,6 +28,7 @@ public class Cinema extends Entity {
 
     /**
      * Creates a cinema with the given code, type and layout.
+     *
      * @param code
      * @param type
      * @param layout
@@ -39,6 +41,7 @@ public class Cinema extends Entity {
 
     /**
      * Gets this cinema's code.
+     *
      * @return this cinema's code.
      */
     public String getCode() {
@@ -46,23 +49,8 @@ public class Cinema extends Entity {
     }
 
     /**
-     * Gets this cinema's type.
-     * @return this cinema's type.
-     */
-    public CinemaType getType() {
-        return type;
-    }
-
-    /**
-     * Gets this cinema's layout.
-     * @return this cinema's layout.
-     */
-    public CinemaLayout getLayout() {
-        return layout;
-    }
-
-    /**
      * Changes this cinema's code.
+     *
      * @param code this cinema's new code.
      */
     public void setCode(String code) {
@@ -70,7 +58,17 @@ public class Cinema extends Entity {
     }
 
     /**
+     * Gets this cinema's type.
+     *
+     * @return this cinema's type.
+     */
+    public CinemaType getType() {
+        return type;
+    }
+
+    /**
      * CHanges this cinema's type.
+     *
      * @param type this cinema's new type.
      */
     public void setType(CinemaType type) {
@@ -78,7 +76,17 @@ public class Cinema extends Entity {
     }
 
     /**
+     * Gets this cinema's layout.
+     *
+     * @return this cinema's layout.
+     */
+    public CinemaLayout getLayout() {
+        return layout;
+    }
+
+    /**
      * CHanges this cinema's layout.
+     *
      * @param layout this cinema's new layout.
      */
     public void setLayout(CinemaLayout layout) {

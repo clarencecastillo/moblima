@@ -28,6 +28,4 @@ public class CineplexController extends EntityController<Cineplex> {
     }
 
 
-
-
 }

@@ -1,12 +1,12 @@
 package manager;
 
-import java.util.UUID;
-
 import exception.InvalidReviewRatingException;
 import exception.UninitialisedSingletonException;
 import model.commons.User;
 import model.movie.Movie;
 import model.movie.MovieReview;
+
+import java.util.UUID;
 
 public class MovieReviewController extends EntityController<MovieReview> {
 

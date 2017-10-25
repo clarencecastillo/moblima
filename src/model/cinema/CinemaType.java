@@ -7,10 +7,11 @@ import model.transaction.Priceable;
 import java.util.List;
 
 /**
- Represents a standard set of types of the cinema whose pricing rate is added to the price of the ticket.
- @author Castillo Clarence Fitzgerald Gumtang
- @version 1.0
- @since 2017-10-20
+ * Represents a standard set of types of the cinema whose pricing rate is added to the price of the ticket.
+ *
+ * @author Castillo Clarence Fitzgerald Gumtang
+ * @version 1.0
+ * @since 2017-10-20
  */
 public enum CinemaType implements Priceable {
 
@@ -36,6 +37,7 @@ public enum CinemaType implements Priceable {
 
     /**
      * Creates the cinema type with the given type.
+     *
      * @param string
      */
     CinemaType(String string) {
@@ -44,6 +46,7 @@ public enum CinemaType implements Priceable {
 
     /**
      * Gets the pricing rate of this cinema type.
+     *
      * @return the pricing rate of this cinema type.
      */
     public double getPrice() {
@@ -53,6 +56,7 @@ public enum CinemaType implements Priceable {
     /**
      * Gets the list of available ticket type of this cinema type.
      * Each cinema type has limited ticket types set by the staff.
+     *
      * @return the list of available ticket type of this cinema type.
      */
     public List<TicketType> getTicketTypes() {
@@ -61,6 +65,7 @@ public enum CinemaType implements Priceable {
 
     /**
      * Checks whether a ticket type is available in this cinema type.
+     *
      * @param type a ticket type to be checked
      * @return true if this ticket type is available in this cinema type.
      */
@@ -70,6 +75,7 @@ public enum CinemaType implements Priceable {
 
     /**
      * Gets the cinema type.
+     *
      * @return the cinema type.
      */
     @Override

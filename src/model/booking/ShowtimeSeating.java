@@ -1,19 +1,17 @@
 package model.booking;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Hashtable;
-import java.util.List;
-
 import exception.SeatNotFoundException;
 import model.cinema.Seat;
-import model.cinema.SeatType;
+
+import java.io.Serializable;
+import java.util.Hashtable;
 
 /**
- Represents a seating of a showtime, consisting the all seats and their status.
- @author Castillo Clarence Fitzgerald Gumtang
- @version 1.0
- @since 2017-10-20
+ * Represents a seating of a showtime, consisting the all seats and their status.
+ *
+ * @author Castillo Clarence Fitzgerald Gumtang
+ * @version 1.0
+ * @since 2017-10-20
  */
 public class ShowtimeSeating implements Serializable {
 
@@ -26,16 +24,18 @@ public class ShowtimeSeating implements Serializable {
      * Creates a showtime seating for the given showtime.
      * The seating will be all the seats in the cinema layout of the assigned cinema of the showtime.
      * All seats are set to be available when initially created.
+     *
      * @param showtime the showtime seating of which to be creates of.
      */
     public ShowtimeSeating(Showtime showtime) {
         seatings = new Hashtable<>();
-        for (Seat seat: showtime.getCinema().getLayout().getSeats())
+        for (Seat seat : showtime.getCinema().getLayout().getSeats())
             seatings.put(seat, SeatingStatus.AVAILABLE);
     }
 
     /**
      * * Gets the status of a seat in this showtime seating.
+     *
      * @param seat The seat of whose availability is to to be checked.
      * @return the status of a seat in this showtime seating if the seat is in this seat is in the showtime seating.
      * @throws SeatNotFoundException if the seat is not in this showtime seating.
@@ -49,6 +49,7 @@ public class ShowtimeSeating implements Serializable {
 
     /**
      * Checks whether the seat is available in this showtime seating.
+     *
      * @param seat The seat to be checked.
      * @return true is the status of the seat is available.
      * @throws SeatNotFoundException if the seat is not in this showtime seating.
@@ -59,9 +60,10 @@ public class ShowtimeSeating implements Serializable {
 
     /**
      * Change the status of the seat in this seating.
-     * @param seat The seat of whose status of be changed.
+     *
+     * @param seat          The seat of whose status of be changed.
      * @param seatingStatus The new status of seat to be changes in this showtime seating.
-     * @exception if the seat is not in this showtime seating.
+     * @throws if the seat is not in this showtime seating.
      */
     public void setSeatingStatus(Seat seat, SeatingStatus seatingStatus) throws SeatNotFoundException {
         if (!hasSeat(seat))
@@ -71,6 +73,7 @@ public class ShowtimeSeating implements Serializable {
 
     /**
      * Checks whether a given seat can be found in this showtime seating.
+     *
      * @param seat The seat to be checked.
      * @return true if this showtime seating contains the seat.
      */

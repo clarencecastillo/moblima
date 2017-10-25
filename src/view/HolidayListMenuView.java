@@ -1,12 +1,14 @@
 package view;
 
 import config.HolidayConfig;
-
-import java.util.*;
-
 import exception.UnauthorisedNavigationException;
 import util.Utilities;
 import view.ui.*;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Hashtable;
+import java.util.TreeSet;
 
 public class HolidayListMenuView extends ListView {
 
@@ -74,6 +76,7 @@ public class HolidayListMenuView extends ListView {
         SET_HOLIDAY("Set Holiday");
 
         private String description;
+
         HolidayConfigMenuOption(String description) {
             this.description = description;
         }

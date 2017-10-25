@@ -1,19 +1,16 @@
 package model.transaction;
 
-import model.booking.Booking;
-import model.cinema.Cinema;
 import model.commons.Entity;
 import util.Utilities;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 
 /**
- Represents a payment that is to be paid for.
- @author Castillo Clarence Fitzgerald Gumtang
- @version 1.0
- @since 2017-10-20
+ * Represents a payment that is to be paid for.
+ *
+ * @author Castillo Clarence Fitzgerald Gumtang
+ * @version 1.0
+ * @since 2017-10-20
  */
 public class Payment extends Entity {
 
@@ -40,6 +37,7 @@ public class Payment extends Entity {
     /**
      * Creates a payment that is to be paid for with a given amount.
      * A payment is pending when it is initially created.
+     *
      * @param amount The amount of this payment.
      */
     public Payment(double amount, String transactionCode) {
@@ -51,6 +49,7 @@ public class Payment extends Entity {
 
     /**
      * Gets the status of this payment.
+     *
      * @return the status of this payment.
      */
     public PaymentStatus getStatus() {
@@ -58,27 +57,8 @@ public class Payment extends Entity {
     }
 
     /**
-     * Gets the time of making this payment.
-     * @return the time of making this payment.
-     */
-    public Date getDate() {
-        return date;
-    }
-
-    /**
-     * Gets the amount of this payment.
-     * @return the amount of this payment.
-     */
-    public double getAmount() { return amount; }
-
-    /**
-     * Gets the transaction ID of this payment.
-     * @return the transaction ID of this payment.
-     */
-    public String getTransactionId() { return transactionId; }
-
-    /**
      * Changes the status of this payment.
+     *
      * @param status The new status of this payment.
      */
     public void setStatus(PaymentStatus status) {
@@ -86,7 +66,17 @@ public class Payment extends Entity {
     }
 
     /**
+     * Gets the time of making this payment.
+     *
+     * @return the time of making this payment.
+     */
+    public Date getDate() {
+        return date;
+    }
+
+    /**
      * Sets the time of making this payment when it is paid.
+     *
      * @param date The time of paying this payment.
      */
     public void setDate(Date date) {
@@ -94,8 +84,29 @@ public class Payment extends Entity {
     }
 
     /**
+     * Gets the amount of this payment.
+     *
+     * @return the amount of this payment.
+     */
+    public double getAmount() {
+        return amount;
+    }
+
+    /**
      * Changes the amount of this payment.
+     *
      * @param amount The new amount of this payment.
      */
-    public void setAmount(double amount) {this.amount = amount; }
+    public void setAmount(double amount) {
+        this.amount = amount;
+    }
+
+    /**
+     * Gets the transaction ID of this payment.
+     *
+     * @return the transaction ID of this payment.
+     */
+    public String getTransactionId() {
+        return transactionId;
+    }
 }

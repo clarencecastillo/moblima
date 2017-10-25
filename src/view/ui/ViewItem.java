@@ -29,8 +29,8 @@ public class ViewItem extends View implements Item {
             System.out.println(Item.prepareLabel(index) + DELIMITER + " " + title);
         if (content.size() != 0) {
             System.out.println(line(' ', LABEL_LENGTH) + DELIMITER + " "
-                               + line('-', maxLength));
-            for (String string: content)
+                    + line('-', maxLength));
+            for (String string : content)
                 for (String stringLine : wrap(string, maxLength))
                     System.out.println(line(' ', LABEL_LENGTH) + DELIMITER + " " + stringLine);
         }

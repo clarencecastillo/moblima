@@ -1,10 +1,11 @@
 package config;
 
 /**
- Represents the configuration of payment setting.
- @author Castillo Clarence Fitzgerald Gumtang
- @version 1.0
- @since 2017-10-20
+ * Represents the configuration of payment setting.
+ *
+ * @author Castillo Clarence Fitzgerald Gumtang
+ * @version 1.0
+ * @since 2017-10-20
  */
 public class PaymentConfig implements Configurable {
 
@@ -27,6 +28,7 @@ public class PaymentConfig implements Configurable {
 
     /**
      * ets this PaymentConfig's singleton instance.
+     *
      * @return this PaymentConfig's singleton instance.
      */
     public static PaymentConfig getInstance() {
@@ -35,6 +37,7 @@ public class PaymentConfig implements Configurable {
 
     /**
      * Gets the GST to be paid for each booking.
+     *
      * @return the GST to be paid for each booking.
      */
     public static double getGst() {
@@ -43,6 +46,7 @@ public class PaymentConfig implements Configurable {
 
     /**
      * Changse the GST to be paid for each booking.
+     *
      * @param gst the new GST to be paid for each booking.
      */
     public void setGst(double gst) {
@@ -51,6 +55,7 @@ public class PaymentConfig implements Configurable {
 
     /**
      * Gets the type of this configuration.
+     *
      * @return the type of this configuration which is payment.
      */
     @Override

@@ -2,16 +2,15 @@ package manager;
 
 import config.BookingConfig;
 import exception.*;
-
-import java.util.Hashtable;
-import java.util.List;
-import java.util.UUID;
-
 import model.booking.*;
 import model.cinema.Seat;
 import model.commons.User;
 import model.transaction.Payment;
 import model.transaction.PaymentStatus;
+
+import java.util.Hashtable;
+import java.util.List;
+import java.util.UUID;
 
 public class BookingController extends EntityController<Booking> {
 
@@ -77,7 +76,7 @@ public class BookingController extends EntityController<Booking> {
 
         for (TicketType ticketType : ticketTypesCount.keySet())
             for (int i = 0; i < ticketTypesCount.get(ticketType); i++)
-                booking.addTicket(new Ticket(ticketType,booking));
+                booking.addTicket(new Ticket(ticketType, booking));
     }
 
     // Set seats to tickets according to the order when user selects seats
@@ -108,8 +107,8 @@ public class BookingController extends EntityController<Booking> {
         ShowtimeController showtimeController = ShowtimeController.getInstance();
         Booking booking = findById(bookingId);
         double price = BookingConfig.getBookingSurcharrge();
-        for (Ticket ticket:booking.getTickets())
-            price += showtimeController.getTicketTypePricing(booking.getShowtime(),ticket.getType());
+        for (Ticket ticket : booking.getTickets())
+            price += showtimeController.getTicketTypePricing(booking.getShowtime(), ticket.getType());
         return price;
     }
 
@@ -152,7 +151,7 @@ public class BookingController extends EntityController<Booking> {
 
         // Mark all seats for the booking as taken
         ShowtimeSeating seating = showtime.getSeating();
-        for(Ticket ticket: booking.getTickets())
+        for (Ticket ticket : booking.getTickets())
             seating.setSeatingStatus(ticket.getSeat(), SeatingStatus.TAKEN);
     }
 

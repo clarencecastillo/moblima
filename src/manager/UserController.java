@@ -42,7 +42,7 @@ public class UserController extends EntityController<User> {
 
     public void registerStaff(String firstName, String lastName, String mobile, String email,
                               String username, String password) throws InvalidRegisterEmailException,
-                                InvalidRegisterMobileException, InvalidRegisterUsernameException {
+            InvalidRegisterMobileException, InvalidRegisterUsernameException {
 
         if (findByEmail(email) != null)
             throw new InvalidRegisterEmailException("Registered email already exists");
@@ -58,7 +58,7 @@ public class UserController extends EntityController<User> {
     }
 
     public User findByMobile(String mobile) {
-        for(User user: entities.values()) {
+        for (User user : entities.values()) {
             if (user.getMobile().equals(mobile))
                 return user;
         }
@@ -66,7 +66,7 @@ public class UserController extends EntityController<User> {
     }
 
     public User findByEmail(String email) {
-        for(User user: entities.values()) {
+        for (User user : entities.values()) {
             if (user.getEmail().equals(email))
                 return user;
         }
@@ -74,7 +74,7 @@ public class UserController extends EntityController<User> {
     }
 
     public Staff findByUsername(String username) {
-        for(User registeredUser: entities.values()) {
+        for (User registeredUser : entities.values()) {
             if (registeredUser instanceof Staff) {
                 Staff staff = (Staff) registeredUser;
                 if (staff.getUsername().equals(username))

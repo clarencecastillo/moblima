@@ -1,10 +1,11 @@
 package manager;
 
+import model.commons.Entity;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.UUID;
-import model.commons.Entity;
 
 public abstract class EntityController<T extends Entity> implements Serializable {
 

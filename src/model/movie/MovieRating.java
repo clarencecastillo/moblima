@@ -1,11 +1,13 @@
 package model.movie;
 
 import view.ui.EnumerableMenuOption;
+
 /**
- Represents a standard set of rating of a movie.
- @author Castillo Clarence Fitzgerald Gumtang
- @version 1.0
- @since 2017-10-20
+ * Represents a standard set of rating of a movie.
+ *
+ * @author Castillo Clarence Fitzgerald Gumtang
+ * @version 1.0
+ * @since 2017-10-20
  */
 public enum MovieRating implements EnumerableMenuOption {
 
@@ -46,6 +48,7 @@ public enum MovieRating implements EnumerableMenuOption {
 
     /**
      * Creates the rating with the given rating name.
+     *
      * @param name The given rating name of this movie.
      */
     MovieRating(String name) {
@@ -54,6 +57,7 @@ public enum MovieRating implements EnumerableMenuOption {
 
     /**
      * Gets the name of this movie rating.
+     *
      * @return the name of this movie rating.
      */
     @Override
@@ -63,6 +67,7 @@ public enum MovieRating implements EnumerableMenuOption {
 
     /**
      * Gets the name of this movie rating.
+     *
      * @return the name of this movie rating.
      */
     @Override

@@ -1,11 +1,8 @@
 package view;
 
 import model.booking.Showtime;
-import model.movie.Movie;
 import util.Utilities;
 import view.ui.View;
-
-import java.util.Arrays;
 
 public class ShowtimeView extends View {
     public ShowtimeView(Showtime showtime) {
@@ -15,6 +12,6 @@ public class ShowtimeView extends View {
                 "Subtitles: " + String.join(",", showtime.getSubtitles().stream()
                         .map(String::valueOf).toArray(String[]::new)),
                 "Free Seating Allowed: " + (showtime.isNoFreePasses() ? "No" : "Yes")
-                );
+        );
     }
 }

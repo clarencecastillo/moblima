@@ -3,10 +3,11 @@ package model.movie;
 import view.ui.EnumerableMenuOption;
 
 /**
- Represents a standard set of movie status.
- @author Castillo Clarence Fitzgerald Gumtang
- @version 1.0
- @since 2017-10-20
+ * Represents a standard set of movie status.
+ *
+ * @author Castillo Clarence Fitzgerald Gumtang
+ * @version 1.0
+ * @since 2017-10-20
  */
 public enum MovieStatus implements EnumerableMenuOption {
 
@@ -37,6 +38,7 @@ public enum MovieStatus implements EnumerableMenuOption {
 
     /**
      * Creates the movie status with the given status name.
+     *
      * @param name the name of this movie status.
      */
     MovieStatus(String name) {
@@ -45,6 +47,7 @@ public enum MovieStatus implements EnumerableMenuOption {
 
     /**
      * Gets the name of this movie status.
+     *
      * @return the name of this movie status.
      */
     @Override
@@ -54,6 +57,7 @@ public enum MovieStatus implements EnumerableMenuOption {
 
     /**
      * Gets the name of this movie status.
+     *
      * @return the name of this movie status.
      */
     @Override

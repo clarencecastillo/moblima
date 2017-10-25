@@ -164,7 +164,7 @@ public interface Form {
                 View.displayError(INVALID_ERROR);
         }
     }
-    
+
     static Date getDate(String prompt, String format) {
         while (true) {
             SimpleDateFormat dateFormat = new SimpleDateFormat(format);

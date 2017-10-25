@@ -3,10 +3,11 @@ package config;
 import view.ui.EnumerableMenuOption;
 
 /**
- Represents a standard set of system settings that can be configured by the admin.
- @author Castillo Clarence Fitzgerald Gumtang
- @version 1.0
- @since 2017-10-20
+ * Represents a standard set of system settings that can be configured by the admin.
+ *
+ * @author Castillo Clarence Fitzgerald Gumtang
+ * @version 1.0
+ * @since 2017-10-20
  */
 public enum ConfigType implements EnumerableMenuOption {
 
@@ -42,6 +43,7 @@ public enum ConfigType implements EnumerableMenuOption {
 
     /**
      * Creates a type of configuration with the given description.
+     *
      * @param description the description of this configuration type.
      */
     ConfigType(String description) {
@@ -50,6 +52,7 @@ public enum ConfigType implements EnumerableMenuOption {
 
     /**
      * Gets the description of this configuration type.
+     *
      * @return the description of this configuration type.
      */
     @Override

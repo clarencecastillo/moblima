@@ -43,6 +43,7 @@ public class TicketConfigMenuView extends MenuView {
         SET_ALLOWED_TICKET_TYPES("Set Allowed Ticket Types");
 
         private String description;
+
         TicketConfigMenuOption(String description) {
             this.description = description;
         }

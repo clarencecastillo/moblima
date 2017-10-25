@@ -65,7 +65,7 @@ public class BookingConfigListView extends ListView {
                     break;
                 case MIN_DAYS_BEFORE_OPEN_BOOKING:
                     int newMinDaysBeforeOpenBooking = Form
-                            .getIntWithMin("Enter new minimum days before open booking",0);
+                            .getIntWithMin("Enter new minimum days before open booking", 0);
                     bookingConfig.setMinDaysBeforeOpenBooking(newMinDaysBeforeOpenBooking);
                     break;
                 case BOOKING_FEE:
@@ -82,7 +82,7 @@ public class BookingConfigListView extends ListView {
 //                    bookingConfig.setBookingChangesSurcharge(newBookingChangeFee);
 //                    break;
                 case MINS_BEFORE_CLOSED_BOOKING:
-                    int newMinutesBeforeClosedBooking  = Form
+                    int newMinutesBeforeClosedBooking = Form
                             .getIntWithMin("Enter new minutes before closed booking", 0);
                     bookingConfig.setMinutesBeforeClosedBooking(newMinutesBeforeClosedBooking);
                     break;
@@ -99,6 +99,6 @@ public class BookingConfigListView extends ListView {
         BOOKING_FEE,
         BOOKING_CHANGE_GRACE_PERIOD,
         BOOKING_CHANGE_FEE,
-        MINS_BEFORE_CLOSED_BOOKING;
+        MINS_BEFORE_CLOSED_BOOKING
     }
 }

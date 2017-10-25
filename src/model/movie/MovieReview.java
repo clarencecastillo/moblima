@@ -1,14 +1,16 @@
 package model.movie;
 
-import java.util.Date;
-import java.util.UUID;
 import model.commons.Entity;
 import model.commons.User;
+
+import java.util.Date;
+
 /**
- Represents review of a movie written by a user who is a moviegoer.
- @author Castillo Clarence Fitzgerald Gumtang
- @version 1.0
- @since 2017-10-20
+ * Represents review of a movie written by a user who is a moviegoer.
+ *
+ * @author Castillo Clarence Fitzgerald Gumtang
+ * @version 1.0
+ * @since 2017-10-20
  */
 public class MovieReview extends Entity {
 
@@ -35,6 +37,7 @@ public class MovieReview extends Entity {
     /**
      * Creates the review with the content, rating and author.
      * The date create will be the current date.
+     *
      * @param review The content of this review.
      * @param rating The rating of this review.
      * @param author The author of this review.
@@ -48,6 +51,7 @@ public class MovieReview extends Entity {
 
     /**
      * Gets the review of this movie.
+     *
      * @return the review of this movie.
      */
     public String getReview() {
@@ -55,7 +59,17 @@ public class MovieReview extends Entity {
     }
 
     /**
+     * Changes the content of this review.
+     *
+     * @param review the new content of this review.
+     */
+    public void setReview(String review) {
+        this.review = review;
+    }
+
+    /**
      * Gets the rating of this movie.
+     *
      * @return the rating of this movie.
      */
     public int getRating() {
@@ -63,7 +77,17 @@ public class MovieReview extends Entity {
     }
 
     /**
+     * Changes the rating of this review.
+     *
+     * @param rating the new rating of this review.
+     */
+    public void setRating(int rating) {
+        this.rating = rating;
+    }
+
+    /**
      * Gets the created day of this movie.
+     *
      * @return the created day of this movie.
      */
     public Date getCreated() {
@@ -72,6 +96,7 @@ public class MovieReview extends Entity {
 
     /**
      * Gets the author of this movie.
+     *
      * @return the author of this movie.
      */
     public User getAuthor() {
@@ -79,23 +104,8 @@ public class MovieReview extends Entity {
     }
 
     /**
-     * Changes the content of this review.
-     * @param review the new content of this review.
-     */
-    public void setReview(String review) {
-        this.review = review;
-    }
-
-    /**
-     * Changes the rating of this review.
-     * @param rating the new rating of this review.
-     */
-    public void setRating(int rating) {
-        this.rating = rating;
-    }
-
-    /**
      * Changes the author of this review.
+     *
      * @param author the new author of this review.
      */
     public void setAuthor(User author) {

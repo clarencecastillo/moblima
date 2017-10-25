@@ -5,10 +5,11 @@ import model.transaction.Priceable;
 import view.ui.EnumerableMenuOption;
 
 /**
- Represents a standard set of type of a movie those pricing rate will be added to the ticket price.
- @author Castillo Clarence Fitzgerald Gumtang
- @version 1.0
- @since 2017-10-20
+ * Represents a standard set of type of a movie those pricing rate will be added to the ticket price.
+ *
+ * @author Castillo Clarence Fitzgerald Gumtang
+ * @version 1.0
+ * @since 2017-10-20
  */
 public enum MovieType implements Priceable, EnumerableMenuOption {
 
@@ -39,7 +40,8 @@ public enum MovieType implements Priceable, EnumerableMenuOption {
 
     /**
      * Creates the movie type with the movie type name and description.
-     * @param string The name of this movie type.
+     *
+     * @param string      The name of this movie type.
      * @param description The description of this movie type.
      */
     MovieType(String string, String description) {
@@ -49,6 +51,7 @@ public enum MovieType implements Priceable, EnumerableMenuOption {
 
     /**
      * Gets the pricing rate of this movie type.
+     *
      * @return the pricing rate of this movie type.
      */
     @Override
@@ -58,6 +61,7 @@ public enum MovieType implements Priceable, EnumerableMenuOption {
 
     /**
      * Gets the movie type name of this movie type.
+     *
      * @return the movie type name of this movie type.
      */
     @Override
@@ -67,6 +71,7 @@ public enum MovieType implements Priceable, EnumerableMenuOption {
 
     /**
      * Gets the movie type description of this movie type.
+     *
      * @return the movie type description of this movie type.
      */
     @Override

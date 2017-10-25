@@ -3,9 +3,7 @@ package view;
 import exception.NavigationRejectedException;
 import manager.UserController;
 import model.cinema.Staff;
-import view.MovieListView.MovieListIntent;
 import view.ui.*;
-import view.ui.EnumerableMenuOption;
 
 public class AdminMenuView extends MenuView {
 
@@ -82,6 +80,7 @@ public class AdminMenuView extends MenuView {
         LOGOUT("Log Out");
 
         private String description;
+
         AdminMenuOption(String description) {
             this.description = description;
         }

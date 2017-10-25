@@ -1,7 +1,5 @@
 package manager;
 
-import java.util.UUID;
-
 import config.TicketConfig;
 import exception.UninitialisedSingletonException;
 import model.booking.TicketType;
@@ -9,6 +7,8 @@ import model.cinema.Cinema;
 import model.cinema.CinemaLayout;
 import model.cinema.CinemaType;
 import model.cinema.Cineplex;
+
+import java.util.UUID;
 
 public class CinemaController extends EntityController<Cinema> {
 
@@ -42,6 +42,7 @@ public class CinemaController extends EntityController<Cinema> {
 
     /**
      * Checks whether a ticket type is available in this cinema.
+     *
      * @param type a ticket type to be checked
      * @return true if this ticket type is available in this cinema.
      */

@@ -1,16 +1,16 @@
 package model.transaction;
 
 /**
- Represents a standard set of payment status.
- @author Castillo Clarence Fitzgerald Gumtang
- @version 1.0
- @since 2017-10-20
+ * Represents a standard set of payment status.
+ *
+ * @author Castillo Clarence Fitzgerald Gumtang
+ * @version 1.0
+ * @since 2017-10-20
  */
 public enum PaymentStatus {
 
     /**
      * The pending status is when the payment is initially created and has not been paid.
-     *
      */
     PENDING("Pending"),
     /**
@@ -30,6 +30,7 @@ public enum PaymentStatus {
 
     /**
      * Creates a payment status with s given status name.
+     *
      * @param name The name of this payment status.
      */
     PaymentStatus(String name) {
@@ -38,6 +39,7 @@ public enum PaymentStatus {
 
     /**
      * Gets the name of this payment status.
+     *
      * @return the name of this payment status.
      */
     @Override

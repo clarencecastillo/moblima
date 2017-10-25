@@ -1,22 +1,22 @@
 package config;
 
+import model.booking.TicketType;
+import model.cinema.CinemaType;
+import model.movie.MovieType;
+import model.transaction.Priceable;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Hashtable;
 import java.util.List;
 
-import model.booking.TicketType;
-import model.cinema.CinemaType;
-import model.cinema.SeatType;
-import model.movie.MovieType;
-import model.transaction.Priceable;
-
 /**
- Represents the configuration of ticket setting. It consists os the available ticket types for each cinema type and
- the pricing rate of each priceable, including cinema type, movie type and ticket type.
- @author Castillo Clarence Fitzgerald Gumtang
- @version 1.0
- @since 2017-10-20
+ * Represents the configuration of ticket setting. It consists os the available ticket types for each cinema type and
+ * the pricing rate of each priceable, including cinema type, movie type and ticket type.
+ *
+ * @author Castillo Clarence Fitzgerald Gumtang
+ * @version 1.0
+ * @since 2017-10-20
  */
 public class TicketConfig implements Configurable {
 
@@ -44,6 +44,7 @@ public class TicketConfig implements Configurable {
 
     /**
      * Gets this TicketConfig's singleton instance.
+     *
      * @return this BookingConfig's singleton instance.
      */
     public static TicketConfig getInstance() {
@@ -52,6 +53,7 @@ public class TicketConfig implements Configurable {
 
     /**
      * Gets the available ticket types
+     *
      * @param cinemaType
      * @return
      */
@@ -89,18 +91,18 @@ public class TicketConfig implements Configurable {
         // DEFAULT AVAILABLE TICKET TYPES
         cinemaTicketTypes.put(CinemaType.REGULAR,
                 new ArrayList<>(Arrays.asList(
-                    TicketType.PEAK,
-                    TicketType.SENIOR_CITIZEN,
-                    TicketType.STANDARD,
-                    TicketType.STUDENT)));
+                        TicketType.PEAK,
+                        TicketType.SENIOR_CITIZEN,
+                        TicketType.STANDARD,
+                        TicketType.STUDENT)));
         cinemaTicketTypes.put(CinemaType.PLATINUM,
                 new ArrayList<>(Arrays.asList(
-                    TicketType.STANDARD,
-                    TicketType.PEAK)));
+                        TicketType.STANDARD,
+                        TicketType.PEAK)));
         cinemaTicketTypes.put(CinemaType.EXECUTIVE,
                 new ArrayList<>(Arrays.asList(
-                    TicketType.STANDARD,
-                    TicketType.PEAK)));
+                        TicketType.STANDARD,
+                        TicketType.PEAK)));
 
         // DEFAULT MOVIE TYPE SURCHARGE RATES
         priceableRates.put(MovieType.TWO_DIMENSION, 0.0);

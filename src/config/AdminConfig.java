@@ -1,10 +1,11 @@
 package config;
 
 /**
- Represents the configuration of admin settings.
- @author Castillo Clarence Fitzgerald Gumtang
- @version 1.0
- @since 2017-10-20
+ * Represents the configuration of admin settings.
+ *
+ * @author Castillo Clarence Fitzgerald Gumtang
+ * @version 1.0
+ * @since 2017-10-20
  */
 public class AdminConfig implements Configurable {
 
@@ -28,6 +29,7 @@ public class AdminConfig implements Configurable {
 
     /**
      * Gets this AdminConfig's singleton instance.
+     *
      * @return this AdminConfig's singleton instance.
      */
     public static AdminConfig getInstance() {
@@ -35,16 +37,8 @@ public class AdminConfig implements Configurable {
     }
 
     /**
-     * Gets the type of this configuration.
-     * @return the type of this configuration which is admin.
-     */
-    @Override
-    public ConfigType getConfigType() {
-        return ConfigType.ADMIN;
-    }
-
-    /**
      * Gets the admin secret.
+     *
      * @return the admin secret.
      */
     public static String getAdminSecret() {
@@ -53,10 +47,21 @@ public class AdminConfig implements Configurable {
 
     /**
      * Changes the admin secret.
+     *
      * @param adminSecret The new admin secret used to enter the admin menu.
      */
     public void setAdminSecret(String adminSecret) {
         AdminConfig.adminSecret = adminSecret;
+    }
+
+    /**
+     * Gets the type of this configuration.
+     *
+     * @return the type of this configuration which is admin.
+     */
+    @Override
+    public ConfigType getConfigType() {
+        return ConfigType.ADMIN;
     }
 
     /**

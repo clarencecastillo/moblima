@@ -93,7 +93,7 @@ public class ShowtimeListView extends ListView {
                                 .filter(date -> Utilities.getDateWithTime(date, 0, 0)
                                         .compareTo(Utilities.getDateWithTime(dateFilter, 0, 0)) != 0)
                                 .map(date -> new GenericMenuOption(Utilities.toFormat(date, DATE_DISPLAY_FORMAT),
-                                                Utilities.toFormat(date))).toArray(GenericMenuOption[]::new));
+                                        Utilities.toFormat(date))).toArray(GenericMenuOption[]::new));
                         navigation.reload(accessLevel, cineplexFilter.getId().toString(),
                                 movieFilter.getId().toString(), dateChoice);
                         break;
@@ -110,6 +110,7 @@ public class ShowtimeListView extends ListView {
         ADD_SHOWTIME("Add Showtime");
 
         private String description;
+
         ShowtimeMenuOption(String description) {
             this.description = description;
         }

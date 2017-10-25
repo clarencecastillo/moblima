@@ -1,17 +1,17 @@
 package config;
 
-import java.text.ParseException;
-import java.util.Date;
-import java.util.Hashtable;
-
 import exception.HolidayNotFoundException;
 import util.Utilities;
 
+import java.util.Date;
+import java.util.Hashtable;
+
 /**
- Represents the configuration of holidays setting.
- @author Castillo Clarence Fitzgerald Gumtang
- @version 1.0
- @since 2017-10-20
+ * Represents the configuration of holidays setting.
+ *
+ * @author Castillo Clarence Fitzgerald Gumtang
+ * @version 1.0
+ * @since 2017-10-20
  */
 public class HolidayConfig implements Configurable {
 
@@ -34,6 +34,7 @@ public class HolidayConfig implements Configurable {
 
     /**
      * Gets this BookingConfig's singleton instance.
+     *
      * @return this BookingConfig's singleton instance.
      */
     public static HolidayConfig getInstance() {
@@ -42,6 +43,7 @@ public class HolidayConfig implements Configurable {
 
     /**
      * Gets the hash table of holidays with the date as the key and the holiday name as the value.
+     *
      * @return
      */
     public static Hashtable<Date, String> getHolidays() {
@@ -50,6 +52,7 @@ public class HolidayConfig implements Configurable {
 
     /**
      * Checks whether a date is a holiday in the holiday setting.
+     *
      * @param date The date to be checked.
      * @return true is the date appears in the holiday setting.
      */
@@ -59,6 +62,7 @@ public class HolidayConfig implements Configurable {
 
     /**
      * Adds a holiday to the holiday setting.
+     *
      * @param date The date to be added.
      * @param name The name of the holiday to be added.
      */
@@ -68,6 +72,7 @@ public class HolidayConfig implements Configurable {
 
     /**
      * Removes a holiday from the holiday settings.
+     *
      * @param date The date to be removed.
      */
     public void unsetHoliday(Date date) throws HolidayNotFoundException {
@@ -79,6 +84,7 @@ public class HolidayConfig implements Configurable {
 
     /**
      * Gets the type of this configuration.
+     *
      * @return the type of this configuration which is holiday.
      */
     @Override

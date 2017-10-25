@@ -1,15 +1,15 @@
 package view;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
-
 import manager.MovieController;
 import model.movie.Movie;
 import model.movie.MovieStatus;
 import view.MovieMenuView.MovieMenuIntent;
 import view.ui.*;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class MovieListView extends ListView {
 
@@ -105,6 +105,7 @@ public class MovieListView extends ListView {
         ADD_MOVIE("Add Movie");
 
         private String description;
+
         MovieListMenuOption(String description) {
             this.description = description;
         }

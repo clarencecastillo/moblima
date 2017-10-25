@@ -6,7 +6,6 @@ import model.movie.Movie;
 import util.Utilities;
 import view.ui.View;
 
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -23,11 +22,11 @@ public class MovieShowtimeView extends View {
 
         if (cineplexFilter != null)
             movieShowtimes = movieShowtimes.stream().filter(showtime ->
-                showtime.getCineplex().equals(cineplexFilter)).collect(Collectors.toList());
+                    showtime.getCineplex().equals(cineplexFilter)).collect(Collectors.toList());
 
         setTitle(new MovieView(movie).getTitle());
         setContent(movieShowtimes.size() > 0 ? (movieShowtimes.stream().map(showtime ->
                 Utilities.toFormat(showtime.getStartTime(), "[hh:mm a]")).toArray(String[]::new)) :
-                new String[] { "No available showtime screenings for this movie"});
+                new String[]{"No available showtime screenings for this movie"});
     }
 }

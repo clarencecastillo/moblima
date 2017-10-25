@@ -7,7 +7,6 @@ import model.booking.Booking;
 import model.commons.User;
 import view.ui.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class BookingListView extends ListView {

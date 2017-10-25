@@ -1,18 +1,19 @@
 package model.cinema;
 
-import java.util.*;
-
 import model.booking.Showtime;
 import model.commons.Entity;
-import model.movie.Movie;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- Represents a cineplex
- Cineplexes are in different locations, managed by the vendor.
- Each Cineplex has 3 or more cinemas.
- @author Castillo Clarence Fitzgerald Gumtang
- @version 1.0
- @since 2017-10-20
+ * Represents a cineplex
+ * Cineplexes are in different locations, managed by the vendor.
+ * Each Cineplex has 3 or more cinemas.
+ *
+ * @author Castillo Clarence Fitzgerald Gumtang
+ * @version 1.0
+ * @since 2017-10-20
  */
 public class Cineplex extends Entity {
 
@@ -38,7 +39,8 @@ public class Cineplex extends Entity {
 
     /**
      * Creates a cineplex with the given name and address.
-     * @param name This cinemplex's name.
+     *
+     * @param name    This cinemplex's name.
      * @param address This cineplex's address.
      */
     public Cineplex(String name, String address) {
@@ -50,6 +52,7 @@ public class Cineplex extends Entity {
 
     /**
      * Gets this cinemplex's name.
+     *
      * @return this cinemplex's name.
      */
     public String getName() {
@@ -57,7 +60,17 @@ public class Cineplex extends Entity {
     }
 
     /**
+     * Changes this cinemplex's name.
+     *
+     * @param name This cinemplex's new name.
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    /**
      * Gets this cinemplex's address.
+     *
      * @return this cinemplex's address.
      */
     public String getAddress() {
@@ -65,7 +78,17 @@ public class Cineplex extends Entity {
     }
 
     /**
+     * Changes this cinemplex's address.
+     *
+     * @param address This cinemplex's new address.
+     */
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    /**
      * Gets this cinemplex's list of cinemas.
+     *
      * @return this cinemplex's list of cinemas.
      */
     public List<Cinema> getCinemas() {
@@ -74,28 +97,16 @@ public class Cineplex extends Entity {
 
     /**
      * Gets this cinemplex's list of showtimes.
+     *
      * @return this cinemplex's list of showtimes.
      */
-    public List<Showtime> getShowtimes() { return showtimes; }
-
-    /**
-     * Changes this cinemplex's name.
-     * @param name This cinemplex's new name.
-     */
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    /**
-     * Changes this cinemplex's address.
-     * @param address This cinemplex's new address.
-     */
-    public void setAddress(String address) {
-        this.address = address;
+    public List<Showtime> getShowtimes() {
+        return showtimes;
     }
 
     /**
      * Adds a new cinema to this cineplex.
+     *
      * @param cinema This cinemplex's new cinema.
      */
     public void addCinema(Cinema cinema) {
@@ -104,12 +115,16 @@ public class Cineplex extends Entity {
 
     /**
      * Adds a new showtime to this cineplex.
+     *
      * @param showtime This cinemplex's new showtime.
      */
-    public void addShowtime (Showtime showtime) {showtimes.add(showtime); }
+    public void addShowtime(Showtime showtime) {
+        showtimes.add(showtime);
+    }
 
     /**
      * Removes a cinema from this cineplex.
+     *
      * @param cinema Thie cinema to be removed from this cineplex.
      */
     public void removeCinema(Cinema cinema) {
@@ -118,9 +133,12 @@ public class Cineplex extends Entity {
 
     /**
      * Removes a showtime from this cineplex.
+     *
      * @param showtime Thie showtime to be removed from this cineplex.
      */
-    public void removeShowtime(Showtime showtime) { showtimes.remove(showtime); }
+    public void removeShowtime(Showtime showtime) {
+        showtimes.remove(showtime);
+    }
 
 //    public List<Movie> getMovie() {
 //        Set<Movie> movies = new HashSet<Movie>();
