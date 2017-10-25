@@ -1,7 +1,7 @@
 package view;
 
 import config.BookingConfig;
-import exception.NavigationRejectedException;
+import exception.RejectedNavigationException;
 import manager.CineplexController;
 import manager.MovieController;
 import manager.ShowtimeController;
@@ -64,7 +64,7 @@ public class ShowtimeListView extends ListView {
             if (cineplexFilter == null) {
                 View.displayError("Cineplex not found!");
                 Form.pressAnyKeyToContinue();
-                throw new NavigationRejectedException();
+                throw new RejectedNavigationException();
             }
         } else
             cineplexes = cineplexController.getList();
@@ -75,7 +75,7 @@ public class ShowtimeListView extends ListView {
             if (movieFilter == null) {
                 View.displayError("Movie not found!");
                 Form.pressAnyKeyToContinue();
-                throw new NavigationRejectedException();
+                throw new RejectedNavigationException();
             }
 
         } else if (cineplexFilter != null)
@@ -90,7 +90,7 @@ public class ShowtimeListView extends ListView {
             } catch (ParseException e) {
                 View.displayError("Invalid date!");
                 Form.pressAnyKeyToContinue();
-                throw new NavigationRejectedException();
+                throw new RejectedNavigationException();
             }
         } else
             dateFilter = new Date();

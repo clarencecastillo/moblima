@@ -1,6 +1,6 @@
 package view;
 
-import exception.NavigationRejectedException;
+import exception.RejectedNavigationException;
 import manager.UserController;
 import model.cinema.Staff;
 import view.ui.*;
@@ -42,7 +42,7 @@ public class AdminMenuView extends MenuView {
         if (administrator == null) {
             View.displayError("Max login attempts reached!");
             Form.pressAnyKeyToContinue();
-            throw new NavigationRejectedException();
+            throw new RejectedNavigationException();
         }
 
         setContent("Signed in: " + administrator.getUsername());

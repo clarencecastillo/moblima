@@ -1,6 +1,6 @@
 package view;
 
-import exception.NavigationRejectedException;
+import exception.RejectedNavigationException;
 import manager.BookingController;
 import manager.UserController;
 import model.booking.Booking;
@@ -40,7 +40,7 @@ public class BookingListView extends ListView {
                 if (user == null) {
                     View.displayError("User with mobile '" + mobileNumber + "' not found!");
                     Form.pressAnyKeyToContinue();
-                    throw new NavigationRejectedException();
+                    throw new RejectedNavigationException();
                 }
                 bookings = user.getBookings();
                 break;
