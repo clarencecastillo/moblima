@@ -79,7 +79,7 @@ public class ShowtimeListView extends ListView {
             }
 
         } else if (cineplexFilter != null)
-            movies = movieController.findByCineplex(cineplexFilter).stream().filter(movie ->
+            movies = movieController.findByCineplex(cineplexFilter.getId()).stream().filter(movie ->
                     movie.getStatus() == MovieStatus.NOW_SHOWING).collect(Collectors.toList());
         else
             movies = movieController.getList();
