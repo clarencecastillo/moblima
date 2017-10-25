@@ -33,7 +33,7 @@ public class AdminConfigListView extends ListView {
         viewItems.add(new ViewItem("Admin Secret",
                 AdminConfigListOption.ADMIN_SECRET.toString(),
                 AdminConfig.getAdminSecret()));
-        setViewItems(viewItems.toArray(new ViewItem[viewItems.size()]));
+        setViewItems(viewItems);
 
         display();
 

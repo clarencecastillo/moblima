@@ -35,7 +35,7 @@ public class PaymentConfigListView extends ListView {
 //        viewItems.add(new ViewItem("Allow Refunds",
 //                PaymentConfigListOption.ALLOW_REFUNDS.toString(),
 //                PaymentConfig.isRefundsAllowed() ? "ALLOWED" : "NOT ALLOWED"));
-        setViewItems(viewItems.toArray(new ViewItem[viewItems.size()]));
+        setViewItems(viewItems);
 
         display();
         String userChoice = getChoice();

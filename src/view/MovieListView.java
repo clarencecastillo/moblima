@@ -75,7 +75,7 @@ public class MovieListView extends ListView {
 
         setViewItems(movies.stream().map(
                 movie -> new ViewItem(new MovieView(movie),
-                        movie.getId().toString())).toArray(ViewItem[]::new));
+                        movie.getId().toString())).collect(Collectors.toList()));
 
         display();
         String userInput = getChoice();

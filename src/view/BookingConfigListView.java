@@ -48,7 +48,7 @@ public class BookingConfigListView extends ListView {
         viewItems.add(new ViewItem("Minutes Before Closed Booking",
                 BookingConfigListOption.MINS_BEFORE_CLOSED_BOOKING.toString(),
                 String.format("%d minutes", BookingConfig.getMinutesBeforeClosedBooking())));
-        setViewItems(viewItems.toArray(new ViewItem[viewItems.size()]));
+        setViewItems(viewItems);
 
         display();
 

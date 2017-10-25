@@ -111,11 +111,11 @@ public class ShowtimeListView extends ListView {
                     new ViewItem(movieFilter == null ?
                             new ShowtimeView(cineplex, MovieStatus.NOW_SHOWING, dateFilter) :
                             new ShowtimeView(cineplex, movieFilter, dateFilter),
-                            cineplex.getId().toString())).toArray(ViewItem[]::new));
+                            cineplex.getId().toString())).collect(Collectors.toList()));
         } else if (movieFilter == null) {
             setViewItems(movies.stream().map(movie ->
                     new ViewItem(new ShowtimeView(cineplexFilter, movie, dateFilter),
-                    movie.getId().toString())).toArray(ViewItem[]::new));
+                    movie.getId().toString())).collect(Collectors.toList()));
         } else {
 
             showtimes = showtimeController.findByCineplexAndMovie(cineplexFilter, movieFilter).stream().filter(showtime ->
@@ -127,7 +127,7 @@ public class ShowtimeListView extends ListView {
                         showtime.getStatus() == showtimeStatusFilter).collect(Collectors.toList());
 
             setViewItems(showtimes.stream().map(showtime ->
-                    new ViewItem(new ShowtimeView(showtime), showtime.getId().toString())).toArray(ViewItem[]::new));
+                    new ViewItem(new ShowtimeView(showtime), showtime.getId().toString())).collect(Collectors.toList()));
         }
 
 
