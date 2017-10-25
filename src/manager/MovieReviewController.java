@@ -66,12 +66,23 @@ public class MovieReviewController extends EntityController<MovieReview> {
 
         Movie movie = movieManager.findById(movieId);
         User author = userManager.findById(authorId);
-        MovieReview movieReview = new MovieReview(review, rating, author);
+        MovieReview movieReview = new MovieReview(review, movie, rating, author);
         entities.put(movieReview.getId(), movieReview);
         movie.addReview(movieReview);
         author.addReview(movieReview);
 
         return movieReview;
+    }
+
+    // TODO Javadoc
+    public void removeReview(UUID movieReviewId) {
+
+        // TODO validate if movieReviewId exists and throw appropriate exception
+
+        MovieReview movieReview = findById(movieReviewId);
+        movieReview.getMovie().removeReview(movieReview);
+        movieReview.getAuthor().removeReview(movieReview);
+        entities.remove(movieReview.getId());
     }
 
 }

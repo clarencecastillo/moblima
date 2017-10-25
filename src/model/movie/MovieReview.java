@@ -34,6 +34,8 @@ public class MovieReview extends Entity {
      */
     private User author;
 
+    private Movie movie; // TODO javadoc
+
     /**
      * Creates the review with the content, rating and author.
      * The date create will be the current date.
@@ -42,11 +44,12 @@ public class MovieReview extends Entity {
      * @param rating The rating of this review.
      * @param author The author of this review.
      */
-    public MovieReview(String review, int rating, User author) {
+    public MovieReview(String review, Movie movie, int rating, User author) {
         this.review = review;
         this.rating = rating;
         this.created = new Date();
         this.author = author;
+        this.movie = movie;
     }
 
     /**
@@ -110,5 +113,10 @@ public class MovieReview extends Entity {
      */
     public void setAuthor(User author) {
         this.author = author;
+    }
+
+    // TODO javadoc
+    public Movie getMovie() {
+        return movie;
     }
 }

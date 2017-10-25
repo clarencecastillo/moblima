@@ -85,6 +85,7 @@ public class MovieMenuView extends MenuView {
                             new String[] {null, movie.getId().toString()});
                     break;
                 case SEE_REVIEWS:
+                    navigation.goTo(new MovieReviewListView(navigation), accessLevel, movie.getId().toString());
                     break;
                 case CHANGE_STATUS:
                     View.displayInformation("Please enter new status.");
