@@ -10,14 +10,14 @@ import java.util.Date;
 import java.util.Hashtable;
 import java.util.TreeSet;
 
-public class HolidayListMenuView extends ListView {
+public class HolidayConfigListView extends ListView {
 
 
     private HolidayConfig holidayConfig;
 
     private Hashtable<Date, String> holidays;
 
-    public HolidayListMenuView(Navigation navigation) {
+    public HolidayConfigListView(Navigation navigation) {
         super(navigation);
         holidayConfig = HolidayConfig.getInstance();
     }
@@ -31,7 +31,7 @@ public class HolidayListMenuView extends ListView {
         setTitle("Holiday Config");
         holidays = HolidayConfig.getHolidays();
 
-        setMenuItems(HolidayConfigMenuOption.values());
+        setMenuItems(HolidayConfigListOption.values());
         addBackOption();
     }
 
@@ -44,7 +44,7 @@ public class HolidayListMenuView extends ListView {
             String holidayDate = Utilities.toFormat(date, "d MMMMM");
             viewItems.add(new ViewItem(holidayDate, Utilities.toFormat(date), holidays.get(date)));
         }
-        setViewItems(viewItems.toArray(new ViewItem[viewItems.size()]));
+        setViewItems(viewItems);
 
         display();
         String userOption = getChoice();
@@ -52,7 +52,7 @@ public class HolidayListMenuView extends ListView {
             navigation.goBack();
         else {
             try {
-                switch (HolidayConfigMenuOption.valueOf(userOption)) {
+                switch (HolidayConfigListOption.valueOf(userOption)) {
                     case SET_HOLIDAY:
                         View.displayInformation("Please enter holiday details. Specifying dates already " +
                                 "configured will be overwritten.");
@@ -71,13 +71,13 @@ public class HolidayListMenuView extends ListView {
         }
     }
 
-    private enum HolidayConfigMenuOption implements EnumerableMenuOption {
+    private enum HolidayConfigListOption implements EnumerableMenuOption {
 
         SET_HOLIDAY("Set Holiday");
 
         private String description;
 
-        HolidayConfigMenuOption(String description) {
+        HolidayConfigListOption(String description) {
             this.description = description;
         }
 

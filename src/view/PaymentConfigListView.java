@@ -30,10 +30,10 @@ public class PaymentConfigListView extends ListView {
     public void onEnter() {
         ArrayList<ViewItem> viewItems = new ArrayList<>();
         viewItems.add(new ViewItem("GST",
-                PaymentConfigMenuOption.GST.toString(),
+                PaymentConfigListOption.GST.toString(),
                 String.format("$%.2f", PaymentConfig.getGst())));
 //        viewItems.add(new ViewItem("Allow Refunds",
-//                PaymentConfigMenuOption.ALLOW_REFUNDS.toString(),
+//                PaymentConfigListOption.ALLOW_REFUNDS.toString(),
 //                PaymentConfig.isRefundsAllowed() ? "ALLOWED" : "NOT ALLOWED"));
         setViewItems(viewItems.toArray(new ViewItem[viewItems.size()]));
 
@@ -42,7 +42,7 @@ public class PaymentConfigListView extends ListView {
         if (userChoice.equals(BACK))
             navigation.goBack();
         else {
-            switch (PaymentConfigMenuOption.valueOf(userChoice)) {
+            switch (PaymentConfigListOption.valueOf(userChoice)) {
                 case GST:
                     View.displayInformation("Please enter new value. Enter values in SGD.");
                     double newGst = Form.getDouble("New GST", 0, 5);
@@ -58,7 +58,7 @@ public class PaymentConfigListView extends ListView {
         }
     }
 
-    private enum PaymentConfigMenuOption {
+    private enum PaymentConfigListOption {
         GST,
 //        ALLOW_REFUNDS
     }

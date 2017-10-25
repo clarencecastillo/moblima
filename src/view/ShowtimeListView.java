@@ -51,11 +51,11 @@ public class ShowtimeListView extends ListView {
         this.accessLevel = accessLevel;
         switch (accessLevel) {
             case ADMINISTRATOR:
-                setMenuItems(ShowtimeMenuOption.values());
+                setMenuItems(ShowtimeListOption.values());
                 showtimeStatusFilter = ShowtimeStatus.OPEN_BOOKING;
                 break;
             case PUBLIC:
-                setMenuItems(ShowtimeMenuOption.CHOOSE_DAY);
+                setMenuItems(ShowtimeListOption.CHOOSE_DAY);
                 break;
         }
 
@@ -137,7 +137,7 @@ public class ShowtimeListView extends ListView {
             navigation.goBack();
         else
             try {
-                ShowtimeMenuOption userChoice = ShowtimeMenuOption.valueOf(userInput);
+                ShowtimeListOption userChoice = ShowtimeListOption.valueOf(userInput);
                 switch (userChoice) {
                     case CHOOSE_DAY:
                         View.displayInformation("Please select date");
@@ -171,14 +171,14 @@ public class ShowtimeListView extends ListView {
 
     }
 
-    public enum ShowtimeMenuOption implements EnumerableMenuOption {
+    public enum ShowtimeListOption implements EnumerableMenuOption {
 
         CHOOSE_DAY("Choose Another Date"),
         ADD_SHOWTIME("Add Showtime");
 
         private String description;
 
-        ShowtimeMenuOption(String description) {
+        ShowtimeListOption(String description) {
             this.description = description;
         }
 

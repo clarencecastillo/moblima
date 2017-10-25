@@ -33,7 +33,7 @@ public class ConfigMenuView extends MenuView {
         else
             switch (ConfigType.valueOf(userChoice)) {
                 case HOLIDAY:
-                    navigation.goTo(new HolidayListMenuView(navigation), AccessLevel.ADMINISTRATOR);
+                    navigation.goTo(new HolidayConfigListView(navigation), AccessLevel.ADMINISTRATOR);
                     break;
                 case TICKET:
                     navigation.goTo(new TicketConfigMenuView(navigation), AccessLevel.ADMINISTRATOR);

@@ -31,7 +31,7 @@ public class MovieListView extends ListView {
         this.accessLevel = accessLevel;
         switch (accessLevel) {
             case ADMINISTRATOR:
-                setMenuItems(MovieListMenuOption.ADD_MOVIE);
+                setMenuItems(MovieListOption.ADD_MOVIE);
                 break;
             case PUBLIC:
                 break;
@@ -83,7 +83,7 @@ public class MovieListView extends ListView {
             navigation.goBack();
         else
             try {
-                MovieListMenuOption userChoice = MovieListMenuOption.valueOf(userInput);
+                MovieListOption userChoice = MovieListOption.valueOf(userInput);
                 switch (userChoice) {
                     case ADD_MOVIE:
                         navigation.goTo(new MovieMenuView(navigation), accessLevel, MovieMenuIntent.CREATE_MOVIE);
@@ -100,13 +100,13 @@ public class MovieListView extends ListView {
         VIEW_RANKING
     }
 
-    public enum MovieListMenuOption implements EnumerableMenuOption {
+    public enum MovieListOption implements EnumerableMenuOption {
 
         ADD_MOVIE("Add Movie");
 
         private String description;
 
-        MovieListMenuOption(String description) {
+        MovieListOption(String description) {
             this.description = description;
         }
 
