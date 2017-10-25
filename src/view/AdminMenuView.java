@@ -55,7 +55,8 @@ public class AdminMenuView extends MenuView {
         AdminMenuOption userChoice = AdminMenuOption.valueOf(getChoice());
         switch (userChoice) {
             case MANAGE_MOVIE_LISTINGS:
-                navigation.goTo(new MovieListView(navigation), AccessLevel.ADMINISTRATOR);
+                navigation.goTo(new MovieListView(navigation), AccessLevel.ADMINISTRATOR,
+                        MovieListView.MovieListIntent.VIEW_MOVIES);
                 break;
             case MANAGE_SHOWTIMES:
                 break;
