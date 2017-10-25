@@ -3,14 +3,12 @@ package manager;
 import config.BookingConfig;
 import exception.*;
 
-import java.util.Date;
 import java.util.Hashtable;
+import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 import model.booking.*;
 import model.cinema.Seat;
-import model.cinema.SeatType;
 import model.commons.User;
 import model.transaction.Payment;
 import model.transaction.PaymentStatus;
@@ -57,6 +55,8 @@ public class BookingController extends EntityController<Booking> {
     public void selectTicketType(UUID bookingId, Hashtable<TicketType, Integer> ticketTypesCount)
             throws ExceedBookingSeatException, UnavailableTicketTypeException, IllegalBookingStatusException {
 
+        ShowtimeController showtimeController = ShowtimeController.getInstance();
+
         Booking booking = findById(bookingId);
 
         // Check if booking not in progress
@@ -64,8 +64,10 @@ public class BookingController extends EntityController<Booking> {
             throw new IllegalBookingStatusException("The booking cannot be modified");
 
         // Check if all ticket types are available for this booking cinema
+        List<TicketType> availableTicketTypes =
+                showtimeController.getAvailableTicketTypes(booking.getShowtime().getId());
         for (TicketType ticketType : ticketTypesCount.keySet())
-            if (!booking.getShowtime().getCinema().getType().isAvailable(ticketType))
+            if (!availableTicketTypes.contains(ticketType))
                 throw new UnavailableTicketTypeException();
 
         // Check if number of ticket types exceed maximum seats per booking
@@ -75,12 +77,12 @@ public class BookingController extends EntityController<Booking> {
 
         for (TicketType ticketType : ticketTypesCount.keySet())
             for (int i = 0; i < ticketTypesCount.get(ticketType); i++)
-                booking.addTicket(new Ticket(ticketType));
+                booking.addTicket(new Ticket(ticketType,booking));
     }
 
     // Set seats to tickets according to the order when user selects seats
     public void selectSeat(UUID bookingId, Seat[] seats) throws UnavailableBookingSeatException,
-            InsufficientSeatsException, IllegalBookingStatusException {
+            InsufficientSeatsException, IllegalBookingStatusException, SeatNotFoundException {
 
         Booking booking = findById(bookingId);
 
@@ -89,7 +91,7 @@ public class BookingController extends EntityController<Booking> {
             throw new IllegalBookingStatusException("The booking cannot be modified");
 
         // Check if the number of seats the same with the tickets
-        if (seats.length != booking.getTickets().length)
+        if (seats.length != booking.getTickets().size())
             throw new InsufficientSeatsException();
 
         // Check if all seats are available
@@ -99,22 +101,29 @@ public class BookingController extends EntityController<Booking> {
 
         // Arbitrarily pair seats to the ticket types
         for (int i = 0; i < seats.length; i++)
-            booking.getTickets()[i].setSeat(seats[i]);
+            booking.getTickets().get(i).setSeat(seats[i]);
     }
 
     public double getBookingPrice(UUID bookingId) {
+        ShowtimeController showtimeController = ShowtimeController.getInstance();
         Booking booking = findById(bookingId);
         double price = BookingConfig.getBookingSurcharrge();
         for (Ticket ticket:booking.getTickets())
-            price += ticket.getPrice();
+            price += showtimeController.getTicketTypePricing(booking.getShowtime(),ticket.getType());
         return price;
     }
+
+//    public void createBookingPayment(UUID bookingId) {
+//        Booking booking = findById(bookingId);
+//        Payment payment = new Payment(getBookingPrice(bookingId),booking.getShowtime().getCinema().getCode());
+//        booking.setPayment(payment);
+//    }
 
     // Assign booking to the user after booking is confirmed
     public void confirmBooking(UUID bookingId, UUID userId)
             throws IllegalShowtimeStatusException, UnpaidPaymentException, IllegalShowtimeBookingException,
             ExceedBookingSeatException, UnavailableTicketTypeException, UnavailableBookingSeatException,
-            IllegalBookingStatusException {
+            IllegalBookingStatusException, SeatNotFoundException {
 
         UserController userController = UserController.getInstance();
 

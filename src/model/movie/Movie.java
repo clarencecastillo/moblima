@@ -2,6 +2,7 @@ package model.movie;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import model.booking.Booking;
 import model.booking.Showtime;
@@ -9,23 +10,79 @@ import model.booking.Ticket;
 import model.commons.Entity;
 import model.commons.Searchable;
 
+/**
+ Represents a movie.
+ @author Castillo Clarence Fitzgerald Gumtang
+ @version 1.0
+ @since 2017-10-20
+ */
 public class Movie extends Entity implements Searchable {
 
+    /**
+     * The title of this movie.
+     */
     private String title;
-    private String sypnosis;
+
+    /**
+     * The synopsis of this movie.
+     */
+    private String synopsis;
+
+    /**
+     * The directer of this movie.
+     */
     private MoviePerson director;
+
+    /**
+     * The type of this movie.
+     */
     private MovieType type;
+
+    /**
+     * The array list of actors of this movie.
+     */
     private ArrayList<MoviePerson> actors;
+
+    /**
+     * The array list of reviews of this movie.
+     */
     private ArrayList<MovieReview> reviews;
+
+    /**
+     * The array list of showtimes of this movie.
+     */
     private ArrayList<Showtime> showtimes;
+
+    /**
+     * The status of this movie.
+     */
     private MovieStatus status;
+
+    /**
+     * The rating of this movie.
+     */
     private MovieRating rating;
+
+    /**
+     * The runtime of this movie in minutes.
+     */
     private int runtimeMinutes;
 
-    public Movie(String title, String sypnosis, MoviePerson director, MovieType type,
+    /**
+     * Creates a moview with the given titles, synopsis, director, type, actors, status, rating and runtime in minutes.
+     * @param title The title of this movie.
+     * @param synopsis The synopsis of this movie.
+     * @param director The directer of this movie.
+     * @param type The type of this movie.
+     * @param actors The array of actors of this movie.
+     * @param status The status of this movie.
+     * @param rating The rating of this movie.
+     * @param runtimeMinutes The runtime of this movie in minutes.
+     */
+    public Movie(String title, String synopsis, MoviePerson director, MovieType type,
                  MoviePerson[] actors, MovieStatus status, MovieRating rating, int runtimeMinutes) {
         this.title = title;
-        this.sypnosis = sypnosis;
+        this.synopsis = synopsis;
         this.director = director;
         this.actors = new ArrayList<MoviePerson>(Arrays.asList(actors));
         this.type = type;
@@ -36,65 +93,87 @@ public class Movie extends Entity implements Searchable {
         this.runtimeMinutes = runtimeMinutes;
     }
 
+    /**
+     * Gets this movie's title.
+     * @return this movie's title.
+     */
     public String getTitle() {
         return title;
     }
 
-    public String getSypnosis() {
-        return sypnosis;
+    /**
+     * Gets this movie's synopsis.
+     * @return this movie's synopsis.
+     */
+    public String getSynopsis() {
+        return synopsis;
     }
 
+    /**
+     * Gets this movie's director.
+     * @return this movie's director.
+     */
     public MoviePerson getDirector() {
         return director;
     }
 
-    public MoviePerson[] getActors() {
-        return actors.toArray(new MoviePerson[actors.size()]);
-    }
-
+    /**
+     * Gets this movie's type.
+     * @return this movie's type.
+     */
     public MovieType getType() {
         return type;
     }
 
-    public MovieReview[] getReviews() {
-        return reviews.toArray(new MovieReview[reviews.size()]);
+    /**
+     * Gets this movie's list of actors.
+     * @return this movie's list of actors.
+     */
+    public List<MoviePerson> getActors() {
+        return actors;
     }
 
-    public Showtime[] getShowtimes() {
-        return showtimes.toArray(new Showtime[showtimes.size()]);
+    /**
+     * Gets this movie's list of reviews.
+     * @return this movie's list of reviews.
+     */
+    public List<MovieReview> getReviews() {
+        return reviews;
     }
 
+    /**
+     * Gets this movie's list of showtime.
+     * @return this movie's list of showtime.
+     */
+    public List<Showtime> getShowtimes() { return showtimes; }
+
+    /**
+     * Gets this movie's status.
+     * @return this movie's status.
+     */
     public MovieStatus getStatus() {
         return status;
     }
 
+    /**
+     * Gets this movie's rating.
+     * @return this movie's rating.
+     */
     public MovieRating getRating() {
         return rating;
     }
 
+    /**
+     * Gets this movie's runtime in minutes.
+     * @return this movie's runtime in minutes.
+     */
     public int getRuntimeMinutes(){ return runtimeMinutes; }
 
-
-    public double getOverallReviewRating() {
-        if (reviews.size() <= 1)
-            return -1;
-
-        int sum = 0;
-        for(MovieReview review : reviews)
-            sum += review.getRating();
-        return sum / reviews.size();
-    }
-
-    public int getTicketSales() {
-        int sum = 0;
-        for(Showtime showtime: showtimes)
-            for(Booking booking: showtime.getBookings())
-                for(Ticket ticket:booking.getTickets())
-                    sum++;
-        return sum;
-    }
-
-    public String[] getSearchTags() {
+    /**
+     * Gets this movie's search tag which can be its title, director or actors.
+     * @return this movie's search tag.
+     */
+    public List<String> getSearchTags() {
 
         ArrayList<String> tags = new ArrayList<>();
 
@@ -113,52 +192,101 @@ public class Movie extends Entity implements Searchable {
         tags.add(director.getLastName());
         tags.add(director.getLastName());
 
-        return tags.toArray(new String[tags.size()]);
+        return tags;
     }
 
+    /**
+     * Changes this movie's title.
+     * @param title The new title of this movie.
+     */
     public void setTitle(String title) {
         this.title = title;
     }
 
-    public void setSypnosis(String sypnosis) {
-        this.sypnosis = sypnosis;
+    /**
+     * Changes this movie's synopsis.
+     * @param synopsis The new synopsis of this movie.
+     */
+    public void setSynopsis(String synopsis) {
+        this.synopsis = synopsis;
     }
 
+    /**
+     * Changes this movie's director.
+     * @param director The new director of this movie.
+     */
     public void setDirector(MoviePerson director) {
         this.director = director;
     }
 
+    /**
+     * Changes this movie's type.
+     * @param type The new type of this movie.
+     */
     public void setType(MovieType type) {
         this.type = type;
     }
 
+    /**
+     * Changes this movie's actors.
+     * @param actors The new actors list of this movie.
+     */
     public void setActors(MoviePerson[] actors) {
         this.actors = new ArrayList<MoviePerson>(Arrays.asList(actors));
     }
 
+    /**
+     * Adds a review to this movie.
+     * @param movieReview The review to be added to this movie.
+     */
     public void addReview(MovieReview movieReview) {
         reviews.add(movieReview);
     }
 
+    /**
+     * Removes a reviwe from this movie.
+     * @param movieReview The review to be removed from this movie.
+     */
     public void removeReview(MovieReview movieReview) {
         reviews.remove(movieReview);
     }
 
+    /**
+     * Adds a showtime to this movie.
+     * @param showtime The showtime to be added to this movie.
+     */
     public void addShowtime(Showtime showtime) {
         showtimes.add(showtime);
     }
 
+    /**
+     * Removes a showtime from this movie.
+     * @param showtime The showtime to be removed this movie.
+     */
     public void removeShowtime(Showtime showtime) {
         showtimes.remove(showtime);
     }
 
+    /**
+     * Changes this movie's status.
+     * @param status The new status of this movie.
+     */
     public void setStatus(MovieStatus status) {
         this.status = status;
     }
 
+    /**
+     * Changes this movie's rating.
+     * @param rating The new rating of this movie.
+     */
     public void setRating(MovieRating rating) {
         this.rating = rating;
     }
 
+    /**
+     * Changes this movie's runtime in minutes.
+     * @param runtimeMinutes The new runtime in minutes of this movie.
+     */
     public void setRuntime(int runtimeMinutes) { this.runtimeMinutes = runtimeMinutes; }
 }
+

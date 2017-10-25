@@ -6,6 +6,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.function.IntPredicate;
 
 public class Utilities {
 
@@ -85,10 +86,12 @@ public class Utilities {
         return toFormat(date, Form.DATE_FORMAT);
     }
 
-    public static boolean dateFallsOn(Date date, int calendarDayOfWeek) {
+    public static boolean dateFallsOn(Date date, int... calendarDaysOfWeek) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
-        return calendar.get(Calendar.DAY_OF_WEEK) == calendarDayOfWeek;
+
+        return Arrays.stream(calendarDaysOfWeek).anyMatch(calendarDayOfWeek ->
+                calendarDayOfWeek == calendar.get(Calendar.DAY_OF_WEEK));
     }
 
     public static int levenshteinDistance(String a, String b) {

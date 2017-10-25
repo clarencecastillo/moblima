@@ -1,18 +1,19 @@
 package manager;
 
 import config.BookingConfig;
+import config.HolidayConfig;
 import exception.*;
 
 import java.util.*;
 
 import model.booking.*;
 import model.cinema.Cinema;
+import model.cinema.CinemaType;
 import model.cinema.Cineplex;
 import model.commons.Language;
 import model.movie.Movie;
 import model.movie.MovieStatus;
 import model.transaction.Priceable;
-import model.transaction.Pricing;
 import util.Utilities;
 
 public class ShowtimeController extends EntityController<Showtime> {
@@ -84,7 +85,7 @@ public class ShowtimeController extends EntityController<Showtime> {
             bookingController.cancelBooking(booking.getId());
     }
 
-    public ArrayList<Showtime> findByStatus(ShowtimeStatus statuses) {
+    public List<Showtime> findByStatus(ShowtimeStatus statuses) {
         ArrayList<Showtime> showtimes = new ArrayList<>();
         List<ShowtimeStatus> statusFilter = Arrays.asList(statuses);
         for (Showtime showtime : entities.values())
@@ -93,7 +94,7 @@ public class ShowtimeController extends EntityController<Showtime> {
         return showtimes;
     }
 
-    public ArrayList<Showtime> findByCineplexAndMovie(Cineplex cineplex, Movie movie) {
+    public List<Showtime> findByCineplexAndMovie(Cineplex cineplex, Movie movie) {
         ArrayList<Showtime> showtimes = new ArrayList<>();
         for (Showtime showtime : cineplex.getShowtimes())
             if (showtime.getMovie().equals(movie))
@@ -105,4 +106,24 @@ public class ShowtimeController extends EntityController<Showtime> {
         return Priceable.getPrice(ticketType,showtime.getCinema().getType(),showtime.getMovie().getType());
     }
 
+    /**
+     * Checks whether this ticket type is available for a booking.
+     * @param booking the booking to be checked for.
+     * @return true if the ticket type is avaible for this cinema
+     */
+    public List<TicketType> getAvailableTicketTypes(UUID showtimeId){
+        Showtime showtime = findById(showtimeId);
+        Cinema cinema = showtime.getCinema();
+
+        Date showtimeDate = showtime.getStartTime();
+        List<TicketType> availableTicketTypes = cinema.getType().getTicketTypes();
+        if (HolidayConfig.isHoliday(showtimeDate) ||
+                Utilities.dateFallsOn(showtimeDate, Calendar.FRIDAY, Calendar.SATURDAY, Calendar.SUNDAY) &&
+                        availableTicketTypes.contains(TicketType.PEAK))
+            availableTicketTypes = Arrays.asList(TicketType.PEAK);
+        else
+            availableTicketTypes.remove(TicketType.PEAK);
+
+        return availableTicketTypes;
+    }
 }

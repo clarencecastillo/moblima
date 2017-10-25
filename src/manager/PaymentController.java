@@ -28,14 +28,12 @@ public class PaymentController extends EntityController<Payment> {
         return instance;
     }
 
-    public Payment makePayment(Booking booking) throws InvalidPayableException{
+    public Payment makePayment(Payable payable) throws InvalidPayableException{
 
         // Assume Payment will always be successful.
-        Payment payment = new Payment(booking.getPrice());
-        payment.setDate(new Date());
+        Payment payment = new Payment(payable.getPrice(), payable.getTransactionCode());
         payment.setStatus(PaymentStatus.ACCEPTED);
-        payment.setTransactionId(booking);
-        booking.setPayment(payment);
+        payable.setPayment(payment);
         entities.put(payment.getId(), payment);
         return payment;
     }

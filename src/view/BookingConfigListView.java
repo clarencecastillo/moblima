@@ -35,7 +35,7 @@ public class BookingConfigListView extends ListView {
                 String.format("%d seats", BookingConfig.getMaxSeatsPerBooking())));
         viewItems.add(new ViewItem("Minimum Days Before Open Booking",
                 BookingConfigMenuOption.MIN_DAYS_BEFORE_OPEN_BOOKING.toString(),
-                String.format("%d days", BookingConfig.getMinDaysBeforeOpenBooking())));
+                String.format("%d days", BookingConfig.getDaysBeforeOpenBooking())));
         viewItems.add(new ViewItem("Booking Fee",
                 BookingConfigMenuOption.BOOKING_FEE.toString(),
                 String.format("$%.2f", BookingConfig.getBookingSurcharrge())));

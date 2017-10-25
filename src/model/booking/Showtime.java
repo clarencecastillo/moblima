@@ -31,7 +31,7 @@ public class Showtime extends Entity {
         this.movie = movie;
         this.cineplex = cineplex;
         this.cinema = cinema;
-        this.seating = new ShowtimeSeating(cinema.getLayout().getSeats());
+        this.seating = new ShowtimeSeating(this);
         this.language = language;
         this.startTime = startTime;
         this.noFreePasses = noFreePasses;
@@ -85,7 +85,7 @@ public class Showtime extends Entity {
 
         ShowtimeStatus showtimeStatus = ShowtimeStatus.OPEN_BOOKING;
 
-        int minDaysBeforeOpenBooking = BookingConfig.getMinDaysBeforeOpenBooking();
+        int minDaysBeforeOpenBooking = BookingConfig.getDaysBeforeOpenBooking();
         Date openBookingDate = Utilities.getDateBefore(startTime,
                                                        Calendar.DAY_OF_YEAR,
                                                        minDaysBeforeOpenBooking);

@@ -1,23 +1,17 @@
 package manager;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.UUID;
-import java.util.function.Predicate;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import exception.IllegalMovieStatusException;
 import exception.IllegalMovieStatusTransitionException;
 import exception.UninitialisedSingletonException;
+import model.booking.Booking;
 import model.booking.Showtime;
 import model.booking.ShowtimeStatus;
+import model.booking.Ticket;
 import model.cinema.Cineplex;
-import model.movie.Movie;
-import model.movie.MoviePerson;
-import model.movie.MovieRating;
-import model.movie.MovieStatus;
-import model.movie.MovieType;
+import model.movie.*;
 import util.Utilities;
 
 public class MovieController extends EntityController<Movie> {
@@ -80,7 +74,7 @@ public class MovieController extends EntityController<Movie> {
                                    MovieRating rating, int runtime) {
         Movie movie = findById(movieId);
         movie.setTitle(title);
-        movie.setSypnosis(sypnosis);
+        movie.setSynopsis(sypnosis);
         movie.setDirector(director);
         movie.setActors(actors);
         movie.setRating(rating);
@@ -115,9 +109,48 @@ public class MovieController extends EntityController<Movie> {
         return movies.toArray(new Movie[movies.size()]);
     }
 
+    /**
+     * Finds all the movies shown in a given cineplex.
+     * @param cineplex The cineplex to be....
+     * @return
+     */
     public List<Movie> findByCineplex(Cineplex cineplex) {
         return entities.values().stream().filter(movie ->
-                Arrays.stream(movie.getShowtimes()).anyMatch(showtime ->
+                movie.getShowtimes().stream().anyMatch(showtime ->
                         showtime.getCineplex().equals(cineplex))).collect(Collectors.toList());
+    }
+
+    /**
+     * Gets a given movie's overall rating which will only be shown when there is more than one rating.
+     * @return this movie's overall rating.
+     * @param movieId the given ID of a movie.
+     * @return this movie's overall rating.
+     */
+    public double getOverallReviewRating(UUID movieId) {
+        Movie movie = findById(movieId);
+        if (movie.getReviews().size() <= 1)
+            return -1;
+
+        int sum = 0;
+        for(MovieReview review : movie.getReviews())
+            sum += review.getRating();
+        return sum / movie.getReviews().size();
+    }
+
+    /**
+     * Gets a given movie's overall rating which will only be shown when there is more than one rating.
+     * NA will be displayed if there is no more than one movie review.
+     * @return this movie's overall rating.
+     * @param movieId the given ID of a movie.
+     * @return this movie's total ticket sale.
+     */
+    public int getTicketSales(UUID movieId) {
+        Movie movie = findById(movieId);
+        int sum = 0;
+        for(Showtime showtime: movie.getShowtimes())
+            for(Booking booking: showtime.getBookings())
+                for(Ticket ticket:booking.getTickets())
+                    sum++;
+        return sum;
     }
 }

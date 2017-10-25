@@ -8,44 +8,61 @@ import model.cinema.CinemaType;
 import model.transaction.Priceable;
 import util.Utilities;
 
+/**
+ Represents a standard set of ticket types whose pricing rate will be added to the ticket price.
+ @author Castillo Clarence Fitzgerald Gumtang
+ @version 1.0
+ @since 2017-10-20
+ */
 public enum TicketType implements Priceable {
 
+    /**
+     * The student ticket type.
+     */
     STUDENT("Student Ticket"),
+
+    /**
+     * The senior citizen ticket type.
+     */
     SENIOR_CITIZEN("Senior Citizen Ticket"),
+
+    /**
+     * The standard ticket type.
+     */
     STANDARD("Standard Ticket"),
+
+    /**
+     * The peak day ticket type.
+     */
     PEAK("Fri - Sun, Eve of PH & PH Ticket");
 
-    private String string;
+    /**
+     * The name of this ticket type.
+     */
+    private String name;
 
+    /**
+     * Creates a ticket type with s given ticket type name.
+     * @param string The name of this ticket type.
+     */
     TicketType(String string) {
-        this.string = string;
+        this.name = string;
     }
 
+    /**
+     * Gets the pricing rate of this ticket type.
+     * @return the pricing rate of this ticket type.
+     */
     public double getPrice() {
         return TicketConfig.getPriceableRate(this);
     }
 
+    /**
+     * Gets the name of this ticket type.
+     * @return the name of this ticket type.
+     */
     @Override
     public String toString() {
-        return string;
-    }
-
-    public boolean isValidFor(Booking booking) {
-
-        CinemaType bookingCinemaType = booking.getShowtime().getCinema().getType();
-
-        if (!bookingCinemaType.isAvailable(this))
-            return false; // TODO Ticket type not available for this cinema
-
-        if (this == PEAK) {
-            Date movieDate = booking.getShowtime().getStartTime();
-            if (!HolidayConfig.isHoliday(movieDate) &&
-                !(Utilities.dateFallsOn(movieDate, Calendar.FRIDAY) ||
-                  Utilities.dateFallsOn(movieDate, Calendar.SATURDAY) ||
-                  Utilities.dateFallsOn(movieDate, Calendar.SUNDAY)))
-                return false;
-        }
-
-        return true;
+        return name;
     }
 }

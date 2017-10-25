@@ -89,7 +89,7 @@ public class ShowtimeListView extends ListView {
                         // Get user date selection from today to number of days before booking
                         String dateChoice = Form.getOption("Date", Utilities.getDaysBetweenDates(today,
                                 Utilities.getDateAfter(today, Calendar.DAY_OF_YEAR,
-                                        BookingConfig.getMinDaysBeforeOpenBooking())).stream()
+                                        BookingConfig.getDaysBeforeOpenBooking())).stream()
                                 .filter(date -> Utilities.getDateWithTime(date, 0, 0)
                                         .compareTo(Utilities.getDateWithTime(dateFilter, 0, 0)) != 0)
                                 .map(date -> new GenericMenuOption(Utilities.toFormat(date, DATE_DISPLAY_FORMAT),

@@ -8,13 +8,14 @@ import model.commons.User;
 import view.ui.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class BookingListView extends ListView {
 
     private UserController userController;
 
     private User user;
-    private ArrayList<Booking> bookings;
+    private List<Booking> bookings;
 
     private BookingController bookingController;
 

@@ -16,7 +16,7 @@ public class BookingView extends View {
         setContent( "Cinema: " + booking.getShowtime().getCinema().getCode(),
                     "Start Time: " + booking.getShowtime().getStartTime(),
                     "Seats: " + String.join(",",
-                                            Arrays.stream(booking.getTickets())
+                                            booking.getTickets().stream()
                                                   .map(Ticket::getSeat).map(String::valueOf)
                                                   .toArray(String[]::new)));
     }
