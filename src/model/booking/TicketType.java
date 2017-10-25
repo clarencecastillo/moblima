@@ -1,18 +1,14 @@
 package model.booking;
 
-import config.HolidayConfig;
 import config.TicketConfig;
-import java.util.Calendar;
-import java.util.Date;
-import model.cinema.CinemaType;
 import model.transaction.Priceable;
-import util.Utilities;
 
 /**
- Represents a standard set of ticket types whose pricing rate will be added to the ticket price.
- @author Castillo Clarence Fitzgerald Gumtang
- @version 1.0
- @since 2017-10-20
+ * Represents a standard set of ticket types whose pricing rate will be added to the ticket price.
+ *
+ * @author Castillo Clarence Fitzgerald Gumtang
+ * @version 1.0
+ * @since 2017-10-20
  */
 public enum TicketType implements Priceable {
 
@@ -43,6 +39,7 @@ public enum TicketType implements Priceable {
 
     /**
      * Creates a ticket type with s given ticket type name.
+     *
      * @param string The name of this ticket type.
      */
     TicketType(String string) {
@@ -51,6 +48,7 @@ public enum TicketType implements Priceable {
 
     /**
      * Gets the pricing rate of this ticket type.
+     *
      * @return the pricing rate of this ticket type.
      */
     public double getPrice() {
@@ -59,6 +57,7 @@ public enum TicketType implements Priceable {
 
     /**
      * Gets the name of this ticket type.
+     *
      * @return the name of this ticket type.
      */
     @Override

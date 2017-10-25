@@ -23,11 +23,6 @@ public abstract class MenuView extends View implements Navigable, Form {
         return menuItems;
     }
 
-    protected void setMenuItems(MenuItem[] menuItems) {
-        this.menuItems.clear();
-        this.menuItems.addAll(Arrays.asList(menuItems));
-    }
-
     protected void setMenuItems(EnumerableMenuOption... enumerableMenuOptions) {
         menuItems.clear();
         for (int i = 0; i < enumerableMenuOptions.length; i++) {
@@ -35,6 +30,11 @@ public abstract class MenuView extends View implements Navigable, Form {
             if (description != null)
                 menuItems.add(new MenuItem(description, enumerableMenuOptions[i].name()));
         }
+    }
+
+    protected void setMenuItems(MenuItem[] menuItems) {
+        this.menuItems.clear();
+        this.menuItems.addAll(Arrays.asList(menuItems));
     }
 
     protected void addBackOption() {

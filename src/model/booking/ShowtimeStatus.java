@@ -1,10 +1,11 @@
 package model.booking;
 
 /**
- Represents a standard set of showtime status.
- @author Castillo Clarence Fitzgerald Gumtang
- @version 1.0
- @since 2017-10-20
+ * Represents a standard set of showtime status.
+ *
+ * @author Castillo Clarence Fitzgerald Gumtang
+ * @version 1.0
+ * @since 2017-10-20
  */
 public enum ShowtimeStatus {
 
@@ -19,6 +20,7 @@ public enum ShowtimeStatus {
 
     /**
      * Creates a showtime status with s given status name.
+     *
      * @param name The name of this showtime status.
      */
     ShowtimeStatus(String name) {
@@ -27,6 +29,7 @@ public enum ShowtimeStatus {
 
     /**
      * Gets the name of this showtime status.
+     *
      * @return the name of this showtime status.
      */
     @Override

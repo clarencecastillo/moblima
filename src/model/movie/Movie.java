@@ -1,20 +1,19 @@
 package model.movie;
 
+import model.booking.Showtime;
+import model.commons.Entity;
+import model.commons.Searchable;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import model.booking.Booking;
-import model.booking.Showtime;
-import model.booking.Ticket;
-import model.commons.Entity;
-import model.commons.Searchable;
-
 /**
- Represents a movie.
- @author Castillo Clarence Fitzgerald Gumtang
- @version 1.0
- @since 2017-10-20
+ * Represents a movie.
+ *
+ * @author Castillo Clarence Fitzgerald Gumtang
+ * @version 1.0
+ * @since 2017-10-20
  */
 public class Movie extends Entity implements Searchable {
 
@@ -70,13 +69,14 @@ public class Movie extends Entity implements Searchable {
 
     /**
      * Creates a moview with the given titles, synopsis, director, type, actors, status, rating and runtime in minutes.
-     * @param title The title of this movie.
-     * @param synopsis The synopsis of this movie.
-     * @param director The directer of this movie.
-     * @param type The type of this movie.
-     * @param actors The array of actors of this movie.
-     * @param status The status of this movie.
-     * @param rating The rating of this movie.
+     *
+     * @param title          The title of this movie.
+     * @param synopsis       The synopsis of this movie.
+     * @param director       The directer of this movie.
+     * @param type           The type of this movie.
+     * @param actors         The array of actors of this movie.
+     * @param status         The status of this movie.
+     * @param rating         The rating of this movie.
      * @param runtimeMinutes The runtime of this movie in minutes.
      */
     public Movie(String title, String synopsis, MoviePerson director, MovieType type,
@@ -95,6 +95,7 @@ public class Movie extends Entity implements Searchable {
 
     /**
      * Gets this movie's title.
+     *
      * @return this movie's title.
      */
     public String getTitle() {
@@ -102,7 +103,17 @@ public class Movie extends Entity implements Searchable {
     }
 
     /**
+     * Changes this movie's title.
+     *
+     * @param title The new title of this movie.
+     */
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    /**
      * Gets this movie's synopsis.
+     *
      * @return this movie's synopsis.
      */
     public String getSynopsis() {
@@ -110,7 +121,17 @@ public class Movie extends Entity implements Searchable {
     }
 
     /**
+     * Changes this movie's synopsis.
+     *
+     * @param synopsis The new synopsis of this movie.
+     */
+    public void setSynopsis(String synopsis) {
+        this.synopsis = synopsis;
+    }
+
+    /**
      * Gets this movie's director.
+     *
      * @return this movie's director.
      */
     public MoviePerson getDirector() {
@@ -118,7 +139,17 @@ public class Movie extends Entity implements Searchable {
     }
 
     /**
+     * Changes this movie's director.
+     *
+     * @param director The new director of this movie.
+     */
+    public void setDirector(MoviePerson director) {
+        this.director = director;
+    }
+
+    /**
      * Gets this movie's type.
+     *
      * @return this movie's type.
      */
     public MovieType getType() {
@@ -126,7 +157,17 @@ public class Movie extends Entity implements Searchable {
     }
 
     /**
+     * Changes this movie's type.
+     *
+     * @param type The new type of this movie.
+     */
+    public void setType(MovieType type) {
+        this.type = type;
+    }
+
+    /**
      * Gets this movie's list of actors.
+     *
      * @return this movie's list of actors.
      */
     public List<MoviePerson> getActors() {
@@ -134,7 +175,17 @@ public class Movie extends Entity implements Searchable {
     }
 
     /**
+     * Changes this movie's actors.
+     *
+     * @param actors The new actors list of this movie.
+     */
+    public void setActors(MoviePerson[] actors) {
+        this.actors = new ArrayList<MoviePerson>(Arrays.asList(actors));
+    }
+
+    /**
      * Gets this movie's list of reviews.
+     *
      * @return this movie's list of reviews.
      */
     public List<MovieReview> getReviews() {
@@ -143,12 +194,16 @@ public class Movie extends Entity implements Searchable {
 
     /**
      * Gets this movie's list of showtime.
+     *
      * @return this movie's list of showtime.
      */
-    public List<Showtime> getShowtimes() { return showtimes; }
+    public List<Showtime> getShowtimes() {
+        return showtimes;
+    }
 
     /**
      * Gets this movie's status.
+     *
      * @return this movie's status.
      */
     public MovieStatus getStatus() {
@@ -156,7 +211,17 @@ public class Movie extends Entity implements Searchable {
     }
 
     /**
+     * Changes this movie's status.
+     *
+     * @param status The new status of this movie.
+     */
+    public void setStatus(MovieStatus status) {
+        this.status = status;
+    }
+
+    /**
      * Gets this movie's rating.
+     *
      * @return this movie's rating.
      */
     public MovieRating getRating() {
@@ -164,13 +229,26 @@ public class Movie extends Entity implements Searchable {
     }
 
     /**
+     * Changes this movie's rating.
+     *
+     * @param rating The new rating of this movie.
+     */
+    public void setRating(MovieRating rating) {
+        this.rating = rating;
+    }
+
+    /**
      * Gets this movie's runtime in minutes.
+     *
      * @return this movie's runtime in minutes.
      */
-    public int getRuntimeMinutes(){ return runtimeMinutes; }
+    public int getRuntimeMinutes() {
+        return runtimeMinutes;
+    }
 
     /**
      * Gets this movie's search tag which can be its title, director or actors.
+     *
      * @return this movie's search tag.
      */
     public List<String> getSearchTags() {
@@ -181,7 +259,7 @@ public class Movie extends Entity implements Searchable {
         tags.add(title);
 
         // Actors
-        for (MoviePerson moviePerson: actors) {
+        for (MoviePerson moviePerson : actors) {
             tags.add(moviePerson.getFirstName());
             tags.add(moviePerson.getLastName());
             tags.add(moviePerson.getFullName());
@@ -196,47 +274,8 @@ public class Movie extends Entity implements Searchable {
     }
 
     /**
-     * Changes this movie's title.
-     * @param title The new title of this movie.
-     */
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    /**
-     * Changes this movie's synopsis.
-     * @param synopsis The new synopsis of this movie.
-     */
-    public void setSynopsis(String synopsis) {
-        this.synopsis = synopsis;
-    }
-
-    /**
-     * Changes this movie's director.
-     * @param director The new director of this movie.
-     */
-    public void setDirector(MoviePerson director) {
-        this.director = director;
-    }
-
-    /**
-     * Changes this movie's type.
-     * @param type The new type of this movie.
-     */
-    public void setType(MovieType type) {
-        this.type = type;
-    }
-
-    /**
-     * Changes this movie's actors.
-     * @param actors The new actors list of this movie.
-     */
-    public void setActors(MoviePerson[] actors) {
-        this.actors = new ArrayList<MoviePerson>(Arrays.asList(actors));
-    }
-
-    /**
      * Adds a review to this movie.
+     *
      * @param movieReview The review to be added to this movie.
      */
     public void addReview(MovieReview movieReview) {
@@ -245,6 +284,7 @@ public class Movie extends Entity implements Searchable {
 
     /**
      * Removes a reviwe from this movie.
+     *
      * @param movieReview The review to be removed from this movie.
      */
     public void removeReview(MovieReview movieReview) {
@@ -253,6 +293,7 @@ public class Movie extends Entity implements Searchable {
 
     /**
      * Adds a showtime to this movie.
+     *
      * @param showtime The showtime to be added to this movie.
      */
     public void addShowtime(Showtime showtime) {
@@ -261,6 +302,7 @@ public class Movie extends Entity implements Searchable {
 
     /**
      * Removes a showtime from this movie.
+     *
      * @param showtime The showtime to be removed this movie.
      */
     public void removeShowtime(Showtime showtime) {
@@ -268,25 +310,12 @@ public class Movie extends Entity implements Searchable {
     }
 
     /**
-     * Changes this movie's status.
-     * @param status The new status of this movie.
-     */
-    public void setStatus(MovieStatus status) {
-        this.status = status;
-    }
-
-    /**
-     * Changes this movie's rating.
-     * @param rating The new rating of this movie.
-     */
-    public void setRating(MovieRating rating) {
-        this.rating = rating;
-    }
-
-    /**
      * Changes this movie's runtime in minutes.
+     *
      * @param runtimeMinutes The new runtime in minutes of this movie.
      */
-    public void setRuntime(int runtimeMinutes) { this.runtimeMinutes = runtimeMinutes; }
+    public void setRuntime(int runtimeMinutes) {
+        this.runtimeMinutes = runtimeMinutes;
+    }
 }
 

@@ -79,6 +79,7 @@ public class MainMenuView extends MenuView {
         ADMIN(null);
 
         private String description;
+
         MainMenuOption(String description) {
             this.description = description;
         }

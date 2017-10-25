@@ -63,7 +63,7 @@ public class MovieShowtimeListView extends ListView {
     public void onEnter() {
         // Get showtimes movies and generate view items
         setViewItems(movies.stream().map(movie -> new ViewItem(new MovieShowtimeView(movie, cineplex, dateFilter),
-                        movie.getId().toString())).toArray(ViewItem[]::new));
+                movie.getId().toString())).toArray(ViewItem[]::new));
 
         display();
         String userInput = getChoice();
@@ -100,6 +100,7 @@ public class MovieShowtimeListView extends ListView {
         CHOOSE_DAY("Choose Another Date");
 
         private String description;
+
         CineplexMovieMenuOption(String description) {
             this.description = description;
         }

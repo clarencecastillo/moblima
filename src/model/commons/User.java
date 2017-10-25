@@ -1,16 +1,17 @@
 package model.commons;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import model.booking.Booking;
 import model.movie.MovieReview;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
- Represents a user of the application, who is the moviegoers that can book tickets and write reviews.
- @author Castillo Clarence Fitzgerald Gumtang
- @version 1.0
- @since 2017-10-20
+ * Represents a user of the application, who is the moviegoers that can book tickets and write reviews.
+ *
+ * @author Castillo Clarence Fitzgerald Gumtang
+ * @version 1.0
+ * @since 2017-10-20
  */
 public class User extends Person {
 
@@ -39,10 +40,11 @@ public class User extends Person {
 
     /**
      * Creates an user with the first name, last name, mobile number and email address.
+     *
      * @param firstName This user's first name.
-     * @param lastName This user's last name.
-     * @param mobile This user's mobile number.
-     * @param email This user's email address.
+     * @param lastName  This user's last name.
+     * @param mobile    This user's mobile number.
+     * @param email     This user's email address.
      */
     public User(String firstName, String lastName, String mobile, String email) {
         super(firstName, lastName);
@@ -54,6 +56,7 @@ public class User extends Person {
 
     /**
      * Gets this user's mobile number.
+     *
      * @return this user's mobile number.
      */
     public String getMobile() {
@@ -61,7 +64,17 @@ public class User extends Person {
     }
 
     /**
+     * Changes this user's mobile number.
+     *
+     * @param mobile This user's new mobile number.
+     */
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
+
+    /**
      * Gets this user's email address.
+     *
      * @return this user's email address.
      */
     public String getEmail() {
@@ -69,7 +82,17 @@ public class User extends Person {
     }
 
     /**
+     * Changes this user's email address.
+     *
+     * @param email This user's new email address.
+     */
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    /**
      * Gets the list of movie reviews written by this user.
+     *
      * @return the list of movie reviews written by this user.
      */
     public List<MovieReview> getMovieReviews() {
@@ -78,6 +101,7 @@ public class User extends Person {
 
     /**
      * Gets the list of bookings made by this user.
+     *
      * @return the list of bookings made by this user.
      */
     public List<Booking> getBookings() {
@@ -85,23 +109,8 @@ public class User extends Person {
     }
 
     /**
-     * Changes this user's mobile number.
-     * @param mobile This user's new mobile number.
-     */
-    public void setMobile(String mobile) {
-        this.mobile = mobile;
-    }
-
-    /**
-     * Changes this user's email address.
-     * @param email This user's new email address.
-     */
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    /**
      * Add a new movie review written by the user to the array list of movie reviews.
+     *
      * @param movieReview A new movie review written by the user.
      */
     public void addReview(MovieReview movieReview) {
@@ -110,6 +119,7 @@ public class User extends Person {
 
     /**
      * Remove a movie review written by the user from the array list of movie reviews.
+     *
      * @param movieReview the movie review to be removed.
      */
     public void removeReview(MovieReview movieReview) {
@@ -118,6 +128,7 @@ public class User extends Person {
 
     /**
      * Add a new booking booked by the user to the array list of bookings.
+     *
      * @param booking
      */
     public void addBooking(Booking booking) {
@@ -126,6 +137,7 @@ public class User extends Person {
 
     /**
      * Remove a booking booked by the user from the array list of bookings.
+     *
      * @param booking
      */
     public void removeBooking(Booking booking) {

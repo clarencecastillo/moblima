@@ -3,9 +3,9 @@ package view;
 import config.ConfigType;
 import exception.UnauthorisedNavigationException;
 import view.ui.AccessLevel;
+import view.ui.Intent;
 import view.ui.MenuView;
 import view.ui.Navigation;
-import view.ui.Intent;
 
 public class ConfigMenuView extends MenuView {
 

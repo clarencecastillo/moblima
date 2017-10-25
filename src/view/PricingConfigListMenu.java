@@ -35,17 +35,17 @@ public class PricingConfigListMenu extends ListView {
     public void onEnter() {
 
         ArrayList<ViewItem> viewItems = new ArrayList<>();
-        for (MovieType movieType: MovieType.values())
+        for (MovieType movieType : MovieType.values())
             viewItems.add(new ViewItem(movieType.toString() + " Movies",
                     String.join(VALUE_DELIMITER, "MovieType", movieType.name(),
                             movieType.toString() + " Movies"),
                     String.format("$%.2f", movieType.getPrice())));
-        for (TicketType ticketType: TicketType.values())
+        for (TicketType ticketType : TicketType.values())
             viewItems.add(new ViewItem(ticketType.toString() + "s",
                     String.join(VALUE_DELIMITER, "TicketType", ticketType.name(),
                             ticketType.toString() + "s"),
                     String.format("$%.2f", ticketType.getPrice())));
-        for (CinemaType cinemaType: CinemaType.values())
+        for (CinemaType cinemaType : CinemaType.values())
             viewItems.add(new ViewItem(cinemaType.toString() + " Cinemas",
                     String.join(VALUE_DELIMITER, "CinemaType", cinemaType.name(),
                             cinemaType.toString() + " Cinemas"),

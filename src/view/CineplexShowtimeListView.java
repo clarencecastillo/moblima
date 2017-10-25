@@ -10,7 +10,10 @@ import model.movie.MovieStatus;
 import util.Utilities;
 import view.ui.*;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.UUID;
 
 public class CineplexShowtimeListView extends ListView {
 
@@ -118,6 +121,7 @@ public class CineplexShowtimeListView extends ListView {
         ADD_SHOWTIME("Add Showtime");
 
         private String description;
+
         CineplexShowtimeMenuOption(String description) {
             this.description = description;
         }

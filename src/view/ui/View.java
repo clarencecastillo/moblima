@@ -21,6 +21,48 @@ public abstract class View {
     protected String title;
     protected ArrayList<String> content = new ArrayList<>();
 
+    public static void displayColored(String message, ConsoleColor color) {
+        System.out.println(color.code + message + ConsoleColor.RESET.code);
+    }
+
+    public static void displayInformation(String message) {
+        displayColored(message, INFO);
+        System.out.println();
+    }
+
+    public static void displayWarning(String message) {
+        displayColored(message, WARN);
+        System.out.println();
+    }
+
+    public static void displayError(String message) {
+        displayColored(message, ERROR);
+        System.out.println();
+    }
+
+    public static void displaySuccess(String message) {
+        displayColored(message, SUCCESS);
+        System.out.println();
+    }
+
+    protected static String line(char character, int length) {
+        String line = String.format("%0" + length + "d", 0);
+        return line.replace("0", String.valueOf(character));
+    }
+
+    protected static String[] wrap(String text, int length) {
+        ArrayList<String> lines = new ArrayList<>();
+        Pattern regex = Pattern.compile(String.format("(.{1,%s}(?:\\s|$))|(.{0,10})", length),
+                Pattern.DOTALL);
+        Matcher regexMatcher = regex.matcher(text);
+        while (regexMatcher.find()) {
+            String match = regexMatcher.group();
+            if (match.length() > 0)
+                lines.add(match);
+        }
+        return lines.toArray(new String[lines.size()]);
+    }
+
     public String getTitle() {
         return title;
     }
@@ -58,47 +100,5 @@ public abstract class View {
 
     public String flatten(String titleDelimiter, String contentDelimiter) {
         return title + titleDelimiter + String.join(contentDelimiter, content);
-    }
-
-    public static void displayColored(String message, ConsoleColor color) {
-        System.out.println(color.code + message + ConsoleColor.RESET.code);
-    }
-
-    public static void displayInformation(String message) {
-        displayColored(message, INFO);
-        System.out.println();
-    }
-
-    public static void displayWarning(String message) {
-        displayColored(message, WARN);
-        System.out.println();
-    }
-
-    public static void displayError(String message) {
-        displayColored(message, ERROR);
-        System.out.println();
-    }
-
-    public static void displaySuccess(String message) {
-        displayColored(message, SUCCESS);
-        System.out.println();
-    }
-
-    protected static String line(char character, int length) {
-        String line = String.format("%0" + length + "d", 0);
-        return line.replace("0", String.valueOf(character));
-    }
-
-    protected static String[] wrap(String text, int length) {
-        ArrayList<String> lines = new ArrayList<>();
-        Pattern regex = Pattern.compile(String.format("(.{1,%s}(?:\\s|$))|(.{0,10})", length),
-                                        Pattern.DOTALL);
-        Matcher regexMatcher = regex.matcher(text);
-        while (regexMatcher.find()) {
-            String match = regexMatcher.group();
-            if (match.length() > 0)
-                lines.add(match);
-        }
-        return lines.toArray(new String[lines.size()]);
     }
 }

@@ -1,10 +1,11 @@
 package model.booking;
 
 /**
- Represents a standard set of booking status.
- @author Castillo Clarence Fitzgerald Gumtang
- @version 1.0
- @since 2017-10-20
+ * Represents a standard set of booking status.
+ *
+ * @author Castillo Clarence Fitzgerald Gumtang
+ * @version 1.0
+ * @since 2017-10-20
  */
 public enum BookingStatus {
 
@@ -30,6 +31,7 @@ public enum BookingStatus {
 
     /**
      * Creates a booking status with s given status name.
+     *
      * @param name The name of this booking status.
      */
     BookingStatus(String name) {
@@ -38,6 +40,7 @@ public enum BookingStatus {
 
     /**
      * Gets the name of this booking status.
+     *
      * @return the name of this booking status.
      */
     @Override

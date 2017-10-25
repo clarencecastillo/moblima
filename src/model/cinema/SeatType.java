@@ -1,10 +1,11 @@
 package model.cinema;
 
 /**
- Represents a standard set of seat types for a seat, which can be single, couple, or handicap.
- @author Castillo Clarence Fitzgerald Gumtang
- @version 1.0
- @since 2017-10-20
+ * Represents a standard set of seat types for a seat, which can be single, couple, or handicap.
+ *
+ * @author Castillo Clarence Fitzgerald Gumtang
+ * @version 1.0
+ * @since 2017-10-20
  */
 public enum SeatType {
 
@@ -32,6 +33,7 @@ public enum SeatType {
 
     /**
      * Creates a standard seat type with a given type name.
+     *
      * @param string The given type name of this seat type.
      */
     SeatType(String string) {
@@ -40,6 +42,7 @@ public enum SeatType {
 
     /**
      * Gets this seat's type name.
+     *
      * @return This seat's type name.
      */
     @Override

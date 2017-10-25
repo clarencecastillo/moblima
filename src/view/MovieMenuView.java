@@ -133,7 +133,7 @@ public class MovieMenuView extends MenuView {
 
     public enum MovieMenuIntent implements Intent {
         VIEW_MOVIE,
-        CREATE_MOVIE;
+        CREATE_MOVIE
     }
 
     private enum MovieMenuOption implements EnumerableMenuOption {
@@ -145,6 +145,7 @@ public class MovieMenuView extends MenuView {
         REMOVE("Remove");
 
         private String description;
+
         MovieMenuOption(String description) {
             this.description = description;
         }

@@ -3,18 +3,19 @@ package manager;
 import config.BookingConfig;
 import config.HolidayConfig;
 import exception.*;
-
-import java.util.*;
-
-import model.booking.*;
+import model.booking.Booking;
+import model.booking.Showtime;
+import model.booking.ShowtimeStatus;
+import model.booking.TicketType;
 import model.cinema.Cinema;
-import model.cinema.CinemaType;
 import model.cinema.Cineplex;
 import model.commons.Language;
 import model.movie.Movie;
 import model.movie.MovieStatus;
 import model.transaction.Priceable;
 import util.Utilities;
+
+import java.util.*;
 
 public class ShowtimeController extends EntityController<Showtime> {
 
@@ -54,7 +55,7 @@ public class ShowtimeController extends EntityController<Showtime> {
         Cinema cinema = cinemaController.findById(cinemaId);
 
         Showtime showtime = new Showtime(movie, cineplex, cinema, language, startTime,
-                                         noFreePasses, isPreview, subtitles);
+                noFreePasses, isPreview, subtitles);
 
         movie.addShowtime(showtime);
         cineplex.addShowtime(showtime);
@@ -64,7 +65,7 @@ public class ShowtimeController extends EntityController<Showtime> {
 
     public void cancelShowtime(UUID showtimeId) throws IllegalShowtimeStatusException,
             IllegalMovieStatusException, IllegalBookingStatusException,
-        UnpaidBookingChargeException, UnpaidPaymentException {
+            UnpaidBookingChargeException, UnpaidPaymentException {
 
         BookingController bookingController = BookingController.getInstance();
 
@@ -75,13 +76,13 @@ public class ShowtimeController extends EntityController<Showtime> {
 
         int minutesBeforeClosedBooking = BookingConfig.getMinutesBeforeClosedBooking();
         Date lastBookingMinute = Utilities.getDateBefore(showtime.getStartTime(), Calendar.MINUTE,
-                                                         minutesBeforeClosedBooking);
+                minutesBeforeClosedBooking);
         Date now = new Date();
         if (now.after(lastBookingMinute))
             throw new IllegalShowtimeStatusException("Last booking minute is already passed.");
 
         showtime.setCancelled(true);
-        for (Booking booking: showtime.getBookings())
+        for (Booking booking : showtime.getBookings())
             bookingController.cancelBooking(booking.getId());
     }
 
@@ -103,15 +104,16 @@ public class ShowtimeController extends EntityController<Showtime> {
     }
 
     public double getTicketTypePricing(Showtime showtime, TicketType ticketType) {
-        return Priceable.getPrice(ticketType,showtime.getCinema().getType(),showtime.getMovie().getType());
+        return Priceable.getPrice(ticketType, showtime.getCinema().getType(), showtime.getMovie().getType());
     }
 
     /**
      * Checks whether this ticket type is available for a booking.
+     *
      * @param booking the booking to be checked for.
      * @return true if the ticket type is avaible for this cinema
      */
-    public List<TicketType> getAvailableTicketTypes(UUID showtimeId){
+    public List<TicketType> getAvailableTicketTypes(UUID showtimeId) {
         Showtime showtime = findById(showtimeId);
         Cinema cinema = showtime.getCinema();
 

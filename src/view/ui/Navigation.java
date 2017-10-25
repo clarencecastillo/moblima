@@ -2,6 +2,7 @@ package view.ui;
 
 import exception.NavigationRejectedException;
 import exception.RootControllerPopException;
+
 import java.util.Stack;
 
 public class Navigation {
@@ -19,11 +20,11 @@ public class Navigation {
     }
 
     public void reload(String... args) {
-        reload(AccessLevel.PUBLIC,null, args);
+        reload(AccessLevel.PUBLIC, null, args);
     }
 
     public void reload(AccessLevel accessLevel, String... args) {
-        reload(accessLevel,null, args);
+        reload(accessLevel, null, args);
     }
 
     public void enter(Navigable navigable) {

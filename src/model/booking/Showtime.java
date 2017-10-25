@@ -1,15 +1,17 @@
 package model.booking;
 
 import config.BookingConfig;
-
-import java.util.*;
-
 import model.cinema.Cinema;
 import model.cinema.Cineplex;
 import model.commons.Entity;
 import model.commons.Language;
 import model.movie.Movie;
 import util.Utilities;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 
 public class Showtime extends Entity {
 
@@ -46,34 +48,72 @@ public class Showtime extends Entity {
         return movie;
     }
 
-    public Cineplex getCineplex() {return cineplex; }
+    public void setMovie(Movie movie) {
+        this.movie = movie;
+    }
+
+    public Cineplex getCineplex() {
+        return cineplex;
+    }
+
+    public void setCineplex(Cineplex cineplex) {
+        this.cineplex = cineplex;
+    }
 
     public Cinema getCinema() {
         return cinema;
+    }
+
+    public void setCinema(Cinema cinema) {
+        this.cinema = cinema;
     }
 
     public ShowtimeSeating getSeating() {
         return seating;
     }
 
+    public void setSeating(ShowtimeSeating seating) {
+        this.seating = seating;
+    }
+
     public Language getLanguage() {
         return language;
+    }
+
+    public void setLanguage(Language language) {
+        this.language = language;
     }
 
     public Date getStartTime() {
         return startTime;
     }
 
+    public void setStartTime(Date startTime) {
+        this.startTime = startTime;
+    }
+
     public boolean isNoFreePasses() {
         return noFreePasses;
+    }
+
+    public void setNoFreePasses(boolean noFreePasses) {
+        this.noFreePasses = noFreePasses;
     }
 
     public boolean isPreview() {
         return isPreview;
     }
 
+    public void setPreview(boolean preview) {
+        isPreview = preview;
+    }
+
     public ArrayList<Language> getSubtitles() {
         return subtitles;
+    }
+
+    public void setSubtitles(ArrayList<Language> subtitles) {
+        this.subtitles = subtitles;
     }
 
     public ArrayList<Booking> getBookings() {
@@ -87,11 +127,11 @@ public class Showtime extends Entity {
 
         int minDaysBeforeOpenBooking = BookingConfig.getDaysBeforeOpenBooking();
         Date openBookingDate = Utilities.getDateBefore(startTime,
-                                                       Calendar.DAY_OF_YEAR,
-                                                       minDaysBeforeOpenBooking);
+                Calendar.DAY_OF_YEAR,
+                minDaysBeforeOpenBooking);
         int minutesBeforeClosedBooking = BookingConfig.getMinutesBeforeClosedBooking();
         Date lastBookingMinute = Utilities.getDateBefore(startTime, Calendar.MINUTE,
-                                                         minutesBeforeClosedBooking);
+                minutesBeforeClosedBooking);
         Date now = new Date();
         if (now.before(Utilities.getStartOfDate(openBookingDate)) || now.after(lastBookingMinute))
             showtimeStatus = ShowtimeStatus.CLOSED_BOOKING;
@@ -103,38 +143,8 @@ public class Showtime extends Entity {
         return isCancelled;
     }
 
-    public void setMovie(Movie movie) {
-        this.movie = movie;
-    }
-
-    public void setCineplex(Cineplex cineplex) {this.cineplex = cineplex; }
-
-    public void setCinema(Cinema cinema) {
-        this.cinema = cinema;
-    }
-
-    public void setSeating(ShowtimeSeating seating) {
-        this.seating = seating;
-    }
-
-    public void setLanguage(Language language) {
-        this.language = language;
-    }
-
-    public void setStartTime(Date startTime) {
-        this.startTime = startTime;
-    }
-
-    public void setNoFreePasses(boolean noFreePasses) {
-        this.noFreePasses = noFreePasses;
-    }
-
-    public void setPreview(boolean preview) {
-        isPreview = preview;
-    }
-
-    public void setSubtitles(ArrayList<Language> subtitles) {
-        this.subtitles = subtitles;
+    public void setCancelled(boolean cancelled) {
+        isCancelled = cancelled;
     }
 
     public void addBooking(Booking booking) {
@@ -143,9 +153,5 @@ public class Showtime extends Entity {
 
     public void removeBooking(Booking booking) {
         bookings.remove(booking.getId());
-    }
-
-    public void setCancelled(boolean cancelled) {
-        isCancelled = cancelled;
     }
 }
