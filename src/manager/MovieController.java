@@ -109,22 +109,15 @@ public class MovieController extends EntityController<Movie> {
         return movies.toArray(new Movie[movies.size()]);
     }
 
-//    public List<Movie> findByCineplex(Cineplex cineplex) {
-//        return entities.values().stream().filter(movie ->
-//                movie.getShowtimes().anyMatch(showtime ->
-//                        showtime.getCineplex().equals(cineplex))).collect(Collectors.toList());
-//    }
-
-//    public List<Movie> findByCineplex(Cineplex cineplex) {
-//        return cineplex.getMovie();
-//    }
-
+    /**
+     * Finds all the movies shown in a given cineplex.
+     * @param cineplex The cineplex to be....
+     * @return
+     */
     public List<Movie> findByCineplex(Cineplex cineplex) {
-        Set<Movie> movies = new HashSet<Movie>();
-        for (Showtime showtime:cineplex.getShowtimes())
-            movies.add(showtime.getMovie());
-        List movieList = new ArrayList(movies);
-        return movieList;
+        return entities.values().stream().filter(movie ->
+                movie.getShowtimes().stream().anyMatch(showtime ->
+                        showtime.getCineplex().equals(cineplex))).collect(Collectors.toList());
     }
 
     /**
@@ -146,6 +139,7 @@ public class MovieController extends EntityController<Movie> {
 
     /**
      * Gets a given movie's overall rating which will only be shown when there is more than one rating.
+     * NA will be displayed if there is no more than one movie review.
      * @return this movie's overall rating.
      * @param movieId the given ID of a movie.
      * @return this movie's total ticket sale.

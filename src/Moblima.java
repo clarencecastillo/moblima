@@ -79,7 +79,7 @@ public class Moblima {
             Cinema cinema1 = cinemaController.createCinema(cineplex.getId(), "1",
                     CinemaType.REGULAR, layout1);
             Calendar calendar = Calendar.getInstance();
-            calendar.set(2017, 9, 27, 23, 8);
+            calendar.set(2017, 9, 25, 23, 8);
             Date startTime1 = calendar.getTime();
             Language[] subtitles = new Language[] { Language.ENGLISH };
             Showtime showtime1 = showtimeManager.createShowtime(movie1.getId(), cineplex.getId(), cinema1.getId(),

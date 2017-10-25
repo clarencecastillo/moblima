@@ -1,28 +1,61 @@
 package config;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Hashtable;
+import java.util.List;
+
 import model.booking.TicketType;
 import model.cinema.CinemaType;
 import model.cinema.SeatType;
 import model.movie.MovieType;
 import model.transaction.Priceable;
 
+/**
+ Represents the configuration of ticket setting. It consists os the available ticket types for each cinema type and
+ the pricing rate of each priceable, including cinema type, movie type and ticket type.
+ @author Castillo Clarence Fitzgerald Gumtang
+ @version 1.0
+ @since 2017-10-20
+ */
 public class TicketConfig implements Configurable {
 
+    /**
+     * A reference to this singleton instance.
+     */
     private static TicketConfig instance = new TicketConfig();
-    private static Hashtable<CinemaType, TicketType[]> cinemaTicketTypes;
+
+    /**
+     * A hash table of setting with the cinema type as the key and the array list of available ticket types as the value.
+     */
+    private static Hashtable<CinemaType, ArrayList<TicketType>> cinemaTicketTypes;
+
+    /**
+     * A hash table of setting with the priceable as the key and its pricing rate as the value.
+     */
     private static Hashtable<Priceable, Double> priceableRates;
 
+    /**
+     * Initializes the ticket configuration by resetting.
+     */
     private TicketConfig() {
         reset();
     }
 
+    /**
+     * Gets this TicketConfig's singleton instance.
+     * @return this BookingConfig's singleton instance.
+     */
     public static TicketConfig getInstance() {
         return instance;
     }
 
-    public static TicketType[] getAvailableTicketTypes(CinemaType cinemaType) {
+    /**
+     * Gets the available ticket types
+     * @param cinemaType
+     * @return
+     */
+    public static List<TicketType> getAvailableTicketTypes(CinemaType cinemaType) {
         return cinemaTicketTypes.get(cinemaType);
     }
 
@@ -38,8 +71,8 @@ public class TicketConfig implements Configurable {
         priceableRates.put(priceable, price);
     }
 
-    public void setAvailableTicketTypes(CinemaType cinemaType, TicketType[] ticketTypes) {
-        cinemaTicketTypes.put(cinemaType, ticketTypes);
+    public void setAvailableTicketTypes(CinemaType cinemaType, List<TicketType> ticketTypes) {
+        cinemaTicketTypes.put(cinemaType, new ArrayList<>(ticketTypes));
     }
 
     @Override
@@ -50,19 +83,24 @@ public class TicketConfig implements Configurable {
     @Override
     public void reset() {
 
-        cinemaTicketTypes = new Hashtable<CinemaType, TicketType[]>();
-        priceableRates = new Hashtable<Priceable, Double>();
+        cinemaTicketTypes = new Hashtable<>();
+        priceableRates = new Hashtable<>();
 
         // DEFAULT AVAILABLE TICKET TYPES
-        TicketType[] regularTicketTypes = {
-            TicketType.PEAK, TicketType.SENIOR_CITIZEN,
-            TicketType.STANDARD, TicketType.STUDENT};
-        TicketType[] platinumTicketTypes = {TicketType.STANDARD};
-        TicketType[] eliteTicketTypes = {TicketType.STANDARD};
-
-        cinemaTicketTypes.put(CinemaType.REGULAR, regularTicketTypes);
-        cinemaTicketTypes.put(CinemaType.PLATINUM, platinumTicketTypes);
-        cinemaTicketTypes.put(CinemaType.EXECUTIVE, eliteTicketTypes);
+        cinemaTicketTypes.put(CinemaType.REGULAR,
+                new ArrayList<>(Arrays.asList(
+                    TicketType.PEAK,
+                    TicketType.SENIOR_CITIZEN,
+                    TicketType.STANDARD,
+                    TicketType.STUDENT)));
+        cinemaTicketTypes.put(CinemaType.PLATINUM,
+                new ArrayList<>(Arrays.asList(
+                    TicketType.STANDARD,
+                    TicketType.PEAK)));
+        cinemaTicketTypes.put(CinemaType.EXECUTIVE,
+                new ArrayList<>(Arrays.asList(
+                    TicketType.STANDARD,
+                    TicketType.PEAK)));
 
         // DEFAULT MOVIE TYPE SURCHARGE RATES
         priceableRates.put(MovieType.TWO_DIMENSION, 0.0);

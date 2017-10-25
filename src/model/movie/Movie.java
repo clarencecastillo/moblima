@@ -169,38 +169,11 @@ public class Movie extends Entity implements Searchable {
      */
     public int getRuntimeMinutes(){ return runtimeMinutes; }
 
-//    /**
-//     * Gets this movie's overall rating which will only be shown when there is more than one rating.
-//     * @return this movie's overall rating.
-//     */
-//    public double getOverallReviewRating() {
-//        if (reviews.size() <= 1)
-//            return -1;
-//
-//        int sum = 0;
-//        for(MovieReview review : reviews)
-//            sum += review.getRating();
-//        return sum / reviews.size();
-//    }
-
-//    /**
-//     * Gets this movie's total ticket sales.
-//     * @return this movie's total ticket sales.
-//     */
-//    public int getTicketSales() {
-//        int sum = 0;
-//        for(Showtime showtime: showtimes)
-//            for(Booking booking: showtime.getBookings())
-//                for(Ticket ticket:booking.getTickets())
-//                    sum++;
-//        return sum;
-//    }
-
     /**
      * Gets this movie's search tag which can be its title, director or actors.
      * @return this movie's search tag.
      */
-    public String[] getSearchTags() {
+    public List<String> getSearchTags() {
 
         ArrayList<String> tags = new ArrayList<>();
 
@@ -219,7 +192,7 @@ public class Movie extends Entity implements Searchable {
         tags.add(director.getLastName());
         tags.add(director.getLastName());
 
-        return tags.toArray(new String[tags.size()]);
+        return tags;
     }
 
     /**

@@ -51,13 +51,13 @@ public class TicketTypeConfigListMenu extends ListView {
             CinemaType cinemaType = CinemaType.valueOf(ticketTypeConfig[0]);
             TicketType ticketType = TicketType.valueOf(ticketTypeConfig[1]);
 
-            ArrayList<TicketType> ticketTypes = new ArrayList<>(Arrays.asList(cinemaType.getTicketTypes()));
+            ArrayList<TicketType> ticketTypes = new ArrayList<>(cinemaType.getTicketTypes());
             if (cinemaType.isAvailable(ticketType))
                 ticketTypes.remove(ticketType);
             else
                 ticketTypes.add(ticketType);
 
-            ticketConfig.setAvailableTicketTypes(cinemaType, ticketTypes.toArray(new TicketType[ticketTypes.size()]));
+            ticketConfig.setAvailableTicketTypes(cinemaType, ticketTypes);
             View.displaySuccess(String.format("Successfully toggled!"));
             Form.pressAnyKeyToContinue();
             navigation.reload(AccessLevel.ADMINISTRATOR);

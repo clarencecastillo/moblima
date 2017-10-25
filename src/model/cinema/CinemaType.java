@@ -4,6 +4,8 @@ import config.TicketConfig;
 import model.booking.TicketType;
 import model.transaction.Priceable;
 
+import java.util.List;
+
 /**
  Represents a standard set of types of the cinema whose pricing rate is added to the price of the ticket.
  @author Castillo Clarence Fitzgerald Gumtang
@@ -53,7 +55,7 @@ public enum CinemaType implements Priceable {
      * Each cinema type has limited ticket types set by the staff.
      * @return the list of available ticket type of this cinema type.
      */
-    public TicketType[] getTicketTypes() {
+    public List<TicketType> getTicketTypes() {
         return TicketConfig.getAvailableTicketTypes(this);
     }
 
