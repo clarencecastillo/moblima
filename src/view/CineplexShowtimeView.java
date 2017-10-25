@@ -15,7 +15,7 @@ public class CineplexShowtimeView extends View {
     MovieController movieController = MovieController.getInstance();
 
     public CineplexShowtimeView(Cineplex cineplex, MovieStatus movieStatusFilter, Date dateFilter) {
-        List<Movie> movies = movieController.findByCineplex(cineplex);
+        List<Movie> movies = movieController.findByCineplex(cineplex.getId());
 
         if (movieStatusFilter != null)
             movies = movies.stream().filter(movie ->

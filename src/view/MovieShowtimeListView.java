@@ -48,7 +48,7 @@ public class MovieShowtimeListView extends ListView {
         }
 
         dateFilter = args.length == 2 && args[1] != null ? Utilities.parseDate(args[1]) : new Date();
-        movies = movieController.findByCineplex(cineplex).stream().filter(movie ->
+        movies = movieController.findByCineplex(cineplex.getId()).stream().filter(movie ->
                 movie.getStatus() == MovieStatus.NOW_SHOWING).collect(Collectors.toList());
 
         setTitle("Movie Showtimes");

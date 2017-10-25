@@ -17,34 +17,74 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+/**
+ Represents the controller of movies.
+ @author Castillo Clarence Fitzgerald Gumtang
+ @version 1.0
+ @since 2017-10-20
+ */
 public class MovieController extends EntityController<Movie> {
 
+    /**
+     * The threshold of the similarity that indicates how similar the result is to the keyword.
+     */
     public static final int SIMILARITY_THRESHOLD = 5;
 
+    /**
+     * A reference to this singleton instance.
+     */
     private static MovieController instance;
 
-    private MovieController() {
-        super();
-    }
+    /**
+     * Creates the movie controller.
+     */
+    private MovieController() { super(); }
 
-    public static void init() {
-        instance = new MovieController();
-    }
+    /**
+     * Initialize the movie controller.
+     */
+    public static void init() { instance = new MovieController(); }
 
+    /**
+     * Gets this Movie Controller's singleton instance.
+     * @return this Movie Controller's singleton instance.
+     */
     public static MovieController getInstance() {
         if (instance == null)
             throw new UninitialisedSingletonException();
         return instance;
     }
 
-    public Movie createMovie(String title, String sypnosis, MoviePerson director,
+    /**
+     * Creates a movie with the given movie information and put it into entities.
+     * @param title The title of this movie.
+     * @param synopsis The synopsis of this movie.
+     * @param director The director of this movie.
+     * @param actors The actors of this movie.
+     * @param movieType The movieType of this movie.
+     * @param status The status of this movie.
+     * @param rating The rating of this movie.
+     * @param runtimeMinutes The runtime in minutes of this movie.
+     * @return The newly created movie.
+     */
+    public Movie createMovie(String title, String synopsis, MoviePerson director,
                              MoviePerson[] actors, MovieType movieType,
                              MovieStatus status, MovieRating rating, int runtimeMinutes) {
-        Movie movie = new Movie(title, sypnosis, director, movieType, actors, status, rating, runtimeMinutes);
+        Movie movie = new Movie(title, synopsis, director, movieType, actors, status, rating, runtimeMinutes);
         entities.put(movie.getId(), movie);
         return movie;
     }
 
+    /**
+     * Changes the status of the movie with the given movie ID.
+     * @param movieId The ID of the movie whose status is to be changed.
+     * @param status The new status of this movie.
+     * @throws IllegalMovieStatusTransitionException if the change of the movie status is illegal
+     * according to business rule. The movie can not end showing if it is still open for booking.
+     * The movie can not be set to preview if it is not coming soon now. The movie can not
+     * be changed to showing now is it ends showing now. The movie can not be changed to coming soon
+     * if it is in other status now.
+     */
     public void changeMovieStatus(UUID movieId, MovieStatus status) throws IllegalMovieStatusTransitionException {
 
         Movie movie = findById(movieId);
@@ -72,18 +112,35 @@ public class MovieController extends EntityController<Movie> {
         movie.setStatus(status);
     }
 
-    public void changeMovieDetails(UUID movieId, String title, String sypnosis,
+    /**
+     * Change the movie details of the movie with the given movie ID.
+     * @param movieId The ID of the movie to be changed.
+     * @param title The new title of this movie.
+     * @param synopsis The new synopsis of this movie.
+     * @param director The new director of this movie.
+     * @param actors The new actors of this movie.
+     * @param rating The new rating of this movie.
+     * @param runtimeMinutes The new runtimeMinutes in minutes of this movie.
+     */
+    public void changeMovieDetails(UUID movieId, String title, String synopsis,
                                    MoviePerson director, MoviePerson[] actors,
-                                   MovieRating rating, int runtime) {
+                                   MovieRating rating, int runtimeMinutes) {
         Movie movie = findById(movieId);
         movie.setTitle(title);
-        movie.setSynopsis(sypnosis);
+        movie.setSynopsis(synopsis);
         movie.setDirector(director);
         movie.setActors(actors);
         movie.setRating(rating);
-        movie.setRuntime(runtime);
+        movie.setRuntime(runtimeMinutes);
     }
 
+    /**
+     * Change the movie type of the movie with the given ID to the given movie type.
+     * @param movieId The ID of the movie to be changed.
+     * @param type The new movie type of this movie.
+     * @throws IllegalMovieStatusException if the movie to be changes is not coming soon now, which means
+     * it is showing or has ended showing already.
+     */
     public void changeMovieType(UUID movieId, MovieType type) throws IllegalMovieStatusException {
         Movie movie = findById(movieId);
         if (movie.getStatus() != MovieStatus.COMING_SOON)
@@ -91,16 +148,27 @@ public class MovieController extends EntityController<Movie> {
         movie.setType(type);
     }
 
-    public Movie[] findByStatus(MovieStatus... status) {
+    /**
+     * Finds movies by the given list of movie status.
+     * @param status The list of movie status of the movies to be searched for.
+     * @return a list of movies in the status inside this list of movie status.
+     */
+    public List<Movie> findByStatus(MovieStatus... status) {
         ArrayList<Movie> movies = new ArrayList<>();
         List<MovieStatus> statuses = Arrays.asList(status);
         for (Movie movie : entities.values())
             if (statuses.contains(movie.getStatus()))
                 movies.add(movie);
-        return movies.toArray(new Movie[movies.size()]);
+        return movies;
     }
 
-    public Movie[] findByKeyword(String keyword) {
+    /**
+     * Finds movies by the given keyword.
+     * @param keyword The keyword to be searched for.
+     * @return a list of movies that has the information of which similarity to the keyword
+     * is within the similarity threshold.
+     */
+    public List<Movie> findByKeyword(String keyword) {
         ArrayList<Movie> movies = new ArrayList<>();
         for (Movie movie : entities.values()) {
             for (String tag : movie.getSearchTags())
@@ -109,25 +177,28 @@ public class MovieController extends EntityController<Movie> {
                     break;
                 }
         }
-        return movies.toArray(new Movie[movies.size()]);
+        return movies;
     }
 
     /**
      * Finds all the movies shown in a given cineplex.
      *
-     * @param cineplex The cineplex to be....
-     * @return
+     * @param cineplexId The ID of the cineplex to be searched for.
+     * @return all the movies shown in this cineplex.
      */
-    public List<Movie> findByCineplex(Cineplex cineplex) {
+    public List<Movie> findByCineplex(UUID cineplexId) {
+        CineplexController cineplexController = CineplexController.getInstance();
+        Cineplex cineplex = cineplexController.findById(cineplexId);
         return entities.values().stream().filter(movie ->
                 movie.getShowtimes().stream().anyMatch(showtime ->
                         showtime.getCineplex().equals(cineplex))).collect(Collectors.toList());
     }
 
     /**
-     * Gets a given movie's overall rating which will only be shown when there is more than one rating.
+     * Gets the overall rating of the movie with the given movie ID. This overall rating will only be shown
+     * when there is more than one rating.
      *
-     * @param movieId the given ID of a movie.
+     * @param movieId The ID of this movie.
      * @return this movie's overall rating.
      */
     public double getOverallReviewRating(UUID movieId) {
@@ -142,8 +213,7 @@ public class MovieController extends EntityController<Movie> {
     }
 
     /**
-     * Gets a given movie's overall rating which will only be shown when there is more than one rating.
-     * NA will be displayed if there is no more than one movie review.
+     * Gets the total ticket sale of a movie with the given movie ID.
      *
      * @param movieId the given ID of a movie.
      * @return this movie's total ticket sale.

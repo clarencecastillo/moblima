@@ -57,7 +57,7 @@ public class MovieListView extends ListView {
         movies = new ArrayList<>();
         switch (this.intent) {
             case SEARCH_MOVIES:
-                movies.addAll(Arrays.asList(movieController.findByKeyword(searchKeyword)));
+                movies.addAll(movieController.findByKeyword(searchKeyword));
                 if (accessLevel == AccessLevel.PUBLIC)
                     movies = movies.stream().filter(movie ->
                             movie.getStatus() != MovieStatus.END_OF_SHOWING).collect(Collectors.toList());
