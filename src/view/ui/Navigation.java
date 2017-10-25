@@ -27,6 +27,10 @@ public class Navigation {
         reload(accessLevel, null, args);
     }
 
+    public void refresh() {
+        enter(stack.peek());
+    }
+
     public void enter(Navigable navigable) {
         clearScreen();
         navigable.onEnter();

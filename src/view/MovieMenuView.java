@@ -81,7 +81,8 @@ public class MovieMenuView extends MenuView {
         else
             switch (MovieMenuOption.valueOf(userChoice)) {
                 case VIEW_SHOWTIMES:
-                    navigation.goTo(new CineplexShowtimeListView(navigation), accessLevel, movie.getId().toString());
+                    navigation.goTo(new ShowtimeListView(navigation), accessLevel,
+                            new String[] {null, movie.getId().toString()});
                     break;
                 case SEE_REVIEWS:
                     break;
