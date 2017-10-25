@@ -7,25 +7,53 @@ import exception.UninitialisedSingletonException;
 import model.cinema.Staff;
 import model.commons.User;
 
+/**
+ Represents the controller of users.
+ @author Castillo Clarence Fitzgerald Gumtang
+ @version 1.0
+ @since 2017-10-20
+ */
 public class UserController extends EntityController<User> {
 
+    /**
+     * A reference to this singleton instance.
+     */
     private static UserController instance;
 
+    /**
+     * Creates the cineplex controller.
+     */
     private UserController() {
         super();
     }
 
+    /**
+     * Initialize the cineplex controller.
+     */
     public static void init() {
         instance = new UserController();
     }
 
+    /**
+     * Gets this User Controller's singleton instance.
+     * @return this User Controller's singleton instance.
+     */
     public static UserController getInstance() {
         if (instance == null)
             throw new UninitialisedSingletonException();
         return instance;
     }
 
-    // Create user after capturing user information when they make bookings
+    /**
+     * Creates a user after capturing user information when they make bookings.
+     * @param firstName The first name of this user.
+     * @param lastName The last name of this user.
+     * @param mobile The mobile number of this user.
+     * @param email The email address of this user.
+     * @return
+     * @throws InvalidRegisterEmailException
+     * @throws InvalidRegisterMobileException
+     */
     public User registerUser(String firstName, String lastName, String mobile, String email)
             throws InvalidRegisterEmailException, InvalidRegisterMobileException {
 

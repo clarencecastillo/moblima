@@ -36,7 +36,7 @@ public enum CinemaType implements Priceable {
 
     /**
      * Creates the cinema type with the given type.
-     * @param string
+     * @param string The name of this cinema type.
      */
     CinemaType(String string) {
         this.string = string;

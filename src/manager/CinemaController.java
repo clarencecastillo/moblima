@@ -10,24 +10,51 @@ import model.cinema.CinemaLayout;
 import model.cinema.CinemaType;
 import model.cinema.Cineplex;
 
+/**
+ Represents the controller of cinemas.
+ @author Castillo Clarence Fitzgerald Gumtang
+ @version 1.0
+ @since 2017-10-20
+ */
 public class CinemaController extends EntityController<Cinema> {
 
+    /**
+     * A reference to this singleton instance.
+     */
     private static CinemaController instance;
 
+    /**
+     * Creates the cineplex controller.
+     */
     private CinemaController() {
         super();
     }
 
+    /**
+     * Initialize the cineplex controller.
+     */
     public static void init() {
         instance = new CinemaController();
     }
 
+    /**
+     * Gets this Cinema Controller's singleton instance.
+     * @return this Cinema Controller's singleton instance.
+     */
     public static CinemaController getInstance() {
         if (instance == null)
             throw new UninitialisedSingletonException();
         return instance;
     }
 
+    /**
+     * Creates a cinema with the ID of its cineplex, code, cinema type and layout.
+     * @param cineplexId The ID of the cineplex that the cinem belongs to.
+     * @param code The code of this cinema.
+     * @param type The type of this cinema.
+     * @param layout The layout of this cinema.
+     * @return a newly created cinema with the given ID of cineplex, code, cinema type and layout.
+     */
     public Cinema createCinema(UUID cineplexId, String code,
                                CinemaType type, CinemaLayout layout) {
 
@@ -42,7 +69,8 @@ public class CinemaController extends EntityController<Cinema> {
 
     /**
      * Checks whether a ticket type is available in this cinema.
-     * @param type a ticket type to be checked
+     * @param cinemaId The ID of the cinema to be checked.
+     * @param type The ticket type to be checked
      * @return true if this ticket type is available in this cinema.
      */
     public boolean isAvailable(UUID cinemaId, TicketType type) {

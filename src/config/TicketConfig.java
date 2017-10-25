@@ -51,35 +51,63 @@ public class TicketConfig implements Configurable {
     }
 
     /**
-     * Gets the available ticket types
-     * @param cinemaType
-     * @return
+     * Gets the available ticket types of a given cinema type.
+     * @param cinemaType The cinema type whose available ticket type is to be checked.
+     * @return the available ticket types of a given cinema type.
      */
     public static List<TicketType> getAvailableTicketTypes(CinemaType cinemaType) {
         return cinemaTicketTypes.get(cinemaType);
     }
 
+    /**
+     * Checked whether a ticket type is available for a cinema type.
+     * @param cinemaType the cinema type to be checked.
+     * @param ticketType the ticket type to be checked.
+     * @return true if this ticket type is available for this cinema type.
+     */
     public static boolean isAvailable(CinemaType cinemaType, TicketType ticketType) {
         return Arrays.asList(getAvailableTicketTypes(cinemaType)).contains(ticketType);
     }
 
+    /**
+     * Gets the pricing rate of a given priceable.
+     * @param priceable The priceable whose pricing rate is to be returned.
+     * @return pricing rate of this priceable.
+     */
     public static double getPriceableRate(Priceable priceable) {
         return priceableRates.get(priceable);
     }
 
+    /**
+     * Changes the pricing rate of a given priceable.
+     * @param priceable The priceable whose pricing rate is to be changed.
+     * @param price The new pricing rate of this priceable.
+     */
     public void setPriceableRate(Priceable priceable, double price) {
         priceableRates.put(priceable, price);
     }
 
+    /**
+     * Changes the available ticket types of a given cinema type.
+     * @param cinemaType The type of the cinema to be changes.
+     * @param ticketTypes The new available ticket types of this cinema.
+     */
     public void setAvailableTicketTypes(CinemaType cinemaType, List<TicketType> ticketTypes) {
         cinemaTicketTypes.put(cinemaType, new ArrayList<>(ticketTypes));
     }
 
+    /**
+     * Gets the type of this configuration.
+     * @return the type of this configuration which is ticket.
+     */
     @Override
     public ConfigType getConfigType() {
         return ConfigType.TICKET;
     }
 
+    /**
+     * Resets the ticket settings to the default.
+     */
     @Override
     public void reset() {
 
