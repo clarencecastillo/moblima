@@ -1,6 +1,6 @@
 package exception;
 
-public class IllegalBookingStatusException extends Exception {
+public class IllegalBookingStatusException extends RuntimeException {
     public IllegalBookingStatusException() {
         super("Illgal Booking Status.");
     }

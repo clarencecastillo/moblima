@@ -11,7 +11,7 @@ public class BookingView extends View {
     public BookingView(Booking booking) {
         this.booking = booking;
 
-        setTitle(new MovieView(booking.getShowtime().getMovie()).getTitle());
+        setTitle(booking.getShowtime().getMovie().toString());
         setContent("Cinema: " + booking.getShowtime().getCinema().getCode(),
                 "Start Time: " + booking.getShowtime().getStartTime(),
                 "Seats: " + String.join(",",

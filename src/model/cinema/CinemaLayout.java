@@ -1,7 +1,10 @@
 package model.cinema;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Hashtable;
+import java.util.List;
 
 /**
  * Represents the cinema layout of a cinema.
@@ -40,7 +43,7 @@ public class CinemaLayout implements Serializable {
      * @param maxRow    this layout's given maximum number of row.
      */
     public CinemaLayout(Seat[] seats, int maxColumn, char maxRow) {
-        this.layout = new Hashtable<Character, Cell[]>();
+        this.layout = new Hashtable<>();
         this.maxColumn = maxColumn;
         this.maxRow = maxRow;
         this.seats = seats;
@@ -56,6 +59,34 @@ public class CinemaLayout implements Serializable {
         // Change a cell to a seat where specified
         for (Seat seat : seats)
             this.layout.get(seat.row)[seat.column - 1] = seat;
+    }
+
+    public CinemaLayout(List<Integer> colAisles, List<Character> rowAisles, int maxColumn, char maxRow) {
+        this.layout = new Hashtable<>();
+        this.maxColumn = maxColumn;
+        this.maxRow = maxRow;
+
+        if (colAisles == null)
+            colAisles = new ArrayList<>();
+
+        if (rowAisles == null)
+            rowAisles = new ArrayList<>();
+
+        ArrayList<Seat> seats = new ArrayList<>();
+        for (char row = 'A'; row <= maxRow; row++) {
+            Cell[] rowCells = new Cell[maxColumn];
+            for (int column = 1; column <= maxColumn; column++) {
+                if (colAisles.contains(column) || rowAisles.contains(row))
+                    rowCells[column - 1] = new Cell(row, column);
+                else {
+                    Seat seat = new Seat(row, column, SeatType.SINGLE);
+                    seats.add(seat);
+                    rowCells[column - 1] = seat;
+                }
+            }
+            this.layout.put(row, rowCells);
+        }
+        this.seats = seats.toArray(new Seat[seats.size()]);
     }
 
     /**

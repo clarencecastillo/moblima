@@ -125,7 +125,7 @@ public class BookingController extends EntityController<Booking> {
      * @throws IllegalBookingStatusException if the booking is not in progress.
      * @throws SeatNotFoundException if the seat is not found in this showtime.
      */
-    public void selectSeat(UUID bookingId, Seat[] seats) throws UnavailableBookingSeatException,
+    public void selectSeats(UUID bookingId, Seat[] seats) throws UnavailableBookingSeatException,
             InsufficientSeatsException, IllegalBookingStatusException, SeatNotFoundException {
 
         Booking booking = findById(bookingId);

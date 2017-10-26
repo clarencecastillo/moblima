@@ -22,7 +22,11 @@ public abstract class View {
     protected ArrayList<String> content = new ArrayList<>();
 
     public static void displayColored(String message, ConsoleColor color) {
-        System.out.println(color.code + message + ConsoleColor.RESET.code);
+        System.out.print(color.code);
+        for (String stringLine : wrap(message, VIEW_WIDTH))
+            System.out.println(stringLine);
+        System.out.print(ConsoleColor.RESET.code);
+
     }
 
     public static void displayInformation(String message) {

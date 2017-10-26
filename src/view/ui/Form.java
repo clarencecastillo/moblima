@@ -16,6 +16,9 @@ public interface Form {
     String INVALID_ERROR = "Invalid user input! Please try again.";
     String UNRECOGNIZED_ERROR = "Unrecognized user input! Please try again.";
 
+    String CONFIRM = "CONFIRM";
+    String CANCEL = "CANCEL";
+
     static int getIntWithMax(String prompt, int max) {
         while (true) {
             int input = getInt(prompt + " [ <=" + max + " ]");
@@ -139,6 +142,11 @@ public interface Form {
         return getOption(prompt, Arrays.stream(enumerableMenuOptions).map(menuOption ->
                 new GenericMenuOption(menuOption.getDescription(),
                         menuOption.name())).toArray(GenericMenuOption[]::new));
+    }
+
+    static String getConfirmOption(String confirmText, String cancelText) {
+        return getOption("Confirmation", new GenericMenuOption(confirmText, CONFIRM),
+                new GenericMenuOption(cancelText, CANCEL));
     }
 
     static char getChar(String prompt) {

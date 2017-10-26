@@ -78,4 +78,22 @@ public class Seat extends Cell {
     public int hashCode() {
         return toString().hashCode();
     }
+
+    @Override
+    public String toStringIcon() {
+        String stringIcon = super.toStringIcon();
+        switch (type) {
+
+            case SINGLE:
+                stringIcon = "[ ]";
+                break;
+            case COUPLE:
+                stringIcon = "[    ]";
+                break;
+            case HANDICAP:
+                stringIcon = "{ }";
+                break;
+        }
+        return stringIcon;
+    }
 }

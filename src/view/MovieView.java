@@ -15,8 +15,7 @@ public class MovieView extends View {
     public MovieView(Movie movie) {
         this.movie = movie;
 
-        setTitle(String.format("%s [%s] %s", movie.getTitle(),
-                movie.getType(), movie.getRating()));
+        setTitle(movie.toString());
         setContent("Status: " + movie.getStatus().toString(),
                 "Director: " + movie.getDirector(),
                 "Actors: " + String.join(",",

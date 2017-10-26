@@ -1,10 +1,14 @@
 package view;
 
 import config.BookingConfig;
+import exception.IllegalBookingStatusException;
+import exception.IllegalShowtimeStatusException;
 import exception.RejectedNavigationException;
+import manager.BookingController;
 import manager.CineplexController;
 import manager.MovieController;
 import manager.ShowtimeController;
+import model.booking.Booking;
 import model.booking.Showtime;
 import model.booking.ShowtimeStatus;
 import model.cinema.Cineplex;
@@ -31,6 +35,7 @@ public class ShowtimeListView extends ListView {
     private CineplexController cineplexController;
     private MovieController movieController;
     private ShowtimeController showtimeController;
+    private BookingController bookingController;
 
     private AccessLevel accessLevel;
 
@@ -39,6 +44,7 @@ public class ShowtimeListView extends ListView {
         cineplexController = CineplexController.getInstance();
         movieController = MovieController.getInstance();
         showtimeController = ShowtimeController.getInstance();
+        bookingController = BookingController.getInstance();
     }
 
     @Override
@@ -102,7 +108,7 @@ public class ShowtimeListView extends ListView {
     @Override
     public void onEnter() {
 
-        setContent("Movie: " + (movieFilter == null ? "All Movies" : new MovieView(movieFilter).getTitle()),
+        setContent("Movie: " + (movieFilter == null ? "All Movies" : movieFilter.toString()),
                 "Cineplex: " + (cineplexFilter == null ? "All Cineplexes" : cineplexFilter.getName()),
                 "Date: " + Utilities.toFormat(dateFilter, DATE_DISPLAY_FORMAT));
 
@@ -165,8 +171,15 @@ public class ShowtimeListView extends ListView {
                             cineplexFilter == null ? null : cineplexFilter.getId().toString(),
                             userInput,
                             Utilities.toFormat(dateFilter));
-                } else
-                    System.out.println("Go to showtime View view");
+                } else {
+                    try {
+                        Booking booking = bookingController.createBooking(UUID.fromString(userInput));
+                        navigation.goTo(new TicketListView(navigation), accessLevel, booking.getId().toString());
+                    } catch (IllegalShowtimeStatusException ex) {
+                        View.displayError("Sorry, cannot book for this showtime at this time.");
+                        navigation.refresh();
+                    }
+                }
             }
 
     }
