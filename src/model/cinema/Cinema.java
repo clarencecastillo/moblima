@@ -29,9 +29,9 @@ public class Cinema extends Entity {
     /**
      * Creates a cinema with the given code, type and layout.
      *
-     * @param code
-     * @param type
-     * @param layout
+     * @param code The code of this cinema.
+     * @param type The type of thi cinema.
+     * @param layout The layout of this cinema.
      */
     public Cinema(String code, CinemaType type, CinemaLayout layout) {
         this.code = code;

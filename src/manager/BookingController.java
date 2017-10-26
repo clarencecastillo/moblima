@@ -151,8 +151,8 @@ public class BookingController extends EntityController<Booking> {
     /**
      * Gets the total price of the booking, consisting of the prices of all its tickets, the booking surcharge fee
      * and the GST.
-     * @param bookingId
-     * @return
+     * @param bookingId The ID of the booking whose total price is to be returned.
+     * @return the total price of this booking
      */
     public double getBookingPrice(UUID bookingId) {
         ShowtimeController showtimeController = ShowtimeController.getInstance();
@@ -164,14 +164,16 @@ public class BookingController extends EntityController<Booking> {
     }
 
     /**
-     * Cancels the booking with the given booking ID.
+     * Cancels the booking with the given booking ID in the process of making a booking.
+     * A booking cannot be cancelled once confirmed.
      * @param bookingId The ID of the booking to be cancelled.
+     * @exception IllegalBookingStatusException if the booking has been confirmed.
      */
     public void cancelBooking(UUID bookingId) throws IllegalBookingStatusException {
         Booking booking = findById(bookingId);
         BookingStatus previousStatus = booking.getStatus();
         if (previousStatus == BookingStatus.CONFIRMED)
-            throw new IllegalBookingStatusException("The booking can not be confirmed");
+            throw new IllegalBookingStatusException("The booking can not be cancelled");
         booking.setStatus(BookingStatus.CANCELLED);
     }
 
@@ -183,6 +185,7 @@ public class BookingController extends EntityController<Booking> {
      * @throws IllegalShowtimeStatusException if the movie is not open for booking.
      * @throws UnpaidPaymentException if the payment is not accepted.
      * @throws IllegalBookingStatusException if the booking is not in progress previously.
+     * @throws SeatNotFoundException if the seat is not found in this booing's showtime seating.
      */
     public void confirmBooking(UUID bookingId, UUID userId)
             throws IllegalShowtimeStatusException, UnpaidPaymentException, IllegalBookingStatusException,

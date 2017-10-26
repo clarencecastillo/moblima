@@ -8,14 +8,43 @@ import java.util.Date;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+/**
+ * Represents a base interface that must be implemented by all classes that are user interfaces.
+ * It has static methods that are useful for getting inputs.
+ *
+ * @author Castillo Clarence Fitzgerald Gumtang
+ * @version 1.0
+ * @since 2017-10-20
+ */
 public interface Form {
 
-    String PROMPT_DELIMETER = " > ";
+    /**
+     * The delimiter for prompt.
+     */
+    String PROMPT_DELIMITER = " > ";
+
+    /**
+     * The format of date.
+     */
     String DATE_FORMAT = "dd/MM/yyyy HH:mm";
 
+    /**
+     * The message to be displayed with the user input is invalid.
+     */
     String INVALID_ERROR = "Invalid user input! Please try again.";
+
+    /**
+     * message to be displayed with the user input is unrecognized.
+     */
     String UNRECOGNIZED_ERROR = "Unrecognized user input! Please try again.";
 
+    /**
+     * Gets integer input which has a maximum limit. A invalid error message will be displayed
+     * if the input integer exceeding the maximum limit.
+     * @param prompt The message to prompt the user to enter input.
+     * @param max The maximum limit that the integer cannot be.
+     * @return The integer input from the user which is not larger than the maximum limit.
+     */
     static int getIntWithMax(String prompt, int max) {
         while (true) {
             int input = getInt(prompt + " [ <=" + max + " ]");
@@ -27,6 +56,13 @@ public interface Form {
 
     }
 
+    /**
+     * Gets integer input which has a minimum limit. A invalid error message will be displayed
+     * if the input integer is below the minimum limit.
+     * @param prompt The message to prompt the user to enter input.
+     * @param min The minimum limit that the integer can be.
+     * @return The integer input from the user which is smaller than the minimum limit.
+     */
     static int getIntWithMin(String prompt, int min) {
         while (true) {
             int input = getInt(prompt + " [ >=" + min + " ]");
@@ -40,7 +76,7 @@ public interface Form {
 
     static int getInt(String prompt) {
         while (true) {
-            System.out.print(prompt + PROMPT_DELIMETER);
+            System.out.print(prompt + PROMPT_DELIMITER);
             Scanner sc = new Scanner(System.in);
             try {
                 return sc.nextInt();
@@ -64,7 +100,7 @@ public interface Form {
     static double getDouble(String prompt) {
 
         while (true) {
-            System.out.print(prompt + PROMPT_DELIMETER);
+            System.out.print(prompt + PROMPT_DELIMITER);
             Scanner sc = new Scanner(System.in);
             try {
                 return sc.nextDouble();
@@ -97,7 +133,7 @@ public interface Form {
 
     static String getCensoredString(String prompt) {
         Console console = System.console();
-        return new String(console.readPassword(prompt + PROMPT_DELIMETER));
+        return new String(console.readPassword(prompt + PROMPT_DELIMITER));
     }
 
     static String getString(String prompt) {
@@ -107,7 +143,7 @@ public interface Form {
     static String getString(String prompt, int minWords) {
 
         while (true) {
-            System.out.print(prompt + PROMPT_DELIMETER);
+            System.out.print(prompt + PROMPT_DELIMITER);
             Scanner sc = new Scanner(System.in);
             String input = sc.nextLine();
             if (minWords == 0)
@@ -143,7 +179,7 @@ public interface Form {
 
     static char getChar(String prompt) {
         while (true) {
-            System.out.print(prompt + PROMPT_DELIMETER);
+            System.out.print(prompt + PROMPT_DELIMITER);
             Scanner sc = new Scanner(System.in);
             String input = sc.next();
             if (input.length() == 1)
@@ -168,7 +204,7 @@ public interface Form {
     static Date getDate(String prompt, String format) {
         while (true) {
             SimpleDateFormat dateFormat = new SimpleDateFormat(format);
-            System.out.print(prompt + " [ " + format + " ]" + PROMPT_DELIMETER);
+            System.out.print(prompt + " [ " + format + " ]" + PROMPT_DELIMITER);
             Scanner sc = new Scanner(System.in);
             try {
                 return dateFormat.parse(sc.nextLine());

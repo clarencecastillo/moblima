@@ -1,11 +1,18 @@
 package view.ui;
 
+/**
+ * Represents a standard set of the text formats.
+ *
+ * @author Castillo Clarence Fitzgerald Gumtang
+ * @version 1.0
+ * @since 2017-10-20
+ */
 public enum ConsoleColor {
 
-    // Text Reset
+    // The colour of test reset.
     RESET("\033[0m"),
 
-    // Regular Colors
+    // Regular Colors.
     BLACK("\033[0;30m"),
     RED("\033[0;31m"),
     GREEN("\033[0;32m"),
@@ -15,7 +22,7 @@ public enum ConsoleColor {
     CYAN("\033[0;36m"),
     WHITE("\033[0;37m"),
 
-    // Bold
+    // Colours with bold.
     BLACK_BOLD("\033[1;30m"),
     RED_BOLD("\033[1;31m"),
     GREEN_BOLD("\033[1;32m"),
@@ -25,7 +32,7 @@ public enum ConsoleColor {
     CYAN_BOLD("\033[1;36m"),
     WHITE_BOLD("\033[1;37m"),
 
-    // Underline
+    //Colours with underline.
     BLACK_UNDERLINED("\033[4;30m"),
     RED_UNDERLINED("\033[4;31m"),
     GREEN_UNDERLINED("\033[4;32m"),
@@ -35,7 +42,7 @@ public enum ConsoleColor {
     CYAN_UNDERLINED("\033[4;36m"),
     WHITE_UNDERLINED("\033[4;37m"),
 
-    // Background
+    // Colours with background.
     BLACK_BACKGROUND("\033[40m"),
     RED_BACKGROUND("\033[41m"),
     GREEN_BACKGROUND("\033[42m"),
@@ -45,7 +52,7 @@ public enum ConsoleColor {
     CYAN_BACKGROUND("\033[46m"),
     WHITE_BACKGROUND("\033[47m"),
 
-    // High Intensity
+    // Colours with high intensity.
     BLACK_BRIGHT("\033[0;90m"),
     RED_BRIGHT("\033[0;91m"),
     GREEN_BRIGHT("\033[0;92m"),
@@ -55,7 +62,7 @@ public enum ConsoleColor {
     CYAN_BRIGHT("\033[0;96m"),
     WHITE_BRIGHT("\033[0;97m"),
 
-    // Bold High Intensity
+    // Colours with bold and high intensity.
     BLACK_BOLD_BRIGHT("\033[1;90m"),
     RED_BOLD_BRIGHT("\033[1;91m"),
     GREEN_BOLD_BRIGHT("\033[1;92m"),
@@ -65,7 +72,7 @@ public enum ConsoleColor {
     CYAN_BOLD_BRIGHT("\033[1;96m"),
     WHITE_BOLD_BRIGHT("\033[1;97m"),
 
-    // High Intensity backgrounds
+    // Colours with high intensity backgrounds.
     BLACK_BACKGROUND_BRIGHT("\033[0;100m"),
     RED_BACKGROUND_BRIGHT("\033[0;101m"),
     GREEN_BACKGROUND_BRIGHT("\033[0;102m"),
@@ -75,8 +82,15 @@ public enum ConsoleColor {
     CYAN_BACKGROUND_BRIGHT("\033[0;106m"),
     WHITE_BACKGROUND_BRIGHT("\033[0;107m");
 
+    /**
+     * The code of the text format.
+     */
     public final String code;
 
+    /**
+     * Creates a text format with the given code.
+     * @param code the code of this text format.
+     */
     ConsoleColor(String code) {
         this.code = code;
     }

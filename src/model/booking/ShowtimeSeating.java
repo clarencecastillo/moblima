@@ -63,7 +63,7 @@ public class ShowtimeSeating implements Serializable {
      *
      * @param seat          The seat of whose status of be changed.
      * @param seatingStatus The new status of seat to be changes in this showtime seating.
-     * @throws if the seat is not in this showtime seating.
+     * @throws SeatNotFoundException if the seat is not in this showtime seating.
      */
     public void setSeatingStatus(Seat seat, SeatingStatus seatingStatus) throws SeatNotFoundException {
         if (!hasSeat(seat))

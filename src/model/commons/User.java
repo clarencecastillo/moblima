@@ -129,7 +129,7 @@ public class User extends Person {
     /**
      * Add a new booking booked by the user to the array list of bookings.
      *
-     * @param booking
+     * @param booking The booking to be added to this user.
      */
     public void addBooking(Booking booking) {
         bookings.add(booking);
@@ -138,7 +138,7 @@ public class User extends Person {
     /**
      * Remove a booking booked by the user from the array list of bookings.
      *
-     * @param booking
+     * @param booking The booing to be removed from this user.
      */
     public void removeBooking(Booking booking) {
         bookings.remove(booking);

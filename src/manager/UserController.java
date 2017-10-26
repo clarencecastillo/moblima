@@ -52,7 +52,7 @@ public class UserController extends EntityController<User> {
      * @param email The email address of this user.
      * @return the newly created user.
      * @throws InvalidRegisterEmailException if the email is already registered by another user.
-     * @throws InvalidRegisterMobileException if he mobile phone is already registered by another user.
+     * @throws InvalidRegisterMobileException if the mobile phone is already registered by another user.
      */
     public User registerUser(String firstName, String lastName, String mobile, String email)
             throws InvalidRegisterEmailException, InvalidRegisterMobileException {
@@ -76,9 +76,9 @@ public class UserController extends EntityController<User> {
      * @param email The email address of this staff.
      * @param username The log in username of this staff.
      * @param password The log in password of this staff.
-     * @throws InvalidRegisterEmailException
-     * @throws InvalidRegisterMobileException
-     * @throws InvalidRegisterUsernameException
+     * @throws InvalidRegisterEmailException if the email is already registered by another user.
+     * @throws InvalidRegisterMobileException if the mobile phone is already registered by another user.
+     * @throws InvalidRegisterUsernameException if the username is already registered by another user.
      */
     public void registerStaff(String firstName, String lastName, String mobile, String email,
                               String username, String password) throws InvalidRegisterEmailException,

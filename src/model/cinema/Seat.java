@@ -49,7 +49,7 @@ public class Seat extends Cell {
      *
      * @param obj The object to compare to.
      * @param obj The object to compare to.
-     * @return
+     * @return true if the object is a seat, has the same row character, column number and seat type as this seat.
      */
     @Override
     public boolean equals(Object obj) {

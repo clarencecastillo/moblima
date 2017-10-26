@@ -1,6 +1,5 @@
 package manager;
 
-import exception.InvalidPayableException;
 import exception.UninitialisedSingletonException;
 import model.transaction.Payable;
 import model.transaction.Payment;
@@ -48,13 +47,11 @@ public class PaymentController extends EntityController<Payment> {
      * The transaction code is given by the payable. The transaction The assumption is that the payment is
      * always successful, so the status of the payment is set to be accepted. The payable will be set with
      * this payment and the payment will be put into entities.
-     * @param payable
-     * @return
-     * @throws InvalidPayableException
+     * @param payable The payable whose payment is to be made.
+     * @return the payment for this payable.
      */
-    public Payment makePayment(Payable payable) throws InvalidPayableException {
+    public Payment makePayment(Payable payable) {
 
-        // Assume Payment will always be successful.
         Payment payment = new Payment(payable.getPrice(), payable.getTransactionCode());
         payment.setStatus(PaymentStatus.ACCEPTED);
         payable.setPayment(payment);

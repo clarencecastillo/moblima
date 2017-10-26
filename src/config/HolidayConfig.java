@@ -44,7 +44,7 @@ public class HolidayConfig implements Configurable {
     /**
      * Gets the hash table of holidays with the date as the key and the holiday name as the value.
      *
-     * @return
+     * @return the hash table of holidays with the date as the key and the holiday name as the value.
      */
     public static Hashtable<Date, String> getHolidays() {
         return holidays;
