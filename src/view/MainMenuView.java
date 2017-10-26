@@ -53,7 +53,7 @@ public class MainMenuView extends MenuView {
         char min = 'A';
         char max = (char) ('A' + menuItems.size() - 1);
         while (true) {
-            System.out.print(PROMPT + " [ " + min + "-" + max + " ]" + PROMPT_DELIMETER);
+            System.out.print(PROMPT + " [ " + min + "-" + max + " ]" + PROMPT_DELIMITER);
             Scanner sc = new Scanner(System.in);
             String input = sc.next();
             if (input.length() == 1) {

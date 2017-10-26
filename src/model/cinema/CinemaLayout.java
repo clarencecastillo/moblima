@@ -137,7 +137,7 @@ public class CinemaLayout implements Serializable {
     /**
      * Gets this layout's array of seats.
      *
-     * @return
+     * @return a list of seats of this cinema layout.
      */
     public Seat[] getSeats() {
         return seats;

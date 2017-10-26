@@ -24,9 +24,10 @@ public class Ticket implements Priceable {
     private Booking booking;
 
     /**
-     * Creates a ticket with the given ticket type when the use selects the ticke type during booking process.
+     * Creates a ticket with the given ticket type when the use selects the ticket type during booking process.
      *
      * @param type the selected ticket type of this ticket.
+     * @param booking the booking that this ticket belongs to.
      */
     public Ticket(TicketType type, Booking booking) {
         this.seat = null;
@@ -92,7 +93,7 @@ public class Ticket implements Priceable {
      * Gets the price of this ticket which is calculated by the total pricing rates of the ticket type,
      * the booking's showtime's cinema type and movie type.
      *
-     * @return
+     * @return the price of this ticket.
      */
     @Override
     public double getPrice() {

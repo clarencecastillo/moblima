@@ -85,7 +85,7 @@ public abstract class Person extends Entity {
     /**
      * Gets this person's full name consisting first name and last name.
      *
-     * @return
+     * @return the full name of this person.
      */
     public String getFullName() {
         return this.firstName + " " + this.lastName;
