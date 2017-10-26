@@ -39,7 +39,7 @@ public class TicketTypeConfigListMenu extends ListView {
                 viewItems.add(new ViewItem(cinemaType.toString() + " - " + ticketType.toString(),
                         String.join(VALUE_DELIMITER, cinemaType.name(), ticketType.name()),
                         cinemaType.isAvailable(ticketType) ? "ALLOWED" : "NOT ALLOWED"));
-        setViewItems(viewItems.toArray(new ViewItem[viewItems.size()]));
+        setViewItems(viewItems);
 
         display();
         String userChoice = getChoice();

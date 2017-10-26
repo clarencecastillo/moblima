@@ -31,13 +31,13 @@ public class BookingConfigListView extends ListView {
 
         ArrayList<ViewItem> viewItems = new ArrayList<>();
         viewItems.add(new ViewItem("Maximum Seats Per Booking",
-                BookingConfigMenuOption.MAX_SEATS_PER_BOOKING.toString(),
+                BookingConfigListOption.MAX_SEATS_PER_BOOKING.toString(),
                 String.format("%d seats", BookingConfig.getMaxSeatsPerBooking())));
         viewItems.add(new ViewItem("Minimum Days Before Open Booking",
-                BookingConfigMenuOption.MIN_DAYS_BEFORE_OPEN_BOOKING.toString(),
+                BookingConfigListOption.MIN_DAYS_BEFORE_OPEN_BOOKING.toString(),
                 String.format("%d days", BookingConfig.getDaysBeforeOpenBooking())));
         viewItems.add(new ViewItem("Booking Fee",
-                BookingConfigMenuOption.BOOKING_FEE.toString(),
+                BookingConfigListOption.BOOKING_FEE.toString(),
                 String.format("$%.2f", BookingConfig.getBookingSurcharrge())));
 //        viewItems.add(new ViewItem("Booking Changes Grace Period",
 //                BookingConfigMenuOption.BOOKING_CHANGE_GRACE_PERIOD.toString(),
@@ -46,9 +46,9 @@ public class BookingConfigListView extends ListView {
 //                BookingConfigMenuOption.BOOKING_CHANGE_FEE.toString(),
 //                String.format("$%.2f", BookingConfig.getBookingChangesSurcharge())));
         viewItems.add(new ViewItem("Minutes Before Closed Booking",
-                BookingConfigMenuOption.MINS_BEFORE_CLOSED_BOOKING.toString(),
+                BookingConfigListOption.MINS_BEFORE_CLOSED_BOOKING.toString(),
                 String.format("%d minutes", BookingConfig.getMinutesBeforeClosedBooking())));
-        setViewItems(viewItems.toArray(new ViewItem[viewItems.size()]));
+        setViewItems(viewItems);
 
         display();
 
@@ -57,7 +57,7 @@ public class BookingConfigListView extends ListView {
             navigation.goBack();
         else {
             View.displayInformation("Please enter new value. Enter pricing values in SGD.");
-            switch (BookingConfigMenuOption.valueOf(userChoice)) {
+            switch (BookingConfigListOption.valueOf(userChoice)) {
                 case MAX_SEATS_PER_BOOKING:
                     int newMaxSeatsPerBooking = Form
                             .getIntWithMin("Enter new maximum seats per booking", 0);
@@ -93,7 +93,7 @@ public class BookingConfigListView extends ListView {
         }
     }
 
-    private enum BookingConfigMenuOption {
+    private enum BookingConfigListOption {
         MAX_SEATS_PER_BOOKING,
         MIN_DAYS_BEFORE_OPEN_BOOKING,
         BOOKING_FEE,

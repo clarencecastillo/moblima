@@ -1,6 +1,6 @@
 package view.ui;
 
-import exception.NavigationRejectedException;
+import exception.RejectedNavigationException;
 import exception.RootControllerPopException;
 
 import java.util.Stack;
@@ -27,6 +27,10 @@ public class Navigation {
         reload(accessLevel, null, args);
     }
 
+    public void refresh() {
+        enter(stack.peek());
+    }
+
     public void enter(Navigable navigable) {
         clearScreen();
         navigable.onEnter();
@@ -47,7 +51,7 @@ public class Navigation {
         try {
             navigable.onLoad(accessLevel, intent, args);
             enter(navigable);
-        } catch (NavigationRejectedException e) {
+        } catch (RejectedNavigationException e) {
             goBack();
         }
     }

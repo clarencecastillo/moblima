@@ -50,7 +50,7 @@ public class PricingConfigListMenu extends ListView {
                     String.join(VALUE_DELIMITER, "CinemaType", cinemaType.name(),
                             cinemaType.toString() + " Cinemas"),
                     String.format("$%.2f", cinemaType.getPrice())));
-        setViewItems(viewItems.toArray(new ViewItem[viewItems.size()]));
+        setViewItems(viewItems);
 
         display();
         String userChoice = getChoice();

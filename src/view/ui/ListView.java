@@ -2,6 +2,7 @@ package view.ui;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public abstract class ListView extends MenuView implements Navigable {
 
@@ -15,9 +16,9 @@ public abstract class ListView extends MenuView implements Navigable {
         return viewItems;
     }
 
-    protected void setViewItems(ViewItem[] viewItems) {
+    protected void setViewItems(List<ViewItem> viewItems) {
         this.viewItems.clear();
-        this.viewItems.addAll(Arrays.asList(viewItems));
+        this.viewItems.addAll(viewItems);
     }
 
     @Override

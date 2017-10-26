@@ -1,6 +1,6 @@
 package view;
 
-import exception.NavigationRejectedException;
+import exception.RejectedNavigationException;
 import manager.BookingController;
 import manager.UserController;
 import model.booking.Booking;
@@ -8,6 +8,7 @@ import model.commons.User;
 import view.ui.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class BookingListView extends ListView {
 
@@ -40,7 +41,7 @@ public class BookingListView extends ListView {
                 if (user == null) {
                     View.displayError("User with mobile '" + mobileNumber + "' not found!");
                     Form.pressAnyKeyToContinue();
-                    throw new NavigationRejectedException();
+                    throw new RejectedNavigationException();
                 }
                 bookings = user.getBookings();
                 break;
@@ -50,7 +51,7 @@ public class BookingListView extends ListView {
         addBackOption();
         setViewItems(bookings.stream().map(
                 booking -> new ViewItem(new BookingView(booking),
-                        booking.getId().toString())).toArray(ViewItem[]::new));
+                        booking.getId().toString())).collect(Collectors.toList()));
     }
 
     @Override

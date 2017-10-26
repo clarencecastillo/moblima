@@ -31,9 +31,9 @@ public class AdminConfigListView extends ListView {
 
         ArrayList<ViewItem> viewItems = new ArrayList<>();
         viewItems.add(new ViewItem("Admin Secret",
-                AdminConfigMenuOption.ADMIN_SECRET.toString(),
+                AdminConfigListOption.ADMIN_SECRET.toString(),
                 AdminConfig.getAdminSecret()));
-        setViewItems(viewItems.toArray(new ViewItem[viewItems.size()]));
+        setViewItems(viewItems);
 
         display();
 
@@ -41,7 +41,7 @@ public class AdminConfigListView extends ListView {
         if (userChoice.equals(BACK))
             navigation.goBack();
         else {
-            switch (AdminConfigMenuOption.valueOf(userChoice)) {
+            switch (AdminConfigListOption.valueOf(userChoice)) {
                 case ADMIN_SECRET:
                     View.displayInformation("Please enter new admin secret.");
                     String newAdminSecret = Form.getString("Admin Secret");
@@ -54,7 +54,7 @@ public class AdminConfigListView extends ListView {
         }
     }
 
-    private enum AdminConfigMenuOption {
+    private enum AdminConfigListOption {
         ADMIN_SECRET
     }
 }

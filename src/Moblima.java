@@ -42,6 +42,7 @@ public class Moblima {
 
             UserController userManager = UserController.getInstance();
             MovieController movieManager = MovieController.getInstance();
+            MovieReviewController movieReviewController = MovieReviewController.getInstance();
             CineplexController cineplexController = CineplexController.getInstance();
             CinemaController cinemaController = CinemaController.getInstance();
             ShowtimeController showtimeManager = ShowtimeController.getInstance();
@@ -62,6 +63,16 @@ public class Moblima {
                             + "rightful place as king.", director,
                     new MoviePerson[]{director}, MovieType.THREE_DIMENSION,
                     MovieStatus.NOW_SHOWING, MovieRating.PG, 120);
+
+            movieReviewController.createReview("Plots dealing with the irreversible damage to our Mother " +
+                    "Earth is realistic in the sense that we create new technology to continue sustaining life. " +
+                    "What happens when it fails, reverting back and shocking the natural phenomenon that sustain us",
+                    4, movie1.getId(), user.getId());
+
+            movieReviewController.createReview("Plots dealing with the irreversible damage to our Mother " +
+                            "Earth is realistic in the sense that we create new technology to continue sustaining life. " +
+                            "What happens when it fails, reverting back and shocking the natural phenomenon that sustain us",
+                    4, movie1.getId(), user.getId());
 
             Cineplex cineplex = cineplexController.createCineplex("AMK Hub", "Ang Mo Kio, Singapore");
             Seat[] seats = IntStream.range(0, 4).mapToObj(col ->

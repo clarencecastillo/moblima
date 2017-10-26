@@ -36,6 +36,10 @@ public class Utilities {
         }
     }
 
+    public static Date parseDateIgnoreError(String date) throws ParseException {
+        return parseDateIgnoreError(date, Form.DATE_FORMAT);
+    }
+
     public static Date parseDateIgnoreError(String date, String format) throws ParseException {
         SimpleDateFormat dateFormat = new SimpleDateFormat(format);
         return dateFormat.parse(date);

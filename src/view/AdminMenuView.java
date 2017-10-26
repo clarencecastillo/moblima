@@ -1,6 +1,6 @@
 package view;
 
-import exception.NavigationRejectedException;
+import exception.RejectedNavigationException;
 import manager.UserController;
 import model.cinema.Staff;
 import view.ui.*;
@@ -42,7 +42,7 @@ public class AdminMenuView extends MenuView {
         if (administrator == null) {
             View.displayError("Max login attempts reached!");
             Form.pressAnyKeyToContinue();
-            throw new NavigationRejectedException();
+            throw new RejectedNavigationException();
         }
 
         setContent("Signed in: " + administrator.getUsername());
@@ -55,7 +55,8 @@ public class AdminMenuView extends MenuView {
         AdminMenuOption userChoice = AdminMenuOption.valueOf(getChoice());
         switch (userChoice) {
             case MANAGE_MOVIE_LISTINGS:
-                navigation.goTo(new MovieListView(navigation), AccessLevel.ADMINISTRATOR);
+                navigation.goTo(new MovieListView(navigation), AccessLevel.ADMINISTRATOR,
+                        MovieListView.MovieListIntent.VIEW_MOVIES);
                 break;
             case MANAGE_SHOWTIMES:
                 break;
