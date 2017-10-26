@@ -34,13 +34,17 @@ public class MovieReview extends Entity {
      */
     private User author;
 
-    private Movie movie; // TODO javadoc
+    /**
+     * The movie that this review is written for.
+     */
+    private Movie movie;
 
     /**
      * Creates the review with the content, rating and author.
      * The date create will be the current date.
      *
      * @param review The content of this review.
+     * @param movie The movie that this review is written for.
      * @param rating The rating of this review.
      * @param author The author of this review.
      */
@@ -115,7 +119,10 @@ public class MovieReview extends Entity {
         this.author = author;
     }
 
-    // TODO javadoc
+    /**
+     * Gets the movie that this review is written for.
+     * @return the movie that this review is written for.
+     */
     public Movie getMovie() {
         return movie;
     }

@@ -95,6 +95,7 @@ public class ShowtimeController extends EntityController<Showtime> {
         return showtimes;
     }
 
+    // TODO UUID
     public List<Showtime> findByCineplexAndMovie(Cineplex cineplex, Movie movie) {
         ArrayList<Showtime> showtimes = new ArrayList<>();
         for (Showtime showtime : cineplex.getShowtimes())
@@ -103,6 +104,7 @@ public class ShowtimeController extends EntityController<Showtime> {
         return showtimes;
     }
 
+    // TODO UUID
     public double getTicketTypePricing(Showtime showtime, TicketType ticketType) {
         return Priceable.getPrice(ticketType, showtime.getCinema().getType(), showtime.getMovie().getType());
     }
