@@ -9,6 +9,7 @@ import model.movie.*;
 import view.MainMenuView;
 import view.ui.Navigation;
 
+import java.io.*;
 import java.util.*;
 import java.util.stream.IntStream;
 
@@ -97,6 +98,39 @@ public class Moblima {
             e.printStackTrace();
             System.out.println("Debug Error!");
         }
+
+//        ObjectOutputStream ooStream = null;
+//        try {
+//            ooStream = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream("movies.dat")));
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//            System.out.println(e.getMessage());
+//        }
+//
+//        try {
+//            MovieController movieController = MovieController.getInstance();
+//            ooStream.writeObject(movieController. ());
+//            ooStream.close();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//            System.out.println(e.getMessage());
+//        }
+//
+//        ObjectInputStream oiStream = null;
+//        try {
+//            oiStream = new ObjectInputStream(new BufferedInputStream(new FileInputStream("movies.dat")));
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//            System.out.println(e.getMessage());
+//        }
+//
+//        try {
+//            movieManager.setEntities((Hashtable<UUID, Movie>)oiStream.readObject());
+//            oiStream.close();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//            System.out.println(e.getMessage());
+//        }
 
         nav = new Navigation();
     }
