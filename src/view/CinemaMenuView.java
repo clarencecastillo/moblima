@@ -40,7 +40,7 @@ public class CinemaMenuView extends MenuView {
         showtimeSeating = booking.getShowtime().getSeating();
         cinemaLayout = booking.getShowtime().getCinema().getLayout();
         selectedSeats = new ArrayList<>();
-        numberOfSeats = booking.getTickets().size();
+        numberOfSeats = booking.getTotalTicketsCount();
 
         setTitle("Seat Selection");
         setMenuItems(CinemaMenuOption.values());
