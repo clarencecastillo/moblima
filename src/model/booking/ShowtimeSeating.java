@@ -43,7 +43,7 @@ public class ShowtimeSeating implements Serializable {
     public SeatingStatus getSeatingStatus(Seat seat) throws IllegalActionException {
         SeatingStatus seatingStatus = seatings.get(seat);
         if (seatingStatus == null)
-            throw new IllegalActionException("This seat is not found in this showtime seating");
+            throw new IllegalActionException("This seat is not found in this showtime's seating");
         return seatingStatus;
     }
 
@@ -59,11 +59,11 @@ public class ShowtimeSeating implements Serializable {
     }
 
     // TODO Javadoc
-    public Seat getSeatAt(char row, int column) throws SeatNotFoundException {
+    public Seat getSeatAt(char row, int column) throws IllegalActionException {
         for (Seat seat : seatings.keySet())
             if (seat.getRow() == row && seat.getColumn() == column)
                 return seat;
-        throw new SeatNotFoundException();
+        throw new IllegalActionException("This seat is not found in this showtime's seating.");
     }
 
     /**
@@ -75,7 +75,7 @@ public class ShowtimeSeating implements Serializable {
      */
     public void setSeatingStatus(Seat seat, SeatingStatus seatingStatus) throws IllegalActionException {
         if (!hasSeat(seat))
-            throw new IllegalActionException("This seat is not found in this showtime seating");
+            throw new IllegalActionException("This seat is not found in this showtime's seating");
         seatings.put(seat, seatingStatus);
     }
 

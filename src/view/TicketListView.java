@@ -1,7 +1,6 @@
 package view;
 
 import config.BookingConfig;
-import exception.ExceedBookingSeatException;
 import exception.RejectedNavigationException;
 import manager.BookingController;
 import manager.ShowtimeController;
@@ -48,7 +47,7 @@ public class TicketListView extends ListView {
         this.ticketTypePricing = new Hashtable<>();
         for (TicketType ticketType : showtimeController.getAvailableTicketTypes(showtime.getId())) {
             ticketTypeCount.put(ticketType, 0);
-            ticketTypePricing.put(ticketType, showtimeController.getTicketTypePricing(showtime, ticketType));
+            ticketTypePricing.put(ticketType, showtimeController.getTicketTypePricing(showtime.getId(), ticketType));
         }
 
         setTitle("Ticket Selection");

@@ -1,8 +1,7 @@
 package view;
 
 import config.BookingConfig;
-import exception.IllegalBookingStatusException;
-import exception.IllegalShowtimeStatusException;
+import exception.IllegalActionException;
 import exception.RejectedNavigationException;
 import manager.BookingController;
 import manager.CineplexController;
@@ -175,7 +174,7 @@ public class ShowtimeListView extends ListView {
                     try {
                         Booking booking = bookingController.createBooking(UUID.fromString(userInput));
                         navigation.goTo(new TicketListView(navigation), accessLevel, booking.getId().toString());
-                    } catch (IllegalShowtimeStatusException ex) {
+                    } catch (IllegalActionException ex) {
                         View.displayError("Sorry, cannot book for this showtime at this time.");
                         navigation.refresh();
                     }

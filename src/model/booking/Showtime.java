@@ -8,10 +8,7 @@ import model.commons.Language;
 import model.movie.Movie;
 import util.Utilities;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
+import java.util.*;
 
 public class Showtime extends Entity {
 
