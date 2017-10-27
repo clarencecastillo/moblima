@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.InputMismatchException;
 import java.util.Scanner;
+import java.util.regex.Pattern;
 
 /**
  * Represents a base interface that must be implemented by all classes that are user interfaces.
@@ -40,6 +41,12 @@ public interface Form {
     // TODO javadoc
     String CONFIRM = "CONFIRM";
     String CANCEL = "CANCEL";
+
+    Pattern EMAIL_REGEX = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$",
+            Pattern.CASE_INSENSITIVE);
+    Pattern CREDIT_CARD_REGEX = Pattern.compile("\\d{13,16}");
+    Pattern MOBILE_REGEX = Pattern.compile("^[89]\\d{7}$");
+    Pattern CVV_REGEX = Pattern.compile("/^[0-9]{3,4}$/");
 
     /**
      * Gets integer input which has a maximum limit. A invalid error message will be displayed
@@ -205,6 +212,16 @@ public interface Form {
                 return input;
             else
                 View.displayError(INVALID_ERROR);
+        }
+    }
+
+    // TODO Javadoc
+    static String getString(String prompt, Pattern regexPattern) {
+        while (true) {
+            String input = getString(prompt);
+            if (regexPattern.matcher(input).matches())
+                return input;
+            View.displayError(INVALID_ERROR);
         }
     }
 

@@ -79,17 +79,17 @@ public class BookingMenuView extends MenuView {
                         "enter your card details in the following section.");
                 String firstName = Form.getString("First Name", 1);
                 String lastName = Form.getString("Last Name", 1);
-                String mobile = Form.getString("Mobile", 1);
-                String email = Form.getString("Email", 1);
+                String mobile = Form.getString("Mobile", MOBILE_REGEX);
+                String email = Form.getString("Email", EMAIL_REGEX);
 
                 user = userController.findByMobile(mobile);
                 if (user == null)
                     user = userController.registerUser(firstName, lastName, mobile, email);
 
                 View.displayInformation("Please enter your card details in order to complete your purchase.");
-                Form.getString("Card Number");
+                Form.getString("Card Number", CREDIT_CARD_REGEX);
                 Form.getDate("Expiry Date", "MM/YYYY");
-                Form.getString("Security Code");
+                Form.getString("Security Code", CVV_REGEX);
                 View.displayWarning("By proceeding to PAY, you hereby authorise the debit to your " +
                         "Card Account in favour of MOBLIMA PTE LTD");
                 Form.pressAnyKeyToContinue();
