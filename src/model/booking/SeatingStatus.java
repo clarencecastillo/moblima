@@ -17,17 +17,7 @@ public enum SeatingStatus {
     /**
      * The status of a taken seating.
      */
-    TAKEN("X"),
-
-    /**
-     * The status of a seating under maintenance.
-     */
-    MAINTENANCE("!"),
-
-    /**
-     * The status of a reserved seating.
-     */
-    RESERVED("-");
+    TAKEN("X");
 
     /**
      * The icon representation of this seating.

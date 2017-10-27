@@ -70,7 +70,11 @@ public abstract class View {
      * @param color The displayed colour of this message.
      */
     public static void displayColored(String message, ConsoleColor color) {
-        System.out.println(color.code + message + ConsoleColor.RESET.code);
+        System.out.print(color.code);
+        for (String stringLine : wrap(message, VIEW_WIDTH))
+            System.out.println(stringLine);
+        System.out.print(ConsoleColor.RESET.code);
+
     }
 
     /**

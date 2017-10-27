@@ -9,9 +9,7 @@ import model.movie.*;
 import view.MainMenuView;
 import view.ui.Navigation;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Hashtable;
+import java.util.*;
 import java.util.stream.IntStream;
 
 //import manager.TicketController;
@@ -75,13 +73,13 @@ public class Moblima {
                     4, movie1.getId(), user.getId());
 
             Cineplex cineplex = cineplexController.createCineplex("AMK Hub", "Ang Mo Kio, Singapore");
-            Seat[] seats = IntStream.range(0, 4).mapToObj(col ->
-                    new Seat('A', col + 1, SeatType.SINGLE)).toArray(Seat[]::new);
-            CinemaLayout layout1 = new CinemaLayout(seats, 4, 'A');
+
+
+            CinemaLayout layout1 = new CinemaLayout(Arrays.asList(9), null, 17, 'K');
             Cinema cinema1 = cinemaController.createCinema(cineplex.getId(), "1",
                     CinemaType.REGULAR, layout1);
             Calendar calendar = Calendar.getInstance();
-            calendar.set(2017, 9, 25, 23, 8);
+            calendar.set(2017, 9, 27, 23, 8);
             Date startTime1 = calendar.getTime();
             Language[] subtitles = new Language[]{Language.ENGLISH};
             Showtime showtime1 = showtimeManager.createShowtime(movie1.getId(), cineplex.getId(), cinema1.getId(),
@@ -89,9 +87,9 @@ public class Moblima {
 
             Booking booking1 = bookingController.createBooking(showtime1.getId());
             Hashtable<TicketType, Integer> ticketTypesCount = new Hashtable<>();
-            ticketTypesCount.put(TicketType.STANDARD, 4);
+            ticketTypesCount.put(TicketType.PEAK, 1);
             bookingController.selectTicketType(booking1.getId(), ticketTypesCount);
-            bookingController.selectSeat(booking1.getId(), seats);
+            bookingController.selectSeats(booking1.getId(), new Seat[] {layout1.getSeats()[0]});
             paymentController.makePayment(booking1);
             bookingController.confirmBooking(booking1.getId(), user.getId());
 

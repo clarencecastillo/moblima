@@ -40,7 +40,7 @@ public class MovieReviewListView extends ListView {
             }
         }
 
-        setTitle("Reviews for " + new MovieView(movie).getTitle());
+        setTitle("Reviews for " + movie.toString());
         setContent("The views shared reflects the personal opinion of the respective movie goers " +
                 "and are not a representation of MOBLIMA.");
         addBackOption();

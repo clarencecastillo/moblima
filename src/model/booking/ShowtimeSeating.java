@@ -58,6 +58,14 @@ public class ShowtimeSeating implements Serializable {
         return getSeatingStatus(seat) == SeatingStatus.AVAILABLE;
     }
 
+    // TODO Javadoc
+    public Seat getSeatAt(char row, int column) throws SeatNotFoundException {
+        for (Seat seat : seatings.keySet())
+            if (seat.getRow() == row && seat.getColumn() == column)
+                return seat;
+        throw new SeatNotFoundException();
+    }
+
     /**
      * Change the status of the seat in this seating.
      *

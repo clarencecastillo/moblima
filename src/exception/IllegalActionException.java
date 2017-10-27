@@ -1,6 +1,6 @@
 package exception;
 
-public class IllegalActionException extends Exception {
+public class IllegalActionException extends RuntimeException {
     public IllegalActionException(String message) {
         super(message);
     }

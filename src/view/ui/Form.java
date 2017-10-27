@@ -37,6 +37,10 @@ public interface Form {
      */
     String UNRECOGNIZED_ERROR = "Unrecognized user input! Please try again.";
 
+    // TODO javadoc
+    String CONFIRM = "CONFIRM";
+    String CANCEL = "CANCEL";
+
     /**
      * Gets integer input which has a maximum limit. A invalid error message will be displayed
      * if the input integer exceeding the maximum limit.
@@ -236,6 +240,12 @@ public interface Form {
         return getOption(prompt, Arrays.stream(enumerableMenuOptions).map(menuOption ->
                 new GenericMenuOption(menuOption.getDescription(),
                         menuOption.name())).toArray(GenericMenuOption[]::new));
+    }
+
+    // TODO Javadoc
+    static String getConfirmOption(String confirmText, String cancelText) {
+        return getOption("Confirmation", new GenericMenuOption(confirmText, CONFIRM),
+                new GenericMenuOption(cancelText, CANCEL));
     }
 
     /**

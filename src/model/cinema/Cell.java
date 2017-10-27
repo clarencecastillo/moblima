@@ -11,6 +11,8 @@ import java.io.Serializable;
  */
 public class Cell implements Serializable {
 
+    private String CELL_ICON = "   ";
+
     /**
      * This cell's row character.
      */
@@ -80,5 +82,9 @@ public class Cell implements Serializable {
             return false;
         Cell seat = (Cell) obj;
         return seat.row == row && seat.column == column;
+    }
+
+    public String toStringIcon() {
+        return CELL_ICON;
     }
 }

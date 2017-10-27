@@ -317,5 +317,15 @@ public class Movie extends Entity implements Searchable {
     public void setRuntime(int runtimeMinutes) {
         this.runtimeMinutes = runtimeMinutes;
     }
+
+    // TODO OVerride toString
+    @Override
+    public String toString() {
+        return String.format("%s [%s] %s", title, type, rating);
+    }
+
+    public String toString(boolean noFreePasses) {
+        return (noFreePasses ? "*" : "") + String.format("%s [%s] %s", title, type, rating);
+    }
 }
 
