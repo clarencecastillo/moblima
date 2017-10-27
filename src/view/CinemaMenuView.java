@@ -20,6 +20,7 @@ public class CinemaMenuView extends MenuView {
     private ArrayList<Seat> selectedSeats;
     private int numberOfSeats;
 
+    private AccessLevel accessLevel;
     private BookingController bookingController;
 
     public CinemaMenuView(Navigation navigation) {
@@ -29,6 +30,14 @@ public class CinemaMenuView extends MenuView {
 
     @Override
     public void onLoad(AccessLevel accessLevel, Intent intent, String... args) {
+
+        this.accessLevel = accessLevel;
+        switch (accessLevel) {
+            case ADMINISTRATOR:
+                break;
+            case PUBLIC:
+                break;
+        }
 
         booking = bookingController.findById(UUID.fromString(args[0]));
         if (booking == null) {
@@ -87,7 +96,9 @@ public class CinemaMenuView extends MenuView {
                         Form.pressAnyKeyToContinue();
                         navigation.refresh();
                     } else {
-                        System.out.println("Success");
+                        bookingController.selectSeats(booking.getId(), selectedSeats);
+                        navigation.goTo(new BookingMenuView(navigation), accessLevel,
+                                BookingMenuView.BookingMenuIntent.VERIFY_BOOKING, booking.getId().toString());
                     }
                     break;
             }

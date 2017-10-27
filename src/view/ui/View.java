@@ -14,6 +14,9 @@ import java.util.regex.Pattern;
  */
 public abstract class View {
 
+    // TODO Javadoc
+    public int LEFT_MARGIN = 1;
+
     /**
      * Sets the width of the view to be 100.
      */

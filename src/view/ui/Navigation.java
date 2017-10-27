@@ -15,6 +15,7 @@ public class Navigation {
 
     public void reload(AccessLevel accessLevel, Intent intent, String... args) {
         Navigable recentNavigable = stack.peek();
+        clearScreen();
         recentNavigable.onLoad(accessLevel, intent, args);
         enter(recentNavigable);
     }

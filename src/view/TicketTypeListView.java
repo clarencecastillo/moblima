@@ -14,7 +14,7 @@ import java.util.Hashtable;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-public class TicketListView extends ListView {
+public class TicketTypeListView extends ListView {
 
     private Booking booking;
     private Hashtable<TicketType, Integer> ticketTypeCount;
@@ -25,7 +25,7 @@ public class TicketListView extends ListView {
     private ShowtimeController showtimeController;
     private BookingController bookingController;
 
-    public TicketListView(Navigation navigation) {
+    public TicketTypeListView(Navigation navigation) {
         super(navigation);
         this.showtimeController = ShowtimeController.getInstance();
         this.bookingController = BookingController.getInstance();
@@ -69,10 +69,8 @@ public class TicketListView extends ListView {
     public void onEnter() {
         int totalCount = ticketTypeCount.values().stream().mapToInt(Integer::intValue).sum();
         setViewItems(ticketTypeCount.keySet().stream().map(ticketType ->
-                new ViewItem(ticketType.toString(), ticketType.name(),
-                        "Price " + String.format("$%.2f", ticketTypePricing.get(ticketType)),
-                        "Quantity: " + ticketTypeCount.get(ticketType)
-                        )).collect(Collectors.toList()));
+                new ViewItem(new TicketTypeView(ticketType, ticketTypePricing.get(ticketType),
+                        ticketTypeCount.get(ticketType)), ticketType.name())).collect(Collectors.toList()));
 
         display();
 

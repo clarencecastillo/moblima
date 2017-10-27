@@ -68,6 +68,6 @@ public class PaymentConfig implements Configurable {
      */
     @Override
     public void reset() {
-        gst = 0.7;
+        gst = 0.07;
     }
 }

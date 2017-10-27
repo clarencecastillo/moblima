@@ -38,6 +38,8 @@ public abstract class MenuView extends View implements Navigable, Form {
     }
 
     protected void addBackOption() {
+        if (menuItems.contains(BACK_MENU_ITEM))
+            return;
         menuItems.add(BACK_MENU_ITEM);
     }
 

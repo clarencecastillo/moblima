@@ -123,7 +123,7 @@ public class BookingController extends EntityController<Booking> {
      * or if the booking is not in progress,
      * or if the seat is not found in this showtime.
      */
-    public void selectSeats(UUID bookingId, Seat[] seats) throws IllegalActionException {
+    public void selectSeats(UUID bookingId, List<Seat> seats) throws IllegalActionException {
 
         Booking booking = findById(bookingId);
 
@@ -133,7 +133,7 @@ public class BookingController extends EntityController<Booking> {
 
         // Check if the number of seats the same with the tickets
         int totalTicketsCount = booking.getTotalTicketsCount();
-        if (seats.length != totalTicketsCount)
+        if (seats.size() != totalTicketsCount)
             throw new IllegalActionException("The number of seats does not match the number of ticket types.");
 
         // Check if all seats are available
@@ -141,7 +141,7 @@ public class BookingController extends EntityController<Booking> {
             if (!booking.getShowtime().getSeating().isAvailable(seat))
                 throw new IllegalActionException("Seat is unavailable");
 
-        booking.setSeats(Arrays.asList(seats));
+        booking.setSeats(seats);
     }
 
 //    FIXME
