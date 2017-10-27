@@ -54,9 +54,6 @@ public class UserController extends EntityController<User> {
     public User registerUser(String firstName, String lastName, String mobile, String email)
             throws IllegalActionException {
 
-        if (findByEmail(email) != null)
-            throw new IllegalActionException("This email has already been registered.");
-
         if (findByMobile(mobile) != null)
             throw new IllegalActionException("This mobile number has already been registered.");
 
@@ -80,9 +77,6 @@ public class UserController extends EntityController<User> {
     public void registerStaff(String firstName, String lastName, String mobile, String email,
                               String username, String password) throws IllegalActionException {
 
-        if (findByEmail(email) != null)
-            throw new IllegalActionException("This email has already been registered.");
-
         if (findByMobile(mobile) != null)
             throw new IllegalActionException("This mobile number has already been registered.");
 
@@ -101,19 +95,6 @@ public class UserController extends EntityController<User> {
     public User findByMobile(String mobile) {
         for (User user : entities.values()) {
             if (user.getMobile().equals(mobile))
-                return user;
-        }
-        return null;
-    }
-
-    /**
-     * Finds a user by the given email address.
-     * @param email The email address of the user to be searched for.
-     * @return the user who registers with this email address.
-     */
-    public User findByEmail(String email) {
-        for (User user : entities.values()) {
-            if (user.getEmail().equals(email))
                 return user;
         }
         return null;

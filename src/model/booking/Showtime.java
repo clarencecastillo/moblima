@@ -6,6 +6,7 @@ import model.cinema.Cineplex;
 import model.commons.Entity;
 import model.commons.Language;
 import model.movie.Movie;
+import model.transaction.Priceable;
 import util.Utilities;
 
 import java.util.*;
@@ -273,6 +274,15 @@ public class Showtime extends Entity {
             showtimeStatus = ShowtimeStatus.CLOSED_BOOKING;
 
         return showtimeStatus;
+    }
+
+    /**
+     * Gets the pricing of a ticket type for this showtime.
+     * @param ticketType The ticket type to be checked.
+     * @return the pricing of a ticket type for a given show time.
+     */
+    public double getTicketTypePricing(TicketType ticketType) {
+        return Priceable.getPrice(ticketType, getCinema().getType(), getMovie().getType());
     }
 
     /**

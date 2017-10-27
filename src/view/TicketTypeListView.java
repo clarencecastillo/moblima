@@ -17,8 +17,8 @@ import java.util.stream.Collectors;
 public class TicketTypeListView extends ListView {
 
     private Booking booking;
+    private Showtime showtime;
     private Hashtable<TicketType, Integer> ticketTypeCount;
-    private Hashtable<TicketType, Double> ticketTypePricing;
 
     private AccessLevel accessLevel;
 
@@ -42,13 +42,10 @@ public class TicketTypeListView extends ListView {
             throw new RejectedNavigationException();
         }
 
-        Showtime showtime = booking.getShowtime();
+        showtime = booking.getShowtime();
         this.ticketTypeCount = new Hashtable<>();
-        this.ticketTypePricing = new Hashtable<>();
-        for (TicketType ticketType : showtimeController.getAvailableTicketTypes(showtime.getId())) {
+        for (TicketType ticketType : showtimeController.getAvailableTicketTypes(showtime.getId()))
             ticketTypeCount.put(ticketType, 0);
-            ticketTypePricing.put(ticketType, showtimeController.getTicketTypePricing(showtime.getId(), ticketType));
-        }
 
         setTitle("Ticket Selection");
         setContent(showtime.getMovie().toString(showtime.isNoFreePasses()),
@@ -69,14 +66,14 @@ public class TicketTypeListView extends ListView {
     public void onEnter() {
         int totalCount = ticketTypeCount.values().stream().mapToInt(Integer::intValue).sum();
         setViewItems(ticketTypeCount.keySet().stream().map(ticketType ->
-                new ViewItem(new TicketTypeView(ticketType, ticketTypePricing.get(ticketType),
+                new ViewItem(new TicketTypeView(ticketType, showtime.getTicketTypePricing(ticketType),
                         ticketTypeCount.get(ticketType)), ticketType.name())).collect(Collectors.toList()));
 
         display();
 
         double subtotal = 0.0;
         for (TicketType ticketType : ticketTypeCount.keySet())
-            subtotal += ticketTypeCount.get(ticketType) * ticketTypePricing.get(ticketType);
+            subtotal += ticketTypeCount.get(ticketType) * showtime.getTicketTypePricing(ticketType);
         View.displayInformation("Subtotal: " + String.format("$%.2f", subtotal));
 
         String userInput = getChoice();

@@ -14,17 +14,15 @@ public class TicketView extends View {
     private Showtime showtime;
     private Seat seat;
     private TicketType ticketType;
-    private double price;
 
     private Movie movie;
     private Cineplex cineplex;
     private Cinema cinema;
 
-    public TicketView(Showtime showtime, Seat seat, TicketType ticketType, double price) {
+    public TicketView(Showtime showtime, Seat seat, TicketType ticketType) {
         this.showtime = showtime;
         this.seat = seat;
         this.ticketType = ticketType;
-        this.price = price;
 
         movie = showtime.getMovie();
         cineplex = showtime.getCineplex();
@@ -46,7 +44,7 @@ public class TicketView extends View {
         System.out.println(" | SEAT ROW: " + seat.getRow());
         System.out.println(" | SEAT COLUMN: " + seat.getColumn());
         System.out.println(" | TICKET: " + ticketType.name().toUpperCase());
-        System.out.println(" | PRICE: " + String.format("$%.2f", price));
+        System.out.println(" | PRICE: " + String.format("$%.2f", showtime.getTicketTypePricing(ticketType)));
         System.out.println(View.line('-', VIEW_WIDTH / 2));
     }
 }

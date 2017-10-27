@@ -22,7 +22,6 @@ public class BookingMenuView extends MenuView {
 
     private User user;
     private Booking booking;
-    private Hashtable<TicketType, Double> ticketTypePricing;
 
     private BookingMenuIntent intent;
     private AccessLevel accessLevel;
@@ -60,10 +59,6 @@ public class BookingMenuView extends MenuView {
 
         Showtime showtime = booking.getShowtime();
 
-        this.ticketTypePricing = new Hashtable<>();
-        for (TicketType ticketType : showtimeController.getAvailableTicketTypes(showtime.getId()))
-            ticketTypePricing.put(ticketType, showtimeController.getTicketTypePricing(showtime.getId(), ticketType));
-
         ArrayList<String> content = new ArrayList<>();
         this.intent = (BookingMenuIntent) intent;
         switch (this.intent) {
@@ -73,8 +68,7 @@ public class BookingMenuView extends MenuView {
                 int nextSeatIndex = 0;
                 for (TicketType ticketType : ticketTypesCount.keySet())
                     for (int i = 0; i < ticketTypesCount.get(ticketType); i++) {
-                        TicketView ticketView = new TicketView(showtime, seats.get(nextSeatIndex++),
-                                ticketType, ticketTypePricing.get(ticketType));
+                        TicketView ticketView = new TicketView(showtime, seats.get(nextSeatIndex++), ticketType);
                         ticketView.display();
                     }
                 Form.pressAnyKeyToContinue();
@@ -85,17 +79,17 @@ public class BookingMenuView extends MenuView {
                         "enter your card details in the following section.");
                 String firstName = Form.getString("First Name", 1);
                 String lastName = Form.getString("Last Name", 1);
-                String mobile = Form.getString("Mobile", 1);
-                String email = Form.getString("Email", 1);
+                String mobile = Form.getString("Mobile", MOBILE_REGEX);
+                String email = Form.getString("Email", EMAIL_REGEX);
 
                 user = userController.findByMobile(mobile);
                 if (user == null)
                     user = userController.registerUser(firstName, lastName, mobile, email);
 
                 View.displayInformation("Please enter your card details in order to complete your purchase.");
-                Form.getString("Card Number");
+                Form.getString("Card Number", CREDIT_CARD_REGEX);
                 Form.getDate("Expiry Date", "MM/YYYY");
-                Form.getString("Security Code");
+                Form.getString("Security Code", CVV_REGEX);
                 View.displayWarning("By proceeding to PAY, you hereby authorise the debit to your " +
                         "Card Account in favour of MOBLIMA PTE LTD");
                 Form.pressAnyKeyToContinue();
@@ -128,7 +122,7 @@ public class BookingMenuView extends MenuView {
             content.addAll(Arrays.asList(new BookingView(booking).getContent()));
         else
             content.addAll(Arrays.asList(new BookingView(booking.getShowtime(),
-                    booking.getSeats(), booking.getTicketTypesCount(), ticketTypePricing).getContent()));
+                    booking.getSeats(), booking.getTicketTypesCount()).getContent()));
         content.addAll(Arrays.asList(" ",
                 "Booking Fee: " + String.format("$%.2f", BookingConfig.getBookingSurcharrge())));
         setContent(content.toArray(new String[content.size()]));
