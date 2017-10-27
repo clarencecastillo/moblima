@@ -1,5 +1,7 @@
 package model.transaction;
 
+import config.PaymentConfig;
+
 /**
  * Represents a base interface that should be implemented by all classes which can be set pricing rate.
  *
@@ -28,4 +30,9 @@ public interface Priceable {
      * @return the pricing rate of this priceable.
      */
     double getPrice();
+
+    // TODO Javadoc
+    static double getPriceWithGst(Priceable priceable) {
+        return priceable.getPrice() * (1 + PaymentConfig.getGst());
+    }
 }

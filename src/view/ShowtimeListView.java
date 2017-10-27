@@ -137,6 +137,7 @@ public class ShowtimeListView extends ListView {
 
 
         display();
+        View.displayInformation("Please select ");
         String userInput = getChoice();
         if (userInput.equals(BACK))
             navigation.goBack();
@@ -173,7 +174,7 @@ public class ShowtimeListView extends ListView {
                 } else {
                     try {
                         Booking booking = bookingController.createBooking(UUID.fromString(userInput));
-                        navigation.goTo(new TicketListView(navigation), accessLevel, booking.getId().toString());
+                        navigation.goTo(new TicketTypeListView(navigation), accessLevel, booking.getId().toString());
                     } catch (IllegalActionException ex) {
                         View.displayError("Sorry, cannot book for this showtime at this time.");
                         navigation.refresh();

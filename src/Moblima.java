@@ -49,7 +49,7 @@ public class Moblima {
 
             userManager.registerStaff("Anqi", "Tu", "91005071",
                     "tuanqi@cinema.com", "tuanqi", "513628");
-            User user = userManager.registerUser("Tu", "Tu", "82678543",
+            User user = userManager.registerUser("Tu", "Tu", "1",
                     "tuanqi96@cinema.com");
 
             MoviePerson director = new MoviePerson("Ryan", "Coogler");
@@ -89,7 +89,7 @@ public class Moblima {
             Hashtable<TicketType, Integer> ticketTypesCount = new Hashtable<>();
             ticketTypesCount.put(TicketType.PEAK, 1);
             bookingController.selectTicketType(booking1.getId(), ticketTypesCount);
-            bookingController.selectSeats(booking1.getId(), new Seat[] {layout1.getSeats()[0]});
+            bookingController.selectSeats(booking1.getId(), Arrays.asList(layout1.getSeats()[0]));
             paymentController.makePayment(booking1);
             bookingController.confirmBooking(booking1.getId(), user.getId());
 

@@ -1,6 +1,5 @@
 package view;
 
-import model.booking.Showtime;
 import model.booking.ShowtimeSeating;
 import model.cinema.Cell;
 import model.cinema.CinemaLayout;
@@ -13,8 +12,6 @@ import java.util.Hashtable;
 import java.util.List;
 
 public class CinemaView extends View {
-
-    public int LEFT_MARGIN = 1;
 
     public CinemaView(ShowtimeSeating showtimeSeating, CinemaLayout cinemaLayout, List<Seat> selectedSeats) {
 

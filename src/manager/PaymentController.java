@@ -1,5 +1,6 @@
 package manager;
 
+import config.PaymentConfig;
 import exception.UninitialisedSingletonException;
 import model.transaction.Payable;
 import model.transaction.Payment;

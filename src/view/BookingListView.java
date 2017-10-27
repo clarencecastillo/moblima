@@ -17,6 +17,8 @@ public class BookingListView extends ListView {
     private User user;
     private List<Booking> bookings;
 
+    private AccessLevel accessLevel;
+
     private BookingController bookingController;
 
     public BookingListView(Navigation navigation) {
@@ -29,6 +31,7 @@ public class BookingListView extends ListView {
     public void onLoad(AccessLevel accessLevel, Intent intent, String... args) {
         setTitle("Booking History");
 
+        this.accessLevel = accessLevel;
         switch (accessLevel) {
 
             case ADMINISTRATOR:
@@ -50,7 +53,7 @@ public class BookingListView extends ListView {
         setContent("Displaying " + bookings.size() + " booking item(s).");
         addBackOption();
         setViewItems(bookings.stream().map(
-                booking -> new ViewItem(new BookingView(booking),
+                booking -> new ViewItem(new BookingView(booking.getShowtime(), booking.getSeats()),
                         booking.getId().toString())).collect(Collectors.toList()));
     }
 
@@ -61,7 +64,8 @@ public class BookingListView extends ListView {
         if (userInput.equals(BACK))
             navigation.goBack();
         else {
-            System.out.println("Booking with UUID " + userInput + " selected!");
+            navigation.goTo(new BookingMenuView(navigation), accessLevel,
+                    BookingMenuView.BookingMenuIntent.VIEW_BOOKING, userInput);
         }
     }
 }

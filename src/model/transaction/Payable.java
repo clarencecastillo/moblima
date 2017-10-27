@@ -22,5 +22,6 @@ public interface Payable extends Priceable {
      */
     void setPayment(Payment payment);
 
+    // TODO Javadoc
     String getTransactionCode();
 }
