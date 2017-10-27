@@ -53,7 +53,7 @@ public class ShowtimeController extends EntityController<Showtime> {
         return instance;
     }
 
-    // TODO
+
     /**
      * Creates a showtime with the given information.
      * @param movieId The ID of the movie of this showtime.
@@ -65,6 +65,21 @@ public class ShowtimeController extends EntityController<Showtime> {
      * @param subtitles The ID of the movie of this showtime.
      * @return The ID of the movie of this showtime.
      * @throws IllegalActionException
+     */
+    /**
+     * Creates a showtime with the given information.
+     * @param movieId The ID of the movie of this showtime.
+     * @param cineplexId The ID of the cineplex of this showtime.
+     * @param cinemaId The ID of the cinema of this showtime.
+     * @param language The language of this showtime.
+     * @param startTime The start time of this showtime.
+     * @param isPreview Whether this showtime is a preview.
+     * @param noFreePasses Whether this showtime allows free pass.
+     * @param subtitles The subtitles of this showtime.
+     * @return the newly created showtime.
+     * @throws IllegalActionException if the given movie is currently in preview
+     * but the showtime to be created is not a preview,
+     * or if the movie already ends showing.
      */
     public Showtime createShowtime(UUID movieId, UUID cineplexId, UUID cinemaId, Language language,
                                    Date startTime, boolean isPreview, boolean noFreePasses, Language[] subtitles)
@@ -81,7 +96,7 @@ public class ShowtimeController extends EntityController<Showtime> {
             throw new IllegalActionException("Movie is still in preview");
 
         if (movie.getStatus() == MovieStatus.END_OF_SHOWING)
-            throw new IllegalActionException("Movie is already not shown");
+            throw new IllegalActionException("Movie has already ended showing.");
 
         Cinema cinema = cinemaController.findById(cinemaId);
 
@@ -95,8 +110,9 @@ public class ShowtimeController extends EntityController<Showtime> {
 
     /**
      * Cancel a showtime, setting its status to cancelled and cancel all its bookings.
-     * @param showtimeId
-     * @throws IllegalActionException
+     * @param showtimeId The ID of the showtime to be cancelled.
+     * @throws IllegalActionException if the showtime is already cancelled,
+     * or if the last booking minute has already passed.
      */
     public void cancelShowtime(UUID showtimeId) throws IllegalActionException {
 
@@ -119,6 +135,11 @@ public class ShowtimeController extends EntityController<Showtime> {
             bookingController.cancelBooking(booking.getId());
     }
 
+    /**
+     * Gets the list of showtimes that are in the given showtime statuses.
+     * @param statuses The statuses of the showtimes to be returned.
+     * @return the list of showtimes that are in the given showtime statuses.
+     */
     public List<Showtime> findByStatus(ShowtimeStatus statuses) {
         ArrayList<Showtime> showtimes = new ArrayList<>();
         List<ShowtimeStatus> statusFilter = Arrays.asList(statuses);
@@ -128,6 +149,12 @@ public class ShowtimeController extends EntityController<Showtime> {
         return showtimes;
     }
 
+    /**
+     * Gets a list of showtime in the given cineplex that shows the given movie.
+     * @param cineplexId The ID of the cineplex of the showtime to be returned.
+     * @param movieId The ID of the movie of the showtime to be returned.
+     * @return a list of showtime in the given cineplex that shows the given movie.
+     */
     public List<Showtime> findByCineplexAndMovie(UUID cineplexId, UUID movieId) {
         CineplexController cineplexController = CineplexController.getInstance();
         Cineplex cineplex = cineplexController.findById(cineplexId);
@@ -142,6 +169,12 @@ public class ShowtimeController extends EntityController<Showtime> {
         return showtimes;
     }
 
+    /**
+     * Gets the pricing of a ticket type for a given show time.
+     * @param showtimeId The ID of the showtime fo the checked.
+     * @param ticketType The ticket type to be checked.
+     * @return the pricing of a ticket type for a given show time.
+     */
     public double getTicketTypePricing(UUID showtimeId, TicketType ticketType) {
         Showtime showtime = findById(showtimeId);
         return Priceable.getPrice(ticketType, showtime.getCinema().getType(), showtime.getMovie().getType());
