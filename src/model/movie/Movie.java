@@ -7,6 +7,7 @@ import model.commons.Searchable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Represents a movie.
@@ -15,7 +16,7 @@ import java.util.List;
  * @version 1.0
  * @since 2017-10-20
  */
-public class Movie extends Entity implements Searchable {
+public class Movie extends Entity implements Searchable, Comparable<Movie> {
 
     /**
      * The title of this movie.
@@ -318,6 +319,19 @@ public class Movie extends Entity implements Searchable {
         this.runtimeMinutes = runtimeMinutes;
     }
 
+    /**
+     * Gets the overall rating of this movie.
+     *
+     * @return this movie's overall rating.
+     */
+    public double getOverallReviewRating() {
+        if (getReviews().size() <= 1)
+            return -1;
+        int sum = getReviews().stream().map(MovieReview::getRating).mapToInt(Integer::intValue).sum();
+        System.out.println(sum / getReviews().size());
+        return sum / getReviews().size();
+    }
+
     // TODO OVerride toString
     @Override
     public String toString() {
@@ -326,6 +340,12 @@ public class Movie extends Entity implements Searchable {
 
     public String toString(boolean noFreePasses) {
         return (noFreePasses ? "*" : "") + String.format("%s [%s] %s", title, type, rating);
+    }
+
+    // TODO Javadoc
+    @Override
+    public int compareTo(Movie movie) {
+        return Double.compare(movie.getOverallReviewRating(), getOverallReviewRating());
     }
 }
 

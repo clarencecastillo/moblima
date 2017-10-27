@@ -62,15 +62,45 @@ public class Moblima {
                     new MoviePerson[]{director}, MovieType.THREE_DIMENSION,
                     MovieStatus.NOW_SHOWING, MovieRating.PG, 120);
 
-            movieReviewController.createReview("Plots dealing with the irreversible damage to our Mother " +
-                    "Earth is realistic in the sense that we create new technology to continue sustaining life. " +
-                    "What happens when it fails, reverting back and shocking the natural phenomenon that sustain us",
-                    4, movie1.getId(), user.getId());
+            Movie movie2 = movieManager.createMovie("Black Panther 2", "blabla", director,
+                    new MoviePerson[]{director}, MovieType.THREE_DIMENSION,
+                    MovieStatus.NOW_SHOWING, MovieRating.PG, 120);
 
-            movieReviewController.createReview("Plots dealing with the irreversible damage to our Mother " +
-                            "Earth is realistic in the sense that we create new technology to continue sustaining life. " +
-                            "What happens when it fails, reverting back and shocking the natural phenomenon that sustain us",
-                    4, movie1.getId(), user.getId());
+            Movie movie3 = movieManager.createMovie("Black Panther 3", "blabla", director,
+                    new MoviePerson[]{director}, MovieType.THREE_DIMENSION,
+                    MovieStatus.NOW_SHOWING, MovieRating.PG, 120);
+
+            Movie movie4 = movieManager.createMovie("Black Panther 4", "blabla", director,
+                    new MoviePerson[]{director}, MovieType.THREE_DIMENSION,
+                    MovieStatus.NOW_SHOWING, MovieRating.PG, 120);
+
+            Movie movie5 = movieManager.createMovie("Black Panther 5", "blabla", director,
+                    new MoviePerson[]{director}, MovieType.THREE_DIMENSION,
+                    MovieStatus.NOW_SHOWING, MovieRating.PG, 120);
+
+            Movie movie6 = movieManager.createMovie("Black Panther 6", "blabla", director,
+                    new MoviePerson[]{director}, MovieType.THREE_DIMENSION,
+                    MovieStatus.NOW_SHOWING, MovieRating.PG, 120);
+
+            Movie movie7 = movieManager.createMovie("Black Panther 7", "blabla", director,
+                    new MoviePerson[]{director}, MovieType.THREE_DIMENSION,
+                    MovieStatus.NOW_SHOWING, MovieRating.PG, 120);
+
+            movieReviewController.createReview("review blabla", 1, movie1.getId(), user.getId());
+            movieReviewController.createReview("review blabla", 2, movie2.getId(), user.getId());
+            movieReviewController.createReview("review blabla", 3, movie3.getId(), user.getId());
+            movieReviewController.createReview("review blabla", 4, movie4.getId(), user.getId());
+            movieReviewController.createReview("review blabla", 5, movie5.getId(), user.getId());
+            movieReviewController.createReview("review blabla", 1, movie6.getId(), user.getId());
+            movieReviewController.createReview("review blabla", 2, movie7.getId(), user.getId());
+
+            movieReviewController.createReview("review blabla", 1, movie1.getId(), user.getId());
+            movieReviewController.createReview("review blabla", 2, movie2.getId(), user.getId());
+            movieReviewController.createReview("review blabla", 3, movie3.getId(), user.getId());
+            movieReviewController.createReview("review blabla", 4, movie4.getId(), user.getId());
+            movieReviewController.createReview("review blabla", 5, movie5.getId(), user.getId());
+            movieReviewController.createReview("review blabla", 1, movie6.getId(), user.getId());
+            movieReviewController.createReview("review blabla", 2, movie7.getId(), user.getId());
 
             Cineplex cineplex = cineplexController.createCineplex("AMK Hub", "Ang Mo Kio, Singapore");
 

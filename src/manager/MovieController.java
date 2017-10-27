@@ -193,24 +193,6 @@ public class MovieController extends EntityController<Movie> {
     }
 
     /**
-     * Gets the overall rating of the movie with the given movie ID. This overall rating will only be shown
-     * when there is more than one rating.
-     *
-     * @param movieId The ID of this movie.
-     * @return this movie's overall rating.
-     */
-    public double getOverallReviewRating(UUID movieId) {
-        Movie movie = findById(movieId);
-        if (movie.getReviews().size() <= 1)
-            return -1;
-
-        int sum = 0;
-        for (MovieReview review : movie.getReviews())
-            sum += review.getRating();
-        return sum / movie.getReviews().size();
-    }
-
-    /**
      * Gets the total ticket sale of a movie with the given movie ID.
      *
      * @param movieId the given ID of a movie.
