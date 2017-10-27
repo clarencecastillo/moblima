@@ -2,10 +2,7 @@ package manager;
 
 import exception.IllegalActionException;
 import exception.UninitialisedSingletonException;
-import model.booking.Booking;
-import model.booking.Showtime;
-import model.booking.ShowtimeStatus;
-import model.booking.Ticket;
+import model.booking.*;
 import model.cinema.Cineplex;
 import model.movie.*;
 import util.Utilities;
@@ -223,9 +220,10 @@ public class MovieController extends EntityController<Movie> {
         Movie movie = findById(movieId);
         int sum = 0;
         for (Showtime showtime : movie.getShowtimes())
-            for (Booking booking : showtime.getBookings())
-                for (Ticket ticket : booking.getTickets())
-                    sum++;
+            if (showtime.getStatus() != ShowtimeStatus.CANCELLED)
+                for (Booking booking : showtime.getBookings())
+                    if (booking.getStatus() == BookingStatus.CONFIRMED)
+                        sum += booking.getTotalTicketsCount();
         return sum;
     }
 }

@@ -2,11 +2,13 @@ package model.booking;
 
 import config.BookingConfig;
 import model.cinema.Cinema;
+import model.cinema.Seat;
 import model.commons.Entity;
 import model.transaction.Payable;
 import model.transaction.Payment;
 
 import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.List;
 
 /**
@@ -24,10 +26,11 @@ public class Booking extends Entity implements Payable {
      */
     private Showtime showtime;
 
-    /**
-     * The array list of tickets of this booking.
-     */
-    private ArrayList<Ticket> tickets;
+    // TODO Javadoc
+    private Hashtable<TicketType, Integer> ticketTypesCount;
+
+    // TODO Javadoc
+    private ArrayList<Seat> seats;
 
     /**
      * The payment of this booking.
@@ -49,10 +52,10 @@ public class Booking extends Entity implements Payable {
      */
     public Booking(Showtime showtime) {
         this.showtime = showtime;
-        this.tickets = new ArrayList<Ticket>();
+        this.ticketTypesCount = new Hashtable<>();
+        this.seats = new ArrayList<>();
         this.payment = null;
         this.status = BookingStatus.IN_PROGRESS;
-
     }
 
     /**
@@ -91,13 +94,18 @@ public class Booking extends Entity implements Payable {
         this.showtime = showtime;
     }
 
-    /**
-     * Gets the list of tickets of this booking.
-     *
-     * @return the list of tickets of this booking.
-     */
-    public List<Ticket> getTickets() {
-        return tickets;
+    // TODO Javadoc
+    public Hashtable<TicketType, Integer> getTicketTypesCount() {
+        return ticketTypesCount;
+    }
+
+    // TODO JAvadoc
+    public List<Seat> getSeats() {
+        return seats;
+    }
+
+    public int getTotalTicketsCount() {
+        return ticketTypesCount.values().stream().mapToInt(Integer::intValue).sum();
     }
 
     /**
@@ -140,18 +148,23 @@ public class Booking extends Entity implements Payable {
      */
     @Override
     public double getPrice() {
+        int totalTickets = ticketTypesCount.values().stream().mapToInt(Integer::intValue).sum();
         double price = BookingConfig.getBookingSurcharrge();
-        for (Ticket ticket : this.getTickets())
-            price += ticket.getPrice();
+        for (TicketType ticketType : ticketTypesCount.keySet())
+            price += ticketType.getPrice() * ticketTypesCount.get(ticketType);
+        price += totalTickets * showtime.getMovie().getType().getPrice();
+        price += totalTickets * showtime.getCinema().getType().getPrice();
         return price;
     }
 
-    /**
-     * Adds a ticket to this booking when the user chooses a ticket type.
-     *
-     * @param ticket The ticket to be added for this booking.
-     */
-    public void addTicket(Ticket ticket) {
-        tickets.add(ticket);
+    // TODO Javadoc
+    public void setTicketTypesCount(Hashtable<TicketType, Integer> ticketTypesCount) {
+        this.ticketTypesCount = ticketTypesCount;
+    }
+
+    // TODO Javadoc
+    public void setSeats(List<Seat> seats) {
+        this.seats.clear();
+        this.seats.addAll(seats);
     }
 }

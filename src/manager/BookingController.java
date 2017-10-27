@@ -9,6 +9,7 @@ import model.commons.User;
 import model.transaction.Payment;
 import model.transaction.PaymentStatus;
 
+import java.util.Arrays;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.UUID;
@@ -108,9 +109,7 @@ public class BookingController extends EntityController<Booking> {
         if (totalCount > BookingConfig.getMaxSeatsPerBooking())
             throw new IllegalActionException("Already reached maximum number of seats for booking");
 
-        for (TicketType ticketType : ticketTypesCount.keySet())
-            for (int i = 0; i < ticketTypesCount.get(ticketType); i++)
-                booking.addTicket(new Ticket(ticketType, booking));
+        booking.setTicketTypesCount(ticketTypesCount);
     }
 
     /**
@@ -133,7 +132,8 @@ public class BookingController extends EntityController<Booking> {
             throw new IllegalActionException("The booking cannot be modified");
 
         // Check if the number of seats the same with the tickets
-        if (seats.length != booking.getTickets().size())
+        int totalTicketsCount = booking.getTotalTicketsCount();
+        if (seats.length != totalTicketsCount)
             throw new IllegalActionException("The number of seats does not match the number of ticket types.");
 
         // Check if all seats are available
@@ -141,25 +141,24 @@ public class BookingController extends EntityController<Booking> {
             if (!booking.getShowtime().getSeating().isAvailable(seat))
                 throw new IllegalActionException("Seat is unavailable");
 
-        // Arbitrarily pair seats to the ticket types
-        for (int i = 0; i < seats.length; i++)
-            booking.getTickets().get(i).setSeat(seats[i]);
+        booking.setSeats(Arrays.asList(seats));
     }
 
-    /**
-     * Gets the total price of the booking, consisting of the prices of all its tickets, the booking surcharge fee
-     * and the GST.
-     * @param bookingId The ID of the booking whose total price is to be returned.
-     * @return the total price of this booking
-     */
-    public double getBookingPrice(UUID bookingId) {
-        ShowtimeController showtimeController = ShowtimeController.getInstance();
-        Booking booking = findById(bookingId);
-        double price = BookingConfig.getBookingSurcharrge();
-        for (Ticket ticket : booking.getTickets())
-            price += showtimeController.getTicketTypePricing(booking.getShowtime().getId(), ticket.getType());
-        return price*(1+PaymentConfig.getGst());
-    }
+//    FIXME
+//    /**
+//     * Gets the total price of the booking, consisting of the prices of all its tickets, the booking surcharge fee
+//     * and the GST.
+//     * @param bookingId The ID of the booking whose total price is to be returned.
+//     * @return the total price of this booking
+//     */
+//    public double getBookingPrice(UUID bookingId) {
+//        ShowtimeController showtimeController = ShowtimeController.getInstance();
+//        Booking booking = findById(bookingId);
+//        double price = BookingConfig.getBookingSurcharrge();
+//        for (Ticket ticket : booking.getTickets())
+//            price += showtimeController.getTicketTypePricing(booking.getShowtime().getId(), ticket.getType());
+//        return price*(1+PaymentConfig.getGst());
+//    }
 
     /**
      * Cancels the booking with the given booking ID in the process of making a booking.
@@ -215,8 +214,8 @@ public class BookingController extends EntityController<Booking> {
 
         // Mark all seats for the booking as taken
         ShowtimeSeating seating = showtime.getSeating();
-        for (Ticket ticket : booking.getTickets())
-            seating.setSeatingStatus(ticket.getSeat(), SeatingStatus.TAKEN);
+        for (Seat seat : booking.getSeats())
+            seating.setSeatingStatus(seat, SeatingStatus.TAKEN);
     }
 
 //    public void changeBookingStatus(UUID bookingId, BookingStatus status) throws IllegalShowtimeStatusException,
