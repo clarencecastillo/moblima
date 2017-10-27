@@ -4,10 +4,24 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Represents a list view whose display items have to be manually set.
+ *
+ * @author Castillo Clarence Fitzgerald Gumtang
+ * @version 1.0
+ * @since 2017-10-20
+ */
 public abstract class ListView extends MenuView implements Navigable {
 
+    /**
+     * An array list og the view items to be displayed in this list view.
+     */
     private ArrayList<ViewItem> viewItems = new ArrayList<>();
 
+    /**
+     *
+     * @param navigation
+     */
     public ListView(Navigation navigation) {
         super(navigation);
     }

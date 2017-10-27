@@ -1,7 +1,7 @@
 package view.ui;
 
 /**
- * Represents a base interface that must be implmented by all the intent.
+ * Represents a base interface that must be implemented by all the intent.
  *
  * @author Castillo Clarence Fitzgerald Gumtang
  * @version 1.0

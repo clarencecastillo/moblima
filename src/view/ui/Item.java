@@ -24,9 +24,9 @@ public interface Item {
     int LABEL_LENGTH = 4;
 
     /**
-     * Gets the
-     * @param index
-     * @return
+     * Gets the prepared label of the given integer index with the preset padding.
+     * @param index The integer index of the prepared lable to be returned.
+     * @return the prepared label of the given index with the preset padding as a string.
      */
     static String prepareLabel(int index) {
         String label = index + View.line(' ', RIGHT_PADDING);
@@ -34,13 +34,26 @@ public interface Item {
         return label;
     }
 
+    /**
+     * Gets the prepared label of the given character index with the preset padding.
+     * @param index The character index of the prepared lable to be returned.
+     * @return the prepared label of the given index with the preset padding as a string.
+     */
     static String prepareLabel(char index) {
         String label = index + View.line(' ', RIGHT_PADDING);
         label = View.line(' ', LABEL_LENGTH - label.length()) + label;
         return label;
     }
 
+    /**
+     * Displays the given index.
+     * @param index
+     */
     void display(int index);
 
+    /**
+     * Gets the value of this item.
+     * @return
+     */
     String getValue();
 }
