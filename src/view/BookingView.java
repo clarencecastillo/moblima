@@ -30,8 +30,7 @@ public class BookingView extends View {
         content.add("Transaction ID: " + booking.getPayment().getTransactionId());
     }
 
-    public BookingView(Showtime showtime, List<Seat> seats, Hashtable<TicketType, Integer> ticketTypeCount,
-                       Hashtable<TicketType, Double> ticketTypePricing) {
+    public BookingView(Showtime showtime, List<Seat> seats, Hashtable<TicketType, Integer> ticketTypeCount) {
         this(showtime, seats);
         content.add(0, getTitle());
         content.add(0, " ");
@@ -45,7 +44,7 @@ public class BookingView extends View {
             String ticketTypeValue = ticketType.toString();
             String ticketTypeRow = ticketTypeValue + View.line(' ',
                     40 - ticketTypeValue.length());
-            String priceValue = String.format("$%.2f", ticketTypePricing.get(ticketType));
+            String priceValue = String.format("$%.2f", showtime.getTicketTypePricing(ticketType));
             ticketTypeRow += priceValue + View.line(' ', 10 - priceValue.length());
             ticketTypeRow += ticketTypeCount.get(ticketType);
             content.add(ticketTypeRow);

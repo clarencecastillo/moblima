@@ -170,17 +170,6 @@ public class ShowtimeController extends EntityController<Showtime> {
     }
 
     /**
-     * Gets the pricing of a ticket type for a given show time.
-     * @param showtimeId The ID of the showtime fo the checked.
-     * @param ticketType The ticket type to be checked.
-     * @return the pricing of a ticket type for a given show time.
-     */
-    public double getTicketTypePricing(UUID showtimeId, TicketType ticketType) {
-        Showtime showtime = findById(showtimeId);
-        return Priceable.getPrice(ticketType, showtime.getCinema().getType(), showtime.getMovie().getType());
-    }
-
-    /**
      * Checks whether this ticket type is available for a booking.
      *
      * @param showtimeId the ID of the showtime to be checked for.
