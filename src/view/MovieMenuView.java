@@ -1,6 +1,6 @@
 package view;
 
-import exception.IllegalMovieStatusTransitionException;
+import exception.IllegalActionException;
 import exception.UnauthorisedNavigationException;
 import manager.MovieController;
 import model.movie.*;
@@ -94,8 +94,8 @@ public class MovieMenuView extends MenuView {
                     try {
                         movieController.changeMovieStatus(movie.getId(), status);
                         View.displaySuccess("Successfully updated movie!");
-                    } catch (IllegalMovieStatusTransitionException e) {
-                        View.displayError("Cannot change movie status to " + status + "!");
+                    } catch (IllegalActionException e) {
+                        View.displayError(e.getMessage());
                     }
                     Form.pressAnyKeyToContinue();
                     navigation.reload(accessLevel, MovieMenuIntent.VIEW_MOVIE, movie.getId().toString());
@@ -124,8 +124,8 @@ public class MovieMenuView extends MenuView {
                         View.displaySuccess("Successfully removed movie!");
                         Form.pressAnyKeyToContinue();
                         navigation.goBack();
-                    } catch (IllegalMovieStatusTransitionException e) {
-                        View.displayError("Cannot remove movie!");
+                    } catch (IllegalActionException e) {
+                        View.displayError(e.getMessage());
                         Form.pressAnyKeyToContinue();
                         navigation.reload(accessLevel, MovieMenuIntent.VIEW_MOVIE, movie.getId().toString());
                     }

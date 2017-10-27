@@ -1,11 +1,11 @@
-package exception;
-
-public class InvalidRegisterUsernameException extends Exception {
-    public InvalidRegisterUsernameException() {
-        super("Invalid Username");
-    }
-
-    public InvalidRegisterUsernameException(String message) {
-        super(message);
-    }
-}
+//package exception;
+//
+//public class InvalidRegisterUsernameException extends Exception {
+//    public InvalidRegisterUsernameException() {
+//        super("Invalid Username");
+//    }
+//
+//    public InvalidRegisterUsernameException(String message) {
+//        super(message);
+//    }
+//}

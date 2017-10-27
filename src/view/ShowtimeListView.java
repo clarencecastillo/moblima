@@ -118,9 +118,9 @@ public class ShowtimeListView extends ListView {
                     movie.getId().toString())).collect(Collectors.toList()));
         } else {
 
-            showtimes = showtimeController.findByCineplexAndMovie(cineplexFilter, movieFilter).stream().filter(showtime ->
-                    Utilities.getStartOfDate(showtime.getStartTime())
-                            .compareTo(Utilities.getStartOfDate(dateFilter)) == 0).collect(Collectors.toList());
+            showtimes = showtimeController.findByCineplexAndMovie(cineplexFilter.getId(), movieFilter.getId())
+                    .stream().filter(showtime -> Utilities.getStartOfDate(showtime.getStartTime())
+                    .compareTo(Utilities.getStartOfDate(dateFilter)) == 0).collect(Collectors.toList());
 
             if (showtimeStatusFilter != null)
                 showtimes = showtimes.stream().filter(showtime ->

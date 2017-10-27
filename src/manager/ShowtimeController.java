@@ -16,28 +16,59 @@ import model.transaction.Priceable;
 import util.Utilities;
 
 import java.util.*;
-
+/**
+ Represents the controller of showtimes.
+ @author Castillo Clarence Fitzgerald Gumtang
+ @version 1.0
+ @since 2017-10-20
+ */
 public class ShowtimeController extends EntityController<Showtime> {
 
+    /**
+     * A reference to this singleton instance.
+     */
     private static ShowtimeController instance;
 
+    /**
+     * Creates the showtime controller.
+     */
     private ShowtimeController() {
         super();
     }
 
+    /**
+     * Initialize the showtime controller.
+     */
     public static void init() {
         instance = new ShowtimeController();
     }
 
+    /**
+     * Gets this Showtime Controller's singleton instance.
+     * @return this Showtime Controller's singleton instance.
+     */
     public static ShowtimeController getInstance() {
         if (instance == null)
             throw new UninitialisedSingletonException();
         return instance;
     }
 
+    // TODO
+    /**
+     * Creates a showtime with the given information.
+     * @param movieId The ID of the movie of this showtime.
+     * @param cineplexId The ID of the cineplex of this showtime.
+     * @param cinemaId The ID of the cinema of this showtime.
+     * @param language The language of this showtime.
+     * @param startTime The start time of this showtime.
+     * @param isPreview The ID of the movie of this showtime.
+     * @param subtitles The ID of the movie of this showtime.
+     * @return The ID of the movie of this showtime.
+     * @throws IllegalActionException
+     */
     public Showtime createShowtime(UUID movieId, UUID cineplexId, UUID cinemaId, Language language,
-                                   Date startTime, boolean noFreePasses,
-                                   boolean isPreview, Language[] subtitles) throws IllegalMovieStatusException {
+                                   Date startTime, boolean isPreview, boolean noFreePasses, Language[] subtitles)
+            throws IllegalActionException {
 
         MovieController movieController = MovieController.getInstance();
         CineplexController cineplexController = CineplexController.getInstance();
@@ -47,15 +78,14 @@ public class ShowtimeController extends EntityController<Showtime> {
         Cineplex cineplex = cineplexController.findById(cineplexId);
 
         if (movie.getStatus() == MovieStatus.PREVIEW && !isPreview)
-            throw new IllegalMovieStatusException("Movie is still in preview");
+            throw new IllegalActionException("Movie is still in preview");
 
         if (movie.getStatus() == MovieStatus.END_OF_SHOWING)
-            throw new IllegalMovieStatusException("Movie is already not shown");
+            throw new IllegalActionException("Movie is already not shown");
 
         Cinema cinema = cinemaController.findById(cinemaId);
 
-        Showtime showtime = new Showtime(movie, cineplex, cinema, language, startTime,
-                noFreePasses, isPreview, subtitles);
+        Showtime showtime = new Showtime(movie, cineplex, cinema, language, startTime, isPreview, noFreePasses, subtitles);
 
         movie.addShowtime(showtime);
         cineplex.addShowtime(showtime);
@@ -63,23 +93,26 @@ public class ShowtimeController extends EntityController<Showtime> {
         return showtime;
     }
 
-    public void cancelShowtime(UUID showtimeId) throws IllegalShowtimeStatusException,
-            IllegalMovieStatusException, IllegalBookingStatusException,
-            UnpaidBookingChargeException, UnpaidPaymentException {
+    /**
+     * Cancel a showtime, setting its status to cancelled and cancel all its bookings.
+     * @param showtimeId
+     * @throws IllegalActionException
+     */
+    public void cancelShowtime(UUID showtimeId) throws IllegalActionException {
 
         BookingController bookingController = BookingController.getInstance();
 
         Showtime showtime = findById(showtimeId);
 
         if (showtime.getStatus() == ShowtimeStatus.CANCELLED)
-            throw new IllegalShowtimeStatusException("Showtime is already cancelled");
+            throw new IllegalActionException("Showtime is already cancelled");
 
         int minutesBeforeClosedBooking = BookingConfig.getMinutesBeforeClosedBooking();
         Date lastBookingMinute = Utilities.getDateBefore(showtime.getStartTime(), Calendar.MINUTE,
                 minutesBeforeClosedBooking);
         Date now = new Date();
         if (now.after(lastBookingMinute))
-            throw new IllegalShowtimeStatusException("Last booking minute is already passed.");
+            throw new IllegalActionException("Last booking minute is already passed.");
 
         showtime.setCancelled(true);
         for (Booking booking : showtime.getBookings())
@@ -95,8 +128,13 @@ public class ShowtimeController extends EntityController<Showtime> {
         return showtimes;
     }
 
-    // TODO UUID
-    public List<Showtime> findByCineplexAndMovie(Cineplex cineplex, Movie movie) {
+    public List<Showtime> findByCineplexAndMovie(UUID cineplexId, UUID movieId) {
+        CineplexController cineplexController = CineplexController.getInstance();
+        Cineplex cineplex = cineplexController.findById(cineplexId);
+
+        MovieController movieController = MovieController.getInstance();
+        Movie movie = movieController.findById(movieId);
+
         ArrayList<Showtime> showtimes = new ArrayList<>();
         for (Showtime showtime : cineplex.getShowtimes())
             if (showtime.getMovie().equals(movie))
@@ -104,8 +142,8 @@ public class ShowtimeController extends EntityController<Showtime> {
         return showtimes;
     }
 
-    // TODO UUID
-    public double getTicketTypePricing(Showtime showtime, TicketType ticketType) {
+    public double getTicketTypePricing(UUID showtimeId, TicketType ticketType) {
+        Showtime showtime = findById(showtimeId);
         return Priceable.getPrice(ticketType, showtime.getCinema().getType(), showtime.getMovie().getType());
     }
 

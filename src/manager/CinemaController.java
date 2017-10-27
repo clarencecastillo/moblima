@@ -24,14 +24,14 @@ public class CinemaController extends EntityController<Cinema> {
     private static CinemaController instance;
 
     /**
-     * Creates the cineplex controller.
+     * Creates the cinema controller.
      */
     private CinemaController() {
         super();
     }
 
     /**
-     * Initialize the cineplex controller.
+     * Initialize the cinema controller.
      */
     public static void init() {
         instance = new CinemaController();

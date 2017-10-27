@@ -1,9 +1,6 @@
 package manager;
 
-import exception.InvalidRegisterEmailException;
-import exception.InvalidRegisterMobileException;
-import exception.InvalidRegisterUsernameException;
-import exception.UninitialisedSingletonException;
+import exception.*;
 import model.cinema.Staff;
 import model.commons.User;
 
@@ -51,17 +48,17 @@ public class UserController extends EntityController<User> {
      * @param mobile The mobile number of this user.
      * @param email The email address of this user.
      * @return the newly created user.
-     * @throws InvalidRegisterEmailException if the email is already registered by another user.
-     * @throws InvalidRegisterMobileException if the mobile phone is already registered by another user.
+     * @throws IllegalActionException if the email is already registered by another user,
+     * or if the mobile phone is already registered by another user.
      */
     public User registerUser(String firstName, String lastName, String mobile, String email)
-            throws InvalidRegisterEmailException, InvalidRegisterMobileException {
+            throws IllegalActionException {
 
         if (findByEmail(email) != null)
-            throw new InvalidRegisterEmailException("This email has already been registered.");
+            throw new IllegalActionException("This email has already been registered.");
 
         if (findByMobile(mobile) != null)
-            throw new InvalidRegisterMobileException("This mobile number has already been registered.");
+            throw new IllegalActionException("This mobile number has already been registered.");
 
         User user = new User(firstName, lastName, mobile, email);
         entities.put(user.getId(), user);
@@ -76,22 +73,21 @@ public class UserController extends EntityController<User> {
      * @param email The email address of this staff.
      * @param username The log in username of this staff.
      * @param password The log in password of this staff.
-     * @throws InvalidRegisterEmailException if the email is already registered by another user.
-     * @throws InvalidRegisterMobileException if the mobile phone is already registered by another user.
-     * @throws InvalidRegisterUsernameException if the username is already registered by another user.
+     * @throws IllegalActionException if the email is already registered by another user,
+     * orif the mobile phone is already registered by another user,
+     * or if the username is already registered by another user.
      */
     public void registerStaff(String firstName, String lastName, String mobile, String email,
-                              String username, String password) throws InvalidRegisterEmailException,
-            InvalidRegisterMobileException, InvalidRegisterUsernameException {
+                              String username, String password) throws IllegalActionException {
 
         if (findByEmail(email) != null)
-            throw new InvalidRegisterEmailException("This email has already been registered.s");
+            throw new IllegalActionException("This email has already been registered.");
 
         if (findByMobile(mobile) != null)
-            throw new InvalidRegisterMobileException("This mobile number has already been registered.");
+            throw new IllegalActionException("This mobile number has already been registered.");
 
         if (findByUsername(username) != null)
-            throw new InvalidRegisterUsernameException("This username already exists");
+            throw new IllegalActionException("This username already exists");
 
         Staff staff = new Staff(firstName, lastName, mobile, email, username, password);
         entities.put(staff.getId(), staff);

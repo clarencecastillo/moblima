@@ -1,6 +1,6 @@
 package manager;
 
-import exception.InvalidReviewRatingException;
+import exception.IllegalActionException;
 import exception.UninitialisedSingletonException;
 import model.commons.User;
 import model.movie.Movie;
@@ -53,16 +53,16 @@ public class MovieReviewController extends EntityController<MovieReview> {
      * @param movieId The ID of the movie of which this movie review is written for.
      * @param authorId The ID of the author who enters this movie review.
      * @return the newly created movie review.
-     * @throws InvalidReviewRatingException if the review rating is not within 0 to 5.
+     * @throws IllegalActionException if the review rating is not within 0 to 5.
      */
     public MovieReview createReview(String review, int rating, UUID movieId, UUID authorId)
-            throws InvalidReviewRatingException {
+            throws IllegalActionException {
 
         MovieController movieManager = MovieController.getInstance();
         UserController userManager = UserController.getInstance();
 
         if (rating > 5 || rating < 0)
-            throw new InvalidReviewRatingException();
+            throw new IllegalActionException("The review rating must be between 1 and 5.");
 
         Movie movie = movieManager.findById(movieId);
         User author = userManager.findById(authorId);
@@ -74,7 +74,10 @@ public class MovieReviewController extends EntityController<MovieReview> {
         return movieReview;
     }
 
-    // TODO Javadoc
+    /**
+     * Removes a movie review, removing is from the movie and the author.
+     * @param movieReviewId The ID of the movie review to be removed.
+     */
     public void removeReview(UUID movieReviewId) {
 
         // TODO validate if movieReviewId exists and throw appropriate exception

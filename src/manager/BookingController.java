@@ -56,16 +56,16 @@ public class BookingController extends EntityController<Booking> {
      * The booking will be put into the entities.
      * @param showtimeId The ID of the showtime choosen by the user.
      * @return The newly created booking for this showtime.
-     * @throws IllegalShowtimeStatusException if the showtime is not yet open for booking.
+     * @throws IllegalActionException if the showtime is not yet open for booking.
      */
-    public Booking createBooking(UUID showtimeId) throws IllegalShowtimeStatusException {
+    public Booking createBooking(UUID showtimeId) throws IllegalActionException {
 
         ShowtimeController showtimeController = ShowtimeController.getInstance();
         Showtime showtime = showtimeController.findById(showtimeId);
 
         // Check whether showtime is open for booking
         if (showtime.getStatus() != ShowtimeStatus.OPEN_BOOKING)
-            throw new IllegalShowtimeStatusException("Can only book when the movie is open for booking");
+            throw new IllegalActionException("Can only book when the movie is open for booking");
 
         // Create the booking
         Booking booking = new Booking(showtime);
@@ -81,13 +81,12 @@ public class BookingController extends EntityController<Booking> {
      * Creates tickets for a booking when the user selects ticketTypes, adding the tickets to the booking.
      * @param bookingId The ID of the given booking.
      * @param ticketTypesCount The total number of tickets.
-     * @throws ExceedBookingSeatException if the number of tickets exceeds the allowed maximum number of
-     * tickets to book.
-     * @throws UnavailableTicketTypeException if the ticket type is not available for this ticket type.
-     * @throws IllegalBookingStatusException if the booking is not in progress.
+     * @throws IllegalActionException if the number of tickets exceeds the allowed maximum number of
+     * tickets to book, or if the ticket type is not available for this ticket type,
+     * or if the booking is not in progress.
      */
     public void selectTicketType(UUID bookingId, Hashtable<TicketType, Integer> ticketTypesCount)
-            throws ExceedBookingSeatException, UnavailableTicketTypeException, IllegalBookingStatusException {
+            throws IllegalActionException {
 
         ShowtimeController showtimeController = ShowtimeController.getInstance();
 
@@ -95,19 +94,19 @@ public class BookingController extends EntityController<Booking> {
 
         // Check if booking not in progress
         if (booking.getStatus() != BookingStatus.IN_PROGRESS)
-            throw new IllegalBookingStatusException("The booking cannot be modified");
+            throw new IllegalActionException("The booking cannot be modified");
 
         // Check if all ticket types are available for this booking cinema
         List<TicketType> availableTicketTypes =
                 showtimeController.getAvailableTicketTypes(booking.getShowtime().getId());
         for (TicketType ticketType : ticketTypesCount.keySet())
             if (!availableTicketTypes.contains(ticketType))
-                throw new UnavailableTicketTypeException();
+                throw new IllegalActionException("Ticket type is not available");
 
         // Check if number of ticket types exceed maximum seats per booking
         int totalCount = ticketTypesCount.values().stream().mapToInt(Integer::intValue).sum();
         if (totalCount > BookingConfig.getMaxSeatsPerBooking())
-            throw new ExceedBookingSeatException();
+            throw new IllegalActionException("Already reached maximum number of seats for booking");
 
         for (TicketType ticketType : ticketTypesCount.keySet())
             for (int i = 0; i < ticketTypesCount.get(ticketType); i++)
@@ -120,28 +119,27 @@ public class BookingController extends EntityController<Booking> {
      * movie goers enters the cinema.
      * @param bookingId The ID of the booking whose tickets are assigned.
      * @param seats The seats to be assigned to the booking's tickets.
-     * @throws UnavailableBookingSeatException if the seats are not available for this showtime.
-     * @throws InsufficientSeatsException if the number of seats is not the same as the number of selected ticket types.
-     * @throws IllegalBookingStatusException if the booking is not in progress.
-     * @throws SeatNotFoundException if the seat is not found in this showtime.
+     * @throws IllegalActionException if the seats are not available for this showtime,
+     * or if the number of seats is not the same as the number of selected ticket types,
+     * or if the booking is not in progress,
+     * or if the seat is not found in this showtime.
      */
-    public void selectSeat(UUID bookingId, Seat[] seats) throws UnavailableBookingSeatException,
-            InsufficientSeatsException, IllegalBookingStatusException, SeatNotFoundException {
+    public void selectSeat(UUID bookingId, Seat[] seats) throws IllegalActionException {
 
         Booking booking = findById(bookingId);
 
         // Check if booking not in progress
         if (booking.getStatus() != BookingStatus.IN_PROGRESS)
-            throw new IllegalBookingStatusException("The booking cannot be modified");
+            throw new IllegalActionException("The booking cannot be modified");
 
         // Check if the number of seats the same with the tickets
         if (seats.length != booking.getTickets().size())
-            throw new InsufficientSeatsException();
+            throw new IllegalActionException("The number of seats does not match the number of ticket types.");
 
         // Check if all seats are available
         for (Seat seat : seats)
             if (!booking.getShowtime().getSeating().isAvailable(seat))
-                throw new UnavailableBookingSeatException();
+                throw new IllegalActionException("Seat is unavailable");
 
         // Arbitrarily pair seats to the ticket types
         for (int i = 0; i < seats.length; i++)
@@ -159,7 +157,7 @@ public class BookingController extends EntityController<Booking> {
         Booking booking = findById(bookingId);
         double price = BookingConfig.getBookingSurcharrge();
         for (Ticket ticket : booking.getTickets())
-            price += showtimeController.getTicketTypePricing(booking.getShowtime(), ticket.getType());
+            price += showtimeController.getTicketTypePricing(booking.getShowtime().getId(), ticket.getType());
         return price*(1+PaymentConfig.getGst());
     }
 
@@ -167,13 +165,13 @@ public class BookingController extends EntityController<Booking> {
      * Cancels the booking with the given booking ID in the process of making a booking.
      * A booking cannot be cancelled once confirmed.
      * @param bookingId The ID of the booking to be cancelled.
-     * @exception IllegalBookingStatusException if the booking has been confirmed.
+     * @exception IllegalActionException if the booking has been confirmed.
      */
-    public void cancelBooking(UUID bookingId) throws IllegalBookingStatusException {
+    public void cancelBooking(UUID bookingId) throws IllegalActionException {
         Booking booking = findById(bookingId);
         BookingStatus previousStatus = booking.getStatus();
         if (previousStatus == BookingStatus.CONFIRMED)
-            throw new IllegalBookingStatusException("The booking can not be cancelled");
+            throw new IllegalActionException("The booking can not be cancelled");
         booking.setStatus(BookingStatus.CANCELLED);
     }
 
@@ -182,14 +180,13 @@ public class BookingController extends EntityController<Booking> {
      * The user will be added the booking. The seats of this booking will be changed to taken.
      * @param bookingId The ID of the booking to be assigned.
      * @param userId The ID of the user who will be assigned the booking.
-     * @throws IllegalShowtimeStatusException if the movie is not open for booking.
-     * @throws UnpaidPaymentException if the payment is not accepted.
-     * @throws IllegalBookingStatusException if the booking is not in progress previously.
-     * @throws SeatNotFoundException if the seat is not found in this booing's showtime seating.
+     * @throws IllegalActionException if the movie is not open for booking,
+     * or if the payment is not accepted,
+     * or if the booking is not in progress previously,
+     * or if the seat is not found in this booing's showtime seating.
      */
     public void confirmBooking(UUID bookingId, UUID userId)
-            throws IllegalShowtimeStatusException, UnpaidPaymentException, IllegalBookingStatusException,
-            SeatNotFoundException {
+            throws IllegalActionException {
 
         UserController userController = UserController.getInstance();
 
@@ -198,17 +195,17 @@ public class BookingController extends EntityController<Booking> {
 
         // Check whether showtime is open for booking
         if (showtime.getStatus() != ShowtimeStatus.OPEN_BOOKING)
-            throw new IllegalShowtimeStatusException("Can only book when the movie is open for booking");
+            throw new IllegalActionException("Can only book when the movie is open for booking");
 
         // Check if booking not in progress
         BookingStatus previousStatus = booking.getStatus();
         if (previousStatus != BookingStatus.IN_PROGRESS)
-            throw new IllegalBookingStatusException("The booking can not be confirmed");
+            throw new IllegalActionException("The booking can not be confirmed");
 
         // Check whether payment is made
         Payment payment = booking.getPayment();
         if (payment.getStatus() != PaymentStatus.ACCEPTED)
-            throw new UnpaidPaymentException();
+            throw new IllegalActionException("The payment is not accepted yet");
 
         booking.setStatus(BookingStatus.CONFIRMED);
         showtime.addBooking(booking);

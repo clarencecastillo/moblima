@@ -1,6 +1,6 @@
 package config;
 
-import exception.HolidayNotFoundException;
+import exception.IllegalActionException;
 import util.Utilities;
 
 import java.util.Date;
@@ -74,10 +74,11 @@ public class HolidayConfig implements Configurable {
      * Removes a holiday from the holiday settings.
      *
      * @param date The date to be removed.
+     * @exception IllegalActionException if the day to be removed is not a holiday by the original setting.
      */
-    public void unsetHoliday(Date date) throws HolidayNotFoundException {
+    public void unsetHoliday(Date date) throws IllegalActionException {
         if (!isHoliday(date)) {
-            throw new HolidayNotFoundException();
+            throw new IllegalActionException("This day is not a holiday.");
         }
         holidays.remove(Utilities.getStartOfDate(date));
     }

@@ -1,4 +1,4 @@
-package exception;
-
-public class InsufficientSeatsException extends Exception {
-}
+//package exception;
+//
+//public class InsufficientSeatsException extends Exception {
+//}

@@ -68,30 +68,58 @@ public class Showtime extends Entity {
         this.cinema = cinema;
     }
 
+    /**
+     *
+     * @return
+     */
     public ShowtimeSeating getSeating() {
         return seating;
     }
 
+    /**
+     * Changes the seating of this showtime.
+     * @param seating The new seating of this showtime.
+     */
     public void setSeating(ShowtimeSeating seating) {
         this.seating = seating;
     }
 
+    /**
+     * Gets the language of this showtime.
+     * @return
+     */
     public Language getLanguage() {
         return language;
     }
 
+    /**
+     * Changes the language of this showtime.
+     * @param language The new language of this showtime.
+     */
     public void setLanguage(Language language) {
         this.language = language;
     }
 
+    /**
+     * Gets the starting time of this showtime.
+     * @return the new starting time of this showtime.
+     */
     public Date getStartTime() {
         return startTime;
     }
 
+    /**
+     * Changes the stating time of this showtime.
+     * @param startTime The new starting time of this showtime.
+     */
     public void setStartTime(Date startTime) {
         this.startTime = startTime;
     }
 
+    /**
+     * Checks whether this showtime allows free pass.
+     * @return true if this showtime allows free pass.
+     */
     public boolean isNoFreePasses() {
         return noFreePasses;
     }
@@ -108,18 +136,34 @@ public class Showtime extends Entity {
         isPreview = preview;
     }
 
+    /**
+     * Gets the subtitles of this showtime.
+     * @return the subtitles of this showtime.
+     */
     public ArrayList<Language> getSubtitles() {
         return subtitles;
     }
 
+    /**
+     * Changes the subtitles of this showtime.
+     * @param subtitles The new subtitles of this showtime.
+     */
     public void setSubtitles(ArrayList<Language> subtitles) {
         this.subtitles = subtitles;
     }
 
-    public ArrayList<Booking> getBookings() {
+    /**
+     * Gets the list of booking of this showtime.
+     * @return the list of booking of this showtime.
+     */
+    public List<Booking> getBookings() {
         return bookings;
     }
 
+    /**
+     * Gets the status of this showtime.
+     * @return the status of this showtime.
+     */
     public ShowtimeStatus getStatus() {
         if (isCancelled) return ShowtimeStatus.CANCELLED;
 
@@ -143,15 +187,25 @@ public class Showtime extends Entity {
         return isCancelled;
     }
 
+    /**
+     * Sets the status of a booking to be cancelled.
+     * @param cancelled The booking to be cancelled.
+     */
     public void setCancelled(boolean cancelled) {
         isCancelled = cancelled;
     }
 
+    /**
+     * Add a booking to this showtime.
+     * @param booking The booking to be added to this showtime.
+     */
     public void addBooking(Booking booking) {
         bookings.add(booking);
     }
 
-    public void removeBooking(Booking booking) {
-        bookings.remove(booking.getId());
-    }
+    /**
+     * Remove a booking from this showtime.
+     * @param booking The booking to be removed from this showtime.
+     */
+    public void removeBooking(Booking booking) { bookings.remove(booking.getId()); }
 }

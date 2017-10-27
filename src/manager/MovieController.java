@@ -1,7 +1,6 @@
 package manager;
 
-import exception.IllegalMovieStatusException;
-import exception.IllegalMovieStatusTransitionException;
+import exception.IllegalActionException;
 import exception.UninitialisedSingletonException;
 import model.booking.Booking;
 import model.booking.Showtime;
@@ -79,34 +78,36 @@ public class MovieController extends EntityController<Movie> {
      * Changes the status of the movie with the given movie ID.
      * @param movieId The ID of the movie whose status is to be changed.
      * @param status The new status of this movie.
-     * @throws IllegalMovieStatusTransitionException if the change of the movie status is illegal
+     * @throws IllegalActionException if the change of the movie status is illegal
      * according to business rule. The movie can not end showing if it is still open for booking.
      * The movie can not be set to preview if it is not coming soon now. The movie can not
      * be changed to showing now is it ends showing now. The movie can not be changed to coming soon
      * if it is in other status now.
      */
-    public void changeMovieStatus(UUID movieId, MovieStatus status) throws IllegalMovieStatusTransitionException {
+    public void changeMovieStatus(UUID movieId, MovieStatus status) throws IllegalActionException {
 
         Movie movie = findById(movieId);
         if (movie.getStatus() == status)
-            throw new IllegalMovieStatusTransitionException("Already in '" + status + "' state");
+            throw new IllegalActionException("Already in '" + status + "' state.");
 
         switch (status) {
             case END_OF_SHOWING:
                 for (Showtime showtime : movie.getShowtimes())
                     if (showtime.getStatus() == ShowtimeStatus.OPEN_BOOKING)
-                        throw new IllegalMovieStatusTransitionException("Cannot remove movies with upcoming/ongoing showtimes");
+                        throw new IllegalActionException("Cannot remove movies with upcoming/ongoing showtimes.");
                 break;
             case PREVIEW:
                 if (movie.getStatus() != MovieStatus.COMING_SOON)
-                    throw new IllegalMovieStatusTransitionException();
+                    throw new IllegalActionException("Can only change movie status to 'Preview' " +
+                            "if it is 'Coming Soon'.");
                 break;
             case NOW_SHOWING:
                 if (movie.getStatus() == MovieStatus.END_OF_SHOWING)
-                    throw new IllegalMovieStatusTransitionException();
+                    throw new IllegalActionException("Cannot change movie status to 'Now Showing' " +
+                            "because it is 'End of Showing' now.");
                 break;
             case COMING_SOON:
-                throw new IllegalMovieStatusTransitionException();
+                throw new IllegalActionException("Can not change movie status to 'Now Showing'.");
         }
 
         movie.setStatus(status);
@@ -138,13 +139,13 @@ public class MovieController extends EntityController<Movie> {
      * Change the movie type of the movie with the given ID to the given movie type.
      * @param movieId The ID of the movie to be changed.
      * @param type The new movie type of this movie.
-     * @throws IllegalMovieStatusException if the movie to be changes is not coming soon now, which means
+     * @throws IllegalActionException if the movie to be changes is not coming soon now, which means
      * it is showing or has ended showing already.
      */
-    public void changeMovieType(UUID movieId, MovieType type) throws IllegalMovieStatusException {
+    public void changeMovieType(UUID movieId, MovieType type) throws IllegalActionException {
         Movie movie = findById(movieId);
         if (movie.getStatus() != MovieStatus.COMING_SOON)
-            throw new IllegalMovieStatusException("Can only change movie type when it is not yet available for screening");
+            throw new IllegalActionException("Cannot only change movie type when it is not yet available for screening");
         movie.setType(type);
     }
 

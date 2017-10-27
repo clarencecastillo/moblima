@@ -1,6 +1,6 @@
 package model.booking;
 
-import exception.SeatNotFoundException;
+import exception.IllegalActionException;
 import model.cinema.Seat;
 
 import java.io.Serializable;
@@ -38,12 +38,12 @@ public class ShowtimeSeating implements Serializable {
      *
      * @param seat The seat of whose availability is to to be checked.
      * @return the status of a seat in this showtime seating if the seat is in this seat is in the showtime seating.
-     * @throws SeatNotFoundException if the seat is not in this showtime seating.
+     * @throws IllegalActionException if the seat is not in this showtime seating.
      */
-    public SeatingStatus getSeatingStatus(Seat seat) throws SeatNotFoundException {
+    public SeatingStatus getSeatingStatus(Seat seat) throws IllegalActionException {
         SeatingStatus seatingStatus = seatings.get(seat);
         if (seatingStatus == null)
-            throw new SeatNotFoundException();
+            throw new IllegalActionException("This seat is not found in this showtime seating");
         return seatingStatus;
     }
 
@@ -52,9 +52,9 @@ public class ShowtimeSeating implements Serializable {
      *
      * @param seat The seat to be checked.
      * @return true is the status of the seat is available.
-     * @throws SeatNotFoundException if the seat is not in this showtime seating.
+     * @throws IllegalActionException if the seat is not in this showtime seating.
      */
-    public boolean isAvailable(Seat seat) throws SeatNotFoundException {
+    public boolean isAvailable(Seat seat) throws IllegalActionException {
         return getSeatingStatus(seat) == SeatingStatus.AVAILABLE;
     }
 
@@ -63,11 +63,11 @@ public class ShowtimeSeating implements Serializable {
      *
      * @param seat          The seat of whose status of be changed.
      * @param seatingStatus The new status of seat to be changes in this showtime seating.
-     * @throws SeatNotFoundException if the seat is not in this showtime seating.
+     * @throws IllegalActionException if the seat is not in this showtime seating.
      */
-    public void setSeatingStatus(Seat seat, SeatingStatus seatingStatus) throws SeatNotFoundException {
+    public void setSeatingStatus(Seat seat, SeatingStatus seatingStatus) throws IllegalActionException {
         if (!hasSeat(seat))
-            throw new SeatNotFoundException();
+            throw new IllegalActionException("This seat is not found in this showtime seating");
         seatings.put(seat, seatingStatus);
     }
 
@@ -80,6 +80,7 @@ public class ShowtimeSeating implements Serializable {
     public boolean hasSeat(Seat seat) {
         return seatings.containsKey(seat);
     }
+
 //    /**
 //     * Gets the list of seats in the given status in this showtime seating.
 //     * @param status The status of the seats to be returned.
