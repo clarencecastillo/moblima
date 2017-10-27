@@ -13,7 +13,7 @@ import java.util.UUID;
  @version 1.0
  @since 2017-10-20
  */
-public abstract class EntityController<T extends Entity> implements Serializable {
+public abstract class EntityController<T extends Entity> {
 
     /**
      * A hash table with the UUID of the entity as the key and the entity as the value.
@@ -42,5 +42,15 @@ public abstract class EntityController<T extends Entity> implements Serializable
      */
     public ArrayList<T> getList() {
         return new ArrayList<>(entities.values());
+    }
+
+    // TODO javadoc
+    public Hashtable<UUID, T> getEntities() {
+        return entities;
+    }
+
+    // TODO javadoc
+    public void setEntities(Hashtable<UUID, T> entities) {
+        this.entities = entities;
     }
 }

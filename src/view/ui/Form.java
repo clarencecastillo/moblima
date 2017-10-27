@@ -34,12 +34,18 @@ public interface Form {
     String INVALID_ERROR = "Invalid user input! Please try again.";
 
     /**
-     * message to be displayed with the user input is unrecognized.
+     * The message to be displayed with the user input is unrecognized.
      */
     String UNRECOGNIZED_ERROR = "Unrecognized user input! Please try again.";
 
-    // TODO javadoc
+    /**
+     * The message to be displayed for confirmation.
+     */
     String CONFIRM = "CONFIRM";
+
+    /**
+     * The message to be displayed for cancellation.
+     */
     String CANCEL = "CANCEL";
 
     Pattern EMAIL_REGEX = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$",
@@ -259,7 +265,12 @@ public interface Form {
                         menuOption.name())).toArray(GenericMenuOption[]::new));
     }
 
-    // TODO Javadoc
+    /**
+     * Gets the confirmation or cancellation option.
+     * @param confirmText The text of confirmation.
+     * @param cancelText The text of cancellation.
+     * @return The option from the user.
+     */
     static String getConfirmOption(String confirmText, String cancelText) {
         return getOption("Confirmation", new GenericMenuOption(confirmText, CONFIRM),
                 new GenericMenuOption(cancelText, CANCEL));

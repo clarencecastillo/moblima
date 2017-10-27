@@ -144,22 +144,6 @@ public class BookingController extends EntityController<Booking> {
         booking.setSeats(seats);
     }
 
-//    FIXME
-//    /**
-//     * Gets the total price of the booking, consisting of the prices of all its tickets, the booking surcharge fee
-//     * and the GST.
-//     * @param bookingId The ID of the booking whose total price is to be returned.
-//     * @return the total price of this booking
-//     */
-//    public double getBookingPrice(UUID bookingId) {
-//        ShowtimeController showtimeController = ShowtimeController.getInstance();
-//        Booking booking = findById(bookingId);
-//        double price = BookingConfig.getBookingSurcharrge();
-//        for (Ticket ticket : booking.getTickets())
-//            price += showtimeController.getTicketTypePricing(booking.getShowtime().getId(), ticket.getType());
-//        return price*(1+PaymentConfig.getGst());
-//    }
-
     /**
      * Cancels the booking with the given booking ID in the process of making a booking.
      * A booking cannot be cancelled once confirmed.
