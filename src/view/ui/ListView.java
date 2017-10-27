@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Represents a list view whose display items have to be manually set.
+ * Represents a list view.
  *
  * @author Castillo Clarence Fitzgerald Gumtang
  * @version 1.0
@@ -14,27 +14,38 @@ import java.util.List;
 public abstract class ListView extends MenuView implements Navigable {
 
     /**
-     * An array list og the view items to be displayed in this list view.
+     * An array list of the view items to be displayed in this list view.
      */
     private ArrayList<ViewItem> viewItems = new ArrayList<>();
 
     /**
-     *
+     * Creates a list view with the given navigation.
      * @param navigation
      */
     public ListView(Navigation navigation) {
         super(navigation);
     }
 
+    /**
+     * Gets the view items from this list view.
+     * @return the view items from this list view.
+     */
     protected ArrayList<ViewItem> getViewItems() {
         return viewItems;
     }
 
+    /**
+     * Sets the view items for this menu view.
+     * @param viewItems The view items for this menu view.
+     */
     protected void setViewItems(List<ViewItem> viewItems) {
         this.viewItems.clear();
         this.viewItems.addAll(viewItems);
     }
 
+    /**
+     * Displays view items.
+     */
     @Override
     public void displayItems() {
         for (int i = 0; i < viewItems.size(); i++) {
@@ -47,6 +58,9 @@ public abstract class ListView extends MenuView implements Navigable {
         }
     }
 
+    /**
+     * Displays list view title, content and items.
+     */
     @Override
     public void display() {
         displayTitle();
@@ -55,6 +69,10 @@ public abstract class ListView extends MenuView implements Navigable {
         System.out.println();
     }
 
+    /**
+     * Gets the choice of the view items from the user.
+     * @return the choice of the view items from the user.
+     */
     @Override
     public String getChoice() {
         String viewItemRange = viewItems.size() > 1 ? "1-" + viewItems.size() :

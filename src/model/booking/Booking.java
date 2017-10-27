@@ -26,10 +26,14 @@ public class Booking extends Entity implements Payable {
      */
     private Showtime showtime;
 
-    // TODO Javadoc
+    /**
+     * A hash table with ticket types as the key and the quantity of this ticket type as the key of this booking.
+     */
     private Hashtable<TicketType, Integer> ticketTypesCount;
 
-    // TODO Javadoc
+    /**
+     * An array list of seats of this booking.
+     */
     private ArrayList<Seat> seats;
 
     /**
@@ -94,12 +98,19 @@ public class Booking extends Entity implements Payable {
         this.showtime = showtime;
     }
 
-    // TODO Javadoc
+    /**
+     * Gets a hash table with ticket types as the key and the quantity of this ticket type as the key of this booking.
+     * @return a hash table with ticket types as the key and the quantity of this ticket type
+     * as the key of this booking.
+     */
     public Hashtable<TicketType, Integer> getTicketTypesCount() {
         return ticketTypesCount;
     }
 
-    // TODO JAvadoc
+    /**
+     * Gets an array list of seats of this booking.
+     * @return an array list of seats of this booking.
+     */
     public List<Seat> getSeats() {
         return seats;
     }
@@ -157,12 +168,18 @@ public class Booking extends Entity implements Payable {
         return price;
     }
 
-    // TODO Javadoc
+    /**
+     * Changes the ticket types selected by this booking.
+     * @param ticketTypesCount the new ticket types selected by this booking.
+     */
     public void setTicketTypesCount(Hashtable<TicketType, Integer> ticketTypesCount) {
         this.ticketTypesCount = ticketTypesCount;
     }
 
-    // TODO Javadoc
+    /**
+     * Changes the seats selected by this booking.
+     * @param seats the new seats selected by this booking.
+     */
     public void setSeats(List<Seat> seats) {
         this.seats.clear();
         this.seats.addAll(seats);

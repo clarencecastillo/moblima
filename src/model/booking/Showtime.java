@@ -104,7 +104,7 @@ public class Showtime extends Entity {
 
     /**
      * Gets the movie of this showtime.
-     * @return
+     * @return the movie of this showtime.
      */
     public Movie getMovie() {
         return movie;
@@ -112,7 +112,7 @@ public class Showtime extends Entity {
 
     /**
      * Changes the movie of this showtime.
-     * @param movie
+     * @param movie the new movie of this showtime.
      */
     public void setMovie(Movie movie) {
         this.movie = movie;
