@@ -318,12 +318,22 @@ public class Movie extends Entity implements Searchable {
         this.runtimeMinutes = runtimeMinutes;
     }
 
-    // TODO OVerride toString
+    /**
+     * Gets the title, type and rating this movie as a string.
+     * @return the title, type and rating this movie as a string.
+     */
     @Override
     public String toString() {
         return String.format("%s [%s] %s", title, type, rating);
     }
 
+    /**
+     * Gets the title, type and rating this movie as a string
+     * with or without "*" to indicate whether there is free pass.
+     * @param noFreePasses whether there is free pass.
+     * @return the title, type and rating this movie as a string
+     * with or without "*" to indicate whether there is free pass.
+     */
     public String toString(boolean noFreePasses) {
         return (noFreePasses ? "*" : "") + String.format("%s [%s] %s", title, type, rating);
     }

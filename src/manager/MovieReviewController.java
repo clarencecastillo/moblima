@@ -77,12 +77,13 @@ public class MovieReviewController extends EntityController<MovieReview> {
     /**
      * Removes a movie review, removing is from the movie and the author.
      * @param movieReviewId The ID of the movie review to be removed.
+     * @exception IllegalActionException if the moview review to be removed does not exist.
      */
-    public void removeReview(UUID movieReviewId) {
-
-        // TODO validate if movieReviewId exists and throw appropriate exception
+    public void removeReview(UUID movieReviewId) throws IllegalActionException {
 
         MovieReview movieReview = findById(movieReviewId);
+        if (movieReview == null)
+            throw new IllegalActionException("This movie review does not exist.");
         movieReview.getMovie().removeReview(movieReview);
         movieReview.getAuthor().removeReview(movieReview);
         entities.remove(movieReview.getId());

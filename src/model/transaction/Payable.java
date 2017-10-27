@@ -22,6 +22,9 @@ public interface Payable extends Priceable {
      */
     void setPayment(Payment payment);
 
-    // TODO Javadoc
+    /**
+     * Gets the transaction code of this payable.
+     * @return the transaction code of this payable.
+     */
     String getTransactionCode();
 }

@@ -31,7 +31,11 @@ public interface Priceable {
      */
     double getPrice();
 
-    // TODO Javadoc
+    /**
+     * Gets the price of this priceable with GST.
+     * @param priceable The GST to be added to the price of this priceable.
+     * @return the price of this priceable with GST.
+     */
     static double getPriceWithGst(Priceable priceable) {
         return priceable.getPrice() * (1 + PaymentConfig.getGst());
     }

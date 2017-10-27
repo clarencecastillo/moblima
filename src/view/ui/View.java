@@ -14,7 +14,9 @@ import java.util.regex.Pattern;
  */
 public abstract class View {
 
-    // TODO Javadoc
+    /**
+     * The left margin is set to be 1.
+     */
     public int LEFT_MARGIN = 1;
 
     /**
