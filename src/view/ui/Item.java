@@ -10,16 +10,17 @@ package view.ui;
 public interface Item {
 
     /**
-     * The icon of delimiter.
+     * The icon of delimiter is "|".
      */
     char DELIMITER = '|';
 
     /**
-     * The number of right padding.
+     * The number of right padding is 4.
      */
     int RIGHT_PADDING = 1;
+
     /**
-     * The number of label length.
+     * The number of label length is 4.
      */
     int LABEL_LENGTH = 4;
 
@@ -47,13 +48,13 @@ public interface Item {
 
     /**
      * Displays the given index.
-     * @param index
+     * @param index the index to be displayed.
      */
     void display(int index);
 
     /**
      * Gets the value of this item.
-     * @return
+     * @return the value of this item.
      */
     String getValue();
 }
