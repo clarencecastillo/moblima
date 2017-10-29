@@ -2,6 +2,7 @@ package util;
 
 import view.ui.Form;
 
+import java.io.*;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -206,5 +207,22 @@ public class Utilities {
             }
         }
         return costs[b.length()];
+    }
+
+    public static ObjectOutputStream getObjectOutputStream(String filename) {
+        ObjectOutputStream objectOutputStream = null;
+        try {
+            objectOutputStream = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(filename)));
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+        }
+        return objectOutputStream;
+    }
+
+    public static ObjectInputStream getObjectInputStream(String filename) throws IOException {
+        ObjectInputStream objectInputStream = null;
+        objectInputStream = new ObjectInputStream(new BufferedInputStream(new FileInputStream(filename)));
+        return objectInputStream;
     }
 }
