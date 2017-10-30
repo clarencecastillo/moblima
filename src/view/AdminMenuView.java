@@ -64,7 +64,9 @@ public class AdminMenuView extends MenuView {
                 navigation.goTo(new ShowtimeListView(navigation), AccessLevel.ADMINISTRATOR,
                         ShowtimeListView.ShowtimeListIntent.VIEW_SHOWTIMES);
                 break;
-            case VIEW_REPORTS:
+            case VIEW_RANKING:
+                navigation.goTo(new MovieListView(navigation), AccessLevel.ADMINISTRATOR,
+                        MovieListView.MovieListIntent.VIEW_RANKING);
                 break;
             case CONFIGURE_SETTINGS:
                 navigation.goTo(new ConfigMenuView(navigation), AccessLevel.ADMINISTRATOR);
@@ -102,7 +104,7 @@ public class AdminMenuView extends MenuView {
     private enum AdminMenuOption implements EnumerableMenuOption {
         MANAGE_MOVIE_LISTINGS("Manage Movie Listings"),
         MANAGE_SHOWTIMES("Manage Showtimes"),
-        VIEW_REPORTS("View Top 5"),
+        VIEW_RANKING("View Top 5"),
         CONFIGURE_SETTINGS("Configure Settings"),
         SAVE_DATA("Save Data"),
         LOGOUT("Log Out");

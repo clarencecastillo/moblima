@@ -121,8 +121,8 @@ public class TicketTypeListView extends ListView {
         String userInput = getChoice();
         if (userInput.equals(BACK)) {
             if (accessLevel == AccessLevel.PUBLIC && totalCount > 0) {
-                View.displayWarning("You have " + totalCount + " selected ticket(s) pending for booking. Are you sure " +
-                        "you want to go back? All progress up to this point will be lost.");
+                View.displayWarning("You have " + totalCount + " selected ticket(s) pending for booking. " +
+                        "Are you sure you want to go back? All progress up to this point will be lost.");
                 switch (Form.getConfirmOption("Leave", "Cancel")) {
                     case CONFIRM:
                         bookingController.cancelBooking(booking.getId());

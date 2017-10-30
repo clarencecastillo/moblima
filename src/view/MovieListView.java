@@ -75,7 +75,6 @@ public class MovieListView extends ListView {
             case VIEW_RANKING:
                 movies.addAll(movieController.getList());
                 Collections.sort(movies);
-                System.out.println(movies);
                 if (movies.size() > 5)
                     movies = movies.subList(0, 5);
                 setContent("Displaying top " + movies.size() + " movie item(s) by score.");
