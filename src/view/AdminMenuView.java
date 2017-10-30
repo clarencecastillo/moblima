@@ -61,6 +61,8 @@ public class AdminMenuView extends MenuView {
                         MovieListView.MovieListIntent.VIEW_MOVIES);
                 break;
             case MANAGE_SHOWTIMES:
+                navigation.goTo(new ShowtimeListView(navigation), AccessLevel.ADMINISTRATOR,
+                        ShowtimeListView.ShowtimeListIntent.VIEW_SHOWTIMES);
                 break;
             case VIEW_REPORTS:
                 break;

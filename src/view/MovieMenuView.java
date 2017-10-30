@@ -82,7 +82,8 @@ public class MovieMenuView extends MenuView {
             switch (MovieMenuOption.valueOf(userChoice)) {
                 case VIEW_SHOWTIMES:
                     navigation.goTo(new ShowtimeListView(navigation), accessLevel,
-                            new String[] {null, movie.getId().toString()});
+                            ShowtimeListView.ShowtimeListIntent.VIEW_SHOWTIMES,
+                            null, movie.getId().toString());
                     break;
                 case SEE_REVIEWS:
                     navigation.goTo(new MovieReviewListView(navigation), accessLevel, movie.getId().toString());

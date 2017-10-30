@@ -182,6 +182,10 @@ public class Utilities {
                 calendarDayOfWeek == calendar.get(Calendar.DAY_OF_WEEK));
     }
 
+    public static boolean isOnSameDay(Date date1, Date date2) {
+        return getDateWithTime(date1, 0, 0).compareTo(getDateWithTime(date2, 0, 0)) == 0;
+    }
+
     /**
      * Gets the similarity score of two strings.
      * @param a The first string to be compared.
@@ -209,6 +213,7 @@ public class Utilities {
         return costs[b.length()];
     }
 
+    // TODO Javadoc
     public static ObjectOutputStream getObjectOutputStream(String filename) {
         ObjectOutputStream objectOutputStream = null;
         try {
@@ -220,6 +225,7 @@ public class Utilities {
         return objectOutputStream;
     }
 
+    // TODO Javadoc
     public static ObjectInputStream getObjectInputStream(String filename) throws IOException {
         ObjectInputStream objectInputStream = null;
         objectInputStream = new ObjectInputStream(new BufferedInputStream(new FileInputStream(filename)));

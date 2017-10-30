@@ -37,19 +37,19 @@ public class PricingConfigListMenu extends ListView {
         ArrayList<ViewItem> viewItems = new ArrayList<>();
         for (MovieType movieType : MovieType.values())
             viewItems.add(new ViewItem(movieType.toString() + " Movies",
+                    String.format("$%.2f", movieType.getPrice()),
                     String.join(VALUE_DELIMITER, "MovieType", movieType.name(),
-                            movieType.toString() + " Movies"),
-                    String.format("$%.2f", movieType.getPrice())));
+                            movieType.toString() + " Movies")));
         for (TicketType ticketType : TicketType.values())
             viewItems.add(new ViewItem(ticketType.toString() + "s",
+                    String.format("$%.2f", ticketType.getPrice()),
                     String.join(VALUE_DELIMITER, "TicketType", ticketType.name(),
-                            ticketType.toString() + "s"),
-                    String.format("$%.2f", ticketType.getPrice())));
+                            ticketType.toString() + "s")));
         for (CinemaType cinemaType : CinemaType.values())
             viewItems.add(new ViewItem(cinemaType.toString() + " Cinemas",
+                    String.format("$%.2f", cinemaType.getPrice()),
                     String.join(VALUE_DELIMITER, "CinemaType", cinemaType.name(),
-                            cinemaType.toString() + " Cinemas"),
-                    String.format("$%.2f", cinemaType.getPrice())));
+                            cinemaType.toString() + " Cinemas")));
         setViewItems(viewItems);
 
         display();

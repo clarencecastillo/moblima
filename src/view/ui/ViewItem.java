@@ -1,6 +1,6 @@
 package view.ui;
 
-import java.util.Arrays;
+import java.util.List;
 
 /**
  * Represents a item in a view.
@@ -19,13 +19,25 @@ public class ViewItem extends View implements Item {
     /**
      * Creates a view item with the given title, string content and description.
      * @param title The title of this view item.
-     * @param value The string content of this view item.
-     * @param description The description of this view item.
+     * @param value The string value of this view item.
+     * @param content The content of this view item.
      */
-    public ViewItem(String title, String value, String... description) {
+    public ViewItem(String title, String content, String value) {
         this.title = title;
+        this.content.add(content);
         this.value = value;
-        this.content.addAll(Arrays.asList(description));
+    }
+
+    /**
+     * Creates a view item with the given title, string content and description.
+     * @param title The title of this view item.
+     * @param value The string value of this view item.
+     * @param content The content of this view item.
+     */
+    public ViewItem(String title, List<String> content, String value) {
+        this.title = title;
+        this.content.addAll(content);
+        this.value = value;
     }
 
     /**

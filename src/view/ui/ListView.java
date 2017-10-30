@@ -48,10 +48,13 @@ public abstract class ListView extends MenuView implements Navigable {
      */
     @Override
     public void displayItems() {
-        for (int i = 0; i < viewItems.size(); i++) {
-            viewItems.get(i).display(i + 1);
-            System.out.println();
-        }
+        if (viewItems.size() == 0)
+            System.out.println("No items to show.");
+        else
+            for (int i = 0; i < viewItems.size(); i++) {
+                viewItems.get(i).display(i + 1);
+                System.out.println();
+            }
         if (menuItems.size() > 0) {
             System.out.println();
             super.displayItems();

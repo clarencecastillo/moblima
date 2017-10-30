@@ -5,6 +5,7 @@ import exception.UnauthorisedNavigationException;
 import view.ui.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class PaymentConfigListView extends ListView {
 
@@ -30,8 +31,8 @@ public class PaymentConfigListView extends ListView {
     public void onEnter() {
         ArrayList<ViewItem> viewItems = new ArrayList<>();
         viewItems.add(new ViewItem("GST",
-                PaymentConfigListOption.GST.toString(),
-                String.format("$%.2f", PaymentConfig.getGst())));
+                String.format("$%.2f", PaymentConfig.getGst()),
+                PaymentConfigListOption.GST.toString()));
 //        viewItems.add(new ViewItem("Allow Refunds",
 //                PaymentConfigListOption.ALLOW_REFUNDS.toString(),
 //                PaymentConfig.isRefundsAllowed() ? "ALLOWED" : "NOT ALLOWED"));

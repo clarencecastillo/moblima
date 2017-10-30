@@ -5,6 +5,7 @@ import exception.UnauthorisedNavigationException;
 import view.ui.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class BookingConfigListView extends ListView {
 
@@ -31,14 +32,14 @@ public class BookingConfigListView extends ListView {
 
         ArrayList<ViewItem> viewItems = new ArrayList<>();
         viewItems.add(new ViewItem("Maximum Seats Per Booking",
-                BookingConfigListOption.MAX_SEATS_PER_BOOKING.toString(),
-                String.format("%d seats", BookingConfig.getMaxSeatsPerBooking())));
+                String.format("%d seats", BookingConfig.getMaxSeatsPerBooking()),
+                BookingConfigListOption.MAX_SEATS_PER_BOOKING.toString()));
         viewItems.add(new ViewItem("Minimum Days Before Open Booking",
-                BookingConfigListOption.MIN_DAYS_BEFORE_OPEN_BOOKING.toString(),
-                String.format("%d days", BookingConfig.getDaysBeforeOpenBooking())));
+                String.format("%d days", BookingConfig.getDaysBeforeOpenBooking()),
+                BookingConfigListOption.MIN_DAYS_BEFORE_OPEN_BOOKING.toString()));
         viewItems.add(new ViewItem("Booking Fee",
-                BookingConfigListOption.BOOKING_FEE.toString(),
-                String.format("$%.2f", BookingConfig.getBookingSurcharrge())));
+                String.format("$%.2f", BookingConfig.getBookingSurcharrge()),
+                BookingConfigListOption.BOOKING_FEE.toString()));
 //        viewItems.add(new ViewItem("Booking Changes Grace Period",
 //                BookingConfigMenuOption.BOOKING_CHANGE_GRACE_PERIOD.toString(),
 //                String.format("%d minutes", BookingConfig.getBookingChangesGraceMinutes())));
@@ -46,8 +47,8 @@ public class BookingConfigListView extends ListView {
 //                BookingConfigMenuOption.BOOKING_CHANGE_FEE.toString(),
 //                String.format("$%.2f", BookingConfig.getBookingChangesSurcharge())));
         viewItems.add(new ViewItem("Minutes Before Closed Booking",
-                BookingConfigListOption.MINS_BEFORE_CLOSED_BOOKING.toString(),
-                String.format("%d minutes", BookingConfig.getMinutesBeforeClosedBooking())));
+                String.format("%d minutes", BookingConfig.getMinutesBeforeClosedBooking()),
+                BookingConfigListOption.MINS_BEFORE_CLOSED_BOOKING.toString()));
         setViewItems(viewItems);
 
         display();

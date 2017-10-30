@@ -335,6 +335,17 @@ public interface Form {
 
     }
 
+    // TODO Javadoc
+    static boolean getBoolean(String prompt) {
+        while (true) {
+            char response = getChar(prompt + " [ Y/N ]");
+            if (response == 'Y' || response == 'N')
+                return response == 'Y';
+            else
+                View.displayError(INVALID_ERROR);
+        }
+    }
+
     /**
      * Prompts the user to press any key to continue.
      */
