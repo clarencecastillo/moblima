@@ -37,11 +37,12 @@ public class CinemaView extends View {
                 if (cell instanceof Seat) {
                     Seat seat = (Seat) cell;
                     char seatIcon = showtimeSeating.getSeatingStatus(seat).toString().charAt(0);
-                    for (Seat selectedSeat : selectedSeats)
-                        if (seat.getRow() == selectedSeat.getRow() && seat.getColumn() == selectedSeat.getColumn()) {
-                            seatIcon = '!';
-                            break;
-                        }
+                    if (selectedSeats != null)
+                        for (Seat selectedSeat : selectedSeats)
+                            if (seat.getRow() == selectedSeat.getRow() && seat.getColumn() == selectedSeat.getColumn()) {
+                                seatIcon = '!';
+                                break;
+                            }
                     row += cell.toStringIcon().replace(' ', seatIcon);
                 } else {
                     row += cell.toStringIcon();
@@ -56,9 +57,11 @@ public class CinemaView extends View {
                 "Available                   [ ]",
                 "Couple Seat              [    ]",
                 "Wheelchair Accessible       { }",
-                "Occupied                    [X]",
-                "Your Seat                   [!]"
+                "Occupied                    [X]"
                 ));
+
+        if (selectedSeats != null)
+            content.add("Your Seat                   [!]");
 
         setContent(content.toArray(new String[content.size()]));
     }

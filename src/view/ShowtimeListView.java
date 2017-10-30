@@ -269,12 +269,16 @@ public class ShowtimeListView extends ListView {
                             userInput,
                             Utilities.toFormat(dateFilter));
                 } else {
-                    try {
-                        Booking booking = bookingController.createBooking(UUID.fromString(userInput));
-                        navigation.goTo(new TicketTypeListView(navigation), accessLevel, booking.getId().toString());
-                    } catch (IllegalActionException ex) {
-                        View.displayError("Sorry, cannot book for this showtime at this time.");
-                        navigation.refresh();
+                    if (accessLevel == AccessLevel.PUBLIC) {
+                        try {
+                            Booking booking = bookingController.createBooking(UUID.fromString(userInput));
+                            navigation.goTo(new TicketTypeListView(navigation), accessLevel, booking.getId().toString());
+                        } catch (IllegalActionException ex) {
+                            View.displayError("Sorry, cannot book for this showtime at this time.");
+                            navigation.refresh();
+                        }
+                    } else {
+                        navigation.goTo(new TicketTypeListView(navigation), accessLevel, userInput);
                     }
                 }
             }
