@@ -2,6 +2,7 @@ package util;
 
 import view.ui.Form;
 
+import java.io.*;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -184,6 +185,10 @@ public class Utilities {
                 calendarDayOfWeek == calendar.get(Calendar.DAY_OF_WEEK));
     }
 
+    public static boolean isOnSameDay(Date date1, Date date2) {
+        return getDateWithTime(date1, 0, 0).compareTo(getDateWithTime(date2, 0, 0)) == 0;
+    }
+
     /**
      * Gets the similarity score of two strings.
      * @param a The first string to be compared.
@@ -209,5 +214,24 @@ public class Utilities {
             }
         }
         return costs[b.length()];
+    }
+
+    // TODO Javadoc
+    public static ObjectOutputStream getObjectOutputStream(String filename) {
+        ObjectOutputStream objectOutputStream = null;
+        try {
+            objectOutputStream = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(filename)));
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+        }
+        return objectOutputStream;
+    }
+
+    // TODO Javadoc
+    public static ObjectInputStream getObjectInputStream(String filename) throws IOException {
+        ObjectInputStream objectInputStream = null;
+        objectInputStream = new ObjectInputStream(new BufferedInputStream(new FileInputStream(filename)));
+        return objectInputStream;
     }
 }

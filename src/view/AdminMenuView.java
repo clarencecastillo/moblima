@@ -1,9 +1,13 @@
 package view;
 
 import exception.RejectedNavigationException;
+import manager.EntityController;
 import manager.UserController;
 import model.cinema.Staff;
+import util.Utilities;
 import view.ui.*;
+
+import java.io.ObjectOutputStream;
 
 public class AdminMenuView extends MenuView {
 
@@ -25,18 +29,16 @@ public class AdminMenuView extends MenuView {
         View.displayInformation("Please enter your credentials");
 
         for (int loginAttempts = 1; loginAttempts <= MAX_LOGIN_ATTEMPTS; loginAttempts++) {
-            String password = Form.getCensoredString("Password");
-            String username = Form.getString("Username", 0);
 
-            // DEBUG
-            administrator = userController.findByUsername("tuanqi");
-            break;
-//            if (userController.login(username, password)) {
-//                administrator = userController.findByUsername(username);
-//                break;
-//            }
-//            String attemptsMessage = "[" + loginAttempts + " of " + MAX_LOGIN_ATTEMPTS + "]";
-//            View.displayError("Access denied. Please try again. " + attemptsMessage);
+            String username = Form.getString("Username", 0);
+            String password = Form.getCensoredString("Password");
+
+            if (userController.login(username, password)) {
+                administrator = userController.findByUsername(username);
+                break;
+            }
+            String attemptsMessage = "[" + loginAttempts + " of " + MAX_LOGIN_ATTEMPTS + "]";
+            View.displayError("Access denied. Please try again. " + attemptsMessage);
         }
 
         if (administrator == null) {
@@ -59,11 +61,37 @@ public class AdminMenuView extends MenuView {
                         MovieListView.MovieListIntent.VIEW_MOVIES);
                 break;
             case MANAGE_SHOWTIMES:
+                navigation.goTo(new ShowtimeListView(navigation), AccessLevel.ADMINISTRATOR,
+                        ShowtimeListView.ShowtimeListIntent.VIEW_SHOWTIMES);
                 break;
-            case VIEW_REPORTS:
+            case VIEW_RANKING:
+                navigation.goTo(new MovieListView(navigation), AccessLevel.ADMINISTRATOR,
+                        MovieListView.MovieListIntent.VIEW_RANKING);
                 break;
             case CONFIGURE_SETTINGS:
                 navigation.goTo(new ConfigMenuView(navigation), AccessLevel.ADMINISTRATOR);
+                break;
+            case SAVE_DATA:
+                View.displayWarning("Warning! This will irreversibly overwrite all previously saved data.");
+                switch(Form.getConfirmOption("Save", "Cancel")) {
+                    case CONFIRM:
+                        ObjectOutputStream objectOutputStream = Utilities
+                                .getObjectOutputStream(EntityController.DAT_FILENAME);
+                        if (objectOutputStream != null) {
+                            try {
+                                EntityController.save(objectOutputStream);
+                                View.displaySuccess("Successfully saved entities to file!");
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                                View.displayError("Error in saving entities to file.");
+                            }
+                        }
+                        break;
+                    case CANCEL:
+                        break;
+                }
+                Form.pressAnyKeyToContinue();
+                navigation.refresh();
                 break;
             case LOGOUT:
                 View.displaySuccess("You have been logged out successfully!");
@@ -76,8 +104,9 @@ public class AdminMenuView extends MenuView {
     private enum AdminMenuOption implements EnumerableMenuOption {
         MANAGE_MOVIE_LISTINGS("Manage Movie Listings"),
         MANAGE_SHOWTIMES("Manage Showtimes"),
-        VIEW_REPORTS("View Top 5"),
+        VIEW_RANKING("View Top 5"),
         CONFIGURE_SETTINGS("Configure Settings"),
+        SAVE_DATA("Save Data"),
         LOGOUT("Log Out");
 
         private String description;

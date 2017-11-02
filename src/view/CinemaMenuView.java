@@ -2,19 +2,21 @@ package view;
 
 import exception.RejectedNavigationException;
 import manager.BookingController;
+import manager.ShowtimeController;
 import model.booking.Booking;
+import model.booking.Showtime;
 import model.booking.ShowtimeSeating;
 import model.cinema.CinemaLayout;
 import model.cinema.Seat;
 import view.ui.*;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.UUID;
 
 public class CinemaMenuView extends MenuView {
 
     private Booking booking;
+    private Showtime showtime;
     private CinemaLayout cinemaLayout;
     private ShowtimeSeating showtimeSeating;
     private ArrayList<Seat> selectedSeats;
@@ -22,10 +24,12 @@ public class CinemaMenuView extends MenuView {
 
     private AccessLevel accessLevel;
     private BookingController bookingController;
+    private ShowtimeController showtimeController;
 
     public CinemaMenuView(Navigation navigation) {
         super(navigation);
         this.bookingController = BookingController.getInstance();
+        this.showtimeController = ShowtimeController.getInstance();
     }
 
     @Override
@@ -34,25 +38,33 @@ public class CinemaMenuView extends MenuView {
         this.accessLevel = accessLevel;
         switch (accessLevel) {
             case ADMINISTRATOR:
+                showtime = showtimeController.findById(UUID.fromString(args[0]));
+                if (showtime == null) {
+                    View.displayError("Showtime not found!");
+                    Form.pressAnyKeyToContinue();
+                    throw new RejectedNavigationException();
+                }
+
+                setTitle("Showtime Seating");
                 break;
             case PUBLIC:
+                booking = bookingController.findById(UUID.fromString(args[0]));
+                if (booking == null) {
+                    View.displayError("Booking not found!");
+                    Form.pressAnyKeyToContinue();
+                    throw new RejectedNavigationException();
+                }
+                showtime = booking.getShowtime();
+                numberOfSeats = booking.getTotalTicketsCount();
+
+                setTitle("Seat Selection");
+                setMenuItems(CinemaMenuOption.values());
+                selectedSeats = new ArrayList<>();
                 break;
         }
 
-        booking = bookingController.findById(UUID.fromString(args[0]));
-        if (booking == null) {
-            View.displayError("Booking not found!");
-            Form.pressAnyKeyToContinue();
-            throw new RejectedNavigationException();
-        }
-
-        showtimeSeating = booking.getShowtime().getSeating();
-        cinemaLayout = booking.getShowtime().getCinema().getLayout();
-        selectedSeats = new ArrayList<>();
-        numberOfSeats = booking.getTotalTicketsCount();
-
-        setTitle("Seat Selection");
-        setMenuItems(CinemaMenuOption.values());
+        showtimeSeating = showtime.getSeating();
+        cinemaLayout = showtime.getCinema().getLayout();
         addBackOption();
     }
 
@@ -61,7 +73,11 @@ public class CinemaMenuView extends MenuView {
         setContent(new CinemaView(showtimeSeating, cinemaLayout, selectedSeats).getContent());
         display();
 
-        View.displayInformation("Seats to Choose: " + (numberOfSeats - selectedSeats.size()));
+        if (accessLevel == AccessLevel.PUBLIC)
+            View.displayInformation("Seats to Choose: " + (numberOfSeats - selectedSeats.size()));
+        else
+            View.displayInformation("Seats occupied: " + showtime.getBookings().stream()
+                    .map(Booking::getTotalTicketsCount).mapToInt(Integer::intValue).sum());
 
         String userChoice = getChoice();
         if (userChoice.equals(BACK))

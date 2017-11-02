@@ -8,6 +8,7 @@ import view.ui.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -70,6 +71,13 @@ public class MovieListView extends ListView {
                     movies = movies.stream().filter(movie ->
                             movie.getStatus() != MovieStatus.END_OF_SHOWING).collect(Collectors.toList());
                 setContent("Displaying " + movies.size() + " movie item(s).");
+                break;
+            case VIEW_RANKING:
+                movies.addAll(movieController.getList());
+                Collections.sort(movies);
+                if (movies.size() > 5)
+                    movies = movies.subList(0, 5);
+                setContent("Displaying top " + movies.size() + " movie item(s) by score.");
                 break;
         }
 

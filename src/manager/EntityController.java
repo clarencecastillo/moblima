@@ -2,8 +2,12 @@ package manager;
 
 import model.commons.Entity;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Hashtable;
 import java.util.UUID;
 
@@ -13,6 +17,12 @@ import java.util.UUID;
  @since 2017-10-20
  */
 public abstract class EntityController<T extends Entity> {
+
+    // TODO Javadoc
+    public static final String DAT_FILENAME = "moblima.dat";
+
+    // TODO Javadoc
+    private static ArrayList<EntityController> controllers = new ArrayList<>();
 
     /**
      * A hash table with the UUID of the entity as the key and the entity as the value.
@@ -24,6 +34,7 @@ public abstract class EntityController<T extends Entity> {
      */
     protected EntityController() {
         this.entities = new Hashtable<>();
+        controllers.add(this);
     }
 
     /**
@@ -43,13 +54,22 @@ public abstract class EntityController<T extends Entity> {
         return new ArrayList<>(entities.values());
     }
 
-    // TODO javadoc
-    public Hashtable<UUID, T> getEntities() {
-        return entities;
+    // TODO Javadoc
+    public static void save(ObjectOutputStream objectOutputStream) throws IOException {
+        for (EntityController controller : controllers)
+            objectOutputStream.writeObject(controller.entities);
+        objectOutputStream.close();
     }
 
-    // TODO javadoc
-    public void setEntities(Hashtable<UUID, T> entities) {
-        this.entities = entities;
+    // TODO Javadoc
+    public static void load(ObjectInputStream objectInputStream) throws IOException, ClassNotFoundException {
+        for (EntityController controller : controllers)
+            controller.loadEntities(objectInputStream);
+        objectInputStream.close();
+    }
+
+    @SuppressWarnings("unchecked")
+    private void loadEntities(ObjectInputStream objectInputStream) throws IOException, ClassNotFoundException {
+        entities = (Hashtable<UUID, T>) objectInputStream.readObject();
     }
 }

@@ -7,6 +7,7 @@ import model.cinema.CinemaType;
 import view.ui.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class TicketTypeConfigListMenu extends ListView {
 
@@ -37,8 +38,8 @@ public class TicketTypeConfigListMenu extends ListView {
         for (CinemaType cinemaType : CinemaType.values())
             for (TicketType ticketType : TicketType.values())
                 viewItems.add(new ViewItem(cinemaType.toString() + " - " + ticketType.toString(),
-                        String.join(VALUE_DELIMITER, cinemaType.name(), ticketType.name()),
-                        cinemaType.isAvailable(ticketType) ? "ALLOWED" : "NOT ALLOWED"));
+                        cinemaType.isAvailable(ticketType) ? "ALLOWED" : "NOT ALLOWED",
+                        String.join(VALUE_DELIMITER, cinemaType.name(), ticketType.name())));
         setViewItems(viewItems);
 
         display();

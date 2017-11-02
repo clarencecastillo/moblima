@@ -5,6 +5,7 @@ import exception.UnauthorisedNavigationException;
 import view.ui.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class AdminConfigListView extends ListView {
 
@@ -31,8 +32,8 @@ public class AdminConfigListView extends ListView {
 
         ArrayList<ViewItem> viewItems = new ArrayList<>();
         viewItems.add(new ViewItem("Admin Secret",
-                AdminConfigListOption.ADMIN_SECRET.toString(),
-                AdminConfig.getAdminSecret()));
+                AdminConfig.getAdminSecret(),
+                AdminConfigListOption.ADMIN_SECRET.toString()));
         setViewItems(viewItems);
 
         display();

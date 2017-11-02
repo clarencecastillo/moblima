@@ -5,10 +5,7 @@ import exception.UnauthorisedNavigationException;
 import util.Utilities;
 import view.ui.*;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Hashtable;
-import java.util.TreeSet;
+import java.util.*;
 
 public class HolidayConfigListView extends ListView {
 
@@ -42,7 +39,7 @@ public class HolidayConfigListView extends ListView {
         TreeSet<Date> holidayDates = new TreeSet<>(holidays.keySet());
         for (Date date : holidayDates) {
             String holidayDate = Utilities.toFormat(date, "d MMMMM");
-            viewItems.add(new ViewItem(holidayDate, Utilities.toFormat(date), holidays.get(date)));
+            viewItems.add(new ViewItem(holidayDate, holidays.get(date), Utilities.toFormat(date)));
         }
         setViewItems(viewItems);
 

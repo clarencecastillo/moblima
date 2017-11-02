@@ -1,5 +1,7 @@
 package model.commons;
 
+import view.ui.EnumerableMenuOption;
+
 /**
  * Represents a standard set of languages for movies.
  *
@@ -7,7 +9,7 @@ package model.commons;
  * @since 2017-10-20
  */
 
-public enum Language {
+public enum Language implements EnumerableMenuOption {
 
     /**
      * Language English.
@@ -55,6 +57,12 @@ public enum Language {
      */
     @Override
     public String toString() {
+        return name;
+    }
+
+    // TODO Javadoc
+    @Override
+    public String getDescription() {
         return name;
     }
 }
