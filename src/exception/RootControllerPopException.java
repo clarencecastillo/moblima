@@ -2,7 +2,6 @@ package exception;
 
 /**
  Signals that the navigation request is out of the root.
- @author Castillo Clarence Fitzgerald Gumtang
  @version 1.0
  @since 2017-10-20
  */

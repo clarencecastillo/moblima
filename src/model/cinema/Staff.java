@@ -5,7 +5,6 @@ import model.commons.User;
 /**
  * Represents a cinema staff who has the admin right.
  *
- * @author Castillo Clarence Fitzgerald Gumtang
  * @version 1.0
  * @since 2017-10-20
  */

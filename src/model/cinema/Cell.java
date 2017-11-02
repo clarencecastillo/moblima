@@ -5,7 +5,6 @@ import java.io.Serializable;
 /**
  * Represents a cell in the cinema layout which can be either an empty space or a seat.
  *
- * @author Castillo Clarence Fitzgerald Gumtang
  * @version 1.0
  * @since 2017-10-20
  */

@@ -14,7 +14,6 @@ import java.util.*;
 /**
  * Represents the showtime of a movie in a Cineplex.
  *
- * @author Castillo Clarence Fitzgerald Gumtang
  * @version 1.0
  * @since 2017-10-20
  */

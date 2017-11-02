@@ -3,7 +3,6 @@ package model.transaction;
 /**
  * Represents a base interface that should be implemented by all classes whose price can be paid.
  *
- * @author Castillo Clarence Fitzgerald Gumtang
  * @version 1.0
  * @since 2017-10-20
  */

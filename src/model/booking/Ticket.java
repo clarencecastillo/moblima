@@ -6,7 +6,6 @@ import model.transaction.Priceable;
 /**
  * Represents a ticket that belongs to a booking.
  *
- * @author Castillo Clarence Fitzgerald Gumtang
  * @version 1.0
  * @since 2017-10-20
  */

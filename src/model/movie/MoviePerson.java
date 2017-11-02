@@ -5,7 +5,6 @@ import model.commons.Person;
 /**
  * Represents a movie-related person who can be a director or an actor.
  *
- * @author Castillo Clarence Fitzgerald Gumtang
  * @version 1.0
  * @since 2017-10-20
  */

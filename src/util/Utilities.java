@@ -9,6 +9,9 @@ import java.util.*;
 
 /**
  * This class has many utility functions related to date and time.
+ *
+ * @version 1.0
+ * @since 2017-10-20
  */
 public class Utilities {
 

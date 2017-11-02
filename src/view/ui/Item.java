@@ -3,7 +3,6 @@ package view.ui;
 /**
  * Represents a standard interface that must be implemented by an item on the interface.
  *
- * @author Castillo Clarence Fitzgerald Gumtang
  * @version 1.0
  * @since 2017-10-20
  */

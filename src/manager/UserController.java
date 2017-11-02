@@ -6,7 +6,6 @@ import model.commons.User;
 
 /**
  Represents the controller of users, including the moviegoer and cinema staff.
- @author Castillo Clarence Fitzgerald Gumtang
  @version 1.0
  @since 2017-10-20
  */

@@ -14,7 +14,6 @@ import java.util.List;
  * Represents the configuration of ticket setting. It consists os the available ticket types for each cinema type and
  * the pricing rate of each priceable, including cinema type, movie type and ticket type.
  *
- * @author Castillo Clarence Fitzgerald Gumtang
  * @version 1.0
  * @since 2017-10-20
  */

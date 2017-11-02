@@ -4,7 +4,6 @@ import exception.UninitialisedSingletonException;
 import model.cinema.Cineplex;
 /**
  Represents the controller of cineplexes.
- @author Castillo Clarence Fitzgerald Gumtang
  @version 1.0
  @since 2017-10-20
  */

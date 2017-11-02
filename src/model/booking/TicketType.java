@@ -6,7 +6,6 @@ import model.transaction.Priceable;
 /**
  * Represents a standard set of ticket types whose pricing rate will be added to the ticket price.
  *
- * @author Castillo Clarence Fitzgerald Gumtang
  * @version 1.0
  * @since 2017-10-20
  */

@@ -5,7 +5,6 @@ import java.util.Arrays;
 /**
  * Represents a item in a view.
  *
- * @author Castillo Clarence Fitzgerald Gumtang
  * @version 1.0
  * @since 2017-10-20
  */

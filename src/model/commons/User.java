@@ -9,7 +9,6 @@ import java.util.List;
 /**
  * Represents a user of the application, who is the moviegoers that can book tickets and write reviews.
  *
- * @author Castillo Clarence Fitzgerald Gumtang
  * @version 1.0
  * @since 2017-10-20
  */

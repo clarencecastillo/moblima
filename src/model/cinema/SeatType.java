@@ -3,7 +3,6 @@ package model.cinema;
 /**
  * Represents a standard set of seat types for a seat, which can be single, couple, or handicap.
  *
- * @author Castillo Clarence Fitzgerald Gumtang
  * @version 1.0
  * @since 2017-10-20
  */

@@ -15,7 +15,6 @@ import java.util.stream.Collectors;
 
 /**
  Represents the controller of movies.
- @author Castillo Clarence Fitzgerald Gumtang
  @version 1.0
  @since 2017-10-20
  */

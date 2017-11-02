@@ -5,7 +5,6 @@ import model.commons.Entity;
 /**
  * Represents a cinema that belongs to a cineplex.
  *
- * @author Castillo Clarence Fitzgerald Gumtang
  * @version 1.0
  * @since 2017-10-20
  */

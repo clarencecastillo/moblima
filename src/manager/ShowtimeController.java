@@ -18,7 +18,6 @@ import util.Utilities;
 import java.util.*;
 /**
  Represents the controller of showtimes.
- @author Castillo Clarence Fitzgerald Gumtang
  @version 1.0
  @since 2017-10-20
  */

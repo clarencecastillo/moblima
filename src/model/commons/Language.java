@@ -3,7 +3,6 @@ package model.commons;
 /**
  * Represents a standard set of languages for movies.
  *
- * @author Castillo Clarence Fitzgerald Gumtang
  * @version 1.0
  * @since 2017-10-20
  */

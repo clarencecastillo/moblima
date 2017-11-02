@@ -10,7 +10,6 @@ import java.util.UUID;
 
 /**
  Represents the controller of movie reviews.
- @author Castillo Clarence Fitzgerald Gumtang
  @version 1.0
  @since 2017-10-20
  */

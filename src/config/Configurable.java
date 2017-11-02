@@ -5,7 +5,6 @@ import java.io.Serializable;
 /**
  * Represents a base interface that must be implemented bu all the classes that are configurable by the admin.
  *
- * @author Castillo Clarence Fitzgerald Gumtang
  * @version 1.0
  * @since 2017-10-20
  */

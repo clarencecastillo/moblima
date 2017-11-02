@@ -8,7 +8,6 @@ import java.util.regex.Pattern;
 /**
  * Represents a base class of view.
  *
- * @author Castillo Clarence Fitzgerald Gumtang
  * @version 1.0
  * @since 2017-10-20
  */

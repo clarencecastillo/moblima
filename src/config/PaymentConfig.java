@@ -3,7 +3,6 @@ package config;
 /**
  * Represents the configuration of payment setting.
  *
- * @author Castillo Clarence Fitzgerald Gumtang
  * @version 1.0
  * @since 2017-10-20
  */

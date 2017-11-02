@@ -9,7 +9,6 @@ import java.util.List;
 /**
  * Represents the cinema layout of a cinema.
  *
- * @author Castillo Clarence Fitzgerald Gumtang
  * @version 1.0
  * @since 2017-10-20
  */

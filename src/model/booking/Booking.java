@@ -15,7 +15,6 @@ import java.util.List;
  * Represents a booking made by the user to book for tickets for a showtime.
  * A booking is payable because it can be made payment for.
  *
- * @author Castillo Clarence Fitzgerald Gumtang
  * @version 1.0
  * @since 2017-10-20
  */

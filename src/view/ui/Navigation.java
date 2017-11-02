@@ -8,7 +8,6 @@ import java.util.Stack;
 /**
  * Represents a navigation history by the user.
  *
- * @author Castillo Clarence Fitzgerald Gumtang
  * @version 1.0
  * @since 2017-10-20
  */

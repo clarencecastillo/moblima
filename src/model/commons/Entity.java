@@ -6,7 +6,6 @@ import java.util.UUID;
 /**
  * Represents an entity with an ID.
  *
- * @author Castillo Clarence Fitzgerald Gumtang
  * @version 1.0
  * @since 2017-10-20
  */

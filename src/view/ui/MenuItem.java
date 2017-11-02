@@ -3,7 +3,6 @@ package view.ui;
 /**
  * Represents a menu item to be displayed in the view.
  *
- * @author Castillo Clarence Fitzgerald Gumtang
  * @version 1.0
  * @since 2017-10-20
  */

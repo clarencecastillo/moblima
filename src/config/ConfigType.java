@@ -5,7 +5,6 @@ import view.ui.EnumerableMenuOption;
 /**
  * Represents a standard set of system settings that can be configured by the admin.
  *
- * @author Castillo Clarence Fitzgerald Gumtang
  * @version 1.0
  * @since 2017-10-20
  */

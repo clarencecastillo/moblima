@@ -3,7 +3,6 @@ package model.cinema;
 /**
  * Represents a seat of a cinema layout, changed from a cell.
  *
- * @author Castillo Clarence Fitzgerald Gumtang
  * @version 1.0
  * @since 2017-10-20
  */

@@ -8,7 +8,6 @@ import java.util.Date;
 /**
  * Represents review of a movie written by a user who is a moviegoer.
  *
- * @author Castillo Clarence Fitzgerald Gumtang
  * @version 1.0
  * @since 2017-10-20
  */

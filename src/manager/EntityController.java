@@ -9,7 +9,6 @@ import java.util.UUID;
 
 /**
  Represents the base class of the entity controllers.
- @author Castillo Clarence Fitzgerald Gumtang
  @version 1.0
  @since 2017-10-20
  */

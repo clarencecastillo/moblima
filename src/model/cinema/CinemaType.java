@@ -9,7 +9,6 @@ import java.util.List;
 /**
  * Represents a standard set of types of the cinema whose pricing rate is added to the price of the ticket.
  *
- * @author Castillo Clarence Fitzgerald Gumtang
  * @version 1.0
  * @since 2017-10-20
  */

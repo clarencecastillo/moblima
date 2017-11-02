@@ -8,7 +8,6 @@ import model.transaction.PaymentStatus;
 
 /**
  Represents the controller of payments.
- @author Castillo Clarence Fitzgerald Gumtang
  @version 1.0
  @since 2017-10-20
  */

@@ -9,7 +9,6 @@ import java.util.Hashtable;
 /**
  * Represents a seating of a showtime, consisting the all seats and their status.
  *
- * @author Castillo Clarence Fitzgerald Gumtang
  * @version 1.0
  * @since 2017-10-20
  */

@@ -3,7 +3,6 @@ package model.booking;
 /**
  * Represents a standard set of seating status and their representation on the layout graph.
  *
- * @author Castillo Clarence Fitzgerald Gumtang
  * @version 1.0
  * @since 2017-10-20
  */
