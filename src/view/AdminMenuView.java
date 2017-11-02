@@ -6,9 +6,14 @@ import manager.UserController;
 import model.cinema.Staff;
 import util.Utilities;
 import view.ui.*;
-
 import java.io.ObjectOutputStream;
 
+/**
+ * This view displays the user interface for the user to select the configuration option.
+ *
+ * @version 1.0
+ * @since 2017-10-30
+ */
 public class AdminMenuView extends MenuView {
 
     public static final int MAX_LOGIN_ATTEMPTS = 5;

@@ -8,6 +8,13 @@ import view.ui.View;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * This view displays the user interface for the user to view movie details.
+ *
+ * @version 1.0
+ * @since 2017-10-30
+ */
+
 public class MovieView extends View {
 
     public MovieView(Movie movie) {

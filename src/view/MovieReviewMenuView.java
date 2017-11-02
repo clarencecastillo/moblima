@@ -11,6 +11,12 @@ import view.ui.*;
 
 import java.util.UUID;
 
+/**
+ * This view displays the user interface for the user to enter movie reviews.
+ *
+ * @version 1.0
+ * @since 2017-10-30
+ */
 public class MovieReviewMenuView extends MenuView {
 
     private AccessLevel accessLevel;

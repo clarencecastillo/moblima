@@ -12,6 +12,13 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * This view displays the user interface for the user view movie listings.
+ *
+ * @version 1.0
+ * @since 2017-10-30
+ */
+
 public class MovieListView extends ListView {
 
     private MovieListIntent intent;

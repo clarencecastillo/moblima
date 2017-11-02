@@ -12,6 +12,12 @@ import java.util.Arrays;
 import java.util.Hashtable;
 import java.util.List;
 
+/**
+ * This view displays the user interface for the user to view current booking information.
+ *
+ * @version 1.0
+ * @since 2017-10-30
+ */
 public class BookingView extends View {
 
     public BookingView(Showtime showtime, List<Seat> seats) {

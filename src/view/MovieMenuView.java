@@ -15,6 +15,12 @@ import view.ui.*;
 import java.util.Calendar;
 import java.util.UUID;
 
+/**
+ * This view displays the user interface for the user to select action in movie listings.
+ *
+ * @version 1.0
+ * @since 2017-10-30
+ */
 public class MovieMenuView extends MenuView {
 
     private AccessLevel accessLevel;

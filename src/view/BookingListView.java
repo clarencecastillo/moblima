@@ -9,7 +9,12 @@ import view.ui.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
+/**
+ * This view displays the user interface for the user to check booking history.
+ *
+ * @version 1.0
+ * @since 2017-10-30
+ */
 public class BookingListView extends ListView {
 
     private UserController userController;

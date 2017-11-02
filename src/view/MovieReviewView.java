@@ -4,6 +4,13 @@ import model.movie.MovieReview;
 import util.Utilities;
 import view.ui.View;
 
+/**
+ * This view displays the user interface of one movie review.
+ *
+ * @version 1.0
+ * @since 2017-10-30
+ */
+
 public class MovieReviewView extends View {
 
     public MovieReviewView(MovieReview movieReview) {

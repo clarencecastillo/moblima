@@ -9,6 +9,12 @@ import view.ui.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+/**
+ * This view displays the user interface for the user to configure available ticket types for each cinema.
+ *
+ * @version 1.0
+ * @since 2017-10-30
+ */
 public class TicketTypeConfigListMenu extends ListView {
 
     private static final String VALUE_DELIMITER = "-";

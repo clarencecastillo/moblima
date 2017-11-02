@@ -6,7 +6,12 @@ import view.ui.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-
+/**
+ * This view displays the user interface for the user to change admin configuration.
+ *
+ * @version 1.0
+ * @since 2017-10-30
+ */
 public class AdminConfigListView extends ListView {
 
     private AdminConfig adminConfig;

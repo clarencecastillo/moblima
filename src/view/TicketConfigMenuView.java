@@ -3,6 +3,13 @@ package view;
 import exception.UnauthorisedNavigationException;
 import view.ui.*;
 
+/**
+ * This view displays the user interface for the user to select action for configuring ticket settings.
+ *
+ * @version 1.0
+ * @since 2017-10-30
+ */
+
 public class TicketConfigMenuView extends MenuView {
 
     public TicketConfigMenuView(Navigation navigation) {

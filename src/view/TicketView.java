@@ -9,6 +9,12 @@ import model.movie.Movie;
 import util.Utilities;
 import view.ui.View;
 
+/**
+ * This view displays the user interface for the user to view tickets.
+ *
+ * @version 1.0
+ * @since 2017-10-30
+ */
 public class TicketView extends View {
 
     private Showtime showtime;

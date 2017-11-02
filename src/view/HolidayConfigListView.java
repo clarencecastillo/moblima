@@ -7,6 +7,12 @@ import view.ui.*;
 
 import java.util.*;
 
+/**
+ * This view displays the user interface for the user to set new holiday.
+ *
+ * @version 1.0
+ * @since 2017-10-30
+ */
 public class HolidayConfigListView extends ListView {
 
 

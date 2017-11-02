@@ -7,6 +7,12 @@ import view.ui.*;
 
 import java.util.Date;
 
+/**
+ * This view displays the user interface for the user to configure holiday settings.
+ *
+ * @version 1.0
+ * @since 2017-10-30
+ */
 public class HolidayMenuView extends MenuView {
 
     private Date holidayDate;

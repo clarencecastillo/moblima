@@ -17,7 +17,12 @@ import model.transaction.Priceable;
 import view.ui.*;
 
 import java.util.*;
-
+/**
+ * This view displays the user interface for the user to make bookings.
+ *
+ * @version 1.0
+ * @since 2017-10-30
+ */
 public class BookingMenuView extends MenuView {
 
     private User user;

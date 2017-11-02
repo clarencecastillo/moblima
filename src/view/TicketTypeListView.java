@@ -14,6 +14,13 @@ import java.util.Hashtable;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+/**
+ * This view displays the user interface for the user to select ticket types during booking.
+ *
+ * @version 1.0
+ * @since 2017-10-30
+ */
+
 public class TicketTypeListView extends ListView {
 
     private Booking booking;

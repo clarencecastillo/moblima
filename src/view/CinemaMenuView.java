@@ -13,6 +13,12 @@ import view.ui.*;
 import java.util.ArrayList;
 import java.util.UUID;
 
+/**
+ * This view displays the user interface for the user to select seats.
+ *
+ * @version 1.0
+ * @since 2017-10-30
+ */
 public class CinemaMenuView extends MenuView {
 
     private Booking booking;

@@ -20,6 +20,12 @@ import java.text.ParseException;
 import java.util.*;
 import java.util.stream.Collectors;
 
+/**
+ * This view displays the user interface for the user to view showtimes.
+ *
+ * @version 1.0
+ * @since 2017-10-30
+ */
 public class ShowtimeListView extends ListView {
 
     private Cineplex cineplexFilter;

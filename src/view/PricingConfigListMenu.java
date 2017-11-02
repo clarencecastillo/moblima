@@ -8,7 +8,12 @@ import model.movie.MovieType;
 import view.ui.*;
 
 import java.util.ArrayList;
-
+/**
+ * This view displays the user interface for the user to configure pricing settings.
+ *
+ * @version 1.0
+ * @since 2017-10-30
+ */
 public class PricingConfigListMenu extends ListView {
 
     private static final String VALUE_DELIMITER = "-";

@@ -7,6 +7,12 @@ import view.ui.Intent;
 import view.ui.MenuView;
 import view.ui.Navigation;
 
+/**
+ * This view displays the user interface for the user to select the configuration option.
+ *
+ * @version 1.0
+ * @since 2017-10-30
+ */
 public class ConfigMenuView extends MenuView {
 
     public ConfigMenuView(Navigation navigation) {

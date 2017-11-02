@@ -8,6 +8,13 @@ import view.ui.*;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+/**
+ * This view displays the user interface for the user to view movie reviews.
+ *
+ * @version 1.0
+ * @since 2017-10-30
+ */
+
 public class MovieReviewListView extends ListView {
 
     private Movie movie;

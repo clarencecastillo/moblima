@@ -11,6 +11,12 @@ import java.util.Arrays;
 import java.util.Hashtable;
 import java.util.List;
 
+/**
+ * This view displays the user interface for the user view cinema seating.
+ *
+ * @version 1.0
+ * @since 2017-10-30
+ */
 public class CinemaView extends View {
 
     public CinemaView(ShowtimeSeating showtimeSeating, CinemaLayout cinemaLayout, List<Seat> selectedSeats) {
