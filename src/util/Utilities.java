@@ -231,4 +231,9 @@ public class Utilities {
         objectInputStream = new ObjectInputStream(new BufferedInputStream(new FileInputStream(filename)));
         return objectInputStream;
     }
+
+    // TODO Javadoc
+    public static boolean overlaps(Date start1, Date end1, Date start2, Date end2){
+        return start1.getTime() <= end2.getTime() && start2.getTime() <= end1.getTime();
+    }
 }

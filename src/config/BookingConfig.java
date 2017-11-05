@@ -34,6 +34,9 @@ public class BookingConfig implements Configurable {
      */
     private static int minutesBeforeClosedBooking;
 
+    // TODO javadoc
+    private static int bufferMinutesAfterShowtime;
+
     /**
      * Initializes the booking configuration by resetting.
      */
@@ -95,6 +98,11 @@ public class BookingConfig implements Configurable {
         return minutesBeforeClosedBooking;
     }
 
+    // TODO Javadoc
+    public static int getBufferMinutesAfterShowtime() {
+        return bufferMinutesAfterShowtime;
+    }
+
     /**
      * Changes the number of minutes before the showtime to close the booking.
      *
@@ -122,6 +130,11 @@ public class BookingConfig implements Configurable {
         BookingConfig.bookingSurcharge = bookingSurcharge;
     }
 
+    // TODO Javadoc
+    public void setBufferMinutesAfterShowtime(int bufferMinutesAfterShowtime) {
+        BookingConfig.bufferMinutesAfterShowtime = bufferMinutesAfterShowtime;
+    }
+
     /**
      * Gets the type of this configuration.
      *
@@ -141,5 +154,6 @@ public class BookingConfig implements Configurable {
         DaysBeforeOpenBooking = 7;
         bookingSurcharge = 1.0;
         minutesBeforeClosedBooking = 0;
+        bufferMinutesAfterShowtime = 30;
     }
 }

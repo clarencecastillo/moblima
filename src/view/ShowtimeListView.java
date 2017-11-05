@@ -135,9 +135,13 @@ public class ShowtimeListView extends ListView {
 
                 boolean isPreview = Form.getBoolean("Preview Movie");
                 boolean noFreePasses = Form.getBoolean("No Free Passes");
-                showtimeController.createShowtime(movieFilter.getId(), cineplexFilter.getId(), cinema.getId(),
-                        language, startTime, isPreview, noFreePasses, subtitles);
-                View.displaySuccess("Successfully created showtime!");
+                try {
+                    showtimeController.createShowtime(movieFilter.getId(), cineplexFilter.getId(), cinema.getId(),
+                            language, startTime, isPreview, noFreePasses, subtitles);
+                    View.displaySuccess("Successfully created showtime!");
+                } catch (IllegalActionException e) {
+                    View.displayError(e.getMessage());
+                }
                 Form.pressAnyKeyToContinue();
                 break;
         }

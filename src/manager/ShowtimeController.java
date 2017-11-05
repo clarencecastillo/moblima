@@ -16,6 +16,8 @@ import model.transaction.Priceable;
 import util.Utilities;
 
 import java.util.*;
+import java.util.stream.Collectors;
+
 /**
  Represents the controller of showtimes.
  @author Castillo Clarence Fitzgerald Gumtang
@@ -99,6 +101,18 @@ public class ShowtimeController extends EntityController<Showtime> {
             throw new IllegalActionException("Movie has already ended showing.");
 
         Cinema cinema = cinemaController.findById(cinemaId);
+
+        List<Showtime> cinemaShowtime = findByCineplexAndMovie(cineplexId, movieId)
+                .stream().filter(showtime -> showtime.getCinema().equals(cinema)).collect(Collectors.toList());
+
+        for (Showtime showtime : cinemaShowtime) {
+            Date endTime1 = Utilities.getDateAfter(showtime.getStartTime(), Calendar.MINUTE,
+                    showtime.getMovie().getRuntimeMinutes() + BookingConfig.getBufferMinutesAfterShowtime());
+            Date endTime2 = Utilities.getDateAfter(startTime, Calendar.MINUTE,
+                    movie.getRuntimeMinutes() + BookingConfig.getBufferMinutesAfterShowtime());
+            if (Utilities.overlaps(showtime.getStartTime(), endTime1, startTime, endTime2))
+                throw new IllegalActionException("There is already a showtime scheduled for this cinema");
+        }
 
         Showtime showtime = new Showtime(movie, cineplex, cinema, language, startTime, isPreview, noFreePasses, subtitles);
 
