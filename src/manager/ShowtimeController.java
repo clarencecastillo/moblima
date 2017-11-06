@@ -1,7 +1,6 @@
 package manager;
 
 import config.BookingConfig;
-import config.HolidayConfig;
 import exception.IllegalActionException;
 import exception.UninitialisedSingletonException;
 import model.booking.Booking;
@@ -179,9 +178,7 @@ public class ShowtimeController extends EntityController<Showtime> {
 
         Date showtimeDate = showtime.getStartTime();
         List<TicketType> availableTicketTypes = cinema.getType().getTicketTypes();
-        if (HolidayConfig.isHoliday(showtimeDate) ||
-                Utilities.dateFallsOn(showtimeDate, Calendar.FRIDAY, Calendar.SATURDAY, Calendar.SUNDAY) &&
-                        availableTicketTypes.contains(TicketType.PEAK))
+        if (TicketType.isPeak(showtimeDate) && availableTicketTypes.contains(TicketType.PEAK))
             availableTicketTypes = Arrays.asList(TicketType.PEAK);
         else
             availableTicketTypes.remove(TicketType.PEAK);
