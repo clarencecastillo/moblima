@@ -83,7 +83,7 @@ public class ShowtimeController extends EntityController<Showtime> {
      * or if the movie already ends showing, or if the cinema is not available.
      */
     public Showtime createShowtime(UUID movieId, UUID cineplexId, UUID cinemaId, Language language,
-                                   Date startTime, boolean isPreview, boolean noFreePasses, Language[] subtitles)
+                                   Date startTime, boolean noFreePasses, Language[] subtitles)
             throws IllegalActionException {
 
         MovieController movieController = MovieController.getInstance();
@@ -95,17 +95,15 @@ public class ShowtimeController extends EntityController<Showtime> {
         Date endTime = Utilities.getDateAfter(startTime, Calendar.MINUTE,
                 movie.getRuntimeMinutes() + BookingConfig.getBufferMinutesAfterShowtime());
 
-        if (movie.getStatus() != MovieStatus.NOW_SHOWING & movie.getStatus() != MovieStatus.PREVIEW)
-            throw new IllegalActionException("Cannot create showtime because this movie is not showing now.");
-
-        if (movie.getStatus() == MovieStatus.PREVIEW && !isPreview)
-            throw new IllegalActionException("Cannot create non-preview showtime because this movie is still in preview");
+        if (movie.getStatus() == MovieStatus.END_OF_SHOWING)
+            throw new IllegalActionException("Cannot create showtime for movies in end of showing state");
 
         if (!cinemaController.isAvaiableOn(cineplexId, cinemaId, startTime, endTime))
             throw new IllegalActionException("There is already a showtime scheduled for this cinema");
 
         Cinema cinema = cinemaController.findById(cinemaId);
-        Showtime showtime = new Showtime(movie, cineplex, cinema, language, startTime, isPreview, noFreePasses, subtitles);
+        Showtime showtime = new Showtime(movie, cineplex, cinema, language, startTime,
+                movie.getStatus() == MovieStatus.PREVIEW, noFreePasses, subtitles);
 
         movie.addShowtime(showtime);
         cineplex.addShowtime(showtime);
