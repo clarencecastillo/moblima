@@ -20,8 +20,7 @@ public class ShowtimeView extends View {
         setTitle(Utilities.toFormat(showtime.getStartTime(), "hh:mm a"));
 
         List<Language> subtitles = showtime.getSubtitles();
-        setContent("Cinema: " + showtime.getCineplex().getName() + " " + showtime.getCinema().getType() +
-                        " Hall " + showtime.getCinema().getCode(),
+        setContent("Cinema: " + showtime.getCineplex().getName() + " " + showtime.getCinema(),
                 "Language: " + showtime.getLanguage(),
                 "Subtitles: " + (subtitles.size() > 0 ? String.join(",", showtime.getSubtitles().stream()
                         .map(String::valueOf).toArray(String[]::new)) : "None"),

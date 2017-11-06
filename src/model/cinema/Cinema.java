@@ -91,4 +91,9 @@ public class Cinema extends Entity {
     public void setLayout(CinemaLayout layout) {
         this.layout = layout;
     }
+
+    @Override
+    public String toString() {
+        return type + " Hall " + code;
+    }
 }
