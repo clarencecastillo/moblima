@@ -1,20 +1,13 @@
 package view;
 
-import config.HolidayConfig;
 import exception.IllegalActionException;
 import exception.UnauthorisedNavigationException;
 import manager.MovieController;
-import model.booking.Booking;
-import model.booking.BookingStatus;
-import model.booking.Showtime;
-import model.booking.ShowtimeStatus;
 import model.movie.*;
-import util.Utilities;
 import view.ui.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.UUID;
 
 /**
@@ -93,24 +86,9 @@ public class MovieMenuView extends MenuView {
         setContent(movieView.getContent());
         display();
 
-        double gross = 0;
-        double weekendGross = 0;
-        if (accessLevel == AccessLevel.ADMINISTRATOR) {
-            for (Showtime showtime : movie.getShowtimes())
-                if (showtime.getStatus() != ShowtimeStatus.CANCELLED)
-                    for (Booking booking : showtime.getBookings())
-                        if (booking.getStatus() == BookingStatus.CONFIRMED) {
-                            gross += booking.getPrice();
-                            if (HolidayConfig.isHoliday(showtime.getStartTime()) ||
-                                    Utilities.dateFallsOn(showtime.getStartTime(),
-                                            Calendar.FRIDAY,
-                                            Calendar.SATURDAY,
-                                            Calendar.SUNDAY))
-                                weekendGross += booking.getPrice();
-                        }
-            View.displayInformation("Gross: " + String.format("$%.2f", gross) +
-                    "\nWeekend Gross: " + String.format("$%.2f", weekendGross));
-        }
+        if (accessLevel == AccessLevel.ADMINISTRATOR)
+            View.displayInformation("Gross: " + String.format("$%.2f", movie.getGrossSales()) +
+                    "\nWeekend Gross: " + String.format("$%.2f", movie.getWeekendGrossSales()));
 
         String userChoice = getChoice();
         if (userChoice.equals(BACK))
