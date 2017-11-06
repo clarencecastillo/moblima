@@ -103,7 +103,7 @@ public class MovieController extends EntityController<Movie> {
                             "because it is 'End of Showing' now.");
                 break;
             case COMING_SOON:
-                throw new IllegalActionException("Can not change movie status to 'Now Showing'.");
+                throw new IllegalActionException("Can not change movie status to 'Coming Soon'.");
         }
 
         movie.setStatus(status);

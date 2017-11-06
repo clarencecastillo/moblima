@@ -48,10 +48,26 @@ public interface Form {
      */
     String CANCEL = "CANCEL";
 
+    /**
+     * Email should be in the valid format.
+     */
     Pattern EMAIL_REGEX = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$",
             Pattern.CASE_INSENSITIVE);
+
+    /**
+     * Credit card should be in the correct format with 13 or 16 digits.
+
+     */
     Pattern CREDIT_CARD_REGEX = Pattern.compile("\\d{13,16}");
+
+    /**
+     * Mobile phone should be in the valid format of 8 digits starting with 8 or 9
+     */
     Pattern MOBILE_REGEX = Pattern.compile("[89]\\d{7}");
+
+    /**
+     * Security code should be 3 or 4 digits
+     */
     Pattern CVV_REGEX = Pattern.compile("\\d{3,4}");
 
     /**
