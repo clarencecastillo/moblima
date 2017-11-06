@@ -8,6 +8,7 @@ import view.ui.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,6 +27,7 @@ public class MovieListView extends ListView {
     private boolean withGrouping;
     private MovieController movieController;
     private AccessLevel accessLevel;
+    private int orderBy;
 
     public MovieListView(Navigation navigation) {
         super(navigation);
@@ -51,8 +53,6 @@ public class MovieListView extends ListView {
                 View.displayInformation("Please enter search terms. Keywords may include movie "
                         + "title, director, and actors.");
                 searchKeyword = Form.getString("Search");
-                break;
-            case VIEW_RANKING:
                 break;
         }
         addBackOption();
@@ -80,19 +80,25 @@ public class MovieListView extends ListView {
                             movie.getStatus() != MovieStatus.END_OF_SHOWING).collect(Collectors.toList());
                 setContent("Displaying " + movies.size() + " movie item(s).");
                 break;
-            case VIEW_RANKING:
+            case VIEW_SCORE_RANKING:
                 movies.addAll(movieController.getList());
-                Collections.sort(movies);
+                Collections.sort(movies, Comparator.comparingDouble(Movie::getOverallReviewRating));
                 if (movies.size() > 5)
                     movies = movies.subList(0, 5);
                 setContent("Displaying top " + movies.size() + " movie item(s) by score.");
                 break;
+            case VIEW_SALES_RANKING:
+                movies.addAll(movieController.getList());
+                Collections.sort(movies, Comparator.comparingDouble(Movie::getGrossSales));
+                if (movies.size() > 5)
+                    movies = movies.subList(0, 5);
+                setContent("Displaying top " + movies.size() + " movie item(s) by gross sales.");
+                break;
         }
 
         setViewItems(movies.stream().map(
-                movie -> new ViewItem(new MovieView(movie), movie.getId().toString(),
-                        (int) movie.getOverallReviewRating(), withGrouping ? movie.getStatus().toString() : null))
-                .collect(Collectors.toList()));
+                movie -> new ViewItem(new MovieView(movie), movie.getId().toString(), 0,
+                        withGrouping ? movie.getStatus().toString() : null)).collect(Collectors.toList()));
 
         display();
         String userInput = getChoice();
@@ -114,7 +120,8 @@ public class MovieListView extends ListView {
     public enum MovieListIntent implements Intent {
         VIEW_MOVIES,
         SEARCH_MOVIES,
-        VIEW_RANKING
+        VIEW_SCORE_RANKING,
+        VIEW_SALES_RANKING
     }
 
     public enum MovieListOption implements EnumerableMenuOption {
