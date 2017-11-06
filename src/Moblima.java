@@ -60,29 +60,29 @@ public class Moblima {
                     "", "root", "root");
         }
 
-        // Create Cineplexes and Cinemas
-        CineplexController cineplexController = CineplexController.getInstance();
-        CinemaController cinemaController = CinemaController.getInstance();
-        cineplexController.createCineplex("Orchard Hub", "Orchard 8 Grange Road, Singapore");
-        cineplexController.createCineplex("Woodlands Hub", "1 Woodlands Square, Singapore");
-        cineplexController.createCineplex("Jurong East Hub", "50 Jurong Gateway Road, Singapore");
-        cineplexController.createCineplex("AMK Hub", "Amg Mo Kio Ave 3, Singapore");
-        cineplexController.createCineplex("Downtown Hub", "Marine Parade Road, Singapore");
-        CinemaLayout smallLayout = new CinemaLayout(Arrays.asList(4), null, 7, 'E');
-        CinemaLayout mediumLayout = new CinemaLayout(Arrays.asList(7), null, 13, 'H');
-        CinemaLayout bigLayout = new CinemaLayout(Arrays.asList(9), null, 17, 'K');
-        for (Cineplex cineplex : cineplexController.getList()) {
-            int cinemaCode = 1;
-            for (; cinemaCode < 3; cinemaCode++)
-                cinemaController.createCinema(cineplex.getId(), String.valueOf(cinemaCode),
-                        CinemaType.EXECUTIVE, smallLayout);
-            for (; cinemaCode < 7; cinemaCode++)
-                cinemaController.createCinema(cineplex.getId(), String.valueOf(cinemaCode),
-                        CinemaType.PLATINUM, mediumLayout);
-            for (; cinemaCode < 13; cinemaCode++)
-                cinemaController.createCinema(cineplex.getId(), String.valueOf(cinemaCode),
-                        CinemaType.REGULAR, bigLayout);
-        }
+//        // Create Cineplexes and Cinemas
+//        CineplexController cineplexController = CineplexController.getInstance();
+//        CinemaController cinemaController = CinemaController.getInstance();
+//        cineplexController.createCineplex("Orchard Hub", "Orchard 8 Grange Road, Singapore");
+//        cineplexController.createCineplex("Woodlands Hub", "1 Woodlands Square, Singapore");
+//        cineplexController.createCineplex("Jurong East Hub", "50 Jurong Gateway Road, Singapore");
+//        cineplexController.createCineplex("AMK Hub", "Amg Mo Kio Ave 3, Singapore");
+//        cineplexController.createCineplex("Downtown Hub", "Marine Parade Road, Singapore");
+//        CinemaLayout smallLayout = new CinemaLayout(Arrays.asList(4), null, 7, 'E');
+//        CinemaLayout mediumLayout = new CinemaLayout(Arrays.asList(7), null, 13, 'H');
+//        CinemaLayout bigLayout = new CinemaLayout(Arrays.asList(9), null, 17, 'K');
+//        for (Cineplex cineplex : cineplexController.getList()) {
+//            int cinemaCode = 1;
+//            for (; cinemaCode < 3; cinemaCode++)
+//                cinemaController.createCinema(cineplex.getId(), String.valueOf(cinemaCode),
+//                        CinemaType.EXECUTIVE, smallLayout);
+//            for (; cinemaCode < 7; cinemaCode++)
+//                cinemaController.createCinema(cineplex.getId(), String.valueOf(cinemaCode),
+//                        CinemaType.PLATINUM, mediumLayout);
+//            for (; cinemaCode < 13; cinemaCode++)
+//                cinemaController.createCinema(cineplex.getId(), String.valueOf(cinemaCode),
+//                        CinemaType.REGULAR, bigLayout);
+//        }
 
         // DEBUG
 //        try {
