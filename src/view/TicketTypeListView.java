@@ -62,17 +62,12 @@ public class TicketTypeListView extends ListView {
                 break;
         }
 
-        this.ticketTypeCount = new Hashtable<>();
-        for (TicketType ticketType : showtimeController.getAvailableTicketTypes(showtime.getId()))
-            ticketTypeCount.put(ticketType, 0);
-
         setContent(showtime.getMovie().toString(showtime.isNoFreePasses()),
                 "Showing on " + Utilities.toFormat(showtime.getStartTime(), DATE_DISPLAY_FORMAT + " HH:mm"),
                 "Cinema: " + showtime.getCineplex().getName() + " Hall " + showtime.getCinema().getCode(),
                 "Language: " + showtime.getLanguage(),
                 "Subtitles: " + String.join(",", showtime.getSubtitles().stream()
                         .map(String::valueOf).toArray(String[]::new)));
-
 
         switch (accessLevel) {
             case ADMINISTRATOR:
@@ -100,6 +95,10 @@ public class TicketTypeListView extends ListView {
 
     @Override
     public void onEnter() {
+
+        this.ticketTypeCount = new Hashtable<>();
+        for (TicketType ticketType : showtimeController.getAvailableTicketTypes(showtime.getId()))
+            ticketTypeCount.put(ticketType, 0);
 
         if (accessLevel == AccessLevel.ADMINISTRATOR)
             for (Booking booking : showtime.getBookings())
