@@ -1,8 +1,6 @@
 package view.ui;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 /**
  * Represents a list view.
@@ -12,10 +10,10 @@ import java.util.List;
  */
 public abstract class ListView extends MenuView implements Navigable {
 
-    /**
-     * An array list of the view items to be displayed in this list view.
-     */
-    private ArrayList<ViewItem> viewItems = new ArrayList<>();
+    // TODO Javadoc
+    private LinkedHashMap<String, ArrayList<ViewItem>> groupings;
+    private ArrayList<ViewItem> noGrouping;
+    private ArrayList<ViewItem> viewItems;
 
     /**
      * Creates a list view with the given navigation.
@@ -26,20 +24,33 @@ public abstract class ListView extends MenuView implements Navigable {
     }
 
     /**
-     * Gets the view items from this list view.
-     * @return the view items from this list view.
-     */
-    protected ArrayList<ViewItem> getViewItems() {
-        return viewItems;
-    }
-
-    /**
      * Sets the view items for this menu view.
      * @param viewItems The view items for this menu view.
      */
     protected void setViewItems(List<ViewItem> viewItems) {
-        this.viewItems.clear();
-        this.viewItems.addAll(viewItems);
+
+        groupings = new LinkedHashMap<>();
+        noGrouping = new ArrayList<>();
+        this.viewItems = new ArrayList<>();
+
+        for (ViewItem viewItem : viewItems) {
+            String groupingLabel = viewItem.getGroupingLabel();
+            if (groupingLabel != null)
+                if (groupings.containsKey(groupingLabel))
+                    groupings.get(groupingLabel).add(viewItem);
+                else
+                    groupings.put(groupingLabel, new ArrayList<>(Arrays.asList(viewItem)));
+            else
+                noGrouping.add(viewItem);
+        }
+
+        for (String groupingLabel : groupings.keySet()) {
+            ArrayList<ViewItem> groupingItems = groupings.get(groupingLabel);
+            Collections.sort(groupingItems);
+            this.viewItems.addAll(groupingItems);
+        }
+        Collections.sort(noGrouping);
+        this.viewItems.addAll(noGrouping);
     }
 
     /**
@@ -47,13 +58,28 @@ public abstract class ListView extends MenuView implements Navigable {
      */
     @Override
     public void displayItems() {
+
         if (viewItems.size() == 0)
             System.out.println("No items to show.");
-        else
-            for (int i = 0; i < viewItems.size(); i++) {
-                viewItems.get(i).display(i + 1);
+        else {
+            int nextLabel = 1;
+
+            for (String groupingLabel : groupings.keySet()) {
+                System.out.println(groupingLabel.toUpperCase());
+                System.out.println(View.line('-', groupingLabel.length()));
+                for (ViewItem viewItem : groupings.get(groupingLabel)) {
+                    viewItem.display(nextLabel++);
+                    System.out.println();
+                }
                 System.out.println();
             }
+
+            for (ViewItem viewItem : noGrouping) {
+                viewItem.display(nextLabel++);
+                System.out.println();
+            }
+        }
+
         if (menuItems.size() > 0) {
             System.out.println();
             super.displayItems();

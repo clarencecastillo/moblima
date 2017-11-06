@@ -226,7 +226,9 @@ public class ShowtimeListView extends ListView {
                     movieShowtimes = movieShowtimes.stream().filter(showtime ->
                             showtimeStatusFilters.contains(showtime.getStatus())).collect(Collectors.toList());
 
-                viewItems.add(new ViewItem(new MovieView(movie, movieShowtimes), movie.getId().toString()));
+                if (movieShowtimes.size() > 0 || accessLevel == AccessLevel.ADMINISTRATOR)
+                    viewItems.add(new ViewItem(new MovieView(movie, movieShowtimes),
+                            movie.getId().toString(), (int) movie.getOverallReviewRating()));
             }
 
         } else {
@@ -241,7 +243,8 @@ public class ShowtimeListView extends ListView {
                         showtimeStatusFilters.contains(showtime.getStatus())).collect(Collectors.toList());
 
             for (Showtime showtime : showtimes)
-                viewItems.add(new ViewItem(new ShowtimeView(showtime), showtime.getId().toString()));
+                viewItems.add(new ViewItem(new ShowtimeView(showtime), showtime.getId().toString(),
+                        (int) TimeUnit.MILLISECONDS.toSeconds(showtime.getStartTime().getTime())));
         }
 
         setViewItems(viewItems);

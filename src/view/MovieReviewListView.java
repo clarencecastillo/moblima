@@ -58,7 +58,7 @@ public class MovieReviewListView extends ListView {
 
         setViewItems(movie.getReviews().stream().map(movieReview ->
                 new ViewItem(new MovieReviewView(movieReview),
-                        movieReview.getId().toString())).collect(Collectors.toList()));
+                        movieReview.getId().toString(), movieReview.getRating())).collect(Collectors.toList()));
 
         display();
         String userInput = getChoice();

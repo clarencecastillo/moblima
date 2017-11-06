@@ -8,12 +8,18 @@ import java.util.List;
  * @version 1.0
  * @since 2017-10-20
  */
-public class ViewItem extends View implements Item {
+public class ViewItem extends View implements Item, Comparable {
 
     /**
      * The string content of this view item.
      */
-    public String value;
+    private String value;
+
+    // TODO Javadoc
+    private int weight;
+
+    // TODO Javadoc
+    private String group;
 
     /**
      * Creates a view item with the given title, string content and description.
@@ -22,9 +28,21 @@ public class ViewItem extends View implements Item {
      * @param content The content of this view item.
      */
     public ViewItem(String title, String content, String value) {
+        this(title, content, value, 0);
+    }
+
+    // TODO Javadoc
+    public ViewItem(String title, String content, String value, int weight) {
+        this(title, content, value, weight, null);
+    }
+
+    // TODO Javadoc
+    public ViewItem(String title, String content, String value, int weight, String group) {
         this.title = title;
         this.content.add(content);
         this.value = value;
+        this.weight = weight;
+        this.group = group;
     }
 
     /**
@@ -40,22 +58,26 @@ public class ViewItem extends View implements Item {
     }
 
     /**
-     * Creates a view item with the given string content.
-     * @param value The string content of this view item.
-     */
-    public ViewItem(String value) {
-        this.value = value;
-    }
-
-    /**
      * Creates a view item with the given view and string content.
      * @param view The view of this view item.
      * @param value The string content of this view item.
      */
     public ViewItem(View view, String value) {
+        this(view, value, 0);
+    }
+
+    // TODO Javadoc
+    public ViewItem(View view, String value, int weight) {
+        this(view, value, weight, null);
+    }
+
+    // TODO Javadoc
+    public ViewItem(View view, String value, int weight, String group) {
         this.title = view.title;
         this.content = view.content;
         this.value = value;
+        this.weight = weight;
+        this.group = group;
     }
 
     /**
@@ -83,5 +105,16 @@ public class ViewItem extends View implements Item {
     @Override
     public String getValue() {
         return value;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        if (o instanceof ViewItem)
+            return Integer.compare(weight, ((ViewItem) o).weight);
+        return -1;
+    }
+
+    public String getGroupingLabel() {
+        return group;
     }
 }

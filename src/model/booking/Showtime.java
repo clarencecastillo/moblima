@@ -17,7 +17,7 @@ import java.util.*;
  * @version 1.0
  * @since 2017-10-20
  */
-public class Showtime extends Entity {
+public class Showtime extends Entity implements Comparable<Showtime> {
 
     /**
      * The movie shown for this showtime.
@@ -313,4 +313,9 @@ public class Showtime extends Entity {
      * @param booking The booking to be removed from this showtime.
      */
     public void removeBooking(Booking booking) { bookings.remove(booking.getId()); }
+
+    @Override
+    public int compareTo(Showtime o) {
+        return startTime.compareTo(o.startTime);
+    }
 }

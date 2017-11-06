@@ -17,12 +17,12 @@ import java.util.stream.Collectors;
 
 public class MovieView extends View {
 
+
     public MovieView(Movie movie) {
         double rating = movie.getOverallReviewRating();
 
         setTitle(movie.toString());
-        setContent("Status: " + movie.getStatus().toString(),
-                "Director: " + movie.getDirector(),
+        setContent("Director: " + movie.getDirector(),
                 "Actors: " + String.join(",",
                         movie.getActors().stream().map(String::valueOf).collect(Collectors.toList())),
                 "Runtime: " + movie.getRuntimeMinutes() + " minutes",

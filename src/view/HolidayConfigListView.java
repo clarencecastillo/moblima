@@ -45,7 +45,8 @@ public class HolidayConfigListView extends ListView {
         TreeSet<Date> holidayDates = new TreeSet<>(holidays.keySet());
         for (Date date : holidayDates) {
             String holidayDate = Utilities.toFormat(date, "d MMMMM");
-            viewItems.add(new ViewItem(holidayDate, holidays.get(date), Utilities.toFormat(date)));
+            viewItems.add(new ViewItem(holidayDate, holidays.get(date), Utilities.toFormat(date),
+                    (int) TimeUnit.MILLISECONDS.toSeconds(date.getTime())));
         }
         setViewItems(viewItems);
 

@@ -7,7 +7,6 @@ import view.MovieMenuView.MovieMenuIntent;
 import view.ui.*;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -24,7 +23,7 @@ public class MovieListView extends ListView {
     private MovieListIntent intent;
     private List<Movie> movies;
     private String searchKeyword;
-
+    private boolean withGrouping;
     private MovieController movieController;
     private AccessLevel accessLevel;
 
@@ -65,6 +64,7 @@ public class MovieListView extends ListView {
         movies = new ArrayList<>();
         switch (this.intent) {
             case SEARCH_MOVIES:
+                withGrouping = true;
                 movies.addAll(movieController.findByKeyword(searchKeyword));
                 if (accessLevel == AccessLevel.PUBLIC)
                     movies = movies.stream().filter(movie ->
@@ -73,6 +73,7 @@ public class MovieListView extends ListView {
                         + movies.size() + " movie item(s).");
                 break;
             case VIEW_MOVIES:
+                withGrouping = true;
                 movies.addAll(movieController.getList());
                 if (accessLevel == AccessLevel.PUBLIC)
                     movies = movies.stream().filter(movie ->
@@ -89,8 +90,9 @@ public class MovieListView extends ListView {
         }
 
         setViewItems(movies.stream().map(
-                movie -> new ViewItem(new MovieView(movie),
-                        movie.getId().toString())).collect(Collectors.toList()));
+                movie -> new ViewItem(new MovieView(movie), movie.getId().toString(),
+                        (int) movie.getOverallReviewRating(), withGrouping ? movie.getStatus().toString() : null))
+                .collect(Collectors.toList()));
 
         display();
         String userInput = getChoice();

@@ -8,6 +8,7 @@ import model.commons.User;
 import view.ui.*;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 /**
  * This view displays the user interface for the user to check booking history.
@@ -59,7 +60,9 @@ public class BookingListView extends ListView {
         addBackOption();
         setViewItems(bookings.stream().map(
                 booking -> new ViewItem(new BookingView(booking.getShowtime(), booking.getSeats()),
-                        booking.getId().toString())).collect(Collectors.toList()));
+                        booking.getId().toString(),
+                        (int) TimeUnit.MILLISECONDS.toSeconds(booking.getPayment().getDate().getTime())))
+                .collect(Collectors.toList()));
     }
 
     @Override
