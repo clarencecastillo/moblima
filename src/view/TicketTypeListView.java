@@ -26,9 +26,7 @@ public class TicketTypeListView extends ListView {
     private Booking booking;
     private Showtime showtime;
     private Hashtable<TicketType, Integer> ticketTypeCount;
-
     private AccessLevel accessLevel;
-
     private ShowtimeController showtimeController;
     private BookingController bookingController;
 
@@ -90,15 +88,16 @@ public class TicketTypeListView extends ListView {
                 ));
                 break;
         }
+
+        this.ticketTypeCount = new Hashtable<>();
+        for (TicketType ticketType : showtimeController.getAvailableTicketTypes(showtime.getId()))
+            ticketTypeCount.put(ticketType, 0);
+
         addBackOption();
     }
 
     @Override
     public void onEnter() {
-
-        this.ticketTypeCount = new Hashtable<>();
-        for (TicketType ticketType : showtimeController.getAvailableTicketTypes(showtime.getId()))
-            ticketTypeCount.put(ticketType, 0);
 
         if (accessLevel == AccessLevel.ADMINISTRATOR)
             for (Booking booking : showtime.getBookings())
@@ -211,6 +210,8 @@ public class TicketTypeListView extends ListView {
                     double sales = currentCount * showtime.getTicketTypePricing(ticketType);
                     View.displayInformation("Total Sales for " + ticketType + ": " + String.format("$%.2f", sales));
                     Form.pressAnyKeyToContinue();
+                    for (TicketType tType : ticketTypeCount.keySet())
+                        ticketTypeCount.put(tType, 0);
                     navigation.refresh();
                 }
             }
