@@ -95,11 +95,11 @@ public class ShowtimeController extends EntityController<Showtime> {
         Date endTime = Utilities.getDateAfter(startTime, Calendar.MINUTE,
                 movie.getRuntimeMinutes() + BookingConfig.getBufferMinutesAfterShowtime());
 
-        if (movie.getStatus() == MovieStatus.PREVIEW && !isPreview)
-            throw new IllegalActionException("Movie is still in preview");
+        if (movie.getStatus() != MovieStatus.NOW_SHOWING & movie.getStatus() != MovieStatus.PREVIEW)
+            throw new IllegalActionException("Cannot create showtime because this movie is not showing now.");
 
-        if (movie.getStatus() == MovieStatus.END_OF_SHOWING)
-            throw new IllegalActionException("Movie has already ended showing.");
+        if (movie.getStatus() == MovieStatus.PREVIEW && !isPreview)
+            throw new IllegalActionException("Cannot create non-preview showtime because this movie is still in preview");
 
         if (!cinemaController.isAvaiableOn(cineplexId, cinemaId, startTime, endTime))
             throw new IllegalActionException("There is already a showtime scheduled for this cinema");
