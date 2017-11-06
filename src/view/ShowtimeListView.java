@@ -118,7 +118,8 @@ public class ShowtimeListView extends ListView {
 
                 Cinema cinema = cinemaController.findById(UUID.fromString(Form.getOption("Cinema",
                         cinemas.stream().map(cineplexCinema ->
-                        new GenericMenuOption("Hall " + cineplexCinema.getCode(),
+                        new GenericMenuOption("Hall " + cineplexCinema.getCode() + "  " +
+                                cineplexCinema.getType(),
                                 cineplexCinema.getId().toString())).toArray(GenericMenuOption[]::new))));
                 Language language = Language.valueOf(Form.getOption("Language", Language.values()));
                 int numberOfSubtitles = Form.getIntWithMin("Number of Subtitles", 0);
@@ -126,9 +127,8 @@ public class ShowtimeListView extends ListView {
                 for (int i = 0; i < numberOfSubtitles; i++)
                     subtitles[i] = Language.valueOf(Form.getOption("Subtitle " + (i + 1), Language.values()));
 
-                // Get today's date
                 Calendar calendar = Calendar.getInstance();
-                calendar.setTime(new Date());
+                calendar.setTime(dateFilter);
                 int dayOfYear = calendar.get(Calendar.DAY_OF_YEAR);
                 int year = calendar.get(Calendar.YEAR);
 

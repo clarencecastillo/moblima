@@ -97,7 +97,10 @@ public class BookingConfig implements Configurable {
         return minutesBeforeClosedBooking;
     }
 
-    // TODO Javadoc
+    /**
+     * Gets the buffer minutes after the showtime.
+     * @return the buffer minutes after the showtime.
+     */
     public static int getBufferMinutesAfterShowtime() {
         return bufferMinutesAfterShowtime;
     }
@@ -129,7 +132,10 @@ public class BookingConfig implements Configurable {
         BookingConfig.bookingSurcharge = bookingSurcharge;
     }
 
-    // TODO Javadoc
+    /**
+     * Sets the buffer minutes after the showtime.
+     * @param bufferMinutesAfterShowtime The buffer minutes after the showtime.
+     */
     public void setBufferMinutesAfterShowtime(int bufferMinutesAfterShowtime) {
         BookingConfig.bufferMinutesAfterShowtime = bufferMinutesAfterShowtime;
     }
