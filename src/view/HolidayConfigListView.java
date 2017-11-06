@@ -5,7 +5,11 @@ import exception.UnauthorisedNavigationException;
 import util.Utilities;
 import view.ui.*;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Hashtable;
+import java.util.TreeSet;
+import java.util.concurrent.TimeUnit;
 
 /**
  * This view displays the user interface for the user to set new holiday.
@@ -45,7 +49,8 @@ public class HolidayConfigListView extends ListView {
         TreeSet<Date> holidayDates = new TreeSet<>(holidays.keySet());
         for (Date date : holidayDates) {
             String holidayDate = Utilities.toFormat(date, "d MMMMM");
-            viewItems.add(new ViewItem(holidayDate, holidays.get(date), Utilities.toFormat(date)));
+            viewItems.add(new ViewItem(holidayDate, holidays.get(date), Utilities.toFormat(date),
+                    (int) TimeUnit.MILLISECONDS.toSeconds(date.getTime())));
         }
         setViewItems(viewItems);
 

@@ -1,13 +1,12 @@
 package model.movie;
 
-import model.booking.Showtime;
+import model.booking.*;
 import model.commons.Entity;
 import model.commons.Searchable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.UUID;
 
 /**
  * Represents a movie.
@@ -15,7 +14,7 @@ import java.util.UUID;
  * @version 1.0
  * @since 2017-10-20
  */
-public class Movie extends Entity implements Searchable, Comparable<Movie> {
+public class Movie extends Entity implements Searchable {
 
     /**
      * The title of this movie.
@@ -331,6 +330,28 @@ public class Movie extends Entity implements Searchable, Comparable<Movie> {
         return sum / getReviews().size();
     }
 
+    // TODO Javadoc
+    public double getGrossSales() {
+        double gross = 0;
+        for (Showtime showtime : showtimes)
+            if (showtime.getStatus() != ShowtimeStatus.CANCELLED)
+                for (Booking booking : showtime.getBookings())
+                    if (booking.getStatus() == BookingStatus.CONFIRMED)
+                        gross += booking.getPrice();
+        return gross;
+    }
+
+    // TODO Javadoc
+    public double getWeekendGrossSales() {
+        double weekendGross = 0;
+        for (Showtime showtime : showtimes)
+            if (showtime.getStatus() != ShowtimeStatus.CANCELLED && TicketType.isPeak(showtime.getStartTime()))
+                for (Booking booking : showtime.getBookings())
+                    if (booking.getStatus() == BookingStatus.CONFIRMED)
+                        weekendGross += booking.getPrice();
+        return weekendGross;
+    }
+
     /**
      * Gets the title, type and rating this movie as a string.
      *
@@ -352,10 +373,5 @@ public class Movie extends Entity implements Searchable, Comparable<Movie> {
         return (noFreePasses ? "*" : "") + String.format("%s [%s] %s", title, type, rating);
     }
 
-    // TODO Javadoc
-    @Override
-    public int compareTo(Movie movie) {
-        return Double.compare(movie.getOverallReviewRating(), getOverallReviewRating());
-    }
 }
 

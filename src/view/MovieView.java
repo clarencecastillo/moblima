@@ -5,6 +5,7 @@ import model.movie.Movie;
 import util.Utilities;
 import view.ui.View;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -17,12 +18,12 @@ import java.util.stream.Collectors;
 
 public class MovieView extends View {
 
+
     public MovieView(Movie movie) {
         double rating = movie.getOverallReviewRating();
 
         setTitle(movie.toString());
-        setContent("Status: " + movie.getStatus().toString(),
-                "Director: " + movie.getDirector(),
+        setContent("Director: " + movie.getDirector(),
                 "Actors: " + String.join(",",
                         movie.getActors().stream().map(String::valueOf).collect(Collectors.toList())),
                 "Runtime: " + movie.getRuntimeMinutes() + " minutes",
@@ -34,10 +35,13 @@ public class MovieView extends View {
     }
 
     public MovieView(Movie movie, List<Showtime> showtimes) {
-
         setTitle(movie.toString());
-        setContent(showtimes.size() > 0 ? (showtimes.stream().map(showtime ->
-                Utilities.toFormat(showtime.getStartTime(), "[hh:mm a]")).toArray(String[]::new)) :
-                new String[]{"No available showtime screenings for this movie"});
+        if (showtimes.size() > 0) {
+            Collections.sort(showtimes);
+            setContent(showtimes.stream().map(showtime ->
+                    Utilities.toFormat(showtime.getStartTime(), "[hh:mm a]")).toArray(String[]::new));
+        } else
+            setContent("No available showtime screenings for this movie.");
+
     }
 }

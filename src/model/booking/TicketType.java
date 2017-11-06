@@ -1,7 +1,12 @@
 package model.booking;
 
+import config.HolidayConfig;
 import config.TicketConfig;
 import model.transaction.Priceable;
+import util.Utilities;
+
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Represents a standard set of ticket types whose pricing rate will be added to the ticket price.
@@ -62,5 +67,11 @@ public enum TicketType implements Priceable {
     @Override
     public String toString() {
         return name;
+    }
+
+    // TODO Javadoc
+    public static boolean isPeak(Date date) {
+        return HolidayConfig.isHoliday(date) ||
+                Utilities.dateFallsOn(date, Calendar.FRIDAY, Calendar.SATURDAY, Calendar.SUNDAY);
     }
 }

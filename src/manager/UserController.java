@@ -1,6 +1,7 @@
 package manager;
 
-import exception.*;
+import exception.IllegalActionException;
+import exception.UninitialisedSingletonException;
 import model.cinema.Staff;
 import model.commons.User;
 

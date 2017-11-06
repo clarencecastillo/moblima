@@ -49,7 +49,7 @@ public class MainMenuView extends MenuView {
                 navigation.goTo(new BookingListView(navigation), AccessLevel.PUBLIC);
                 break;
             case VIEW_TOP_5_MOVIES:
-                navigation.goTo(new MovieListView(navigation), AccessLevel.PUBLIC, MovieListIntent.VIEW_RANKING);
+                navigation.goTo(new MovieListView(navigation), AccessLevel.PUBLIC, MovieListIntent.VIEW_SCORE_RANKING);
                 break;
             case ADMIN:
                 navigation.goTo(new AdminMenuView(navigation), AccessLevel.PUBLIC);

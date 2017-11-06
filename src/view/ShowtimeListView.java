@@ -18,6 +18,7 @@ import view.ui.*;
 
 import java.text.ParseException;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 /**
@@ -150,11 +151,10 @@ public class ShowtimeListView extends ListView {
                     startTime = calendar.getTime();
                 }
 
-                boolean isPreview = Form.getBoolean("Preview Movie");
                 boolean noFreePasses = Form.getBoolean("No Free Passes");
                 try {
                     showtimeController.createShowtime(movieFilter.getId(), cineplexFilter.getId(), cinema.getId(),
-                            language, startTime, isPreview, noFreePasses, subtitles);
+                            language, startTime, noFreePasses, subtitles);
                     View.displaySuccess("Successfully created showtime!");
                 } catch (IllegalActionException e) {
                     View.displayError(e.getMessage());
@@ -198,11 +198,14 @@ public class ShowtimeListView extends ListView {
                     if (showtimeStatusFilters != null)
                         movieShowtimes = movieShowtimes.stream().filter(showtime ->
                                 showtimeStatusFilters.contains(showtime.getStatus())).collect(Collectors.toList());
-                    content.add(new MovieView(movie, movieShowtimes).flatten(" : ", " "));
+
+                    if (movieShowtimes.size() > 0)
+                        content.add(new MovieView(movie, movieShowtimes).flatten(" : ", " "));
                 }
 
                 if (content.size() == 0)
-                    content.add("No available showtime screenings for this cineplex");
+                    content.add("No available showtime screenings for this" + (movieFilter != null ?
+                            " movie at this" : "")+ " cineplex");
 
                 viewItems.add(new ViewItem(cineplex.getName(), content, cineplex.getId().toString()));
             }
@@ -227,7 +230,9 @@ public class ShowtimeListView extends ListView {
                     movieShowtimes = movieShowtimes.stream().filter(showtime ->
                             showtimeStatusFilters.contains(showtime.getStatus())).collect(Collectors.toList());
 
-                viewItems.add(new ViewItem(new MovieView(movie, movieShowtimes), movie.getId().toString()));
+                if (movieShowtimes.size() > 0 || accessLevel == AccessLevel.ADMINISTRATOR)
+                    viewItems.add(new ViewItem(new MovieView(movie, movieShowtimes),
+                            movie.getId().toString(), (int) movie.getOverallReviewRating()));
             }
 
         } else {
@@ -242,13 +247,13 @@ public class ShowtimeListView extends ListView {
                         showtimeStatusFilters.contains(showtime.getStatus())).collect(Collectors.toList());
 
             for (Showtime showtime : showtimes)
-                viewItems.add(new ViewItem(new ShowtimeView(showtime), showtime.getId().toString()));
+                viewItems.add(new ViewItem(new ShowtimeView(showtime), showtime.getId().toString(),
+                        (int) TimeUnit.MILLISECONDS.toSeconds(showtime.getStartTime().getTime())));
         }
 
         setViewItems(viewItems);
 
         display();
-        View.displayInformation("Please select ");
         String userInput = getChoice();
         if (userInput.equals(BACK))
             navigation.goBack();

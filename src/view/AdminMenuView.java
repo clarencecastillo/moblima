@@ -6,6 +6,7 @@ import manager.UserController;
 import model.cinema.Staff;
 import util.Utilities;
 import view.ui.*;
+
 import java.io.ObjectOutputStream;
 
 /**
@@ -16,6 +17,8 @@ import java.io.ObjectOutputStream;
  */
 public class AdminMenuView extends MenuView {
 
+    private static final String RANK_BY_SCORE = "RANK_BY_SCORE";
+    private static final String RANK_BY_SALES = "RANK_BY_SALES";
     public static final int MAX_LOGIN_ATTEMPTS = 5;
 
     private Staff administrator;
@@ -70,8 +73,12 @@ public class AdminMenuView extends MenuView {
                         ShowtimeListView.ShowtimeListIntent.VIEW_SHOWTIMES);
                 break;
             case VIEW_RANKING:
+                String rankBy = Form.getOption("Rank By",
+                        new GenericMenuOption("Review Score", RANK_BY_SCORE),
+                        new GenericMenuOption("Sales", RANK_BY_SALES));
                 navigation.goTo(new MovieListView(navigation), AccessLevel.ADMINISTRATOR,
-                        MovieListView.MovieListIntent.VIEW_RANKING);
+                        rankBy.equals(RANK_BY_SCORE) ? MovieListView.MovieListIntent.VIEW_SCORE_RANKING :
+                                MovieListView.MovieListIntent.VIEW_SALES_RANKING);
                 break;
             case CONFIGURE_SETTINGS:
                 navigation.goTo(new ConfigMenuView(navigation), AccessLevel.ADMINISTRATOR);

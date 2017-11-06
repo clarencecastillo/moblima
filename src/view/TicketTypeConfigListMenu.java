@@ -7,7 +7,6 @@ import model.cinema.CinemaType;
 import view.ui.*;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * This view displays the user interface for the user to configure available ticket types for each cinema.

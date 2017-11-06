@@ -6,6 +6,7 @@ import model.cinema.Cineplex;
 import model.commons.Entity;
 import model.commons.Language;
 import model.movie.Movie;
+import model.movie.MovieStatus;
 import model.transaction.Priceable;
 import util.Utilities;
 
@@ -17,7 +18,7 @@ import java.util.*;
  * @version 1.0
  * @since 2017-10-20
  */
-public class Showtime extends Entity {
+public class Showtime extends Entity implements Comparable<Showtime> {
 
     /**
      * The movie shown for this showtime.
@@ -269,7 +270,8 @@ public class Showtime extends Entity {
         Date lastBookingMinute = Utilities.getDateBefore(startTime, Calendar.MINUTE,
                 minutesBeforeClosedBooking);
         Date now = new Date();
-        if (now.before(Utilities.getStartOfDate(openBookingDate)) || now.after(lastBookingMinute))
+        if (now.before(Utilities.getStartOfDate(openBookingDate)) || now.after(lastBookingMinute) ||
+                !Arrays.asList(MovieStatus.NOW_SHOWING, MovieStatus.PREVIEW).contains(movie.getStatus()))
             showtimeStatus = ShowtimeStatus.CLOSED_BOOKING;
 
         return showtimeStatus;
@@ -313,4 +315,9 @@ public class Showtime extends Entity {
      * @param booking The booking to be removed from this showtime.
      */
     public void removeBooking(Booking booking) { bookings.remove(booking.getId()); }
+
+    @Override
+    public int compareTo(Showtime o) {
+        return startTime.compareTo(o.startTime);
+    }
 }
