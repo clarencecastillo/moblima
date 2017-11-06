@@ -81,7 +81,7 @@ public class ShowtimeController extends EntityController<Showtime> {
      * @return the newly created showtime.
      * @throws IllegalActionException if the given movie is currently in preview
      * but the showtime to be created is not a preview,
-     * or if the movie already ends showing.
+     * or if the movie already ends showing, or if the cinema is not available.
      */
     public Showtime createShowtime(UUID movieId, UUID cineplexId, UUID cinemaId, Language language,
                                    Date startTime, boolean isPreview, boolean noFreePasses, Language[] subtitles)
@@ -93,6 +93,8 @@ public class ShowtimeController extends EntityController<Showtime> {
 
         Movie movie = movieController.findById(movieId);
         Cineplex cineplex = cineplexController.findById(cineplexId);
+        Date endTime = Utilities.getDateAfter(startTime, Calendar.MINUTE,
+                movie.getRuntimeMinutes() + BookingConfig.getBufferMinutesAfterShowtime());
 
         if (movie.getStatus() == MovieStatus.PREVIEW && !isPreview)
             throw new IllegalActionException("Movie is still in preview");
@@ -100,20 +102,10 @@ public class ShowtimeController extends EntityController<Showtime> {
         if (movie.getStatus() == MovieStatus.END_OF_SHOWING)
             throw new IllegalActionException("Movie has already ended showing.");
 
+        if (!cinemaController.isAvaiableOn(cineplexId, cinemaId, startTime, endTime))
+            throw new IllegalActionException("There is already a showtime scheduled for this cinema");
+
         Cinema cinema = cinemaController.findById(cinemaId);
-
-        List<Showtime> cinemaShowtime = findByCineplexAndMovie(cineplexId, movieId)
-                .stream().filter(showtime -> showtime.getCinema().equals(cinema)).collect(Collectors.toList());
-
-        for (Showtime showtime : cinemaShowtime) {
-            Date endTime1 = Utilities.getDateAfter(showtime.getStartTime(), Calendar.MINUTE,
-                    showtime.getMovie().getRuntimeMinutes() + BookingConfig.getBufferMinutesAfterShowtime());
-            Date endTime2 = Utilities.getDateAfter(startTime, Calendar.MINUTE,
-                    movie.getRuntimeMinutes() + BookingConfig.getBufferMinutesAfterShowtime());
-            if (Utilities.overlaps(showtime.getStartTime(), endTime1, startTime, endTime2))
-                throw new IllegalActionException("There is already a showtime scheduled for this cinema");
-        }
-
         Showtime showtime = new Showtime(movie, cineplex, cinema, language, startTime, isPreview, noFreePasses, subtitles);
 
         movie.addShowtime(showtime);
@@ -150,20 +142,6 @@ public class ShowtimeController extends EntityController<Showtime> {
     }
 
     /**
-     * Gets the list of showtimes that are in the given showtime statuses.
-     * @param statuses The statuses of the showtimes to be returned.
-     * @return the list of showtimes that are in the given showtime statuses.
-     */
-    public List<Showtime> findByStatus(ShowtimeStatus statuses) {
-        ArrayList<Showtime> showtimes = new ArrayList<>();
-        List<ShowtimeStatus> statusFilter = Arrays.asList(statuses);
-        for (Showtime showtime : entities.values())
-            if (statusFilter.contains(showtime.getStatus()))
-                showtimes.add(showtime);
-        return showtimes;
-    }
-
-    /**
      * Gets a list of showtime in the given cineplex that shows the given movie.
      * @param cineplexId The ID of the cineplex of the showtime to be returned.
      * @param movieId The ID of the movie of the showtime to be returned.
@@ -181,6 +159,15 @@ public class ShowtimeController extends EntityController<Showtime> {
             if (showtime.getMovie().equals(movie))
                 showtimes.add(showtime);
         return showtimes;
+    }
+
+    // TODO Javadoc
+    public List<Showtime> findByCineplexAndCinema(UUID cineplexId, UUID cinemaId) {
+        CineplexController cineplexController = CineplexController.getInstance();
+        Cineplex cineplex = cineplexController.findById(cineplexId);
+
+        return cineplex.getShowtimes().stream().filter(showtime ->
+                showtime.getCinema().getId().equals(cinemaId)).collect(Collectors.toList());
     }
 
     /**
