@@ -12,6 +12,8 @@ import model.movie.*;
 import util.Utilities;
 import view.ui.*;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.UUID;
 
@@ -37,17 +39,6 @@ public class MovieMenuView extends MenuView {
 
     @Override
     public void onLoad(AccessLevel accessLevel, Intent intent, String... args) {
-
-        this.accessLevel = accessLevel;
-        switch (accessLevel) {
-            case ADMINISTRATOR:
-                setMenuItems(MovieMenuOption.values());
-                break;
-            case PUBLIC:
-                setMenuItems(MovieMenuOption.VIEW_SHOWTIMES,
-                        MovieMenuOption.SEE_REVIEWS);
-                break;
-        }
 
         this.intent = (MovieMenuIntent) intent;
         switch (this.intent) {
@@ -76,6 +67,21 @@ public class MovieMenuView extends MenuView {
                 Form.pressAnyKeyToContinue();
                 break;
         }
+
+        this.accessLevel = accessLevel;
+        switch (accessLevel) {
+            case ADMINISTRATOR:
+                setMenuItems(MovieMenuOption.values());
+                break;
+            case PUBLIC:
+                ArrayList<MovieMenuOption> menuOptions = new ArrayList<>();
+                menuOptions.add(MovieMenuOption.SEE_REVIEWS);
+                if (Arrays.asList(MovieStatus.NOW_SHOWING, MovieStatus.PREVIEW).contains(movie.getStatus()))
+                    menuOptions.add(MovieMenuOption.VIEW_SHOWTIMES);
+                setMenuItems(menuOptions.toArray(new MovieMenuOption[menuOptions.size()]));
+                break;
+        }
+
         addBackOption();
     }
 
