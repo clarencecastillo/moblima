@@ -51,8 +51,8 @@ public interface Form {
     Pattern EMAIL_REGEX = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$",
             Pattern.CASE_INSENSITIVE);
     Pattern CREDIT_CARD_REGEX = Pattern.compile("\\d{13,16}");
-    Pattern MOBILE_REGEX = Pattern.compile("^[89]\\d{7}$");
-    Pattern CVV_REGEX = Pattern.compile("/^[0-9]{3,4}$/");
+    Pattern MOBILE_REGEX = Pattern.compile("[89]\\d{7}");
+    Pattern CVV_REGEX = Pattern.compile("\\d{3,4}");
 
     /**
      * Gets integer input which has a maximum limit. A invalid error message will be displayed

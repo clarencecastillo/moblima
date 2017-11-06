@@ -139,11 +139,26 @@ public class ShowtimeListView extends ListView {
                 calendar.set(Calendar.YEAR, year);
                 startTime = calendar.getTime();
 
+                Date endTime = Utilities.getDateAfter(startTime, Calendar.MINUTE,
+                        movieFilter.getRuntimeMinutes() + BookingConfig.getBufferMinutesAfterShowtime());
+                while(!cinemaController.isAvaiableOn(cineplexFilter.getId(), cinema.getId(), startTime, endTime)) {
+                    View.displayError("The specified time conflicts with another showtime scheduled for this cinema.");
+                    startTime = Form.getDate("Start Time", "HH:mm");
+                    calendar.setTime(startTime);
+                    calendar.set(Calendar.DAY_OF_YEAR, dayOfYear);
+                    calendar.set(Calendar.YEAR, year);
+                    startTime = calendar.getTime();
+                }
+
                 boolean isPreview = Form.getBoolean("Preview Movie");
                 boolean noFreePasses = Form.getBoolean("No Free Passes");
-                showtimeController.createShowtime(movieFilter.getId(), cineplexFilter.getId(), cinema.getId(),
-                        language, startTime, isPreview, noFreePasses, subtitles);
-                View.displaySuccess("Successfully created showtime!");
+                try {
+                    showtimeController.createShowtime(movieFilter.getId(), cineplexFilter.getId(), cinema.getId(),
+                            language, startTime, isPreview, noFreePasses, subtitles);
+                    View.displaySuccess("Successfully created showtime!");
+                } catch (IllegalActionException e) {
+                    View.displayError(e.getMessage());
+                }
                 Form.pressAnyKeyToContinue();
                 break;
         }

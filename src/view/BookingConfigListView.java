@@ -55,6 +55,9 @@ public class BookingConfigListView extends ListView {
         viewItems.add(new ViewItem("Minutes Before Closed Booking",
                 String.format("%d minutes", BookingConfig.getMinutesBeforeClosedBooking()),
                 BookingConfigListOption.MINS_BEFORE_CLOSED_BOOKING.toString()));
+        viewItems.add(new ViewItem("Buffer Minutes After Showtime",
+                String.format("%d minutes", BookingConfig.getBufferMinutesAfterShowtime()),
+                BookingConfigListOption.BUFFER_MINUTES_AFTER_SHOWTIME.toString()));
         setViewItems(viewItems);
 
         display();
@@ -78,6 +81,11 @@ public class BookingConfigListView extends ListView {
                 case BOOKING_FEE:
                     double newBookingFee = Form.getDoubleWithMin("Enter new booking fee", 0);
                     bookingConfig.setBookingSurcharge(newBookingFee);
+                    break;
+                case BUFFER_MINUTES_AFTER_SHOWTIME:
+                    int newBufferMinutesAfterShowtime = Form
+                            .getIntWithMin("Enter new buffer minutes after showtime", 0);
+                    bookingConfig.setBufferMinutesAfterShowtime(newBufferMinutesAfterShowtime);
                     break;
 //                case BOOKING_CHANGE_GRACE_PERIOD:
 //                    int newBookingChangeGracePeriod = Form
@@ -106,6 +114,7 @@ public class BookingConfigListView extends ListView {
         BOOKING_FEE,
         BOOKING_CHANGE_GRACE_PERIOD,
         BOOKING_CHANGE_FEE,
-        MINS_BEFORE_CLOSED_BOOKING
+        MINS_BEFORE_CLOSED_BOOKING,
+        BUFFER_MINUTES_AFTER_SHOWTIME
     }
 }

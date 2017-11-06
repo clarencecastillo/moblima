@@ -1,14 +1,23 @@
 package manager;
 
+import config.BookingConfig;
 import config.TicketConfig;
+import exception.IllegalActionException;
 import exception.UninitialisedSingletonException;
+import model.booking.Showtime;
+import model.booking.ShowtimeStatus;
 import model.booking.TicketType;
 import model.cinema.Cinema;
 import model.cinema.CinemaLayout;
 import model.cinema.CinemaType;
 import model.cinema.Cineplex;
+import util.Utilities;
 
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 /**
  Represents the controller of cinemas.
@@ -66,15 +75,20 @@ public class CinemaController extends EntityController<Cinema> {
         return cinema;
     }
 
-    /**
-     * Checks whether a ticket type is available in this cinema.
-     *
-     * @param cinemaId The ID of the cinema to be checked.
-     * @param type The ticket type to be checked
-     * @return true if this ticket type is available in this cinema.
-     */
-    public boolean isAvailable(UUID cinemaId, TicketType type) {
-        Cinema cinema = findById(cinemaId);
-        return TicketConfig.isAvailable(cinema.getType(), type);
+    public boolean isAvaiableOn(UUID cineplexId, UUID cinemaId, Date startTime, Date endTime) {
+
+        ShowtimeController showtimeController = ShowtimeController.getInstance();
+        List<Showtime> cinemaShowtime = showtimeController.findByCineplexAndCinema(cineplexId, cinemaId);
+
+        for (Showtime showtime : cinemaShowtime) {
+            if (showtime.getStatus() != ShowtimeStatus.CANCELLED) {
+                Date showtimeEndTime = Utilities.getDateAfter(showtime.getStartTime(), Calendar.MINUTE,
+                        showtime.getMovie().getRuntimeMinutes() + BookingConfig.getBufferMinutesAfterShowtime());
+                if (Utilities.overlaps(showtime.getStartTime(), showtimeEndTime, startTime, endTime))
+                    return false;
+            }
+        }
+
+        return true;
     }
 }
