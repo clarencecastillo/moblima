@@ -18,6 +18,7 @@ import view.ui.*;
 
 import java.text.ParseException;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 /**
@@ -197,11 +198,14 @@ public class ShowtimeListView extends ListView {
                     if (showtimeStatusFilters != null)
                         movieShowtimes = movieShowtimes.stream().filter(showtime ->
                                 showtimeStatusFilters.contains(showtime.getStatus())).collect(Collectors.toList());
-                    content.add(new MovieView(movie, movieShowtimes).flatten(" : ", " "));
+
+                    if (movieShowtimes.size() > 0)
+                        content.add(new MovieView(movie, movieShowtimes).flatten(" : ", " "));
                 }
 
                 if (content.size() == 0)
-                    content.add("No available showtime screenings for this cineplex");
+                    content.add("No available showtime screenings for this" + (movieFilter != null ?
+                            " movie at this" : "")+ " cineplex");
 
                 viewItems.add(new ViewItem(cineplex.getName(), content, cineplex.getId().toString()));
             }
@@ -250,7 +254,6 @@ public class ShowtimeListView extends ListView {
         setViewItems(viewItems);
 
         display();
-        View.displayInformation("Please select ");
         String userInput = getChoice();
         if (userInput.equals(BACK))
             navigation.goBack();
