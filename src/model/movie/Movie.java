@@ -7,7 +7,6 @@ import model.commons.Searchable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.UUID;
 
 /**
  * Represents a movie.

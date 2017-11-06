@@ -1,15 +1,14 @@
 package manager;
 
 import config.BookingConfig;
-import config.PaymentConfig;
-import exception.*;
+import exception.IllegalActionException;
+import exception.UninitialisedSingletonException;
 import model.booking.*;
 import model.cinema.Seat;
 import model.commons.User;
 import model.transaction.Payment;
 import model.transaction.PaymentStatus;
 
-import java.util.Arrays;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.UUID;

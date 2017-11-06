@@ -2,7 +2,10 @@ package manager;
 
 import exception.IllegalActionException;
 import exception.UninitialisedSingletonException;
-import model.booking.*;
+import model.booking.Booking;
+import model.booking.BookingStatus;
+import model.booking.Showtime;
+import model.booking.ShowtimeStatus;
 import model.cinema.Cineplex;
 import model.movie.*;
 import util.Utilities;

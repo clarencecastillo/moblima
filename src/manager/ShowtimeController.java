@@ -2,7 +2,8 @@ package manager;
 
 import config.BookingConfig;
 import config.HolidayConfig;
-import exception.*;
+import exception.IllegalActionException;
+import exception.UninitialisedSingletonException;
 import model.booking.Booking;
 import model.booking.Showtime;
 import model.booking.ShowtimeStatus;
@@ -12,7 +13,6 @@ import model.cinema.Cineplex;
 import model.commons.Language;
 import model.movie.Movie;
 import model.movie.MovieStatus;
-import model.transaction.Priceable;
 import util.Utilities;
 
 import java.util.*;

@@ -1,12 +1,9 @@
 package manager;
 
 import config.BookingConfig;
-import config.TicketConfig;
-import exception.IllegalActionException;
 import exception.UninitialisedSingletonException;
 import model.booking.Showtime;
 import model.booking.ShowtimeStatus;
-import model.booking.TicketType;
 import model.cinema.Cinema;
 import model.cinema.CinemaLayout;
 import model.cinema.CinemaType;
@@ -17,7 +14,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 /**
  Represents the controller of cinemas.
