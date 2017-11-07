@@ -100,9 +100,7 @@ public class ShowtimeListView extends ListView {
             case PUBLIC:
                 setMenuItems(ShowtimeListOption.CHOOSE_DAY);
                 showtimeStatusFilters = Arrays.asList(ShowtimeStatus.OPEN_BOOKING);
-                movieStatusFilters = Arrays.asList(MovieStatus.NOW_SHOWING,
-                        MovieStatus.COMING_SOON,
-                        MovieStatus.PREVIEW);
+                movieStatusFilters = Arrays.asList(MovieStatus.NOW_SHOWING, MovieStatus.PREVIEW);
                 break;
         }
 
