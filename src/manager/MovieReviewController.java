@@ -2,6 +2,8 @@ package manager;
 
 import exception.IllegalActionException;
 import exception.UninitialisedSingletonException;
+import model.booking.Booking;
+import model.booking.BookingStatus;
 import model.commons.User;
 import model.movie.Movie;
 import model.movie.MovieReview;
@@ -65,6 +67,22 @@ public class MovieReviewController extends EntityController<MovieReview> {
 
         Movie movie = movieManager.findById(movieId);
         User author = userManager.findById(authorId);
+
+        boolean hasBookedMovie = false;
+        for (Booking booking : author.getBookings()) {
+            hasBookedMovie = booking.getShowtime().getMovie().equals(movie) &&
+                    booking.getStatus() == BookingStatus.CONFIRMED;
+            if (hasBookedMovie)
+                break;
+        }
+
+        if (!hasBookedMovie)
+            throw new IllegalActionException("Can only submit reviews for movies you've booked");
+
+        for (MovieReview movieReview : author.getMovieReviews())
+            if (movieReview.getAuthor().equals(author) && movieReview.getMovie().equals(movie))
+                throw new IllegalActionException("Can only submit review once per movie");
+
         MovieReview movieReview = new MovieReview(review, movie, rating, author);
         entities.put(movieReview.getId(), movieReview);
         movie.addReview(movieReview);
