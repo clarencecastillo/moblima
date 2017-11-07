@@ -10,10 +10,7 @@ import model.cinema.Cineplex;
 import model.movie.*;
 import util.Utilities;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -22,11 +19,6 @@ import java.util.stream.Collectors;
  @since 2017-10-20
  */
 public class MovieController extends EntityController<Movie> {
-
-    /**
-     * The threshold of the similarity that indicates how similar the result is to the keyword.
-     */
-    public static final int SIMILARITY_THRESHOLD = 5;
 
     /**
      * A reference to this singleton instance.
@@ -169,14 +161,20 @@ public class MovieController extends EntityController<Movie> {
      * is within the similarity threshold.
      */
     public List<Movie> findByKeyword(String keyword) {
-        ArrayList<Movie> movies = new ArrayList<>();
+        Hashtable<Movie, Integer> searchResults = new Hashtable<>();
         for (Movie movie : entities.values()) {
-            for (String tag : movie.getSearchTags())
-                if (Utilities.levenshteinDistance(keyword, tag) <= SIMILARITY_THRESHOLD) {
-                    movies.add(movie);
-                    break;
-                }
+            int maxFuzzyScore = 0;
+            for (String tag : movie.getSearchTags()) {
+                int fuzzyScore = Utilities.fuzzyScore(keyword, tag);
+                if (fuzzyScore > maxFuzzyScore)
+                    maxFuzzyScore = fuzzyScore;
+            }
+            if (maxFuzzyScore > 0)
+                searchResults.put(movie, maxFuzzyScore);
+
         }
+        ArrayList<Movie> movies = new ArrayList<>(searchResults.keySet());
+        Collections.sort(movies, Comparator.comparingInt(searchResults::get).reversed());
         return movies;
     }
 

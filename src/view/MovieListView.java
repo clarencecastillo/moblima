@@ -27,7 +27,6 @@ public class MovieListView extends ListView {
     private boolean withGrouping;
     private MovieController movieController;
     private AccessLevel accessLevel;
-    private int orderBy;
 
     public MovieListView(Navigation navigation) {
         super(navigation);
@@ -64,7 +63,6 @@ public class MovieListView extends ListView {
         movies = new ArrayList<>();
         switch (this.intent) {
             case SEARCH_MOVIES:
-                withGrouping = true;
                 movies.addAll(movieController.findByKeyword(searchKeyword));
                 if (accessLevel == AccessLevel.PUBLIC)
                     movies = movies.stream().filter(movie ->
