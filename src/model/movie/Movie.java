@@ -326,8 +326,7 @@ public class Movie extends Entity implements Searchable {
         if (getReviews().size() <= 1)
             return -1;
         int sum = getReviews().stream().map(MovieReview::getRating).mapToInt(Integer::intValue).sum();
-        System.out.println(sum / getReviews().size());
-        return sum / getReviews().size();
+        return (double) sum / getReviews().size();
     }
 
     // TODO Javadoc

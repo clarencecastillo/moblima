@@ -82,7 +82,7 @@ public class MovieListView extends ListView {
                 break;
             case VIEW_SCORE_RANKING:
                 movies.addAll(movieController.getList());
-                Collections.sort(movies, Comparator.comparingDouble(Movie::getOverallReviewRating));
+                Collections.sort(movies, Comparator.comparingDouble(Movie::getOverallReviewRating).reversed());
                 if (movies.size() > 5)
                     movies = movies.subList(0, 5);
                 setContent("Displaying top " + movies.size() + " movie item(s) by score.");
