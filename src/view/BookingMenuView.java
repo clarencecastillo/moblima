@@ -94,7 +94,7 @@ public class BookingMenuView extends MenuView {
                 View.displayInformation("Please enter your card details in order to complete your purchase.");
                 Form.getString("Card Number", CREDIT_CARD_REGEX);
                 Date expiryDate = Form.getDate("Expiry Date", "MM/YYYY");
-                while (expiryDate.after(new Date())) {
+                while (expiryDate.before(new Date())) {
                     View.displayError("Credit card already expired! Please try again.");
                     expiryDate = Form.getDate("Expiry Date", "MM/YYYY");
                 }

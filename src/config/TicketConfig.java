@@ -57,7 +57,7 @@ public class TicketConfig implements Configurable {
      * @return the available ticket types of a given cinema type.
      */
     public static List<TicketType> getAvailableTicketTypes(CinemaType cinemaType) {
-        return cinemaTicketTypes.get(cinemaType);
+        return new ArrayList<>(cinemaTicketTypes.get(cinemaType));
     }
 
     /**
@@ -67,7 +67,7 @@ public class TicketConfig implements Configurable {
      * @return true if this ticket type is available for this cinema type.
      */
     public static boolean isAvailable(CinemaType cinemaType, TicketType ticketType) {
-        return Arrays.asList(getAvailableTicketTypes(cinemaType)).contains(ticketType);
+        return getAvailableTicketTypes(cinemaType).contains(ticketType);
     }
 
     /**
