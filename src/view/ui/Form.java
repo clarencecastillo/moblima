@@ -11,7 +11,6 @@ import java.util.regex.Pattern;
 /**
  * Represents a base interface that must be implemented by all classes that are user interfaces.
  * It has static methods that are useful for getting inputs.
- * @author Castillo Clarence Fitzgerald Gumtang
  * @version 1.0
  * @since 2017-10-20
  */
