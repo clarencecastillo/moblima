@@ -85,7 +85,7 @@ public class ShowtimeController extends EntityController<Showtime> {
 
         Cinema cinema = cinemaController.findById(cinemaId);
         Showtime showtime = new Showtime(movie, cineplex, cinema, language, startTime,
-                movie.getStatus() == MovieStatus.PREVIEW, noFreePasses, subtitles);
+                noFreePasses, movie.getStatus() == MovieStatus.PREVIEW, subtitles);
 
         movie.addShowtime(showtime);
         cineplex.addShowtime(showtime);
