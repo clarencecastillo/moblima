@@ -195,25 +195,49 @@ public class Utilities {
      * @param b The second string to be compared.
      * @return the similarity score of these two strings.
      */
-    public static int levenshteinDistance(String a, String b) {
-        a = a.toLowerCase();
-        b = b.toLowerCase();
-        // i == 0
-        int[] costs = new int[b.length() + 1];
-        for (int j = 0; j < costs.length; j++)
-            costs[j] = j;
-        for (int i = 1; i <= a.length(); i++) {
-            // j == 0; nw = lev(i - 1, j)
-            costs[0] = i;
-            int nw = i - 1;
-            for (int j = 1; j <= b.length(); j++) {
-                int cj = Math.min(1 + Math.min(costs[j], costs[j - 1]),
-                        a.charAt(i - 1) == b.charAt(j - 1) ? nw : nw + 1);
-                nw = costs[j];
-                costs[j] = cj;
+    public static int fuzzyScore(String a, String b) {
+
+        final String termLowerCase = a.toLowerCase();
+        final String queryLowerCase = b.toLowerCase();
+
+        // the resulting score
+        int score = 0;
+
+        // the position in the term which will be scanned next for potential
+        // query character matches
+        int termIndex = 0;
+
+        // index of the previously matched character in the term
+        int previousMatchingCharacterIndex = Integer.MIN_VALUE;
+
+        for (int queryIndex = 0; queryIndex < queryLowerCase.length(); queryIndex++) {
+            final char queryChar = queryLowerCase.charAt(queryIndex);
+
+            boolean termCharacterMatchFound = false;
+            for (; termIndex < termLowerCase.length()
+                    && !termCharacterMatchFound; termIndex++) {
+                final char termChar = termLowerCase.charAt(termIndex);
+
+                if (queryChar == termChar) {
+                    // simple character matches result in one point
+                    score++;
+
+                    // subsequent character matches further improve
+                    // the score.
+                    if (previousMatchingCharacterIndex + 1 == termIndex) {
+                        score += 2;
+                    }
+
+                    previousMatchingCharacterIndex = termIndex;
+
+                    // we can leave the nested loop. Every character in the
+                    // query can match at most one character in the term.
+                    termCharacterMatchFound = true;
+                }
             }
         }
-        return costs[b.length()];
+
+        return score;
     }
 
     // TODO Javadoc

@@ -255,6 +255,7 @@ public class Movie extends Entity implements Searchable {
         ArrayList<String> tags = new ArrayList<>();
 
         // Movie Title
+        tags.addAll(Arrays.asList(title.split(" ")));
         tags.add(title);
 
         // Actors
@@ -267,7 +268,7 @@ public class Movie extends Entity implements Searchable {
         // Director
         tags.add(director.getFirstName());
         tags.add(director.getLastName());
-        tags.add(director.getLastName());
+        tags.add(director.getFullName());
 
         return tags;
     }
@@ -326,8 +327,7 @@ public class Movie extends Entity implements Searchable {
         if (getReviews().size() <= 1)
             return -1;
         int sum = getReviews().stream().map(MovieReview::getRating).mapToInt(Integer::intValue).sum();
-        System.out.println(sum / getReviews().size());
-        return sum / getReviews().size();
+        return (double) sum / getReviews().size();
     }
 
     // TODO Javadoc

@@ -139,11 +139,4 @@ public class Cineplex extends Entity {
         showtimes.remove(showtime);
     }
 
-//    public List<Movie> getMovie() {
-//        Set<Movie> movies = new HashSet<Movie>();
-//        for (Showtime showtime:showtimes)
-//            movies.add(showtime.getMovie());
-//        List movieList = new ArrayList(movies);
-//        return movieList;
-//    }
 }

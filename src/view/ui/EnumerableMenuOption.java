@@ -3,7 +3,6 @@ package view.ui;
 /**
  * Represents a base interface that must be implemented by all classes that contains enumerable menu options.
  *
- * @author Castillo Clarence Fitzgerald Gumtang
  * @version 1.0
  * @since 2017-10-20
  */

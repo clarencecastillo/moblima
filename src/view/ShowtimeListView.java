@@ -100,9 +100,7 @@ public class ShowtimeListView extends ListView {
             case PUBLIC:
                 setMenuItems(ShowtimeListOption.CHOOSE_DAY);
                 showtimeStatusFilters = Arrays.asList(ShowtimeStatus.OPEN_BOOKING);
-                movieStatusFilters = Arrays.asList(MovieStatus.NOW_SHOWING,
-                        MovieStatus.COMING_SOON,
-                        MovieStatus.PREVIEW);
+                movieStatusFilters = Arrays.asList(MovieStatus.NOW_SHOWING, MovieStatus.PREVIEW);
                 break;
         }
 
@@ -115,8 +113,7 @@ public class ShowtimeListView extends ListView {
                     throw new UnauthorisedNavigationException();
 
                 View.displayInformation("Please enter showtime details.");
-                List<Cinema> cinemas = cineplexFilter.getCinemas();;
-
+                List<Cinema> cinemas = cineplexFilter.getCinemas();
                 Cinema cinema = cinemaController.findById(UUID.fromString(Form.getOption("Cinema",
                         cinemas.stream().map(cineplexCinema ->
                         new GenericMenuOption("Hall " + cineplexCinema.getCode() + "  " +
@@ -128,28 +125,17 @@ public class ShowtimeListView extends ListView {
                 for (int i = 0; i < numberOfSubtitles; i++)
                     subtitles[i] = Language.valueOf(Form.getOption("Subtitle " + (i + 1), Language.values()));
 
-                Calendar calendar = Calendar.getInstance();
-                calendar.setTime(dateFilter);
-                int dayOfYear = calendar.get(Calendar.DAY_OF_YEAR);
-                int year = calendar.get(Calendar.YEAR);
-
-                // Set date to specified hour and minute
-                Date startTime = Form.getDate("Start Time", "HH:mm");
-                calendar.setTime(startTime);
-                calendar.set(Calendar.DAY_OF_YEAR, dayOfYear);
-                calendar.set(Calendar.YEAR, year);
-                startTime = calendar.getTime();
-
-                Date endTime = Utilities.getDateAfter(startTime, Calendar.MINUTE,
-                        movieFilter.getRuntimeMinutes() + BookingConfig.getBufferMinutesAfterShowtime());
-                while(!cinemaController.isAvaiableOn(cineplexFilter.getId(), cinema.getId(), startTime, endTime)) {
-                    View.displayError("The specified time conflicts with another showtime scheduled for this cinema.");
-                    startTime = Form.getDate("Start Time", "HH:mm");
-                    calendar.setTime(startTime);
-                    calendar.set(Calendar.DAY_OF_YEAR, dayOfYear);
-                    calendar.set(Calendar.YEAR, year);
-                    startTime = calendar.getTime();
-                }
+                Date startTime;
+                Date endTime;
+                do {
+                    startTime = Form.getTime("Start Time", dateFilter, true);
+                    endTime = Utilities.getDateAfter(startTime, Calendar.MINUTE,
+                            movieFilter.getRuntimeMinutes() + BookingConfig.getBufferMinutesAfterShowtime());
+                    if (!cinemaController.isAvaiableOn(cineplexFilter.getId(), cinema.getId(), startTime, endTime))
+                        View.displayError("The specified time conflicts with another showtime scheduled for this cinema.");
+                    else
+                        break;
+                } while (true);
 
                 boolean noFreePasses = Form.getBoolean("No Free Passes");
                 try {
@@ -298,13 +284,16 @@ public class ShowtimeListView extends ListView {
                     if (accessLevel == AccessLevel.PUBLIC) {
                         try {
                             Booking booking = bookingController.createBooking(UUID.fromString(userInput));
-                            navigation.goTo(new TicketTypeListView(navigation), accessLevel, booking.getId().toString());
+                            navigation.goTo(new TicketTypeListView(navigation), accessLevel,
+                                    TicketTypeListView.TicketTypeListIntent.VIEW_TICKET_TYPES,
+                                    booking.getId().toString());
                         } catch (IllegalActionException ex) {
                             View.displayError("Sorry, cannot book for this showtime at this time.");
                             navigation.refresh();
                         }
                     } else {
-                        navigation.goTo(new TicketTypeListView(navigation), accessLevel, userInput);
+                        navigation.goTo(new TicketTypeListView(navigation), accessLevel,
+                                TicketTypeListView.TicketTypeListIntent.VIEW_TICKET_TYPES, userInput);
                     }
                 }
             }

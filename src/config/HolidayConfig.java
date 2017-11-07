@@ -56,7 +56,12 @@ public class HolidayConfig implements Configurable {
      * @return true is the date appears in the holiday setting.
      */
     public static boolean isHoliday(Date date) {
-        return holidays.containsKey(Utilities.getStartOfDate(date));
+        String dateString = Utilities.toFormat(date, "dd/MM");
+        for (Date holidayDate : holidays.keySet()) {
+            if (Utilities.toFormat(holidayDate, "dd/MM").equals(dateString))
+                return true;
+        }
+        return false;
     }
 
     /**

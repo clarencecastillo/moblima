@@ -3,10 +3,7 @@ package manager;
 import config.BookingConfig;
 import exception.IllegalActionException;
 import exception.UninitialisedSingletonException;
-import model.booking.Booking;
-import model.booking.Showtime;
-import model.booking.ShowtimeStatus;
-import model.booking.TicketType;
+import model.booking.*;
 import model.cinema.Cinema;
 import model.cinema.Cineplex;
 import model.commons.Language;
@@ -53,7 +50,6 @@ public class ShowtimeController extends EntityController<Showtime> {
         return instance;
     }
 
-
     /**
      * Creates a showtime with the given information.
      * @param movieId The ID of the movie of this showtime.
@@ -61,19 +57,6 @@ public class ShowtimeController extends EntityController<Showtime> {
      * @param cinemaId The ID of the cinema of this showtime.
      * @param language The language of this showtime.
      * @param startTime The start time of this showtime.
-     * @param isPreview The ID of the movie of this showtime.
-     * @param subtitles The ID of the movie of this showtime.
-     * @return The ID of the movie of this showtime.
-     * @throws IllegalActionException
-     */
-    /**
-     * Creates a showtime with the given information.
-     * @param movieId The ID of the movie of this showtime.
-     * @param cineplexId The ID of the cineplex of this showtime.
-     * @param cinemaId The ID of the cinema of this showtime.
-     * @param language The language of this showtime.
-     * @param startTime The start time of this showtime.
-     * @param isPreview Whether this showtime is a preview.
      * @param noFreePasses Whether this showtime allows free pass.
      * @param subtitles The subtitles of this showtime.
      * @return the newly created showtime.
@@ -94,20 +77,59 @@ public class ShowtimeController extends EntityController<Showtime> {
         Date endTime = Utilities.getDateAfter(startTime, Calendar.MINUTE,
                 movie.getRuntimeMinutes() + BookingConfig.getBufferMinutesAfterShowtime());
 
-        if (movie.getStatus() == MovieStatus.END_OF_SHOWING)
-            throw new IllegalActionException("Cannot create showtime for movies in end of showing state");
+        if (!Arrays.asList(MovieStatus.PREVIEW, MovieStatus.NOW_SHOWING).contains(movie.getStatus()))
+            throw new IllegalActionException("Can only create showtime for movies in Now Showing or Preview state");
 
         if (!cinemaController.isAvaiableOn(cineplexId, cinemaId, startTime, endTime))
             throw new IllegalActionException("There is already a showtime scheduled for this cinema");
 
         Cinema cinema = cinemaController.findById(cinemaId);
         Showtime showtime = new Showtime(movie, cineplex, cinema, language, startTime,
-                movie.getStatus() == MovieStatus.PREVIEW, noFreePasses, subtitles);
+                noFreePasses, movie.getStatus() == MovieStatus.PREVIEW, subtitles);
 
         movie.addShowtime(showtime);
         cineplex.addShowtime(showtime);
         entities.put(showtime.getId(), showtime);
         return showtime;
+    }
+
+    // TODO Javadoc
+    public void changeShowtimeDetails(UUID showtimeId, UUID cinemaId, Language language, Date startTime,
+                                      boolean noFreePasses, Language[] subtitles) {
+
+        CinemaController cinemaController = CinemaController.getInstance();
+        Showtime showtime = findById(showtimeId);
+
+        if (showtime.getStatus() == ShowtimeStatus.CANCELLED)
+            throw new IllegalActionException("Can't update cancelled showtime.");
+
+        int minutesBeforeClosedBooking = BookingConfig.getMinutesBeforeClosedBooking();
+        Date lastBookingMinute = Utilities.getDateBefore(showtime.getStartTime(), Calendar.MINUTE,
+                minutesBeforeClosedBooking);
+        if (new Date().after(lastBookingMinute))
+            throw new IllegalActionException("Can't update showtime that has already started.");
+
+        if (showtime.hasConfirmedBooking())
+            throw new IllegalActionException("Can't update showtime when there's already a booking confirmed.");
+
+        Cinema cinema = cinemaController.findById(cinemaId);
+        if (cinema == null || !showtime.getCineplex().getCinemas().contains(cinema))
+            throw new IllegalActionException("Invalid cinema ID.");
+
+        // Temporarily cancel showtime so can check availability
+        showtime.setCancelled(true);
+        if (!cinemaController.isAvaiableOn(showtime.getCineplex().getId(),
+                cinemaId, startTime, showtime.getEndTime())) {
+            showtime.setCancelled(false);
+            throw new IllegalActionException("There is already a showtime scheduled for this cinema");
+        }
+        showtime.setCancelled(false);
+
+        showtime.setCinema(cinema);
+        showtime.setLanguage(language);
+        showtime.setNoFreePasses(noFreePasses);
+        showtime.setSubtitles(subtitles);
+        showtime.setStartTime(startTime);
     }
 
     /**
@@ -128,9 +150,11 @@ public class ShowtimeController extends EntityController<Showtime> {
         int minutesBeforeClosedBooking = BookingConfig.getMinutesBeforeClosedBooking();
         Date lastBookingMinute = Utilities.getDateBefore(showtime.getStartTime(), Calendar.MINUTE,
                 minutesBeforeClosedBooking);
-        Date now = new Date();
-        if (now.after(lastBookingMinute))
-            throw new IllegalActionException("Last booking minute is already passed.");
+        if (new Date().after(lastBookingMinute))
+            throw new IllegalActionException("Can't cancel showtime that has already started.");
+
+        if (showtime.hasConfirmedBooking())
+            throw new IllegalActionException("Can't cancel showtime when there's already a booking confirmed.");
 
         showtime.setCancelled(true);
         for (Booking booking : showtime.getBookings())

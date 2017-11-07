@@ -84,6 +84,7 @@ public class MovieMenuView extends MenuView {
         MovieView movieView = new MovieView(movie);
         setTitle(movieView.getTitle());
         setContent(movieView.getContent());
+        content.add(0, "Status: " + movie.getStatus().toString());
         display();
 
         if (accessLevel == AccessLevel.ADMINISTRATOR)
@@ -106,7 +107,7 @@ public class MovieMenuView extends MenuView {
                 case CHANGE_STATUS:
                     View.displayInformation("Please enter new status.");
                     MovieStatus status = MovieStatus.valueOf(Form.getOption("Movie Status",
-                            MovieStatus.PREVIEW, MovieStatus.NOW_SHOWING));
+                            MovieStatus.PREVIEW, MovieStatus.NOW_SHOWING, MovieStatus.END_OF_SHOWING));
                     try {
                         movieController.changeMovieStatus(movie.getId(), status);
                         View.displaySuccess("Successfully updated movie!");
@@ -134,18 +135,6 @@ public class MovieMenuView extends MenuView {
                     Form.pressAnyKeyToContinue();
                     navigation.reload(accessLevel, MovieMenuIntent.VIEW_MOVIE, movie.getId().toString());
                     break;
-                case REMOVE:
-                    try {
-                        movieController.changeMovieStatus(movie.getId(), MovieStatus.END_OF_SHOWING);
-                        View.displaySuccess("Successfully removed movie!");
-                        Form.pressAnyKeyToContinue();
-                        navigation.goBack();
-                    } catch (IllegalActionException e) {
-                        View.displayError(e.getMessage());
-                        Form.pressAnyKeyToContinue();
-                        navigation.reload(accessLevel, MovieMenuIntent.VIEW_MOVIE, movie.getId().toString());
-                    }
-                    break;
             }
     }
 
@@ -159,8 +148,7 @@ public class MovieMenuView extends MenuView {
         VIEW_SHOWTIMES("View Showtimes"),
         SEE_REVIEWS("See Reviews"),
         CHANGE_STATUS("Change Status"),
-        UPDATE("Update"),
-        REMOVE("Remove");
+        UPDATE("Update");
 
         private String description;
 

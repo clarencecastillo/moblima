@@ -3,7 +3,6 @@ package view.ui;
 /**
  * Represents a standard set of the text formats.
  *
- * @author Castillo Clarence Fitzgerald Gumtang
  * @version 1.0
  * @since 2017-10-20
  */

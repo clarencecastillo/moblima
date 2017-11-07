@@ -1,18 +1,19 @@
 package view;
 
 import config.BookingConfig;
+import exception.IllegalActionException;
 import exception.RejectedNavigationException;
+import exception.UnauthorisedNavigationException;
 import manager.BookingController;
+import manager.CinemaController;
 import manager.ShowtimeController;
 import model.booking.*;
 import model.cinema.Cinema;
+import model.commons.Language;
 import util.Utilities;
 import view.ui.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Hashtable;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -30,15 +31,59 @@ public class TicketTypeListView extends ListView {
     private AccessLevel accessLevel;
     private ShowtimeController showtimeController;
     private BookingController bookingController;
+    private CinemaController cinemaController;
 
     public TicketTypeListView(Navigation navigation) {
         super(navigation);
         this.showtimeController = ShowtimeController.getInstance();
         this.bookingController = BookingController.getInstance();
+        this.cinemaController = CinemaController.getInstance();
     }
 
     @Override
     public void onLoad(AccessLevel accessLevel, Intent intent, String... args) {
+
+        switch ((TicketTypeListIntent) intent) {
+            case VIEW_TICKET_TYPES:
+                break;
+            case UPDATE_SHOWTIME:
+
+                if (accessLevel != AccessLevel.ADMINISTRATOR)
+                    throw new UnauthorisedNavigationException();
+
+                View.displayInformation("Please enter updated showtime details.");
+                List<Cinema> cinemas = showtime.getCineplex().getCinemas();
+                Cinema cinema = cinemaController.findById(UUID.fromString(Form.getOption("Cinema",
+                        cinemas.stream().map(cineplexCinema ->
+                                new GenericMenuOption("Hall " + cineplexCinema.getCode() + "  " +
+                                        cineplexCinema.getType(), cineplexCinema.getId().toString()))
+                                .toArray(GenericMenuOption[]::new))));
+                Language language = Language.valueOf(Form.getOption("Language", Language.values()));
+                int numberOfSubtitles = Form.getIntWithMin("Number of Subtitles", 0);
+                Language[] subtitles = new Language[numberOfSubtitles];
+                for (int i = 0; i < numberOfSubtitles; i++)
+                    subtitles[i] = Language.valueOf(Form.getOption("Subtitle " + (i + 1), Language.values()));
+
+                Date startTime;
+                do {
+                    startTime = Form.getDate("Start Time", "dd/MM/yyyy HH:mm");
+                    if (startTime.before(new Date()))
+                        View.displayError("The specified time has already passed.");
+                    else
+                        break;
+                } while (true);
+
+                boolean noFreePasses = Form.getBoolean("No Free Passes");
+                try {
+                    showtimeController.changeShowtimeDetails(showtime.getId(), cinema.getId(), language,
+                            startTime, noFreePasses, subtitles);
+                    View.displaySuccess("Successfully created showtime!");
+                } catch (IllegalActionException e) {
+                    View.displayError(e.getMessage());
+                }
+                Form.pressAnyKeyToContinue();
+                break;
+        }
 
         this.accessLevel = accessLevel;
         switch (accessLevel) {
@@ -71,16 +116,16 @@ public class TicketTypeListView extends ListView {
         switch (accessLevel) {
             case ADMINISTRATOR:
                 setTitle("Showtime Sales Summary");
-                ArrayList<TicketListOption> options = new ArrayList<>();
-                options.add(TicketListOption.VIEW_SEATING);
-                if (showtime.getStatus() == ShowtimeStatus.OPEN_BOOKING)
-                    options.add(TicketListOption.CANCEL_SHOWTIME);
-                setMenuItems(options.toArray(new TicketListOption[options.size()]));
+                ArrayList<TicketTypeListOption> options = new ArrayList<>();
+                options.add(TicketTypeListOption.VIEW_SEATING);
+                if (!showtime.hasConfirmedBooking() && showtime.getStatus() != ShowtimeStatus.CANCELLED)
+                    options.addAll(Arrays.asList(TicketTypeListOption.CANCEL_SHOWTIME, TicketTypeListOption.UPDATE_SHOWTIME));
+                setMenuItems(options.toArray(new TicketTypeListOption[options.size()]));
                 content.add("Status: " + showtime.getStatus());
                 break;
             case PUBLIC:
                 setTitle("Ticket Selection");
-                setMenuItems(TicketListOption.SELECT_SEATS);
+                setMenuItems(TicketTypeListOption.SELECT_SEATS);
                 content.addAll(Arrays.asList(
                         "-------",
                         "Select the number and type of tickets you wish to buy. " +
@@ -142,7 +187,11 @@ public class TicketTypeListView extends ListView {
                 navigation.goBack();
         } else
             try {
-                switch (TicketListOption.valueOf(userInput)) {
+                switch (TicketTypeListOption.valueOf(userInput)) {
+                    case UPDATE_SHOWTIME:
+                        navigation.reload(accessLevel, TicketTypeListIntent.UPDATE_SHOWTIME,
+                                showtime.getId().toString());
+                        break;
                     case SELECT_SEATS:
                         if (totalCount == 0) {
                             View.displayError("A minimum of 1 seat is required to create a booking.");
@@ -219,15 +268,22 @@ public class TicketTypeListView extends ListView {
 
     }
 
-    private enum TicketListOption implements EnumerableMenuOption {
+    public enum TicketTypeListIntent implements Intent {
+
+        VIEW_TICKET_TYPES,
+        UPDATE_SHOWTIME
+    }
+
+    private enum TicketTypeListOption implements EnumerableMenuOption {
 
         SELECT_SEATS("Select Seats"),
         CANCEL_SHOWTIME("Cancel Showtime"),
-        VIEW_SEATING("Check Seating");
+        VIEW_SEATING("Check Seating"),
+        UPDATE_SHOWTIME("Update Showtime");
 
         private String description;
 
-        TicketListOption(String description) {
+        TicketTypeListOption(String description) {
             this.description = description;
         }
 

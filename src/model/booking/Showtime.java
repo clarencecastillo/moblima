@@ -97,10 +97,10 @@ public class Showtime extends Entity implements Comparable<Showtime> {
         this.startTime = startTime;
         this.noFreePasses = noFreePasses;
         this.isPreview = isPreview;
-        this.isCancelled = isCancelled;
-        this.subtitles = new ArrayList<Language>();
+        this.isCancelled = false;
+        this.subtitles = new ArrayList<>();
         this.subtitles.addAll(Arrays.asList(subtitles));
-        this.bookings = new ArrayList<Booking>();
+        this.bookings = new ArrayList<>();
     }
 
     /**
@@ -241,8 +241,9 @@ public class Showtime extends Entity implements Comparable<Showtime> {
      * Changes the subtitles of this showtime.
      * @param subtitles The new subtitles of this showtime.
      */
-    public void setSubtitles(ArrayList<Language> subtitles) {
-        this.subtitles = subtitles;
+    public void setSubtitles(Language[] subtitles) {
+        this.subtitles.clear();
+        this.subtitles.addAll(Arrays.asList(subtitles));
     }
 
     /**
@@ -316,8 +317,23 @@ public class Showtime extends Entity implements Comparable<Showtime> {
      */
     public void removeBooking(Booking booking) { bookings.remove(booking.getId()); }
 
+    // TODO Javadoc
     @Override
     public int compareTo(Showtime o) {
         return startTime.compareTo(o.startTime);
+    }
+
+    // TODO Javadoc
+    public boolean hasConfirmedBooking() {
+        for (Booking booking : bookings)
+            if (booking.getStatus() == BookingStatus.CONFIRMED)
+                return true;
+        return false;
+    }
+
+    // TODO Javadoc
+    public Date getEndTime() {
+        return Utilities.getDateAfter(startTime, Calendar.MINUTE,
+                movie.getRuntimeMinutes() + BookingConfig.getBufferMinutesAfterShowtime());
     }
 }
