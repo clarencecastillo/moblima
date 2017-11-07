@@ -113,8 +113,7 @@ public class ShowtimeListView extends ListView {
                     throw new UnauthorisedNavigationException();
 
                 View.displayInformation("Please enter showtime details.");
-                List<Cinema> cinemas = cineplexFilter.getCinemas();;
-
+                List<Cinema> cinemas = cineplexFilter.getCinemas();
                 Cinema cinema = cinemaController.findById(UUID.fromString(Form.getOption("Cinema",
                         cinemas.stream().map(cineplexCinema ->
                         new GenericMenuOption("Hall " + cineplexCinema.getCode() + "  " +
@@ -285,13 +284,16 @@ public class ShowtimeListView extends ListView {
                     if (accessLevel == AccessLevel.PUBLIC) {
                         try {
                             Booking booking = bookingController.createBooking(UUID.fromString(userInput));
-                            navigation.goTo(new TicketTypeListView(navigation), accessLevel, booking.getId().toString());
+                            navigation.goTo(new TicketTypeListView(navigation), accessLevel,
+                                    TicketTypeListView.TicketTypeListIntent.VIEW_TICKET_TYPES,
+                                    booking.getId().toString());
                         } catch (IllegalActionException ex) {
                             View.displayError("Sorry, cannot book for this showtime at this time.");
                             navigation.refresh();
                         }
                     } else {
-                        navigation.goTo(new TicketTypeListView(navigation), accessLevel, userInput);
+                        navigation.goTo(new TicketTypeListView(navigation), accessLevel,
+                                TicketTypeListView.TicketTypeListIntent.VIEW_TICKET_TYPES, userInput);
                     }
                 }
             }
