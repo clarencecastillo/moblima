@@ -1,12 +1,11 @@
 package view.ui;
 
+import util.Utilities;
+
 import java.io.Console;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.InputMismatchException;
-import java.util.Scanner;
+import java.util.*;
 import java.util.regex.Pattern;
 
 /**
@@ -349,6 +348,33 @@ public interface Form {
             }
         }
 
+    }
+
+    static Date getTime(String prompt, Date date, boolean afterNow) {
+
+        if (afterNow && Utilities.getStartOfDate(date).before(Utilities.getStartOfDate(new Date())))
+            return null;
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+
+        int dayOfYear = calendar.get(Calendar.DAY_OF_YEAR);
+        int year = calendar.get(Calendar.YEAR);
+
+        Date time;
+        do {
+            time = Form.getDate(prompt, "HH:mm");
+            calendar.setTime(time);
+            calendar.set(Calendar.DAY_OF_YEAR, dayOfYear);
+            calendar.set(Calendar.YEAR, year);
+            time = calendar.getTime();
+
+            if (afterNow && time.before(new Date()))
+                View.displayError("Invalid user input! Time input must be after current time.");
+            else
+                break;
+        } while (true);
+        return time;
     }
 
     // TODO Javadoc

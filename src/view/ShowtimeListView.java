@@ -128,28 +128,17 @@ public class ShowtimeListView extends ListView {
                 for (int i = 0; i < numberOfSubtitles; i++)
                     subtitles[i] = Language.valueOf(Form.getOption("Subtitle " + (i + 1), Language.values()));
 
-                Calendar calendar = Calendar.getInstance();
-                calendar.setTime(dateFilter);
-                int dayOfYear = calendar.get(Calendar.DAY_OF_YEAR);
-                int year = calendar.get(Calendar.YEAR);
-
-                // Set date to specified hour and minute
-                Date startTime = Form.getDate("Start Time", "HH:mm");
-                calendar.setTime(startTime);
-                calendar.set(Calendar.DAY_OF_YEAR, dayOfYear);
-                calendar.set(Calendar.YEAR, year);
-                startTime = calendar.getTime();
-
-                Date endTime = Utilities.getDateAfter(startTime, Calendar.MINUTE,
-                        movieFilter.getRuntimeMinutes() + BookingConfig.getBufferMinutesAfterShowtime());
-                while(!cinemaController.isAvaiableOn(cineplexFilter.getId(), cinema.getId(), startTime, endTime)) {
-                    View.displayError("The specified time conflicts with another showtime scheduled for this cinema.");
-                    startTime = Form.getDate("Start Time", "HH:mm");
-                    calendar.setTime(startTime);
-                    calendar.set(Calendar.DAY_OF_YEAR, dayOfYear);
-                    calendar.set(Calendar.YEAR, year);
-                    startTime = calendar.getTime();
-                }
+                Date startTime;
+                Date endTime;
+                do {
+                    startTime = Form.getTime("Start Time", dateFilter, true);
+                    endTime = Utilities.getDateAfter(startTime, Calendar.MINUTE,
+                            movieFilter.getRuntimeMinutes() + BookingConfig.getBufferMinutesAfterShowtime());
+                    if (!cinemaController.isAvaiableOn(cineplexFilter.getId(), cinema.getId(), startTime, endTime))
+                        View.displayError("The specified time conflicts with another showtime scheduled for this cinema.");
+                    else
+                        break;
+                } while (true);
 
                 boolean noFreePasses = Form.getBoolean("No Free Passes");
                 try {
