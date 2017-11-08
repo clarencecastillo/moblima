@@ -102,8 +102,10 @@ public class MovieListView extends ListView {
         }
 
         setViewItems(movies.stream().map(
-                movie -> new ViewItem(new MovieView(movie), movie.getId().toString(), 0,
-                        withGrouping ? movie.getStatus().toString() : null)).collect(Collectors.toList()));
+                movie -> new ViewItem(new MovieView(movie, rankBy == null || rankBy.equals(SCORE),
+                        rankBy == null ? accessLevel == AccessLevel.ADMINISTRATOR : rankBy.equals(SALES)),
+                        movie.getId().toString(), 0, withGrouping ? movie.getStatus().toString() : null))
+                .collect(Collectors.toList()));
 
         display();
         String userInput = getChoice();

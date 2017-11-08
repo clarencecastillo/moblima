@@ -22,8 +22,8 @@ public class BookingView extends View {
     public BookingView(Showtime showtime, List<Seat> seats) {
         setTitle(showtime.getMovie().toString(showtime.isNoFreePasses()));
         setContent("Showing on " + Utilities.toFormat(showtime.getStartTime(), DATE_DISPLAY_FORMAT),
-                "Cineplax: " + showtime.getCineplex().getName() + " Hall " + showtime.getCinema().getCode() +
-                        showtime.getCinema().getType(), "Language: " + showtime.getLanguage(),
+                "Cineplax: " + showtime.getCineplex().getName() + " " + showtime.getCinema(),
+                "Language: " + showtime.getLanguage(),
                 "Subtitles: " + String.join(",", showtime.getSubtitles().stream()
                         .map(String::valueOf).toArray(String[]::new)),
                 "Seats: " + String.join(", ",

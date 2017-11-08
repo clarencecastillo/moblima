@@ -127,9 +127,11 @@ public class BookingMenuView extends MenuView {
         }
 
         setTitle("Booking Information");
-        if (intent == BookingMenuIntent.VIEW_BOOKING)
-            content.addAll(Arrays.asList(new BookingView(booking).getContent()));
-        else
+        if (intent == BookingMenuIntent.VIEW_BOOKING) {
+            BookingView bookingView = new BookingView(booking);
+            content.add(bookingView.getTitle());
+            content.addAll(Arrays.asList(bookingView.getContent()));
+        } else
             content.addAll(Arrays.asList(new BookingView(booking.getShowtime(),
                     booking.getSeats(), booking.getTicketTypesCount()).getContent()));
         content.addAll(Arrays.asList(" ",

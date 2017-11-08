@@ -2,6 +2,7 @@ package view.ui;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -178,6 +179,12 @@ public abstract class View {
     public void setContent(String... content) {
         this.content.clear();
         this.content.addAll(Arrays.asList(content));
+    }
+
+    // TODO Javadoc
+    public void setContent(List<String> content) {
+        this.content.clear();
+        this.content.addAll(content);
     }
 
     /**
