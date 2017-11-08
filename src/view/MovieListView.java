@@ -39,9 +39,10 @@ public class MovieListView extends ListView {
         this.accessLevel = accessLevel;
         switch (accessLevel) {
             case ADMINISTRATOR:
-                setMenuItems(MovieListOption.ADD_MOVIE);
+                setMenuItems(MovieListOption.ADD_MOVIE, MovieListOption.SEARCH_MOVIES);
                 break;
             case PUBLIC:
+                setMenuItems(MovieListOption.SEARCH_MOVIES);
                 break;
         }
 
@@ -109,6 +110,8 @@ public class MovieListView extends ListView {
                     case ADD_MOVIE:
                         navigation.goTo(new MovieMenuView(navigation), accessLevel, MovieMenuIntent.CREATE_MOVIE);
                         break;
+                    case SEARCH_MOVIES:
+                        navigation.reload(accessLevel, MovieListIntent.SEARCH_MOVIES);
                 }
             } catch (IllegalArgumentException e) {
                 navigation.goTo(new MovieMenuView(navigation), accessLevel, MovieMenuIntent.VIEW_MOVIE, userInput);
@@ -124,7 +127,8 @@ public class MovieListView extends ListView {
 
     public enum MovieListOption implements EnumerableMenuOption {
 
-        ADD_MOVIE("Add Movie");
+        ADD_MOVIE("Add Movie"),
+        SEARCH_MOVIES("Search Movies");
 
         private String description;
 
