@@ -36,8 +36,7 @@ public class PaymentConfigListView extends ListView {
     @Override
     public void onEnter() {
         ArrayList<ViewItem> viewItems = new ArrayList<>();
-        viewItems.add(new ViewItem("GST",
-                String.format("$%.2f", PaymentConfig.getGst()),
+        viewItems.add(new ViewItem("GST", (int) (PaymentConfig.getGst() * 100) + "%",
                 PaymentConfigListOption.GST.toString()));
 //        viewItems.add(new ViewItem("Allow Refunds",
 //                PaymentConfigListOption.ALLOW_REFUNDS.toString(),
