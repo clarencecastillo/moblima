@@ -1,6 +1,8 @@
 package model.commons;
 
 import model.booking.Booking;
+import model.booking.BookingStatus;
+import model.movie.Movie;
 import model.movie.MovieReview;
 
 import java.util.ArrayList;
@@ -141,5 +143,19 @@ public class User extends Person {
      */
     public void removeBooking(Booking booking) {
         bookings.remove(booking);
+    }
+
+    public boolean hasBooking(Movie movie) {
+        for (Booking booking : bookings)
+            if (booking.getShowtime().getMovie().equals(movie) && booking.getStatus() == BookingStatus.CONFIRMED)
+                return true;
+        return false;
+    }
+
+    public boolean hasMovieReview(Movie movie) {
+        for (MovieReview movieReview : reviews)
+            if (movieReview.getMovie().equals(movie))
+                return true;
+        return false;
     }
 }

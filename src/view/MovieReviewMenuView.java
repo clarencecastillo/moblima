@@ -73,8 +73,15 @@ public class MovieReviewMenuView extends MenuView {
                 View.displayInformation("Please enter your mobile number.");
                 String mobileNumber = Form.getString("Mobile number");
                 user = userController.findByMobile(mobileNumber);
-                if (user == null) {
-                    View.displayError("User with mobile '" + mobileNumber + "' not found!");
+
+                if (user == null || !user.hasBooking(movie)) {
+                    View.displayError("Only users that have made a booking for this movie can write a review.");
+                    Form.pressAnyKeyToContinue();
+                    throw new RejectedNavigationException();
+                }
+
+                if (user.hasMovieReview(movie)) {
+                    View.displayError("Can only write movie review once.");
                     Form.pressAnyKeyToContinue();
                     throw new RejectedNavigationException();
                 }
