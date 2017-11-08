@@ -21,12 +21,16 @@ import java.util.stream.Collectors;
 
 public class MovieListView extends ListView {
 
+    private static final String SCORE = "score";
+    private static final String SALES = "gross sales";
+
     private MovieListIntent intent;
     private List<Movie> movies;
     private String searchKeyword;
     private boolean withGrouping;
     private MovieController movieController;
     private AccessLevel accessLevel;
+    private String rankBy;
 
     public MovieListView(Navigation navigation) {
         super(navigation);
@@ -54,6 +58,12 @@ public class MovieListView extends ListView {
                         + "title, director, and actors.");
                 searchKeyword = Form.getString("Search");
                 break;
+            case RANK_MOVIES:
+                View.displayInformation("Would you like to see ranking by review score or sales?");
+                this.rankBy = Form.getOption("Rank By",
+                        new GenericMenuOption("Review Score", SCORE),
+                        new GenericMenuOption("Sales", SALES));
+                break;
         }
         addBackOption();
     }
@@ -79,19 +89,15 @@ public class MovieListView extends ListView {
                             movie.getStatus() != MovieStatus.END_OF_SHOWING).collect(Collectors.toList());
                 setContent("Displaying " + movies.size() + " movie item(s).");
                 break;
-            case VIEW_SCORE_RANKING:
+            case RANK_MOVIES:
                 movies.addAll(movieController.getList());
-                Collections.sort(movies, Comparator.comparingDouble(Movie::getOverallReviewRating).reversed());
+                Collections.sort(movies, Comparator.comparingDouble(rankBy.equals(SCORE) ?
+                        Movie::getOverallReviewRating :
+                        Movie::getGrossSales)
+                        .reversed());
                 if (movies.size() > 5)
                     movies = movies.subList(0, 5);
-                setContent("Displaying top " + movies.size() + " movie item(s) by score.");
-                break;
-            case VIEW_SALES_RANKING:
-                movies.addAll(movieController.getList());
-                Collections.sort(movies, Comparator.comparingDouble(Movie::getGrossSales));
-                if (movies.size() > 5)
-                    movies = movies.subList(0, 5);
-                setContent("Displaying top " + movies.size() + " movie item(s) by gross sales.");
+                setContent("Displaying top " + movies.size() + " movie item(s) by " + rankBy + ".");
                 break;
         }
 
@@ -121,8 +127,7 @@ public class MovieListView extends ListView {
     public enum MovieListIntent implements Intent {
         VIEW_MOVIES,
         SEARCH_MOVIES,
-        VIEW_SCORE_RANKING,
-        VIEW_SALES_RANKING
+        RANK_MOVIES
     }
 
     public enum MovieListOption implements EnumerableMenuOption {
