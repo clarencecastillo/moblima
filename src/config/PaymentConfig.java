@@ -26,7 +26,7 @@ public class PaymentConfig implements Configurable {
     }
 
     /**
-     * ets this PaymentConfig's singleton instance.
+     * Gets this PaymentConfig's singleton instance.
      *
      * @return this PaymentConfig's singleton instance.
      */
