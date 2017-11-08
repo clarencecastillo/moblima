@@ -145,17 +145,19 @@ public class TicketTypeListView extends ListView {
                 break;
         }
 
+        this.ticketTypeCount = new Hashtable<>();
+        for (TicketType ticketType : showtimeController.getAvailableTicketTypes(showtime.getId()))
+            ticketTypeCount.put(ticketType, 0);
+
         addBackOption();
     }
 
     @Override
     public void onEnter() {
 
-        this.ticketTypeCount = new Hashtable<>();
-        for (TicketType ticketType : showtimeController.getAvailableTicketTypes(showtime.getId()))
-            ticketTypeCount.put(ticketType, 0);
-
-        if (accessLevel == AccessLevel.ADMINISTRATOR)
+        if (accessLevel == AccessLevel.ADMINISTRATOR) {
+            for (TicketType ticketType : showtimeController.getAvailableTicketTypes(showtime.getId()))
+                ticketTypeCount.put(ticketType, 0);
             for (Booking booking : showtime.getBookings())
                 if (booking.getStatus() == BookingStatus.CONFIRMED) {
                     Hashtable<TicketType, Integer> bookingTicketTypesCount = booking.getTicketTypesCount();
@@ -165,6 +167,7 @@ public class TicketTypeListView extends ListView {
                     }
 
                 }
+        }
 
         int totalCount = ticketTypeCount.values().stream().mapToInt(Integer::intValue).sum();
         setViewItems(ticketTypeCount.keySet().stream().map(ticketType ->
