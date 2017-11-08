@@ -1,14 +1,14 @@
-package moblima.controller;
+package controller;
 
-import moblima.exception.IllegalActionException;
-import moblima.exception.UninitialisedSingletonException;
-import moblima.model.booking.Booking;
-import moblima.model.booking.BookingStatus;
-import moblima.model.booking.Showtime;
-import moblima.model.booking.ShowtimeStatus;
-import moblima.model.cineplex.Cineplex;
-import moblima.model.movie.*;
-import moblima.util.Utilities;
+import exception.IllegalActionException;
+import exception.UninitialisedSingletonException;
+import model.booking.Booking;
+import model.booking.BookingStatus;
+import model.booking.Showtime;
+import model.booking.ShowtimeStatus;
+import model.cineplex.Cineplex;
+import model.movie.*;
+import util.Utilities;
 
 import java.util.*;
 import java.util.stream.Collectors;

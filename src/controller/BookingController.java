@@ -1,13 +1,13 @@
-package moblima.controller;
+package controller;
 
-import moblima.config.BookingConfig;
-import moblima.exception.IllegalActionException;
-import moblima.exception.UninitialisedSingletonException;
-import moblima.model.booking.*;
-import moblima.model.cineplex.Seat;
-import moblima.model.commons.User;
-import moblima.model.transaction.Payment;
-import moblima.model.transaction.PaymentStatus;
+import config.BookingConfig;
+import exception.IllegalActionException;
+import exception.UninitialisedSingletonException;
+import model.booking.*;
+import model.cineplex.Seat;
+import model.commons.User;
+import model.transaction.Payment;
+import model.transaction.PaymentStatus;
 
 import java.util.Hashtable;
 import java.util.List;

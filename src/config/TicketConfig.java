@@ -1,9 +1,9 @@
-package moblima.config;
+package config;
 
-import moblima.model.booking.TicketType;
-import moblima.model.cineplex.CinemaType;
-import moblima.model.movie.MovieType;
-import moblima.model.transaction.Priceable;
+import model.booking.TicketType;
+import model.cineplex.CinemaType;
+import model.movie.MovieType;
+import model.transaction.Priceable;
 
 import java.util.ArrayList;
 import java.util.Arrays;

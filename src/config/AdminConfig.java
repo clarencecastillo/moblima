@@ -1,4 +1,4 @@
-package moblima.config;
+package config;
 
 /**
  * Represents the configuration of admin settings.

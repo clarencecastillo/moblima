@@ -1,4 +1,4 @@
-package moblima.exception;
+package exception;
 
 /**
  Signals that an illegal action is taken by the user.

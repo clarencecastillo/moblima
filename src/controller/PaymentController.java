@@ -1,9 +1,9 @@
-package moblima.controller;
+package controller;
 
-import moblima.exception.UninitialisedSingletonException;
-import moblima.model.transaction.Payable;
-import moblima.model.transaction.Payment;
-import moblima.model.transaction.PaymentStatus;
+import exception.UninitialisedSingletonException;
+import model.transaction.Payable;
+import model.transaction.Payment;
+import model.transaction.PaymentStatus;
 
 /**
  Represents the moblima.controller of payments.

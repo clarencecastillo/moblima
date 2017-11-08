@@ -1,7 +1,7 @@
-package moblima.controller;
+package controller;
 
-import moblima.exception.UninitialisedSingletonException;
-import moblima.model.cineplex.Cineplex;
+import exception.UninitialisedSingletonException;
+import model.cineplex.Cineplex;
 /**
  Represents the moblima.controller of cineplexes.
  @version 1.0

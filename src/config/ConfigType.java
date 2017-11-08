@@ -1,6 +1,6 @@
-package moblima.config;
+package config;
 
-import moblima.view.ui.EnumerableMenuOption;
+import view.ui.EnumerableMenuOption;
 
 /**
  * Represents a standard set of system settings that can be configured by the admin.

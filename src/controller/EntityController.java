@@ -1,6 +1,6 @@
-package moblima.controller;
+package controller;
 
-import moblima.model.commons.Entity;
+import model.commons.Entity;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;

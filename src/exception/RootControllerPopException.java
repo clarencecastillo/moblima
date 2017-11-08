@@ -1,4 +1,4 @@
-package moblima.exception;
+package exception;
 
 /**
  Signals that the navigation request is out of the root.

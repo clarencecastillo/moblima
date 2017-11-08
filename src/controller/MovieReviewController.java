@@ -1,10 +1,10 @@
-package moblima.controller;
+package controller;
 
-import moblima.exception.IllegalActionException;
-import moblima.exception.UninitialisedSingletonException;
-import moblima.model.commons.User;
-import moblima.model.movie.Movie;
-import moblima.model.movie.MovieReview;
+import exception.IllegalActionException;
+import exception.UninitialisedSingletonException;
+import model.commons.User;
+import model.movie.Movie;
+import model.movie.MovieReview;
 
 import java.util.UUID;
 

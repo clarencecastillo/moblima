@@ -1,9 +1,9 @@
-package moblima.controller;
+package controller;
 
-import moblima.exception.IllegalActionException;
-import moblima.exception.UninitialisedSingletonException;
-import moblima.model.cineplex.Staff;
-import moblima.model.commons.User;
+import exception.IllegalActionException;
+import exception.UninitialisedSingletonException;
+import model.cineplex.Staff;
+import model.commons.User;
 
 /**
  Represents the moblima.controller of users, including the moviegoer and cineplex staff.

@@ -1,14 +1,14 @@
-package moblima.controller;
+package controller;
 
-import moblima.config.BookingConfig;
-import moblima.exception.UninitialisedSingletonException;
-import moblima.model.booking.Showtime;
-import moblima.model.booking.ShowtimeStatus;
-import moblima.model.cineplex.Cinema;
-import moblima.model.cineplex.CinemaLayout;
-import moblima.model.cineplex.CinemaType;
-import moblima.model.cineplex.Cineplex;
-import moblima.util.Utilities;
+import config.BookingConfig;
+import exception.UninitialisedSingletonException;
+import model.booking.Showtime;
+import model.booking.ShowtimeStatus;
+import model.cineplex.Cinema;
+import model.cineplex.CinemaLayout;
+import model.cineplex.CinemaType;
+import model.cineplex.Cineplex;
+import util.Utilities;
 
 import java.util.Calendar;
 import java.util.Date;
