@@ -60,9 +60,19 @@ public class TicketTypeListView extends ListView {
                                 .toArray(GenericMenuOption[]::new))));
                 Language language = Language.valueOf(Form.getOption("Language", Language.values()));
                 int numberOfSubtitles = Form.getIntWithMin("Number of Subtitles", 0);
+                while (numberOfSubtitles > Language.values().length) {
+                    View.displayError("There are only " + Language.values().length + " languages available.");
+                    numberOfSubtitles = Form.getIntWithMin("Number of Subtitles", 0);
+                }
                 Language[] subtitles = new Language[numberOfSubtitles];
-                for (int i = 0; i < numberOfSubtitles; i++)
-                    subtitles[i] = Language.valueOf(Form.getOption("Subtitle " + (i + 1), Language.values()));
+                for (int i = 0; i < numberOfSubtitles; i++) {
+                    Language subtitle = Language.valueOf(Form.getOption("Subtitle " + (i + 1), Language.values()));
+                    while (Arrays.asList(subtitles).contains(subtitle)) {
+                        View.displayError(subtitle + " is already set.");
+                        subtitle = Language.valueOf(Form.getOption("Subtitle " + (i + 1), Language.values()));
+                    }
+                    subtitles[i] = subtitle;
+                }
 
                 Date startTime;
                 do {
@@ -135,15 +145,15 @@ public class TicketTypeListView extends ListView {
                 break;
         }
 
-        this.ticketTypeCount = new Hashtable<>();
-        for (TicketType ticketType : showtimeController.getAvailableTicketTypes(showtime.getId()))
-            ticketTypeCount.put(ticketType, 0);
-
         addBackOption();
     }
 
     @Override
     public void onEnter() {
+
+        this.ticketTypeCount = new Hashtable<>();
+        for (TicketType ticketType : showtimeController.getAvailableTicketTypes(showtime.getId()))
+            ticketTypeCount.put(ticketType, 0);
 
         if (accessLevel == AccessLevel.ADMINISTRATOR)
             for (Booking booking : showtime.getBookings())

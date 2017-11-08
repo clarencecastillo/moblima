@@ -81,7 +81,7 @@ public class MovieMenuView extends MenuView {
     @Override
     public void onEnter() {
 
-        MovieView movieView = new MovieView(movie);
+        MovieView movieView = new MovieView(movie, true, accessLevel == AccessLevel.ADMINISTRATOR);
         setTitle(movieView.getTitle());
         setContent(movieView.getContent());
         content.add(0, "Status: " + movie.getStatus().toString());

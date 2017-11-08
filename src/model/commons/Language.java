@@ -29,12 +29,7 @@ public enum Language implements EnumerableMenuOption {
     /**
      * Language Malay.
      */
-    MALAY("Malay"),
-
-    /**
-     * Unavailable Language.
-     */
-    NONE("None");
+    MALAY("Malay");
 
     /**
      * The name of the Language.

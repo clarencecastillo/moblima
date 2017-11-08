@@ -20,6 +20,9 @@ import java.util.stream.Collectors;
  */
 public class MovieController extends EntityController<Movie> {
 
+    // TODO Javadoc
+    private static final int SEARCH_SIMILARITY_THRESHOLD = 5;
+
     /**
      * A reference to this singleton instance.
      */
@@ -163,15 +166,15 @@ public class MovieController extends EntityController<Movie> {
     public List<Movie> findByKeyword(String keyword) {
         Hashtable<Movie, Integer> searchResults = new Hashtable<>();
         for (Movie movie : entities.values()) {
-            int maxFuzzyScore = 0;
+            int minDistance = Integer.MAX_VALUE;
             for (String tag : movie.getSearchTags()) {
-                int fuzzyScore = Utilities.fuzzyScore(keyword, tag);
-                if (fuzzyScore > maxFuzzyScore)
-                    maxFuzzyScore = fuzzyScore;
+                int tagMaxScore = tag.length() + (tag.length() - 1) * 2;
+                int distance = tagMaxScore - Utilities.fuzzyScore(keyword, tag);
+                if (minDistance > distance)
+                    minDistance = distance;
             }
-            if (maxFuzzyScore > 0)
-                searchResults.put(movie, maxFuzzyScore);
-
+            if (minDistance <= SEARCH_SIMILARITY_THRESHOLD)
+                searchResults.put(movie, minDistance);
         }
         ArrayList<Movie> movies = new ArrayList<>(searchResults.keySet());
         Collections.sort(movies, Comparator.comparingInt(searchResults::get).reversed());
