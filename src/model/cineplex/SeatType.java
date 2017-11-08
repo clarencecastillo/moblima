@@ -1,4 +1,4 @@
-package model.cinema;
+package model.cineplex;
 
 /**
  * Represents a standard set of seat types for a seat, which can be single, couple, or handicap.

@@ -1,20 +1,20 @@
 package view;
 
+import controller.BookingController;
+import controller.ShowtimeController;
 import exception.RejectedNavigationException;
-import manager.BookingController;
-import manager.ShowtimeController;
 import model.booking.Booking;
 import model.booking.Showtime;
 import model.booking.ShowtimeSeating;
-import model.cinema.CinemaLayout;
-import model.cinema.Seat;
+import model.cineplex.CinemaLayout;
+import model.cineplex.Seat;
 import view.ui.*;
 
 import java.util.ArrayList;
 import java.util.UUID;
 
 /**
- * This view displays the user interface for the user to select seats.
+ * This moblima.view displays the user interface for the user to select seats.
  *
  * @version 1.0
  * @since 2017-10-30

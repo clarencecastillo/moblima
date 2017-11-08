@@ -1,20 +1,20 @@
-package manager;
+package moblima.controller;
 
-import config.BookingConfig;
-import exception.IllegalActionException;
-import exception.UninitialisedSingletonException;
-import model.booking.*;
-import model.cinema.Seat;
-import model.commons.User;
-import model.transaction.Payment;
-import model.transaction.PaymentStatus;
+import moblima.config.BookingConfig;
+import moblima.exception.IllegalActionException;
+import moblima.exception.UninitialisedSingletonException;
+import moblima.model.booking.*;
+import moblima.model.cineplex.Seat;
+import moblima.model.commons.User;
+import moblima.model.transaction.Payment;
+import moblima.model.transaction.PaymentStatus;
 
 import java.util.Hashtable;
 import java.util.List;
 import java.util.UUID;
 
 /**
- Represents the controller of booking.
+ Represents the moblima.controller of booking.
  @version 1.0
  @since 2017-10-20
  */
@@ -50,7 +50,7 @@ public class BookingController extends EntityController<Booking> {
     }
 
     /**
-     * Creates a booking when the user comes to the booking view after choosing the showtime.
+     * Creates a booking when the user comes to the booking moblima.view after choosing the showtime.
      * A booking can only be created for a showtime that is open for booking at that moment.
      * The booking will be put into the entities.
      * @param showtimeId The ID of the showtime choosen by the user.
@@ -95,7 +95,7 @@ public class BookingController extends EntityController<Booking> {
         if (booking.getStatus() != BookingStatus.IN_PROGRESS)
             throw new IllegalActionException("The booking cannot be modified");
 
-        // Check if all ticket types are available for this booking cinema
+        // Check if all ticket types are available for this booking cineplex
         List<TicketType> availableTicketTypes =
                 showtimeController.getAvailableTicketTypes(booking.getShowtime().getId());
         for (TicketType ticketType : ticketTypesCount.keySet())
@@ -113,7 +113,7 @@ public class BookingController extends EntityController<Booking> {
     /**
      * Assign seats to tickets arbitrarily by the order of the selected ticket type when user selects seats.
      * This is to make sure the ticket contains the ticket type and seat information for validation when
-     * movie goers enters the cinema.
+     * movie goers enters the cineplex.
      * @param bookingId The ID of the booking whose tickets are assigned.
      * @param seats The seats to be assigned to the booking's tickets.
      * @throws IllegalActionException if the seats are not available for this showtime,

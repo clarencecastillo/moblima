@@ -1,14 +1,14 @@
-package manager;
+package moblima.controller;
 
-import config.BookingConfig;
-import exception.UninitialisedSingletonException;
-import model.booking.Showtime;
-import model.booking.ShowtimeStatus;
-import model.cinema.Cinema;
-import model.cinema.CinemaLayout;
-import model.cinema.CinemaType;
-import model.cinema.Cineplex;
-import util.Utilities;
+import moblima.config.BookingConfig;
+import moblima.exception.UninitialisedSingletonException;
+import moblima.model.booking.Showtime;
+import moblima.model.booking.ShowtimeStatus;
+import moblima.model.cineplex.Cinema;
+import moblima.model.cineplex.CinemaLayout;
+import moblima.model.cineplex.CinemaType;
+import moblima.model.cineplex.Cineplex;
+import moblima.util.Utilities;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- Represents the controller of cinemas.
+ Represents the moblima.controller of cinemas.
  @version 1.0
  @since 2017-10-20
  */
@@ -28,14 +28,14 @@ public class CinemaController extends EntityController<Cinema> {
     private static CinemaController instance;
 
     /**
-     * Creates the cinema controller.
+     * Creates the cineplex moblima.controller.
      */
     private CinemaController() {
         super();
     }
 
     /**
-     * Initialize the cinema controller.
+     * Initialize the cineplex moblima.controller.
      */
     public static void init() {
         instance = new CinemaController();
@@ -52,12 +52,12 @@ public class CinemaController extends EntityController<Cinema> {
     }
 
     /**
-     * Creates a cinema with the ID of its cineplex, code, cinema type and layout.
+     * Creates a cineplex with the ID of its cineplex, code, cineplex type and layout.
      * @param cineplexId The ID of the cineplex that the cinem belongs to.
-     * @param code The code of this cinema.
-     * @param type The type of this cinema.
-     * @param layout The layout of this cinema.
-     * @return a newly created cinema with the given ID of cineplex, code, cinema type and layout.
+     * @param code The code of this cineplex.
+     * @param type The type of this cineplex.
+     * @param layout The layout of this cineplex.
+     * @return a newly created cineplex with the given ID of cineplex, code, cineplex type and layout.
      */
     public Cinema createCinema(UUID cineplexId, String code,
                                CinemaType type, CinemaLayout layout) {

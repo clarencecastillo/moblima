@@ -1,4 +1,4 @@
-package model.cinema;
+package model.cineplex;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -6,7 +6,7 @@ import java.util.Hashtable;
 import java.util.List;
 
 /**
- * Represents the cinema layout of a cinema.
+ * Represents the cineplex layout of a cineplex.
  *
  * @version 1.0
  * @since 2017-10-20
@@ -34,9 +34,9 @@ public class CinemaLayout implements Serializable {
     private Seat[] seats;
 
     /**
-     * Creates a cinema layout with the given array of seats, maximum number of columns and maximum number of rows.
+     * Creates a cineplex layout with the given array of seats, maximum number of columns and maximum number of rows.
      *
-     * @param seats     an given array of this cinema layout's seats
+     * @param seats     an given array of this cineplex layout's seats
      * @param maxColumn this layout's given maximum number of columns.
      * @param maxRow    this layout's given maximum number of row.
      */
@@ -135,7 +135,7 @@ public class CinemaLayout implements Serializable {
     /**
      * Gets this layout's array of seats.
      *
-     * @return a list of seats of this cinema layout.
+     * @return a list of seats of this cineplex layout.
      */
     public Seat[] getSeats() {
         return seats;

@@ -1,16 +1,16 @@
 package view;
 
+import controller.EntityController;
+import controller.UserController;
 import exception.RejectedNavigationException;
-import manager.EntityController;
-import manager.UserController;
-import model.cinema.Staff;
+import model.cineplex.Staff;
 import util.Utilities;
 import view.ui.*;
 
 import java.io.ObjectOutputStream;
 
 /**
- * This view displays the user interface for the user to select the configuration option.
+ * This moblima.view displays the user interface for the user to select the configuration option.
  *
  * @version 1.0
  * @since 2017-10-30

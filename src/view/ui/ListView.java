@@ -3,29 +3,39 @@ package view.ui;
 import java.util.*;
 
 /**
- * Represents a list view.
+ * Represents a list moblima.view.
  *
  * @version 1.0
  * @since 2017-10-20
  */
 public abstract class ListView extends MenuView implements Navigable {
 
-    // TODO Javadoc
+    /**
+     * A linked hash map that keeps the order of the groupings.
+     */
     private LinkedHashMap<String, ArrayList<ViewItem>> groupings;
+
+    /**
+     * The array list of moblima.view items that has no grouping.
+     */
     private ArrayList<ViewItem> noGrouping;
+
+    /**
+     * The array list of moblima.view items.
+     */
     private ArrayList<ViewItem> viewItems;
 
     /**
-     * Creates a list view with the given navigation.
-     * @param navigation
+     * Creates a list moblima.view with the given navigation.
+     * @param navigation the navigation of the list moblima.view.
      */
     public ListView(Navigation navigation) {
         super(navigation);
     }
 
     /**
-     * Sets the view items for this menu view.
-     * @param viewItems The view items for this menu view.
+     * Sets the moblima.view items for this menu moblima.view.
+     * @param viewItems The moblima.view items for this menu moblima.view.
      */
     protected void setViewItems(List<ViewItem> viewItems) {
 
@@ -54,7 +64,7 @@ public abstract class ListView extends MenuView implements Navigable {
     }
 
     /**
-     * Displays view items.
+     * Displays moblima.view items.
      */
     @Override
     public void displayItems() {
@@ -66,7 +76,7 @@ public abstract class ListView extends MenuView implements Navigable {
 
             for (String groupingLabel : groupings.keySet()) {
                 System.out.println(groupingLabel.toUpperCase());
-                System.out.println(View.line('-', groupingLabel.length()));
+                System.out.println(line('-', groupingLabel.length()));
                 for (ViewItem viewItem : groupings.get(groupingLabel)) {
                     viewItem.display(nextLabel++);
                     System.out.println();
@@ -87,7 +97,7 @@ public abstract class ListView extends MenuView implements Navigable {
     }
 
     /**
-     * Displays list view title, content and items.
+     * Displays list moblima.view title, content and items.
      */
     @Override
     public void display() {
@@ -98,8 +108,8 @@ public abstract class ListView extends MenuView implements Navigable {
     }
 
     /**
-     * Gets the choice of the view items from the user.
-     * @return the choice of the view items from the user.
+     * Gets the choice of the moblima.view items from the user.
+     * @return the choice of the moblima.view items from the user.
      */
     @Override
     public String getChoice() {
@@ -115,15 +125,15 @@ public abstract class ListView extends MenuView implements Navigable {
                 int viewItemIndex = Integer.parseInt(input) - 1;
                 if (viewItemIndex < viewItems.size())
                     return viewItems.get(viewItemIndex).getValue();
-                View.displayError(INVALID_ERROR);
+                displayError(INVALID_ERROR);
             } catch (NumberFormatException e) {
                 if (input.length() == 1) {
                     int menuItemIndex = input.charAt(0) - 'A';
                     if (menuItemIndex < menuItems.size())
                         return menuItems.get(menuItemIndex).getValue();
-                    View.displayError(INVALID_ERROR);
+                    displayError(INVALID_ERROR);
                 } else
-                    View.displayError(UNRECOGNIZED_ERROR);
+                    displayError(UNRECOGNIZED_ERROR);
             }
         }
     }

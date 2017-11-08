@@ -7,7 +7,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Represents a base class of view.
+ * Represents a base class of moblima.view.
  *
  * @version 1.0
  * @since 2017-10-20
@@ -20,22 +20,22 @@ public abstract class View {
     public int LEFT_MARGIN = 1;
 
     /**
-     * Sets the width of the view to be 100.
+     * Sets the width of the moblima.view to be 100.
      */
     public final static int VIEW_WIDTH = 100;
 
     /**
-     * Sets the date display format of the view to be "EEEEE, dd, MMMMMM YYYY".
+     * Sets the date display format of the moblima.view to be "EEEEE, dd, MMMMMM YYYY".
      */
     public static final String DATE_DISPLAY_FORMAT = "EEEEE, dd MMMMM YYYY";
 
     /**
-     * Sets dash line with the length of the view width.
+     * Sets dash line with the length of the moblima.view width.
      */
     public final static String DASH_LINE = line('-', VIEW_WIDTH);
 
     /**
-     * Sets space line with the length of the view width.
+     * Sets space line with the length of the moblima.view width.
      */
     public final static String SPACE_LINE = line(' ', VIEW_WIDTH);
 
@@ -60,12 +60,12 @@ public abstract class View {
     public final static ConsoleColor SUCCESS = ConsoleColor.GREEN;
 
     /**
-     * The title of this view.
+     * The title of this moblima.view.
      */
     protected String title;
 
     /**
-     * The array list of content of this view.
+     * The array list of content of this moblima.view.
      */
     protected ArrayList<String> content = new ArrayList<>();
 
@@ -132,7 +132,7 @@ public abstract class View {
     /**
      * Gets a strings of of given text wrapped according to the given length.
      * @param text The text to be wrapped.
-     * @param length The length of the view in which the text is displayed.
+     * @param length The length of the moblima.view in which the text is displayed.
      * @return a strings of of this given text wrapped according to this given length.
      */
     protected static String[] wrap(String text, int length) {
@@ -149,46 +149,49 @@ public abstract class View {
     }
 
     /**
-     * Gets the title of this view.
-     * @return the title of this view.
+     * Gets the title of this moblima.view.
+     * @return the title of this moblima.view.
      */
     public String getTitle() {
         return title;
     }
 
     /**
-     * Changes the title of this view.
-     * @param title The new title of this view.
+     * Changes the title of this moblima.view.
+     * @param title The new title of this moblima.view.
      */
     public void setTitle(String title) {
         this.title = title;
     }
 
     /**
-     * Gets the content of this view.
-     * @return the content of this view in the form of a list of strings.
+     * Gets the content of this moblima.view.
+     * @return the content of this moblima.view in the form of a list of strings.
      */
     public String[] getContent() {
         return content.toArray(new String[content.size()]);
     }
 
     /**
-     * Sets the content of this view.
-     * @param content the content of this view in the form of a list of strings to be set.
+     * Sets the content of this moblima.view.
+     * @param content the content of this moblima.view in the form of a list of strings to be set.
      */
     public void setContent(String... content) {
         this.content.clear();
         this.content.addAll(Arrays.asList(content));
     }
 
-    // TODO Javadoc
+    /**
+     * Sets content fot his moblima.view.
+     * @param content The content to be set for this moblima.view.
+     */
     public void setContent(List<String> content) {
         this.content.clear();
         this.content.addAll(content);
     }
 
     /**
-     * Display the title of this view.
+     * Display the title of this moblima.view.
      */
     public void displayTitle() {
         System.out.println(DASH_LINE);
@@ -197,7 +200,7 @@ public abstract class View {
     }
 
     /**
-     * Display the content of this view.
+     * Display the content of this moblima.view.
      */
     public void displayContent() {
         for (String line : content)
@@ -207,7 +210,7 @@ public abstract class View {
     }
 
     /**
-     * Display the title and content of this view.
+     * Display the title and content of this moblima.view.
      */
     public void display() {
         displayTitle();
@@ -215,10 +218,10 @@ public abstract class View {
     }
 
     /**
-     * Display the title and content of this view in one line.
-     * @param titleDelimiter the delimiter of the title of this view.
-     * @param contentDelimiter the delimiter of the content of this view.
-     * @return the string of the title and content of this view in one line.
+     * Display the title and content of this moblima.view in one line.
+     * @param titleDelimiter the delimiter of the title of this moblima.view.
+     * @param contentDelimiter the delimiter of the content of this moblima.view.
+     * @return the string of the title and content of this moblima.view in one line.
      */
     public String flatten(String titleDelimiter, String contentDelimiter) {
         return title + titleDelimiter + String.join(contentDelimiter, content);

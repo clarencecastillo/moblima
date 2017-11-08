@@ -1,17 +1,15 @@
-package manager;
+package moblima.controller;
 
-import exception.IllegalActionException;
-import exception.UninitialisedSingletonException;
-import model.booking.Booking;
-import model.booking.BookingStatus;
-import model.commons.User;
-import model.movie.Movie;
-import model.movie.MovieReview;
+import moblima.exception.IllegalActionException;
+import moblima.exception.UninitialisedSingletonException;
+import moblima.model.commons.User;
+import moblima.model.movie.Movie;
+import moblima.model.movie.MovieReview;
 
 import java.util.UUID;
 
 /**
- Represents the controller of movie reviews.
+ Represents the moblima.controller of movie reviews.
  @version 1.0
  @since 2017-10-20
  */
@@ -23,14 +21,14 @@ public class MovieReviewController extends EntityController<MovieReview> {
     private static MovieReviewController instance;
 
     /**
-     * Creates the movie review controller.
+     * Creates the movie review moblima.controller.
      */
     private MovieReviewController() {
         super();
     }
 
     /**
-     * Initialize the movie review controller.
+     * Initialize the movie review moblima.controller.
      */
     public static void init() {
         instance = new MovieReviewController();

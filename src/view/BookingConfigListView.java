@@ -7,7 +7,7 @@ import view.ui.*;
 import java.util.ArrayList;
 
 /**
- * This view displays the user interface for the user to configure booking settings.
+ * This moblima.view displays the user interface for the user to configure booking settings.
  *
  * @version 1.0
  * @since 2017-10-30
@@ -101,7 +101,7 @@ public class BookingConfigListView extends ListView {
                     bookingConfig.setMinutesBeforeClosedBooking(newMinutesBeforeClosedBooking);
                     break;
             }
-            View.displaySuccess("Successfully changed booking config value!");
+            View.displaySuccess("Successfully changed booking moblima.config value!");
             Form.pressAnyKeyToContinue();
             navigation.reload(AccessLevel.ADMINISTRATOR);
         }

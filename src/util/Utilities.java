@@ -240,7 +240,11 @@ public class Utilities {
         return score;
     }
 
-    // TODO Javadoc
+    /**
+     * Gets the object output stream of a given file name.
+     * @param filename The name of the file which output stream is to ge returned.
+     * @return the object output stream of the given file name.
+     */
     public static ObjectOutputStream getObjectOutputStream(String filename) {
         ObjectOutputStream objectOutputStream = null;
         try {
@@ -252,14 +256,26 @@ public class Utilities {
         return objectOutputStream;
     }
 
-    // TODO Javadoc
+    /**
+     * Gets the object input stream of a given file name.
+     * @param filename The name of the file which input stream is to ge returned.
+     * @return the object input stream of a given file name.
+     * @throws IOException if the file is not found.
+     */
     public static ObjectInputStream getObjectInputStream(String filename) throws IOException {
         ObjectInputStream objectInputStream = null;
         objectInputStream = new ObjectInputStream(new BufferedInputStream(new FileInputStream(filename)));
         return objectInputStream;
     }
 
-    // TODO Javadoc
+    /**
+     * checks whether two time periods are overlapped.
+     * @param start1 The starting time of the first period.
+     * @param end1 The ending time of the first period.
+     * @param start2 The starting time of the second period.
+     * @param end2 The ending time of the second period.
+     * @return true is these two periods overlap with each other.
+     */
     public static boolean overlaps(Date start1, Date end1, Date start2, Date end2){
         return start1.getTime() <= end2.getTime() && start2.getTime() <= end1.getTime();
     }

@@ -330,7 +330,10 @@ public class Movie extends Entity implements Searchable {
         return (double) sum / getReviews().size();
     }
 
-    // TODO Javadoc
+    /**
+     * Gets the gross sales of this movie.
+     * @return the gross sales of this movie.
+     */
     public double getGrossSales() {
         double gross = 0;
         for (Showtime showtime : showtimes)
@@ -341,7 +344,10 @@ public class Movie extends Entity implements Searchable {
         return gross;
     }
 
-    // TODO Javadoc
+    /**
+     * Gets the weekend's gross sales of this movie.
+     * @return the weekend's gross sales of this movie.
+     */
     public double getWeekendGrossSales() {
         double weekendGross = 0;
         for (Showtime showtime : showtimes)

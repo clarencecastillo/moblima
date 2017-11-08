@@ -26,10 +26,10 @@ public class Navigation {
     }
 
     /**
-     * Reloads the navigation view with the given access level, intent and necessary information.
-     * @param accessLevel The access level of this view by the user.
-     * @param intent The intent of accessing this view.
-     * @param args The necessary information to reload this navigation view.
+     * Reloads the navigation moblima.view with the given access level, intent and necessary information.
+     * @param accessLevel The access level of this moblima.view by the user.
+     * @param intent The intent of accessing this moblima.view.
+     * @param args The necessary information to reload this navigation moblima.view.
      */
     public void reload(AccessLevel accessLevel, Intent intent, String... args) {
         Navigable recentNavigable = stack.peek();
@@ -39,32 +39,32 @@ public class Navigation {
     }
 
     /**
-     * Reloads the navigation view with necessary information that can be accessed by the public.
-     * @param args The necessary information to reload this navigation view.
+     * Reloads the navigation moblima.view with necessary information that can be accessed by the public.
+     * @param args The necessary information to reload this navigation moblima.view.
      */
     public void reload(String... args) {
         reload(AccessLevel.PUBLIC, null, args);
     }
 
     /**
-     * Reloads the navigation view with the given access level and necessary information and no intent.
-     * @param accessLevel The access level of this view by the user.
-     * @param args The necessary information to reload this navigation view.
+     * Reloads the navigation moblima.view with the given access level and necessary information and no intent.
+     * @param accessLevel The access level of this moblima.view by the user.
+     * @param args The necessary information to reload this navigation moblima.view.
      */
     public void reload(AccessLevel accessLevel, String... args) {
         reload(accessLevel, null, args);
     }
 
     /**
-     * Refreshes a view by entering the most recently view that is on the top of the navigation stack.
+     * Refreshes a moblima.view by entering the most recently moblima.view that is on the top of the navigation stack.
      */
     public void refresh() {
         enter(stack.peek());
     }
 
     /**
-     * Clear the screen and enter the given navigable view.
-     * @param navigable The navigable view to be entered.
+     * Clear the screen and enter the given navigable moblima.view.
+     * @param navigable The navigable moblima.view to be entered.
      */
     public void enter(Navigable navigable) {
         clearScreen();
@@ -80,21 +80,21 @@ public class Navigation {
     }
 
     /**
-     * Go to the given navigable view with the given access level, necessary information when no intent.
-     * @param navigable The navigable view to go to.
-     * @param accessLevel The access level of the navigable view by the user.
-     * @param args The necessary information for loading the navigable view.
+     * Go to the given navigable moblima.view with the given access level, necessary information when no intent.
+     * @param navigable The navigable moblima.view to go to.
+     * @param accessLevel The access level of the navigable moblima.view by the user.
+     * @param args The necessary information for loading the navigable moblima.view.
      */
     public void goTo(Navigable navigable, AccessLevel accessLevel, String... args) {
         goTo(navigable, accessLevel, null, args);
     }
 
     /**
-     * Go to the given navigable view with the given access level, intent and necessary information.
-     * @param navigable The navigable view to go to.
-     * @param accessLevel The access level of the navigable view by the user.
-     * @param intent The intent of accessing this navigable view.
-     * @param args The necessary information for loading the navigable view.
+     * Go to the given navigable moblima.view with the given access level, intent and necessary information.
+     * @param navigable The navigable moblima.view to go to.
+     * @param accessLevel The access level of the navigable moblima.view by the user.
+     * @param intent The intent of accessing this navigable moblima.view.
+     * @param args The necessary information for loading the navigable moblima.view.
      */
     public void goTo(Navigable navigable, AccessLevel accessLevel, Intent intent, String... args) {
         clearScreen();
@@ -108,22 +108,22 @@ public class Navigation {
     }
 
     /**
-     * Go to the given navigable view with the public access level, no intent and necessary information.
-     * @param navigable The navigable view to go to.
-     * @param args The necessary information for loading the navigable view.
+     * Go to the given navigable moblima.view with the public access level, no intent and necessary information.
+     * @param navigable The navigable moblima.view to go to.
+     * @param args The necessary information for loading the navigable moblima.view.
      */
     public void goTo(Navigable navigable, String... args) {
         goTo(navigable, AccessLevel.PUBLIC, null, args);
     }
 
     /**
-     * Go back to the previous view.
+     * Go back to the previous moblima.view.
      */
     public void goBack() { goBack(1); }
 
     /**
-     * Go back to the view which is before the current view by the given number of levels.
-     * @param levels The number of views by which the returned view is before the current view.
+     * Go back to the moblima.view which is before the current moblima.view by the given number of levels.
+     * @param levels The number of views by which the returned moblima.view is before the current moblima.view.
      */
     public void goBack(int levels) {
         if (stack.size() - levels == 0)

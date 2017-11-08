@@ -3,7 +3,7 @@ package view;
 import model.booking.Booking;
 import model.booking.Showtime;
 import model.booking.TicketType;
-import model.cinema.Seat;
+import model.cineplex.Seat;
 import util.Utilities;
 import view.ui.View;
 
@@ -12,7 +12,7 @@ import java.util.Hashtable;
 import java.util.List;
 
 /**
- * This view displays the user interface for the user to view current booking information.
+ * This moblima.view displays the user interface for the user to moblima.view current booking information.
  *
  * @version 1.0
  * @since 2017-10-30

@@ -1,6 +1,6 @@
 package view;
 
-import manager.MovieController;
+import controller.MovieController;
 import model.movie.Movie;
 import model.movie.MovieStatus;
 import view.MovieMenuView.MovieMenuIntent;
@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * This view displays the user interface for the user view movie listings.
+ * This moblima.view displays the user interface for the user moblima.view movie listings.
  *
  * @version 1.0
  * @since 2017-10-30

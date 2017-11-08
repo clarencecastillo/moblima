@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
- * Represents a menu view.
+ * Represents a menu moblima.view.
  *
  * @version 1.0
  * @since 2017-10-20
@@ -42,29 +42,29 @@ public abstract class MenuView extends View implements Navigable, Form {
     protected ArrayList<MenuItem> menuItems = new ArrayList<>();
 
     /**
-     * The navigation for this view.
+     * The navigation for this moblima.view.
      */
     protected Navigation navigation;
 
     /**
-     * Creates a menu view with the given navigation.
-     * @param navigation The navigation for this view.
+     * Creates a menu moblima.view with the given navigation.
+     * @param navigation The navigation for this moblima.view.
      */
     public MenuView(Navigation navigation) {
         this.navigation = navigation;
     }
 
     /**
-     * Gets the menu items from this menu view.
-     * @return the menu items from this menu view.
+     * Gets the menu items from this menu moblima.view.
+     * @return the menu items from this menu moblima.view.
      */
     protected ArrayList<MenuItem> getMenuItems() {
         return menuItems;
     }
 
     /**
-     * Sets the enumerable menu items for this menu view.
-     * @param enumerableMenuOptions The new enumerable menu items to be set for this menu view.
+     * Sets the enumerable menu items for this menu moblima.view.
+     * @param enumerableMenuOptions The new enumerable menu items to be set for this menu moblima.view.
      */
     protected void setMenuItems(EnumerableMenuOption... enumerableMenuOptions) {
         menuItems.clear();
@@ -76,8 +76,8 @@ public abstract class MenuView extends View implements Navigable, Form {
     }
 
     /**
-     * Sets the menu items for this menu view.
-     * @param menuItems The new menu items to be set for this menu view.
+     * Sets the menu items for this menu moblima.view.
+     * @param menuItems The new menu items to be set for this menu moblima.view.
      */
     protected void setMenuItems(MenuItem[] menuItems) {
         this.menuItems.clear();
@@ -85,7 +85,7 @@ public abstract class MenuView extends View implements Navigable, Form {
     }
 
     /**
-     * Adds a go back option to this menu view.
+     * Adds a go back option to this menu moblima.view.
      */
     protected void addBackOption() {
         if (menuItems.contains(BACK_MENU_ITEM))
@@ -94,7 +94,7 @@ public abstract class MenuView extends View implements Navigable, Form {
     }
 
     /**
-     * Adds a go home option to this menu view.
+     * Adds a go home option to this menu moblima.view.
      */
     protected void addHomeOption() {
         menuItems.add(HOME_MENU_ITEM);

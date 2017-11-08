@@ -1,9 +1,9 @@
 package view;
 
 import model.booking.ShowtimeSeating;
-import model.cinema.Cell;
-import model.cinema.CinemaLayout;
-import model.cinema.Seat;
+import model.cineplex.Cell;
+import model.cineplex.CinemaLayout;
+import model.cineplex.Seat;
 import view.ui.View;
 
 import java.util.ArrayList;
@@ -12,7 +12,7 @@ import java.util.Hashtable;
 import java.util.List;
 
 /**
- * This view displays the user interface for the user view cinema seating.
+ * This moblima.view displays the user interface for the user moblima.view cineplex seating.
  *
  * @version 1.0
  * @since 2017-10-30

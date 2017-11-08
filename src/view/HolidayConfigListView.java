@@ -12,7 +12,7 @@ import java.util.TreeSet;
 import java.util.concurrent.TimeUnit;
 
 /**
- * This view displays the user interface for the user to set new holiday.
+ * This moblima.view displays the user interface for the user to set new holiday.
  *
  * @version 1.0
  * @since 2017-10-30

@@ -7,7 +7,7 @@ import view.ui.*;
 import java.util.ArrayList;
 
 /**
- * This view displays the user interface for the user to configure payment settings.
+ * This moblima.view displays the user interface for the user to configure payment settings.
  *
  * @version 1.0
  * @since 2017-10-30
@@ -58,7 +58,7 @@ public class PaymentConfigListView extends ListView {
 //                    paymentConfig.setAllowedRefunds(!PaymentConfig.isRefundsAllowed());
 //                    break;
             }
-            View.displaySuccess("Successfully changed payment config value!");
+            View.displaySuccess("Successfully changed payment moblima.config value!");
             Form.pressAnyKeyToContinue();
             navigation.reload(AccessLevel.ADMINISTRATOR);
         }

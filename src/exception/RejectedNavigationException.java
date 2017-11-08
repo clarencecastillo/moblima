@@ -1,4 +1,4 @@
-package exception;
+package moblima.exception;
 
 /**
  Signals that a navigation is rejected.

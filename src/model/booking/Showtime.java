@@ -1,8 +1,8 @@
 package model.booking;
 
 import config.BookingConfig;
-import model.cinema.Cinema;
-import model.cinema.Cineplex;
+import model.cineplex.Cinema;
+import model.cineplex.Cineplex;
 import model.commons.Entity;
 import model.commons.Language;
 import model.movie.Movie;
@@ -31,7 +31,7 @@ public class Showtime extends Entity implements Comparable<Showtime> {
     private Cineplex cineplex;
 
     /**
-     * The cinema where the showtime is at.
+     * The cineplex where the showtime is at.
      */
     private Cinema cinema;
 
@@ -79,7 +79,7 @@ public class Showtime extends Entity implements Comparable<Showtime> {
      * Creates a showtime with the given information.
      * @param movie The movie shown for this showtime.
      * @param cineplex The cineplex where the showtime is at.
-     * @param cinema The cinema where the showtime is at.
+     * @param cinema The cineplex where the showtime is at.
      * @param language The language of this showtime.
      * @param startTime The starting time of this showtime.
      * @param noFreePasses Whether this showtime can use coupons.
@@ -136,7 +136,7 @@ public class Showtime extends Entity implements Comparable<Showtime> {
     }
 
     /**
-     * Gets the cinema of this showtime.
+     * Gets the cineplex of this showtime.
      * @return The cincinemaeplex of this showtime.
      */
     public Cinema getCinema() {
@@ -144,8 +144,8 @@ public class Showtime extends Entity implements Comparable<Showtime> {
     }
 
     /**
-     * Changes the cinema of this showtime.
-     * @param cinema the new cinema of this showtime.
+     * Changes the cineplex of this showtime.
+     * @param cinema the new cineplex of this showtime.
      */
     public void setCinema(Cinema cinema) { this.cinema = cinema; }
 
@@ -317,13 +317,22 @@ public class Showtime extends Entity implements Comparable<Showtime> {
      */
     public void removeBooking(Booking booking) { bookings.remove(booking.getId()); }
 
-    // TODO Javadoc
+    /**
+     * Compares this showtime with the specified showtime for order. Returns a negative integer, zero, or a
+     * positive integer as this showtime's start time is earlier than, same, or later than the specified showtime's.
+     * @param o The showtime to be compared with.
+     * @return a negative integer, zero, or a positive integer as this showtime's start time is earlier than,
+     * same, or later than the specified showtime's.
+     */
     @Override
     public int compareTo(Showtime o) {
         return startTime.compareTo(o.startTime);
     }
 
-    // TODO Javadoc
+    /**
+     * Checks whether this showtime has confirmed booking.
+     * @return true if this showtime has confirmed booking.
+     */
     public boolean hasConfirmedBooking() {
         for (Booking booking : bookings)
             if (booking.getStatus() == BookingStatus.CONFIRMED)
@@ -331,7 +340,10 @@ public class Showtime extends Entity implements Comparable<Showtime> {
         return false;
     }
 
-    // TODO Javadoc
+    /**
+     * Gets the ending time of this showtime after its buffer time.
+     * @return the ending time of this showtime after its buffer time.
+     */
     public Date getEndTime() {
         return Utilities.getDateAfter(startTime, Calendar.MINUTE,
                 movie.getRuntimeMinutes() + BookingConfig.getBufferMinutesAfterShowtime());

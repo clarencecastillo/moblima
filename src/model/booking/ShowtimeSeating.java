@@ -1,7 +1,7 @@
 package model.booking;
 
 import exception.IllegalActionException;
-import model.cinema.Seat;
+import model.cineplex.Seat;
 
 import java.io.Serializable;
 import java.util.Hashtable;
@@ -21,7 +21,7 @@ public class ShowtimeSeating implements Serializable {
 
     /**
      * Creates a showtime seating for the given showtime.
-     * The seating will be all the seats in the cinema layout of the assigned cinema of the showtime.
+     * The seating will be all the seats in the cineplex layout of the assigned cineplex of the showtime.
      * All seats are set to be available when initially created.
      *
      * @param showtime the showtime seating of which to be creates of.
@@ -92,37 +92,4 @@ public class ShowtimeSeating implements Serializable {
     public boolean hasSeat(Seat seat) {
         return seatings.containsKey(seat);
     }
-
-//    /**
-//     * Gets the list of seats in the given status in this showtime seating.
-//     * @param status The status of the seats to be returned.
-//     * @return the list of seats in the given status.
-//     * @throws SeatNotFoundException
-//     */
-//    public List<Seat> getSeats(SeatingStatus status) throws SeatNotFoundException {
-//        ArrayList<Seat> seats = new ArrayList<Seat>();
-//        for (SeatType seatType: SeatType.values()) {
-//            seats.addAll(getAvailableSeats(seatType));
-//        }
-//        return seats;
-//    }
-//
-//    /**
-//     * Gets a list of seats of a given seat type that is available in this showtime seating.
-//     * @param seatType The seat type of the seats to be returned.
-//     * @return a list of seats of a given seat type that is available in this showtime seating.
-//     * @throws SeatNotFoundException
-//     */
-//    public ArrayList<Seat> getAvailableSeats(SeatType seatType) throws SeatNotFoundException {
-//        ArrayList<Seat> availableSeats = new ArrayList<Seat>();
-//        for(Seat seat : seatings.keySet()) {
-//            if (seat.getType() == seatType && isAvailable(seat))
-//                availableSeats.add(seat);
-//        }
-//        return availableSeats;
-//    }
-
-//    public ArrayList<Seat> getSeats() {
-//        return new ArrayList<Seat>(seatings.keySet());
-//    }
 }

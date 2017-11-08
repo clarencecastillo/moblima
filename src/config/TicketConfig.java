@@ -1,9 +1,9 @@
-package config;
+package moblima.config;
 
-import model.booking.TicketType;
-import model.cinema.CinemaType;
-import model.movie.MovieType;
-import model.transaction.Priceable;
+import moblima.model.booking.TicketType;
+import moblima.model.cineplex.CinemaType;
+import moblima.model.movie.MovieType;
+import moblima.model.transaction.Priceable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -11,8 +11,8 @@ import java.util.Hashtable;
 import java.util.List;
 
 /**
- * Represents the configuration of ticket setting. It consists os the available ticket types for each cinema type and
- * the pricing rate of each priceable, including cinema type, movie type and ticket type.
+ * Represents the configuration of ticket setting. It consists os the available ticket types for each cineplex type and
+ * the pricing rate of each priceable, including cineplex type, movie type and ticket type.
  *
  * @version 1.0
  * @since 2017-10-20
@@ -25,7 +25,7 @@ public class TicketConfig implements Configurable {
     private static TicketConfig instance = new TicketConfig();
 
     /**
-     * A hash table of setting with the cinema type as the key and the array list of available ticket types as the value.
+     * A hash table of setting with the cineplex type as the key and the array list of available ticket types as the value.
      */
     private static Hashtable<CinemaType, ArrayList<TicketType>> cinemaTicketTypes;
 
@@ -51,20 +51,20 @@ public class TicketConfig implements Configurable {
     }
 
     /**
-     * Gets the available ticket types of a given cinema type.
+     * Gets the available ticket types of a given cineplex type.
      *
-     * @param cinemaType The cinema type whose available ticket type is to be checked.
-     * @return the available ticket types of a given cinema type.
+     * @param cinemaType The cineplex type whose available ticket type is to be checked.
+     * @return the available ticket types of a given cineplex type.
      */
     public static List<TicketType> getAvailableTicketTypes(CinemaType cinemaType) {
         return new ArrayList<>(cinemaTicketTypes.get(cinemaType));
     }
 
     /**
-     * Checked whether a ticket type is available for a cinema type.
-     * @param cinemaType the cinema type to be checked.
+     * Checked whether a ticket type is available for a cineplex type.
+     * @param cinemaType the cineplex type to be checked.
      * @param ticketType the ticket type to be checked.
-     * @return true if this ticket type is available for this cinema type.
+     * @return true if this ticket type is available for this cineplex type.
      */
     public static boolean isAvailable(CinemaType cinemaType, TicketType ticketType) {
         return getAvailableTicketTypes(cinemaType).contains(ticketType);
@@ -89,9 +89,9 @@ public class TicketConfig implements Configurable {
     }
 
     /**
-     * Changes the available ticket types of a given cinema type.
-     * @param cinemaType The type of the cinema to be changes.
-     * @param ticketTypes The new available ticket types of this cinema.
+     * Changes the available ticket types of a given cineplex type.
+     * @param cinemaType The type of the cineplex to be changes.
+     * @param ticketTypes The new available ticket types of this cineplex.
      */
     public void setAvailableTicketTypes(CinemaType cinemaType, List<TicketType> ticketTypes) {
         cinemaTicketTypes.put(cinemaType, new ArrayList<>(ticketTypes));

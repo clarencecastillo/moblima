@@ -6,7 +6,7 @@ import view.ui.*;
 
 import java.util.ArrayList;
 /**
- * This view displays the user interface for the user to change admin configuration.
+ * This moblima.view displays the user interface for the user to change admin configuration.
  *
  * @version 1.0
  * @since 2017-10-30

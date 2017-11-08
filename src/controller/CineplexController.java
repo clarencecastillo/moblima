@@ -1,9 +1,9 @@
-package manager;
+package moblima.controller;
 
-import exception.UninitialisedSingletonException;
-import model.cinema.Cineplex;
+import moblima.exception.UninitialisedSingletonException;
+import moblima.model.cineplex.Cineplex;
 /**
- Represents the controller of cineplexes.
+ Represents the moblima.controller of cineplexes.
  @version 1.0
  @since 2017-10-20
  */
@@ -15,14 +15,14 @@ public class CineplexController extends EntityController<Cineplex> {
     private static CineplexController instance;
 
     /**
-     * Creates the cineplex controller.
+     * Creates the cineplex moblima.controller.
      */
     private CineplexController() {
         super();
     }
 
     /**
-     * Initialize the cineplex controller.
+     * Initialize the cineplex moblima.controller.
      */
     public static void init() {
         instance = new CineplexController();

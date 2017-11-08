@@ -1,7 +1,7 @@
-package model.cinema;
+package model.cineplex;
 
 /**
- * Represents a seat of a cinema layout, changed from a cell.
+ * Represents a seat of a cineplex layout, changed from a cell.
  *
  * @version 1.0
  * @since 2017-10-20

@@ -1,8 +1,8 @@
 package view;
 
+import controller.MovieController;
 import exception.IllegalActionException;
 import exception.UnauthorisedNavigationException;
-import manager.MovieController;
 import model.movie.*;
 import view.ui.*;
 
@@ -11,7 +11,7 @@ import java.util.Arrays;
 import java.util.UUID;
 
 /**
- * This view displays the user interface for the user to select action in movie listings.
+ * This moblima.view displays the user interface for the user to select action in movie listings.
  *
  * @version 1.0
  * @since 2017-10-30

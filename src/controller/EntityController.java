@@ -1,6 +1,6 @@
-package manager;
+package moblima.controller;
 
-import model.commons.Entity;
+import moblima.model.commons.Entity;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -16,10 +16,14 @@ import java.util.UUID;
  */
 public abstract class EntityController<T extends Entity> {
 
-    // TODO Javadoc
+    /**
+     * The name of the data file.
+     */
     public static final String DAT_FILENAME = "moblima.dat";
 
-    // TODO Javadoc
+    /**
+     * The array list of entity controllers.
+     */
     private static ArrayList<EntityController> controllers = new ArrayList<>();
 
     /**
@@ -28,7 +32,7 @@ public abstract class EntityController<T extends Entity> {
     protected Hashtable<UUID, T> entities;
 
     /**
-     * Creates the entity controller, initializing a hash table for the entity and its UUID.
+     * Creates the entity moblima.controller, initializing a hash table for the entity and its UUID.
      */
     protected EntityController() {
         this.entities = new Hashtable<>();
@@ -52,20 +56,35 @@ public abstract class EntityController<T extends Entity> {
         return new ArrayList<>(entities.values());
     }
 
-    // TODO Javadoc
+    /**
+     * Save the data.
+     * @param objectOutputStream The object to be saved.
+     * @throws IOException if the file is not found.
+     */
     public static void save(ObjectOutputStream objectOutputStream) throws IOException {
         for (EntityController controller : controllers)
             objectOutputStream.writeObject(controller.entities);
         objectOutputStream.close();
     }
 
-    // TODO Javadoc
+    /**
+     * Loads the data.
+     * @param objectInputStream The data to be loaded.
+     * @throws IOException if the file is not found.
+     * @throws ClassNotFoundException if the class is not found.
+     */
     public static void load(ObjectInputStream objectInputStream) throws IOException, ClassNotFoundException {
         for (EntityController controller : controllers)
             controller.loadEntities(objectInputStream);
         objectInputStream.close();
     }
 
+    /**
+     * Loads the entity form the data.
+     * @param objectInputStream The entities to be loaded.
+     * @throws IOException if the file is not found.
+     * @throws ClassNotFoundException if the class is not found.
+     */
     @SuppressWarnings("unchecked")
     private void loadEntities(ObjectInputStream objectInputStream) throws IOException, ClassNotFoundException {
         entities = (Hashtable<UUID, T>) objectInputStream.readObject();

@@ -1,4 +1,4 @@
-package model.cinema;
+package model.cineplex;
 
 import model.booking.Showtime;
 import model.commons.Entity;
@@ -104,9 +104,9 @@ public class Cineplex extends Entity {
     }
 
     /**
-     * Adds a new cinema to this cineplex.
+     * Adds a new cineplex to this cineplex.
      *
-     * @param cinema This cinemplex's new cinema.
+     * @param cinema This cinemplex's new cineplex.
      */
     public void addCinema(Cinema cinema) {
         cinemas.add(cinema);
@@ -122,9 +122,9 @@ public class Cineplex extends Entity {
     }
 
     /**
-     * Removes a cinema from this cineplex.
+     * Removes a cineplex from this cineplex.
      *
-     * @param cinema Thie cinema to be removed from this cineplex.
+     * @param cinema Thie cineplex to be removed from this cineplex.
      */
     public void removeCinema(Cinema cinema) {
         cinemas.remove(cinema);

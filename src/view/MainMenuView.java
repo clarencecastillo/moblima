@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 
 /**
- * This view displays the user interface of main menu for the user.
+ * This moblima.view displays the user interface of main menu for the user.
  *
  * @version 1.0
  * @since 2017-10-30

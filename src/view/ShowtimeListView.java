@@ -1,15 +1,15 @@
 package view;
 
 import config.BookingConfig;
+import controller.*;
 import exception.IllegalActionException;
 import exception.RejectedNavigationException;
 import exception.UnauthorisedNavigationException;
-import manager.*;
 import model.booking.Booking;
 import model.booking.Showtime;
 import model.booking.ShowtimeStatus;
-import model.cinema.Cinema;
-import model.cinema.Cineplex;
+import model.cineplex.Cinema;
+import model.cineplex.Cineplex;
 import model.commons.Language;
 import model.movie.Movie;
 import model.movie.MovieStatus;
@@ -22,7 +22,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 /**
- * This view displays the user interface for the user to view showtimes.
+ * This moblima.view displays the user interface for the user to moblima.view showtimes.
  *
  * @version 1.0
  * @since 2017-10-30
@@ -142,7 +142,7 @@ public class ShowtimeListView extends ListView {
                     endTime = Utilities.getDateAfter(startTime, Calendar.MINUTE,
                             movieFilter.getRuntimeMinutes() + BookingConfig.getBufferMinutesAfterShowtime());
                     if (!cinemaController.isAvaiableOn(cineplexFilter.getId(), cinema.getId(), startTime, endTime))
-                        View.displayError("The specified time conflicts with another showtime scheduled for this cinema.");
+                        View.displayError("The specified time conflicts with another showtime scheduled for this cineplex.");
                     else
                         break;
                 } while (true);

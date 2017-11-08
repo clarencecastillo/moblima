@@ -1,12 +1,12 @@
-package manager;
+package moblima.controller;
 
-import exception.UninitialisedSingletonException;
-import model.transaction.Payable;
-import model.transaction.Payment;
-import model.transaction.PaymentStatus;
+import moblima.exception.UninitialisedSingletonException;
+import moblima.model.transaction.Payable;
+import moblima.model.transaction.Payment;
+import moblima.model.transaction.PaymentStatus;
 
 /**
- Represents the controller of payments.
+ Represents the moblima.controller of payments.
  @version 1.0
  @since 2017-10-20
  */
@@ -18,14 +18,14 @@ public class PaymentController extends EntityController<Payment> {
     private static PaymentController instance;
 
     /**
-     * Creates the payment controller.
+     * Creates the payment moblima.controller.
      */
     private PaymentController() {
         super();
     }
 
     /**
-     * Initialize the payment controller.
+     * Initialize the payment moblima.controller.
      */
     public static void init() {
         instance = new PaymentController();

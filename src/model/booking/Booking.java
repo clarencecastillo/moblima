@@ -1,8 +1,8 @@
 package model.booking;
 
 import config.BookingConfig;
-import model.cinema.Cinema;
-import model.cinema.Seat;
+import model.cineplex.Cinema;
+import model.cineplex.Seat;
 import model.commons.Entity;
 import model.transaction.Payable;
 import model.transaction.Payment;

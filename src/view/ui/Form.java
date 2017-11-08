@@ -235,7 +235,12 @@ public interface Form {
         }
     }
 
-    // TODO Javadoc
+    /**
+     * Gets the input that must match with the given pattern.
+     * @param prompt The prompt to get the input.
+     * @param regexPattern The pattern that the input must match with.
+     * @return the input that matches with the given pattern.
+     */
     static String getString(String prompt, Pattern regexPattern) {
         while (true) {
             String input = getString(prompt);
@@ -376,7 +381,11 @@ public interface Form {
         return time;
     }
 
-    // TODO Javadoc
+    /**
+     * Gets a boolean input.
+     * @param prompt The prompt to ask for the input.
+     * @return The boolean input.
+     */
     static boolean getBoolean(String prompt) {
         while (true) {
             char response = getChar(prompt + " [ Y/N ]");

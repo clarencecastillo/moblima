@@ -55,7 +55,10 @@ public enum Language implements EnumerableMenuOption {
         return name;
     }
 
-    // TODO Javadoc
+    /**
+     * Gets the description of this language.
+     * @return the description of this language.
+     */
     @Override
     public String getDescription() {
         return name;

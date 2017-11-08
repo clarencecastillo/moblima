@@ -1,4 +1,4 @@
-package config;
+package moblima.config;
 
 /**
  * Represents the configuration of booking setting.
@@ -33,7 +33,9 @@ public class BookingConfig implements Configurable {
      */
     private static int minutesBeforeClosedBooking;
 
-    // TODO javadoc
+    /**
+     * The buffer minutes after the showtime during which the same cineplex cannot be scheduled another showtime.
+     */
     private static int bufferMinutesAfterShowtime;
 
     /**
@@ -134,6 +136,7 @@ public class BookingConfig implements Configurable {
 
     /**
      * Sets the buffer minutes after the showtime.
+     *
      * @param bufferMinutesAfterShowtime The buffer minutes after the showtime.
      */
     public void setBufferMinutesAfterShowtime(int bufferMinutesAfterShowtime) {

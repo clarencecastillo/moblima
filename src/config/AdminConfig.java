@@ -1,4 +1,4 @@
-package config;
+package moblima.config;
 
 /**
  * Represents the configuration of admin settings.
@@ -14,7 +14,7 @@ public class AdminConfig implements Configurable {
     private static AdminConfig instance = new AdminConfig();
 
     /**
-     * The string that must be entered to go to admin menu which is hidden from the main menu. Only the cinema staff
+     * The string that must be entered to go to admin menu which is hidden from the main menu. Only the cineplex staff
      * has access to the admin menu with this admin secret.
      */
     private static String adminSecret;

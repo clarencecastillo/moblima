@@ -1,9 +1,9 @@
 package view;
 
+import controller.MovieController;
+import controller.MovieReviewController;
+import controller.UserController;
 import exception.RejectedNavigationException;
-import manager.MovieController;
-import manager.MovieReviewController;
-import manager.UserController;
 import model.commons.User;
 import model.movie.Movie;
 import model.movie.MovieReview;
@@ -12,7 +12,7 @@ import view.ui.*;
 import java.util.UUID;
 
 /**
- * This view displays the user interface for the user to enter movie reviews.
+ * This moblima.view displays the user interface for the user to enter movie reviews.
  *
  * @version 1.0
  * @since 2017-10-30

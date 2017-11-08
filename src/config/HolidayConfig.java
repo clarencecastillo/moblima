@@ -1,7 +1,7 @@
-package config;
+package moblima.config;
 
-import exception.IllegalActionException;
-import util.Utilities;
+import moblima.exception.IllegalActionException;
+import moblima.util.Utilities;
 
 import java.util.Date;
 import java.util.Hashtable;

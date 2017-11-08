@@ -1,12 +1,12 @@
-package manager;
+package moblima.controller;
 
-import exception.IllegalActionException;
-import exception.UninitialisedSingletonException;
-import model.cinema.Staff;
-import model.commons.User;
+import moblima.exception.IllegalActionException;
+import moblima.exception.UninitialisedSingletonException;
+import moblima.model.cineplex.Staff;
+import moblima.model.commons.User;
 
 /**
- Represents the controller of users, including the moviegoer and cinema staff.
+ Represents the moblima.controller of users, including the moviegoer and cineplex staff.
  @version 1.0
  @since 2017-10-20
  */
@@ -18,14 +18,14 @@ public class UserController extends EntityController<User> {
     private static UserController instance;
 
     /**
-     * Creates the cineplex controller.
+     * Creates the cineplex moblima.controller.
      */
     private UserController() {
         super();
     }
 
     /**
-     * Initialize the cineplex controller.
+     * Initialize the cineplex moblima.controller.
      */
     public static void init() {
         instance = new UserController();

@@ -3,13 +3,13 @@ package view;
 import config.TicketConfig;
 import exception.UnauthorisedNavigationException;
 import model.booking.TicketType;
-import model.cinema.CinemaType;
+import model.cineplex.CinemaType;
 import view.ui.*;
 
 import java.util.ArrayList;
 
 /**
- * This view displays the user interface for the user to configure available ticket types for each cinema.
+ * This moblima.view displays the user interface for the user to configure available ticket types for each cineplex.
  *
  * @version 1.0
  * @since 2017-10-30

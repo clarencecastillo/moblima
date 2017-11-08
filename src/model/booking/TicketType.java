@@ -69,7 +69,11 @@ public enum TicketType implements Priceable {
         return name;
     }
 
-    // TODO Javadoc
+    /**
+     * Checks whether this date is peak.
+     * @param date The date to be checked.
+     * @return true if this date is peak.
+     */
     public static boolean isPeak(Date date) {
         return HolidayConfig.isHoliday(date) ||
                 Utilities.dateFallsOn(date, Calendar.FRIDAY, Calendar.SATURDAY, Calendar.SUNDAY);

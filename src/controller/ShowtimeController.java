@@ -1,21 +1,21 @@
-package manager;
+package moblima.controller;
 
-import config.BookingConfig;
-import exception.IllegalActionException;
-import exception.UninitialisedSingletonException;
-import model.booking.*;
-import model.cinema.Cinema;
-import model.cinema.Cineplex;
-import model.commons.Language;
-import model.movie.Movie;
-import model.movie.MovieStatus;
-import util.Utilities;
+import moblima.config.BookingConfig;
+import moblima.exception.IllegalActionException;
+import moblima.exception.UninitialisedSingletonException;
+import moblima.model.booking.*;
+import moblima.model.cineplex.Cinema;
+import moblima.model.cineplex.Cineplex;
+import moblima.model.commons.Language;
+import moblima.model.movie.Movie;
+import moblima.model.movie.MovieStatus;
+import moblima.util.Utilities;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 /**
- Represents the controller of showtimes.
+ Represents the moblima.controller of showtimes.
  @version 1.0
  @since 2017-10-20
  */
@@ -27,14 +27,14 @@ public class ShowtimeController extends EntityController<Showtime> {
     private static ShowtimeController instance;
 
     /**
-     * Creates the showtime controller.
+     * Creates the showtime moblima.controller.
      */
     private ShowtimeController() {
         super();
     }
 
     /**
-     * Initialize the showtime controller.
+     * Initialize the showtime moblima.controller.
      */
     public static void init() {
         instance = new ShowtimeController();
@@ -54,7 +54,7 @@ public class ShowtimeController extends EntityController<Showtime> {
      * Creates a showtime with the given information.
      * @param movieId The ID of the movie of this showtime.
      * @param cineplexId The ID of the cineplex of this showtime.
-     * @param cinemaId The ID of the cinema of this showtime.
+     * @param cinemaId The ID of the cineplex of this showtime.
      * @param language The language of this showtime.
      * @param startTime The start time of this showtime.
      * @param noFreePasses Whether this showtime allows free pass.
@@ -62,7 +62,7 @@ public class ShowtimeController extends EntityController<Showtime> {
      * @return the newly created showtime.
      * @throws IllegalActionException if the given movie is currently in preview
      * but the showtime to be created is not a preview,
-     * or if the movie already ends showing, or if the cinema is not available.
+     * or if the movie already ends showing, or if the cineplex is not available.
      */
     public Showtime createShowtime(UUID movieId, UUID cineplexId, UUID cinemaId, Language language,
                                    Date startTime, boolean noFreePasses, Language[] subtitles)
@@ -81,7 +81,7 @@ public class ShowtimeController extends EntityController<Showtime> {
             throw new IllegalActionException("Can only create showtime for movies in Now Showing or Preview state");
 
         if (!cinemaController.isAvaiableOn(cineplexId, cinemaId, startTime, endTime))
-            throw new IllegalActionException("There is already a showtime scheduled for this cinema");
+            throw new IllegalActionException("There is already a showtime scheduled for this cineplex");
 
         Cinema cinema = cinemaController.findById(cinemaId);
         Showtime showtime = new Showtime(movie, cineplex, cinema, language, startTime,
@@ -93,7 +93,15 @@ public class ShowtimeController extends EntityController<Showtime> {
         return showtime;
     }
 
-    // TODO Javadoc
+    /**
+     * Changes the detail of a showtime.
+     * @param showtimeId The ID of the showtime to be changed.
+     * @param cinemaId The cineplex of the showtime.
+     * @param language The language of the showtime.
+     * @param startTime The new start time of the showtime
+     * @param noFreePasses The new status of free pass.
+     * @param subtitles The new subtitles for the showtime.
+     */
     public void changeShowtimeDetails(UUID showtimeId, UUID cinemaId, Language language, Date startTime,
                                       boolean noFreePasses, Language[] subtitles) {
 
@@ -114,14 +122,14 @@ public class ShowtimeController extends EntityController<Showtime> {
 
         Cinema cinema = cinemaController.findById(cinemaId);
         if (cinema == null || !showtime.getCineplex().getCinemas().contains(cinema))
-            throw new IllegalActionException("Invalid cinema ID.");
+            throw new IllegalActionException("Invalid cineplex ID.");
 
         // Temporarily cancel showtime so can check availability
         showtime.setCancelled(true);
         if (!cinemaController.isAvaiableOn(showtime.getCineplex().getId(),
                 cinemaId, startTime, showtime.getEndTime())) {
             showtime.setCancelled(false);
-            throw new IllegalActionException("There is already a showtime scheduled for this cinema");
+            throw new IllegalActionException("There is already a showtime scheduled for this cineplex");
         }
         showtime.setCancelled(false);
 
@@ -181,7 +189,12 @@ public class ShowtimeController extends EntityController<Showtime> {
         return showtimes;
     }
 
-    // TODO Javadoc
+    /**
+     * Gets the showtimes of a given cineplex and cinemas.
+     * @param cineplexId The ID of the cineplex to be searched for.
+     * @param cinemaId The ID of the cineplex to be searched for.
+     * @return The showtimes of the given cinemplex and cinemas.
+     */
     public List<Showtime> findByCineplexAndCinema(UUID cineplexId, UUID cinemaId) {
         CineplexController cineplexController = CineplexController.getInstance();
         Cineplex cineplex = cineplexController.findById(cineplexId);
@@ -194,7 +207,7 @@ public class ShowtimeController extends EntityController<Showtime> {
      * Checks whether this ticket type is available for a booking.
      *
      * @param showtimeId the ID of the showtime to be checked for.
-     * @return true if the ticket type is avaible for the cinema of this showtime.
+     * @return true if the ticket type is avaible for the cineplex of this showtime.
      */
     public List<TicketType> getAvailableTicketTypes(UUID showtimeId) {
         Showtime showtime = findById(showtimeId);

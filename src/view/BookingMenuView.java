@@ -2,15 +2,15 @@ package view;
 
 import config.BookingConfig;
 import config.PaymentConfig;
+import controller.BookingController;
+import controller.PaymentController;
+import controller.ShowtimeController;
+import controller.UserController;
 import exception.RejectedNavigationException;
-import manager.BookingController;
-import manager.PaymentController;
-import manager.ShowtimeController;
-import manager.UserController;
 import model.booking.Booking;
 import model.booking.Showtime;
 import model.booking.TicketType;
-import model.cinema.Seat;
+import model.cineplex.Seat;
 import model.commons.User;
 import model.transaction.Payment;
 import model.transaction.Priceable;
@@ -18,7 +18,7 @@ import view.ui.*;
 
 import java.util.*;
 /**
- * This view displays the user interface for the user to make bookings.
+ * This moblima.view displays the user interface for the user to make bookings.
  *
  * @version 1.0
  * @since 2017-10-30

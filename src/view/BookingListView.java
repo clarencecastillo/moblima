@@ -1,8 +1,8 @@
 package view;
 
+import controller.BookingController;
+import controller.UserController;
 import exception.RejectedNavigationException;
-import manager.BookingController;
-import manager.UserController;
 import model.booking.Booking;
 import model.commons.User;
 import view.ui.*;
@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 /**
- * This view displays the user interface for the user to check booking history.
+ * This moblima.view displays the user interface for the user to check booking history.
  *
  * @version 1.0
  * @since 2017-10-30

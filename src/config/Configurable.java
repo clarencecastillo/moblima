@@ -1,4 +1,4 @@
-package config;
+package moblima.config;
 
 import java.io.Serializable;
 

@@ -1,13 +1,7 @@
-import manager.*;
-import model.booking.Booking;
-import model.booking.Showtime;
-import model.booking.TicketType;
-import model.cinema.CinemaLayout;
-import model.cinema.CinemaType;
-import model.cinema.Cineplex;
-import model.commons.Language;
-import model.commons.User;
-import model.movie.*;
+import controller.*;
+import model.cineplex.CinemaLayout;
+import model.cineplex.CinemaType;
+import model.cineplex.Cineplex;
 import util.Utilities;
 import view.MainMenuView;
 import view.ui.Form;
@@ -17,10 +11,10 @@ import view.ui.View;
 import java.io.InvalidClassException;
 import java.io.ObjectInputStream;
 import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Hashtable;
 
+/**
+ * The bootstrap class to load all the classes for this application.
+ */
 public class Moblima {
 
     public static final String VERSION = "v1.0.0";

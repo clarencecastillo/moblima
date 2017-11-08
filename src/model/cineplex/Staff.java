@@ -1,9 +1,9 @@
-package model.cinema;
+package model.cineplex;
 
 import model.commons.User;
 
 /**
- * Represents a cinema staff who has the admin right.
+ * Represents a cineplex staff who has the admin right.
  *
  * @version 1.0
  * @since 2017-10-20

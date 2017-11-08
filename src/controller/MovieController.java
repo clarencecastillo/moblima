@@ -1,26 +1,28 @@
-package manager;
+package moblima.controller;
 
-import exception.IllegalActionException;
-import exception.UninitialisedSingletonException;
-import model.booking.Booking;
-import model.booking.BookingStatus;
-import model.booking.Showtime;
-import model.booking.ShowtimeStatus;
-import model.cinema.Cineplex;
-import model.movie.*;
-import util.Utilities;
+import moblima.exception.IllegalActionException;
+import moblima.exception.UninitialisedSingletonException;
+import moblima.model.booking.Booking;
+import moblima.model.booking.BookingStatus;
+import moblima.model.booking.Showtime;
+import moblima.model.booking.ShowtimeStatus;
+import moblima.model.cineplex.Cineplex;
+import moblima.model.movie.*;
+import moblima.util.Utilities;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 /**
- Represents the controller of movies.
+ Represents the moblima.controller of movies.
  @version 1.0
  @since 2017-10-20
  */
 public class MovieController extends EntityController<Movie> {
 
-    // TODO Javadoc
+    /**
+     * The threshold score for the searching similarity is 5.
+     */
     private static final int SEARCH_SIMILARITY_THRESHOLD = 5;
 
     /**
@@ -29,12 +31,12 @@ public class MovieController extends EntityController<Movie> {
     private static MovieController instance;
 
     /**
-     * Creates the movie controller.
+     * Creates the movie moblima.controller.
      */
     private MovieController() { super(); }
 
     /**
-     * Initialize the movie controller.
+     * Initialize the movie moblima.controller.
      */
     public static void init() { instance = new MovieController(); }
 

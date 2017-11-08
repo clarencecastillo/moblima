@@ -9,15 +9,15 @@ package view.ui;
 public interface Navigable {
 
     /**
-     * Loads the navigable view by the given access level, intent and other necessary information.
-     * @param accessLevel The access level of this view by the user.
-     * @param intent The intent of accessing this view.
-     * @param args Necessary information to load this view.
+     * Loads the navigable moblima.view by the given access level, intent and other necessary information.
+     * @param accessLevel The access level of this moblima.view by the user.
+     * @param intent The intent of accessing this moblima.view.
+     * @param args Necessary information to load this moblima.view.
      */
     void onLoad(AccessLevel accessLevel, Intent intent, String... args);
 
     /**
-     * Things to be performed when entering this view.
+     * Things to be performed when entering this moblima.view.
      */
     void onEnter();
 }

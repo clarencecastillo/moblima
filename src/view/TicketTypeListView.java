@@ -1,14 +1,14 @@
 package view;
 
 import config.BookingConfig;
+import controller.BookingController;
+import controller.CinemaController;
+import controller.ShowtimeController;
 import exception.IllegalActionException;
 import exception.RejectedNavigationException;
 import exception.UnauthorisedNavigationException;
-import manager.BookingController;
-import manager.CinemaController;
-import manager.ShowtimeController;
 import model.booking.*;
-import model.cinema.Cinema;
+import model.cineplex.Cinema;
 import model.commons.Language;
 import util.Utilities;
 import view.ui.*;
@@ -17,7 +17,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 /**
- * This view displays the user interface for the user to select ticket types during booking.
+ * This moblima.view displays the user interface for the user to select ticket types during booking.
  *
  * @version 1.0
  * @since 2017-10-30

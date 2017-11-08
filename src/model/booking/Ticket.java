@@ -1,6 +1,6 @@
 package model.booking;
 
-import model.cinema.Seat;
+import model.cineplex.Seat;
 import model.transaction.Priceable;
 
 /**
@@ -90,7 +90,7 @@ public class Ticket implements Priceable {
 
     /**
      * Gets the price of this ticket which is calculated by the total pricing rates of the ticket type,
-     * the booking's showtime's cinema type and movie type.
+     * the booking's showtime's cineplex type and movie type.
      *
      * @return the price of this ticket.
      */

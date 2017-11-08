@@ -9,7 +9,7 @@ package view.ui;
 public interface MenuOption {
     /**
      * Gets the description of this menu option.
-     * @return
+     * @return the description of this menu option.
      */
     String getDescription();
 }

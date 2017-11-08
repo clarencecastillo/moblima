@@ -1,4 +1,4 @@
-package config;
+package moblima.config;
 
 /**
  * Represents the configuration of payment setting.

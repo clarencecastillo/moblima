@@ -6,13 +6,12 @@ import util.Utilities;
 import view.ui.View;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * This view displays the user interface for the user to view movie details.
+ * This moblima.view displays the user interface for the user to moblima.view movie details.
  *
  * @version 1.0
  * @since 2017-10-30
