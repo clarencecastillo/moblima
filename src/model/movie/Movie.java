@@ -6,7 +6,9 @@ import model.commons.Searchable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Represents a movie.
@@ -270,6 +272,7 @@ public class Movie extends Entity implements Searchable {
         tags.add(director.getLastName());
         tags.add(director.getFullName());
 
+        tags.removeAll(Collections.singleton(null));
         return tags;
     }
 
