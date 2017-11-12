@@ -171,9 +171,14 @@ public class MovieController extends EntityController<Movie> {
             int minDistance = Integer.MAX_VALUE;
             for (String tag : movie.getSearchTags()) {
                 int tagMaxScore = tag.length() + (tag.length() - 1) * 2;
-                int distance = tagMaxScore - Utilities.fuzzyScore(keyword, tag);
-                if (minDistance > distance)
-                    minDistance = distance;
+                int score = Utilities.fuzzyScore(keyword, tag);
+                if (score > 0) {
+                    int distance = tagMaxScore - score;
+                    if (minDistance > distance) {
+                        System.out.println(tag + distance);
+                        minDistance = distance;
+                    }
+                }
             }
             if (minDistance <= SEARCH_SIMILARITY_THRESHOLD)
                 searchResults.put(movie, minDistance);
