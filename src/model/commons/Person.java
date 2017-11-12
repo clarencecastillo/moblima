@@ -26,9 +26,10 @@ public abstract class Person extends Entity {
      */
     public Person(String fullName) {
         String[] splitName = fullName.split(" ");
-        if (splitName.length == 1)
+        if (splitName.length == 1) {
             firstName = fullName;
-        else {
+            lastName = "";
+        } else {
             firstName = splitName[0];
             lastName = splitName[1];
         }
