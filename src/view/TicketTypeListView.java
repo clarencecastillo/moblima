@@ -231,7 +231,8 @@ public class TicketTypeListView extends ListView {
                                     showtimeController.cancelShowtime(showtime.getId());
                                     View.displaySuccess("Showtime successfully canceled!");
                                     Form.pressAnyKeyToContinue();
-                                    navigation.reload(accessLevel, showtime.getId().toString());
+                                    navigation.reload(accessLevel, TicketTypeListIntent.VIEW_TICKET_TYPES,
+                                            showtime.getId().toString());
                                     break;
                                 case CANCEL:
                                     navigation.refresh();
@@ -241,7 +242,8 @@ public class TicketTypeListView extends ListView {
                             showtimeController.cancelShowtime(showtime.getId());
                             View.displaySuccess("Showtime successfully canceled!");
                             Form.pressAnyKeyToContinue();
-                            navigation.reload(accessLevel, showtime.getId().toString());
+                            navigation.reload(accessLevel, TicketTypeListIntent.VIEW_TICKET_TYPES,
+                                    showtime.getId().toString());
                         }
                         break;
                     case VIEW_SEATING:
