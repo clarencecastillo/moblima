@@ -1,7 +1,13 @@
 import controller.*;
+import model.booking.Booking;
+import model.booking.Showtime;
+import model.booking.TicketType;
 import model.cineplex.CinemaLayout;
 import model.cineplex.CinemaType;
 import model.cineplex.Cineplex;
+import model.commons.Language;
+import model.commons.User;
+import model.movie.*;
 import util.Utilities;
 import view.MainMenuView;
 import view.ui.Form;
@@ -11,6 +17,9 @@ import view.ui.View;
 import java.io.InvalidClassException;
 import java.io.ObjectInputStream;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Hashtable;
 
 /**
  * The bootstrap class to load all the classes for this application.
@@ -60,7 +69,6 @@ public class Moblima {
                     "", "root", "root");
         }
 
-        // Debug Data
 //        try {
 //
 //            ShowtimeController showtimeController = ShowtimeController.getInstance();
@@ -92,123 +100,96 @@ public class Moblima {
 //                            CinemaType.REGULAR, bigLayout);
 //            }
 //
-////            MoviePerson director1 = new MoviePerson("Ryan", "Coogler");
-////            Movie movie1 = movieController.createMovie("Black Panther", "T'Challa, after the death "
-////                            + "of his father, the King of Wakanda, "
-////                            + "returns home to the isolated, "
-////                            + "technologically advanced African nation "
-////                            + "to succeed to the throne and take his "
-////                            + "rightful place as king.", director1,
-////                    new MoviePerson[]{director1}, MovieType.THREE_DIMENSION,
-////                    MovieStatus.NOW_SHOWING, MovieRating.PG, 120);
-////
-////            MoviePerson director2 = new MoviePerson("Dean", "Devlin");
-////            Movie movie2 = movieController.createMovie("Geostorm", "When the network of satellites " +
-////                            "designed to control the global climate starts to attack Earth, it's a race against " +
-////                            "the clock to uncover the real threat before a worldwide Geostorm wipes out " +
-////                            "everything and everyone.", director2,
-////                    new MoviePerson[]{director2}, MovieType.TWO_DIMENSION,
-////                    MovieStatus.COMING_SOON, MovieRating.PG, 109);
-////
-////            MoviePerson director3 = new MoviePerson("Taika", "Waititi");
-////            Movie movie3 = movieController.createMovie("Thor: Ragnarok", "Imprisoned, the almighty " +
-////                            "Thor finds himself in a lethal gladiatorial contest against the Hulk, his former ally. " +
-////                            "Thor must fight for survival and race against time to prevent the all-powerful Hela " +
-////                            "from destroying his home and the Asgardian civilization.", director3,
-////                    new MoviePerson[]{director3}, MovieType.BLOCKBUSTER,
-////                    MovieStatus.NOW_SHOWING, MovieRating.PG, 130);
-////
-////            Calendar calendar = Calendar.getInstance();
-////            calendar.setTime(new Date());
-////            calendar.add(Calendar.HOUR, 1);
-////
-////            Language[] subtitles = new Language[] { Language.ENGLISH };
-////            Showtime showtime1 = showtimeController.createShowtime(movie1.getId(), cineplex1.getId(),
-////                    cineplex1.getCinemas().get(0).getId(), Language.ENGLISH, calendar.getTime(),
-////                    true, subtitles);
-////
-////            calendar.add(Calendar.HOUR, 3);
-////            Showtime showtime2 = showtimeController.createShowtime(movie1.getId(), cineplex1.getId(),
-////                    cineplex1.getCinemas().get(0).getId(), Language.ENGLISH, calendar.getTime(),
-////                    true, subtitles);
-////
-////            calendar.add(Calendar.HOUR, 6);
-////            Showtime showtime4 = showtimeController.createShowtime(movie3.getId(), cineplex1.getId(),
-////                    cineplex1.getCinemas().get(0).getId(), Language.ENGLISH, calendar.getTime(),
-////                    true, subtitles);
-////
-////            calendar.add(Calendar.HOUR, -3);
-////            Showtime showtime3 = showtimeController.createShowtime(movie1.getId(), cineplex1.getId(),
-////                    cineplex1.getCinemas().get(0).getId(), Language.ENGLISH, calendar.getTime(),
-////                    true, subtitles);
-////
-////            Hashtable<TicketType, Integer> ticketTypesCount = new Hashtable<>();
-////            ticketTypesCount.put(TicketType.STANDARD, 1);
-////
-////            User user1 = userController.registerUser("Anqi", "Tu", "1", "a@a.com");
-////            Booking booking1 = bookingController.createBooking(showtime1.getId());
-////            bookingController.selectTicketType(booking1.getId(), ticketTypesCount);
-////            bookingController.selectSeats(booking1.getId(),
-////                    Arrays.asList(showtime1.getSeating().getSeatAt('A', 1)));
-////            paymentController.makePayment(booking1);
-////            bookingController.confirmBooking(booking1.getId(), user1.getId());
-////
-////            Booking booking3 = bookingController.createBooking(showtime4.getId());
-////            bookingController.selectTicketType(booking3.getId(), ticketTypesCount);
-////            bookingController.selectSeats(booking3.getId(),
-////                    Arrays.asList(showtime4.getSeating().getSeatAt('A', 1)));
-////            paymentController.makePayment(booking3);
-////            bookingController.confirmBooking(booking3.getId(), user1.getId());
-////
-////            User user2 = userController.registerUser("Clarence", "Castillo", "2", "b@a.com");
-////            Booking booking2 = bookingController.createBooking(showtime1.getId());
-////            bookingController.selectTicketType(booking2.getId(), ticketTypesCount);
-////            bookingController.selectSeats(booking2.getId(),
-////                    Arrays.asList(showtime1.getSeating().getSeatAt('A', 2)));
-////            paymentController.makePayment(booking2);
-////            bookingController.confirmBooking(booking2.getId(), user2.getId());
-////
-////            Booking booking4 = bookingController.createBooking(showtime4.getId());
-////            bookingController.selectTicketType(booking4.getId(), ticketTypesCount);
-////            bookingController.selectSeats(booking4.getId(),
-////                    Arrays.asList(showtime4.getSeating().getSeatAt('A', 2)));
-////            paymentController.makePayment(booking4);
-////            bookingController.confirmBooking(booking4.getId(), user2.getId());
-////
-////            movieReviewController.createReview("Good", 5, movie1.getId(), user1.getId());
-////            movieReviewController.createReview("Good", 0, movie1.getId(), user2.getId());
-////            movieReviewController.createReview("Good", 4, movie3.getId(), user1.getId());
-////            movieReviewController.createReview("Good", 3, movie3.getId(), user2.getId());
+//            MoviePerson director1 = new MoviePerson("Ryan", "Coogler");
+//            Movie movie1 = movieController.createMovie("Black Panther", "T'Challa, after the death "
+//                            + "of his father, the King of Wakanda, "
+//                            + "returns home to the isolated, "
+//                            + "technologically advanced African nation "
+//                            + "to succeed to the throne and take his "
+//                            + "rightful place as king.", director1,
+//                    new MoviePerson[]{director1}, MovieType.THREE_DIMENSION,
+//                    MovieStatus.NOW_SHOWING, MovieRating.PG, 120);
 //
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-
-        // DEBUG
-//        try {
+//            MoviePerson director2 = new MoviePerson("Dean", "Devlin");
+//            Movie movie2 = movieController.createMovie("Geostorm", "When the network of satellites " +
+//                            "designed to control the global climate starts to attack Earth, it's a race against " +
+//                            "the clock to uncover the real threat before a worldwide Geostorm wipes out " +
+//                            "everything and everyone.", director2,
+//                    new MoviePerson[]{director2}, MovieType.TWO_DIMENSION,
+//                    MovieStatus.COMING_SOON, MovieRating.PG, 109);
 //
-//            UserController userController = UserController.getInstance();
-//            MovieController movieController = MovieController.getInstance();
-//            MovieReviewController movieReviewController = MovieReviewController.getInstance();
-//            CineplexController cineplexController = CineplexController.getInstance();
-//            CinemaController cinemaController = CinemaController.getInstance();
-//            ShowtimeController showtimeController = ShowtimeController.getInstance();
-//            BookingController bookingController = BookingController.getInstance();
-//            PaymentController paymentController = PaymentController.getInstance();
+//            MoviePerson director3 = new MoviePerson("Taika", "Waititi");
+//            Movie movie3 = movieController.createMovie("Thor: Ragnarok", "Imprisoned, the almighty " +
+//                            "Thor finds himself in a lethal gladiatorial contest against the Hulk, his former ally. " +
+//                            "Thor must fight for survival and race against time to prevent the all-powerful Hela " +
+//                            "from destroying his home and the Asgardian civilization.", director3,
+//                    new MoviePerson[]{director3}, MovieType.BLOCKBUSTER,
+//                    MovieStatus.NOW_SHOWING, MovieRating.PG, 130);
 //
+//            Calendar calendar = Calendar.getInstance();
+//            calendar.setTime(new Date());
+//            calendar.add(Calendar.HOUR, 1);
 //
+//            Language[] subtitles = new Language[] { Language.ENGLISH };
+//            Showtime showtime1 = showtimeController.createShowtime(movie1.getId(), cineplex1.getId(),
+//                    cineplex1.getCinemas().get(0).getId(), Language.ENGLISH, calendar.getTime(),
+//                    true, subtitles);
 //
-//            Booking booking1 = bookingController.createBooking(showtime1.getId());
+//            calendar.add(Calendar.HOUR, 3);
+//            Showtime showtime2 = showtimeController.createShowtime(movie1.getId(), cineplex1.getId(),
+//                    cineplex1.getCinemas().get(0).getId(), Language.ENGLISH, calendar.getTime(),
+//                    true, subtitles);
+//
+//            calendar.add(Calendar.HOUR, 6);
+//            Showtime showtime4 = showtimeController.createShowtime(movie3.getId(), cineplex1.getId(),
+//                    cineplex1.getCinemas().get(0).getId(), Language.ENGLISH, calendar.getTime(),
+//                    true, subtitles);
+//
+//            calendar.add(Calendar.HOUR, -3);
+//            Showtime showtime3 = showtimeController.createShowtime(movie1.getId(), cineplex1.getId(),
+//                    cineplex1.getCinemas().get(0).getId(), Language.ENGLISH, calendar.getTime(),
+//                    true, subtitles);
+//
 //            Hashtable<TicketType, Integer> ticketTypesCount = new Hashtable<>();
-//            ticketTypesCount.put(TicketType.PEAK, 1);
+//            ticketTypesCount.put(TicketType.STANDARD, 1);
+//
+//            User user1 = userController.registerUser("Anqi", "Tu", "1", "a@a.com");
+//            Booking booking1 = bookingController.createBooking(showtime1.getId());
 //            bookingController.selectTicketType(booking1.getId(), ticketTypesCount);
-//            bookingController.selectSeats(booking1.getId(), Arrays.asList(layout1.getSeats()[0]));
+//            bookingController.selectSeats(booking1.getId(),
+//                    Arrays.asList(showtime1.getSeating().getSeatAt('A', 1)));
 //            paymentController.makePayment(booking1);
-//            bookingController.confirmBooking(booking1.getId(), user.getId());
+//            bookingController.confirmBooking(booking1.getId(), user1.getId());
+//
+//            Booking booking3 = bookingController.createBooking(showtime4.getId());
+//            bookingController.selectTicketType(booking3.getId(), ticketTypesCount);
+//            bookingController.selectSeats(booking3.getId(),
+//                    Arrays.asList(showtime4.getSeating().getSeatAt('A', 1)));
+//            paymentController.makePayment(booking3);
+//            bookingController.confirmBooking(booking3.getId(), user1.getId());
+//
+//            User user2 = userController.registerUser("Clarence", "Castillo", "2", "b@a.com");
+//            Booking booking2 = bookingController.createBooking(showtime1.getId());
+//            bookingController.selectTicketType(booking2.getId(), ticketTypesCount);
+//            bookingController.selectSeats(booking2.getId(),
+//                    Arrays.asList(showtime1.getSeating().getSeatAt('A', 2)));
+//            paymentController.makePayment(booking2);
+//            bookingController.confirmBooking(booking2.getId(), user2.getId());
+//
+//            Booking booking4 = bookingController.createBooking(showtime4.getId());
+//            bookingController.selectTicketType(booking4.getId(), ticketTypesCount);
+//            bookingController.selectSeats(booking4.getId(),
+//                    Arrays.asList(showtime4.getSeating().getSeatAt('A', 2)));
+//            paymentController.makePayment(booking4);
+//            bookingController.confirmBooking(booking4.getId(), user2.getId());
+//
+//            movieReviewController.createReview("Good", 5, movie1.getId(), user1.getId());
+//            movieReviewController.createReview("Good", 0, movie1.getId(), user2.getId());
+//            movieReviewController.createReview("Good", 4, movie3.getId(), user1.getId());
+//            movieReviewController.createReview("Good", 3, movie3.getId(), user2.getId());
 //
 //        } catch (Exception e) {
 //            e.printStackTrace();
-//            System.out.println("Debug Error!");
 //        }
     }
 
