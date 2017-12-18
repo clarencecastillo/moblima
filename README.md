@@ -1,3 +1,5 @@
-Movie Booking and Listing Management Application
+## Movie Booking and Listing Management Application
 
-Don't even try to copy, you won't get it.
+When we developed this, only God, [anqitu](https://github.com/anqitu) and I understood what we were doing. Now, only God knows.
+
+*Use at your own risk!*
